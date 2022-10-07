@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="approvalMapper">
+
+	<select id="selectFormList" resultType="DocFormVo">
+		SELECT FORM_CODE, FORM_NAME FROM DOC_FORM ORDER BY FORM_CODE
+	</select>
+  	
+  	<select id="selectPeriodList" resultType="DocPeriodVo">
+		SELECT PERIOD_CODE, PERIOD FROM DOC_RETENTION_PERIOD ORDER BY PERIOD_CODE
+	</select>
+	
+	<select id="selectSecurityList" resultType="DocSecurityVo">
+		SELECT SECURITY_CODE, SECURITY_LEVLE, READABLE_POSITION FROM DOC_SECURITY_LEVLE ORDER BY SECURITY_CODE
+	</select>
+	
+	<select id="formSelect" resultType="com.kh.app00.approval.vo.DocFormMapperVo">
+		SELECT  DF.FORM_CODE, DT.FORM_DETAIL_CODE, DT.FORM_DETAIL_NAME
+		FROM DOC_FORM_MAPPING DFM
+		INNER JOIN DOC_FORM_DETAIL_TEMPLATE DT ON DT.FORM_DETAIL_CODE = DFM.FORM_DETAIL_CODE
+		INNER JOIN DOC_FORM DF ON DF.FORM_CODE = DFM.FORM_CODE
+		WHERE DF.FORM_CODE = #{formCode}
+		ORDER BY DFM.FORM_CODE, DT.FORM_DETAIL_SEQ
+	</select>
+</mapper>
