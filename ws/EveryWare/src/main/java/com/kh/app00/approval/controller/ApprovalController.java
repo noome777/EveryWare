@@ -1,4 +1,4 @@
-package com.kh.app00.approval;
+package com.kh.app00.approval.controller;
 
 import java.util.List;
 

@@ -216,6 +216,12 @@
                 <a class="nav-link pl-3" href="./support-faqs.html"><span class="ml-1">FAQs</span></a>
               </ul>
             </li>
+            <li class="nav-item dropdown">
+              <a href="${root}/feedback/main" aria-expanded="false" class="nav-link">
+                <i class="fe fe-compass fe-16"></i>
+                <span class="ml-3 item-text">피드백</span>
+              </a>
+            </li>
           </ul>
         </nav>
       </aside>
