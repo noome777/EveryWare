@@ -46,7 +46,6 @@
  	<main role="main" class="main-content">
 	<!-- 제목;, 내용;, 회계월;, 적요;, 지출자;, 계좌번호;, 거래처, 은행명, 예금주, 송금액;, 송금요청날짜;, 첨부파일;, 제출버튼 -->
 	
-        <button type="button" class="btn mb-2 btn-outline-primary right-btn">Primary</button>
 		<div class="card shadow mb-4">
 		
            <div class="card-body">
@@ -261,7 +260,10 @@
 	        </div> <!-- .card-body -->
 	      </div> <!-- .card -->
 	    </div> <!-- .col -->
-	
+		
+		<div class="text-center">
+			<button type="button" class="btn mb-2 btn-secondary ">작성하기</button>
+		</div>
 	
 	
 	

@@ -75,7 +75,7 @@
               </ul>
             </li>
             <li class="nav-item dropdown">
-              <a href="#tables" data-toggle="collapse" href="${root}/approval/storage" aria-expanded="false" class="nav-link">
+              <a href="${root}/approval/storage" aria-expanded="false" class="nav-link">
                 <i class="fe fe-edit fe-16"></i>
                 <span class="ml-3 item-text">임시저장</span>
               </a>
@@ -89,9 +89,9 @@
                 <span class="ml-3 item-text">설정</span>
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="contact">
-                <a class="nav-link pl-3" href="./contacts-grid.html"><span class="ml-1">양식 관리</span></a>
-                <a class="nav-link pl-3" href="${root}/approval/list"><span class="ml-1">전체 문서 관리</span></a>
-                <a class="nav-link pl-3" href="${root}/approval/list"><span class="ml-1">삭제 문서 관리</span></a>
+                <a class="nav-link pl-3" href="${root}/approval/formManager"><span class="ml-1">양식 관리</span></a>
+                <a class="nav-link pl-3" href="${root}/approval/list"><span class="ml-1">전체 문서 목록</span></a>
+                <a class="nav-link pl-3" href="${root}/approval/list"><span class="ml-1">삭제 문서 목록</span></a>
                 <a class="nav-link pl-3" href="${root}/approval/approvalAdmin"><span class="ml-1">전자결재 관리자</span></a>
               </ul>
             </li>
