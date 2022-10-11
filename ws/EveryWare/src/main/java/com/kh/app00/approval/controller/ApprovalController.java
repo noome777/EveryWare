@@ -62,5 +62,24 @@ public class ApprovalController {
 		return "approval/storage";
 	}
 	
+	@GetMapping("formManager")
+	public String formManager() {
+		return "approval/formManager";
+	}
+	
+	@GetMapping("formManagerDetail")
+	public String formManagerDetail() {
+		return "approval/formManagerDetail";
+	}
+	
+	@GetMapping("formEdit")
+	public String formEdit() {
+		return "approval/formEdit";
+	}
+	
+	@GetMapping("formInsert")
+	public String formInsert() {
+		return "approval/formInsert";
+	}
 	
 }
