@@ -6,48 +6,43 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
-
-
-<!-- Root Context: defines shared resources visible to all other web components -->
 	
-	<!-- DB 연결을 위한 Bean 등록 -->
+	<!-- Root Context: defines shared resources visible to all other web components -->
 	
-	<!-- SqlSessionFactory -->
+	<context:property-placeholder location="classpath:config/database.properties" />
+	
 	<bean id="sst" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg index="0" ref="ssfb" />	
+		<constructor-arg index="0" ref="ssfb" />
 	</bean>
 	
-	<!-- 팩토리 -->
 	<bean id="ssfb" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="bds" />
-		<!-- <property name="configLocation" value="경로"/>
-		<property name="mapperLocations" value="경로"/> -->
+		<property name="dataSource" ref="dbs" />
+		<property name="configLocation"  value="classpath:/mybatis/conf.xml"/>
+		<property name="mapperLocations" value="classpath:/mybatis/**/*-mapper.xml" />
 	</bean>
 	
-	<!-- 데이터소스 -->
-	<bean id="bds" class="org.apache.commons.dbcp2.BasicDataSource">
+	<bean id="dbs" class="org.apache.commons.dbcp2.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
-		<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:xe"/>
-		<property name="username" value="C##SPRING"/>
-		<property name="password" value="SPRING"/>
+	    <property name="url" value="${db.url}" />
+	    <property name="username" value="${db.username}" />
+	    <property name="password" value="${db.password}" />
 	</bean>
-
-	<!-- 트랜잭션 관리 bean 등록 (id는 고정) -->
+	
+	<!-- 암호화 -->
+	<bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+	</bean>
+	
+	<!-- 트랜잭션 관리 bean 등록 -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="bds"></property>
+		<property name="dataSource" ref="dbs"></property>
 	</bean>
-
+	
 	<!-- @Aspect 및 하위 어노테이션 활성화 -->
 	<aop:aspectj-autoproxy/>
-
+	
 	<!-- @Aspect 어노테이션도 scan 하기 위함 -->
 	<context:component-scan base-package="com.kh.app00">
 		<context:include-filter type="annotation" expression="org.aspectj.lang.annotation.Aspect"/>
 	</context:component-scan>
-
-	<!-- 암호화 관련 객체 -->
-	<bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
 	
-	</bean>
-		
 </beans>
