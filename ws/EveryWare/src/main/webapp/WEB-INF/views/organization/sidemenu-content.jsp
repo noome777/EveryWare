@@ -21,7 +21,7 @@
           
           <div class="btn-box w-100 mt-4 mb-1">
             <button type="button" class="btn mb-2 btn-primary btn-lg btn-block" onclick="location.href='"">
-              <i class="fe fe-user fe-12 mr-1"></i><span class="small">임직원정보</span>
+              <i class="fe fe-user fe-12 mr-1"></i><span class="small">임직원 정보</span>
             </button>
           </div>
           
