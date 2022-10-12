@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+
 <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
         <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
           <i class="fe fe-x"><span class="sr-only"></span></i>
@@ -18,9 +20,8 @@
             </a>
           </div>
           <div class="btn-box w-100 mt-4 mb-1">
-            <button type="button" class="btn mb-2 btn-primary btn-lg btn-block" onclick="location='${root}/calendar/insert'">
-              <span class="small">일정 추가</span>
-            </button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#eventModal"><span class="fe fe-plus fe-16 mr-3">
+            </span>일정 추가</button>
           </div>
           <p class="text-muted nav-heading mt-4 mb-1">
             <span>일정</span>
