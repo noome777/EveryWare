@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.app00.approval.dao.ApprovalDao;
+import com.kh.app00.approval.vo.DocFormMapperVo;
 import com.kh.app00.approval.vo.DocFormVo;
 import com.kh.app00.approval.vo.DocPeriodVo;
 import com.kh.app00.approval.vo.DocSecurityVo;
@@ -39,6 +40,12 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public List<DocSecurityVo> selectSecurityList() {
 		return dao.selectSecurityList(sst);
+	}
+	
+	//양식항목
+	@Override
+	public List<DocFormMapperVo> formSelect(String formCode) {
+		return dao.formSelect(sst, formCode);
 	}
 
 }

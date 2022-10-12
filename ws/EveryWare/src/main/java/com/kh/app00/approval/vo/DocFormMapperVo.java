@@ -6,5 +6,5 @@ import lombok.Data;
 public class DocFormMapperVo {
 	private String formCode;
 	private String formDetailCode;
-	private String formDetailName;
+	private String formDetailSeq;
 }

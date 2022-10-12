@@ -271,11 +271,11 @@
 	</main>
 	
 
-	<!-- <script>
+	<script>
 		
 		//선택한 양식 코드 가져오기
 		$('#formSelect').change(function(){
-			// console.log($('#formSelect option:selected').val());
+			console.log($('#formSelect option:selected').val());
 			const selectedForm = $('#formSelect option:selected').val();
 			
 			$.ajax({
@@ -292,6 +292,6 @@
 		});
 		
 
-	</script> -->
+	</script>
 </body>
 </html>
