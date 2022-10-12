@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.app00.approval.service.ApprovalService;
+import com.kh.app00.approval.vo.DocFormMapperVo;
 import com.kh.app00.approval.vo.DocFormVo;
 import com.kh.app00.approval.vo.DocPeriodVo;
 import com.kh.app00.approval.vo.DocSecurityVo;
@@ -47,6 +49,20 @@ public class ApprovalController {
 		return "approval/write";
 	}
 	
+	//양식코드 받아와서 항목 그리기
+	@GetMapping("formSelect")
+	@ResponseBody
+	public String formSelect(String formCode) {
+		System.out.println("ajax 요청");
+		
+		DocFormMapperVo vo = new DocFormMapperVo();
+//		vo.getFormCode(formCode);
+		List<DocFormMapperVo> formMappingList = service.formSelect(formCode);
+		System.out.println(formMappingList);
+		
+		return "success";
+	}
+	
 	@GetMapping("approvalAdmin")
 	public String admin() {
 		return "approval/approvalAdmin";
@@ -62,5 +78,24 @@ public class ApprovalController {
 		return "approval/storage";
 	}
 	
+	@GetMapping("formManager")
+	public String formManager() {
+		return "approval/formManager";
+	}
+	
+	@GetMapping("formManagerDetail")
+	public String formManagerDetail() {
+		return "approval/formManagerDetail";
+	}
+	
+	@GetMapping("formEdit")
+	public String formEdit() {
+		return "approval/formEdit";
+	}
+	
+	@GetMapping("formInsert")
+	public String formInsert() {
+		return "approval/formInsert";
+	}
 	
 }

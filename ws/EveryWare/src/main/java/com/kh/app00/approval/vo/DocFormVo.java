@@ -6,4 +6,6 @@ import lombok.Data;
 public class DocFormVo {
 	private String formCode;
 	private String formName;
+	private String formIntro;
+	private String formUseYn;
 }

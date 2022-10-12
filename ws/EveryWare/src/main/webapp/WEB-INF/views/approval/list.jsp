@@ -50,7 +50,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr onclick="location.href='${root}/approval/approvalDocDetail'">
                   <td>1</td>
                   <td>품의서</td>
                   <td>220928_결재_품의</td>
