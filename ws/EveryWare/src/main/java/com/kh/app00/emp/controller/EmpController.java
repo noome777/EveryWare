@@ -34,7 +34,6 @@ public class EmpController {
     //로그인 실행
     @PostMapping("login")
     public String login(EmpVo vo, Model model, String saveEmail, HttpSession session, HttpServletResponse resp) {
-        System.out.println(saveEmail);
         
         //아이디 저장 (쿠키)
         if(saveEmail != null) {

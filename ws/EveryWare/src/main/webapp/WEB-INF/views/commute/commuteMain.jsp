@@ -59,6 +59,8 @@
   }
   
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 </head>
 <body class="vertical  light  ">
   <div class="wrapper">
@@ -68,36 +70,41 @@
    	<main role="main" class="main-content">
 
       <!-- 근무체크 -->
-      <div class="card shadow mb-4">
-        <div class="card-body">
-          <div class="d-flex mb-2">
-            <div class="flex-fill pt-2">
-              <div class="commute-check">
-                <h4 class="mb-0">근무체크</h4><br>
-                <h1 id="timeNow">document.write(timeNow)</h1>
+      <form action="" method="post">
+        <div class="card shadow mb-4">
+          <div class="card-body">
+            <div class="d-flex mb-2">
+              <div class="flex-fill pt-2">
+                <div class="commute-check">
+                  <h4 class="mb-0">근무체크</h4><br>
+                  <h1 id="timeNow">document.write(timeNow)</h1>
+                </div>
+                <img id="profile-img" alt="" src="${root}/resources/img/guest.png">
               </div>
-              <img id="profile-img" alt="" src="${root}/resources/img/guest.png">
-            </div>
-            <div class="flex-fill chart-box mt-n2" style="position: relative;">
-              <div class="resize-triggers"><div class="expand-trigger"><div style="width: 193px; height: 181px;"></div></div><div class="contract-trigger"></div></div></div>
-            </div> <!-- .d-flex -->
-            <div class="row border-top">
-            <div class="col-md-6 pt-4">
-              <h6 class="mb-0">
-                <button class="btn mb-2 btn-outline-primary commute" onclick="entertime();">출근하기🔜</button>
-                <button class="btn mb-2 btn-outline-success commute">QR생성</button>
-                <span class="mb-0" id="enter-time" style="font-size: 20px;"></span>
-              </h6>
-            </div>
-            <div class="col-md-6 pt-4">
-              <h6 class="mb-0">
-                <button class="btn mb-2 btn-outline-primary commute" onclick="exittime();">퇴근하기🔚</button>
-                <span class="mb-0" id="exit-time" style="font-size: 20px;"></span>
-              </h6>
-            </div>
-          </div> <!-- .row -->
-        </div> <!-- .card-body -->
-      </div>
+              <div class="flex-fill chart-box mt-n2" style="position: relative;">
+                <div class="resize-triggers"><div class="expand-trigger"><div style="width: 193px; height: 181px;"></div></div><div class="contract-trigger"></div></div></div>
+              </div> <!-- .d-flex -->
+              <div class="row border-top">
+              <div class="col-md-6 pt-4">
+                <h6 class="mb-0">
+                  <input type="button" value="출근하기🔜" id="enter" class="btn mb-2 btn-outline-primary commute" onclick="Alert(); entertime();">
+                  <button class="btn mb-2 btn-outline-success commute">QR생성</button>
+                  <input type="text" class="mb-0" name="startTime" id="enter-time" value="" style="font-size: 20px; background-color:transparent;  border:0px transparent solid;"></input>
+                </h6>
+              </div>
+              <div class="col-md-6 pt-4">
+                <h6 class="mb-0">
+                  <input type="button" value="퇴근하기🔚" id="exit" class="btn mb-2 btn-outline-primary commute" onclick="Alert(); exittime();">
+                  <input type="text" class="mb-0" name="endTime" id="exit-time" value="" style="font-size: 20px; background-color:transparent;  border:0px transparent solid;"></input>
+                  <input type="submit" value="submit" class="btn mb-2 btn-outline-primary"  style="margin-left: 80px;">
+                </h6>
+              </div>
+            </div> <!-- .row -->
+          </div> <!-- .card-body -->
+        </div>
+        <!-- https://jamesdreaming.tistory.com/206 -->
+        <!-- https://truecode-95.tistory.com/37 -->
+      </form>
 
       <!-- 근태현황 -->
       <div class="card shadow mb-5" style="width: 45%; height: 300px;">
@@ -107,8 +114,8 @@
               <h4 class="mb-0">근태현황</h4>
               <div class="row commute-status">
                 <div class="col-6 text-center border-right border-bottom mb-3">
-                  <h4 class="mb-1">지각</h4><br>
-                  <p class="text-uppercase text-muted mb-1">지각</p>
+                  <h4 class="mb-1">정상출근</h4><br>
+                  <p class="text-uppercase text-muted mb-1">정상출근</p>
                 </div>
                 <div class="col-6 text-center mb-3 border-bottom">
                   <h4 class="mb-1">조기퇴근</h4><br>
@@ -119,8 +126,8 @@
                   <p class="text-uppercase text-muted mb-1">결근</p><br>
                 </div>
                 <div class="col-6 text-center  border-bottom mb-3">
-                  <h4 class="mb-1">퇴근미체크</h4><br>
-                  <p class="text-uppercase text-muted mb-1">퇴근미체크</p><br>
+                  <h4 class="mb-1">지각</h4><br>
+                  <p class="text-uppercase text-muted mb-1">지각</p><br>
                 </div>
               </div>
             </div>
@@ -248,20 +255,12 @@
           </tbody>
         </table>
       </div>
-    
-
-
-
-
-
-
-
 	</main>
-   
 </div>
 
 <script>
-  //시간 출력하는 함수 호출
+  /*시간 출력하는 함수 호출*/
+
   function clock(){
   //h1 태그 가져오기
   const timeNow = document.getElementById('timeNow');
@@ -276,7 +275,7 @@
 
   //html에 출력
   timeNow.innerHTML = date.toLocaleTimeString('en-kr');
-}
+  }
 
   /* 1초마다 clock함수 실행 */
   clock();
@@ -286,19 +285,61 @@
 
 <script>
 
-  //출근시간, 퇴근시간 체크하기
+  //출근시간, 퇴근시간 체크하기 
   function entertime(){
     entertime = new Date();
 
-    document.getElementById('enter-time').innerHTML = entertime.toLocaleTimeString('en-kr');
+    const val = document.getElementById('enter-time').innerHTML = entertime.toLocaleTimeString('en-kr');
+    
+    const startTime = val;
+    $('input[name=startTime]').attr('value', startTime);
   }
 
   function exittime(){
     exittime = new Date();
 
-    document.getElementById('exit-time').innerHTML = exittime.toLocaleTimeString('en-kr');
+    const val = document.getElementById('exit-time').innerHTML = exittime.toLocaleTimeString('en-kr');
+
+    const endTime = val;
+    $('input[name=endTime]').attr('value', endTime);
   }
 
+
 </script>
+
+<!-- <script>
+  $(function(){
+    $('#enter').click(function(){
+      if(!confirm('출근 하시겠습니까?')){
+        return false;
+      }
+    });
+
+  });
+
+</script> -->
+
+<script type="text/javascript">
+
+  //sweet alert로 출퇴근 여부 확인창 띄우기
+
+	var alert = function(msg, type) {
+		swal({
+			title : '',
+			text : msg,
+			type : type,
+			timer : 1500,
+			customClass : 'sweet-size',
+			showConfirmButton : false
+		});
+	}
+
+	function Alert() {
+		alert('확인되었습니다.', 'success');
+	}
+	
+</script>
+
+
 </body>
 </html>
