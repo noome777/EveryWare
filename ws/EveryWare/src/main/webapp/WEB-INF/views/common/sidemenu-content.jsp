@@ -71,10 +71,10 @@
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="tables">
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="./table_basic.html"><span class="ml-1 item-text">Basic Tables</span></a>
+                  <a class="nav-link pl-3" href="${root}/calendar/personal/select"><span class="ml-1 item-text">개인 일정</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="./table_advanced.html"><span class="ml-1 item-text">Advanced Tables</span></a>
+                  <a class="nav-link pl-3" href="${root}/calendar/department/select"><span class="ml-1 item-text">부서 일정</span></a>
                 </li>
               </ul>
             </li>
@@ -108,7 +108,7 @@
               </a>
             </li>
             <li class="nav-item dropdown">
-              <a href="#fileman" aria-expanded="false" class="nav-link">
+              <a href="${root}/filemanager/select" aria-expanded="false" class="nav-link">
                 <i class="fe fe-folder fe-16"></i>
                 <span class="ml-3 item-text">파일 매니저</span>
               </a>

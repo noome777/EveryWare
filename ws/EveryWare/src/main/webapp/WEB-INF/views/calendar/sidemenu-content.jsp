@@ -19,23 +19,18 @@
               </svg>
             </a>
           </div>
-          <div class="btn-box w-100 mt-4 mb-1">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#eventModal"><span class="fe fe-plus fe-16 mr-3">
-            </span>일정 추가</button>
-          </div>
           <p class="text-muted nav-heading mt-4 mb-1">
             <span>일정</span>
           </p>
           <ul class="navbar-nav flex-fill w-100 mb-2">
-           	<li class="nav-item dropdown">
-              <a href="/app99/calendar/select" data-toggle="collapse" aria-expanded="false" class="nav-link">
+           	<li class="nav-item w-100">
+              <a href="${root}/calendar/personal/select" class="nav-link">
                 <i class="fe fe-calendar fe-16"></i>
                 <span class="ml-3 item-text">개인 일정</span>
               </a>
             </li>
-
             <li class="nav-item w-100">
-              <a href="/app99/calendar/select" data-toggle="collapse" aria-expanded="false" class="nav-link">
+              <a href="${root}/calendar/department/select" class="nav-link">
                 <i class="fe fe-calendar fe-16"></i>
                 <span class="ml-3 item-text">부서 일정</span>
               </a>

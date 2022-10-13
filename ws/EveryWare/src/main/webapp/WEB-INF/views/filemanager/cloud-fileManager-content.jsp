@@ -15,7 +15,7 @@
 
 				<div class="file-container border-top">
 					<div class="file-panel mt-4">
-						<h6 class="mb-3">최근 사용된 파일</h6>
+						<h6 class="mb-3">공유한 파일</h6>
 						<div class="row my-4">
 							<div class="col-md-3">
 								<div class="card shadow text-center mb-4">
@@ -101,96 +101,7 @@
 						</div>
 						<!-- .row -->
 
-						<hr class="my-4">
-						<h6 class="mb-3">파일목록</h6>
-						<div class="row my-4 pb-4">
-							<div class="col-md-3">
-								<div class="card shadow text-center mb-4">
-									<div class="card-body file">
-										<div class="file-action">
-											<button type="button"
-												class="btn btn-link dropdown-toggle more-vertical p-0 text-muted mx-auto"
-												data-toggle="dropdown" aria-haspopup="true"
-												aria-expanded="false">
-												<span class="text-muted sr-only">Action</span>
-											</button>
-											<div class="dropdown-menu m-2">
-												<a class="dropdown-item" href="#"><i
-													class="fe fe-star fe-12 mr-4"></i>즐겨찾기</a> <a
-													class="dropdown-item" href="#"><i
-													class="fe fe-copy fe-12 mr-4"></i>복사</a><a
-													class="dropdown-item" href="#"><i
-													class="fe fe-edit-3 fe-12 mr-4"></i>수정</a> <a
-													class="dropdown-item" href="#"><i
-													class="fe fe-delete fe-12 mr-4"></i>삭제</a> <a
-													class="dropdown-item" href="#"><i
-													class="fe fe-share fe-12 mr-4"></i>공유</a> <a
-													class="dropdown-item" href="#"><i
-													class="fe fe-download fe-12 mr-4"></i>다운로드</a>
-											</div>
-										</div>
-										<div class="circle circle-lg bg-light my-4">
-											<span class="fe fe-archive fe-24 text-secondary"></span>
-										</div>
-										<div class="file-info">
-											<span class="badge badge-light text-muted mr-2">14.8M</span>
-											<span class="badge badge-pill badge-light text-muted">Zip</span>
-										</div>
-									</div>
-									<!-- .card-body -->
-									<div class="card-footer bg-transparent border-0 fname">
-										<strong>Packaged-04.02.zip</strong>
-									</div>
-									<!-- .card-footer -->
-								</div>
-								<!-- .card -->
-							</div>
-							<!-- .col -->
-							<div class="col-md-3">
-								<div class="card shadow text-center mb-4">
-									<div class="card-body file">
-										<div class="file-action">
-											<button type="button"
-												class="btn btn-link dropdown-toggle more-vertical p-0 text-muted mx-auto"
-												data-toggle="dropdown" aria-haspopup="true"
-												aria-expanded="false">
-												<span class="text-muted sr-only">Action</span>
-											</button>
-											<div class="dropdown-menu m-2">
-												<a class="dropdown-item" href="#"><i
-													class="fe fe-star fe-12 mr-4"></i>즐겨찾기</a> <a
-													class="dropdown-item" href="#"><i
-													class="fe fe-copy fe-12 mr-4"></i>복사</a><a
-													class="dropdown-item" href="#"><i
-													class="fe fe-edit-3 fe-12 mr-4"></i>수정</a> <a
-													class="dropdown-item" href="#"><i
-													class="fe fe-delete fe-12 mr-4"></i>삭제</a> <a
-													class="dropdown-item" href="#"><i
-													class="fe fe-share fe-12 mr-4"></i>공유</a> <a
-													class="dropdown-item" href="#"><i
-													class="fe fe-download fe-12 mr-4"></i>다운로드</a>
-											</div>
-										</div>
-										<div class="circle circle-lg bg-light my-4">
-											<span class="fe fe-film fe-24 text-info"></span>
-										</div>
-										<div class="file-info">
-											<span class="badge badge-light text-muted mr-2">28M</span> <span
-												class="badge badge-pill badge-light text-muted">MP4</span>
-										</div>
-									</div>
-									<!-- .card-body -->
-									<div class="card-footer bg-transparent border-0 fname">
-										<strong>Introduction.mp4</strong>
-									</div>
-									<!-- .card-footer -->
-								</div>
-								<!-- .card -->
-							</div>
-							<!-- .col -->
-						</div>
-						<!-- .row -->
-					</div>
+						
 					<!-- .file-panel -->
 					<div class="info-panel">
 						<div class="info-content p-3 border-left">

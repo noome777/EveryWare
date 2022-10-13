@@ -8,9 +8,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("calendar")
 public class CalendarController {
 
-	@GetMapping("select")
-	public String select() {
+	@GetMapping("personal/select")
+	public String personal() {
 		
-		return "calendar/calendar";
+		return "calendar/per-calendar";
+	}
+	
+	@GetMapping("department/select")
+	public String department() {
+		
+		return "calendar/department-calendar";
 	}
 }

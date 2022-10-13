@@ -19,6 +19,6 @@ body {
 	<%@ include file="/WEB-INF/views/filemanager/sidemenu-content.jsp"%>
 
 
-	<%@ include file="/WEB-INF/views/filemanager/fileManager-content.jsp"%>
+	<%@ include file="/WEB-INF/views/filemanager/trash-fileManager-content.jsp"%>
 </body>
 </html>
