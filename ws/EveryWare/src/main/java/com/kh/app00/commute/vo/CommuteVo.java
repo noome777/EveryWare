@@ -6,7 +6,7 @@ import lombok.Data;
 public class CommuteVo {
     
     private String comCode;
-    private String ecode;
+    private String eCode;
     private String startTime;
     private String endTime;
     private String enrollDate;
