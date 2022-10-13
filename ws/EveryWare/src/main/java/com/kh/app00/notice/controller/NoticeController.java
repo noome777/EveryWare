@@ -14,4 +14,10 @@ public class NoticeController {
 		return "notice/noticeMain";
 		
 		}
+	
+	@GetMapping("write")
+	public String noticewrite() {
+		return "notice/noticeWrite";
+		
+		}
 }

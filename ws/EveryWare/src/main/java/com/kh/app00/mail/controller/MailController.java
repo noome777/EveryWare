@@ -19,4 +19,9 @@ public class MailController {
 		return "mail/mailWrite";
 	}
 	
+	@GetMapping("receive")
+	public String mailReceive() {
+		return "mail/mailReceive";
+	}
+	
 }

@@ -7,7 +7,7 @@
 <title>메일홈 </title>
 <style>
   
-  #mailall {
+  #mailReceive {
   	font-size: 20px;
   }
   
@@ -38,7 +38,7 @@
     <%@ include file="/WEB-INF/views/mail/sidemenu-content.jsp" %>
     <div class="main-content">
 		
-		<h2 id="mailall">전체 메일함</h2>
+		<h2 id="mailReceive">받은 메일함</h2>
 		<br>
 		<div class="input-group w-50">
 		    <input class="search-txt" type="text" placeholder="메일 검색" id="basic-addon1"> 
