@@ -46,7 +46,7 @@
       <div class="wrapper vh-100">
       <div class="row align-items-center h-100">
         <form class="col-lg-3 col-md-4 col-10 mx-auto text-center" method="post">
-          <img alt="login-logo" id="login-logo" src="${root}/resources/img/EveryWare_logo_220919_small_2.png"><br><br>
+          <img alt="login-logo" id="login-logo" src="${root}/resources/img/EveryWareLogoSmall.png"><br><br>
           <h1 class="h6 mb-3">Sign in</h1>
           <div class="form-group">
             <label for="inputEmail" class="sr-only">Email address</label>
