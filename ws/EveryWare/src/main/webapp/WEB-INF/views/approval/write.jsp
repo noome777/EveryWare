@@ -49,48 +49,48 @@
 		<div class="card shadow mb-4">
 		
            <div class="card-body">
-           	  
                <table class="table table-bordered mb-0 shadow" id="approval-setting-table">
-                 <tr>
-                   <td class="appr-table-color">문서 종류</td>
-                   <td>
-                     <div class="form-group mb-3">
-		               <select class="custom-select form-control" id="formSelect">
-		                 <option selected>선택</option>
-		                 <c:forEach items="${formList}" var="f">
-			                 <option id="formSelect" value="${f.formCode}">${f.formName}</option>
-		                 </c:forEach>
-		               </select>
-					   <input type="hidden" id="formCode">
-		             </div>
-				   </td>
-                   <td class="appr-table-color">보존연한</td>
-                   <td>
-					 <div class="form-group mb-3">
-		               <select class="custom-select form-control" id="custom-select">
-		                 <c:forEach items="${periodList}" var="p">
-			                 <option value="${p.periodCode}">${p.period}</option>
-		                 </c:forEach>
-		               </select>
-		             </div>
-			       </td>
-                 </tr>
-                 <tr>
-                   <td class="appr-table-color">작성자</td>
-                   <td>고은비 </td>
-                   <td class="appr-table-color">보안등급</td>
-                   <td>
-                     <div class="form-group mb-3">
-		               <select class="custom-select form-control" id="custom-select">
-		                 <option selected>선택</option>
-		                 <c:forEach items="${securityList}" var="s">
-			                 <option value="${s.securityCode}">${s.securityLevle}</option>
-		                 </c:forEach>
-		               </select>
-		             </div>
-                   </td>
-                 </tr>
-               </table>
+               <tr>
+                 <td class="appr-table-color">문서 종류</td>
+                 <td>
+                   <div class="form-group mb-3">
+               <select class="custom-select form-control" id="formSelect">
+                 <option value="0" selected>선택</option>
+                 <c:forEach items="${formList}" var="f">
+	                 <option id="formSelect" value="${f.formCode}">${f.formName}</option>
+                 </c:forEach>
+               </select>
+			   <input type="hidden" id="formCode">
+             </div>
+		   </td>
+                 <td class="appr-table-color">보존연한</td>
+                 <td>
+			 <div class="form-group mb-3">
+               <select class="custom-select form-control" id="custom-select">
+                 <c:forEach items="${periodList}" var="p">
+	                 <option value="${p.periodCode}">${p.period}</option>
+                 </c:forEach>
+               </select>
+             </div>
+	       </td>
+               </tr>
+               <tr>
+                 <td class="appr-table-color">작성자</td>
+                 <td>고은비 </td>
+                 <td class="appr-table-color">보안등급</td>
+                 <td>
+                   <div class="form-group mb-3">
+               <select class="custom-select form-control" id="custom-select">
+                 <option selected>선택</option>
+                 <c:forEach items="${securityList}" var="s">
+	                 <option value="${s.securityCode}">${s.securityLevle}</option>
+                 </c:forEach>
+               </select>
+             </div>
+                 </td>
+               </tr>
+             </table>
+               
                
                <!-- 결재라인 -->
                <table id="approval-table" class="table table-bordered mb-0 shadow">
@@ -136,18 +136,18 @@
            </div>
            
          </div>
-         
-	
-		<%-- <c:choose> --%>
+			
 		
 			<div class="card shadow mb-4">
 			
-	          <div class="card-body">
+	          <div class="card-body" id="form-content">
 	          
+			<c:forEach items="${formMappingList}" var="f">
 	            <div class="form-group mb-3">
-	              <label for="simpleinput">제목</label>
+	              <label for="simpleinput">${f.formCode}</label>
 	              <input type="text" id="simpleinput" class="form-control">
 	            </div>
+			</c:forEach>	
 	            
 	            <div class="form-group mb-3">
 	              <label for="example-textarea">내용</label>
@@ -214,7 +214,6 @@
 	          
 	        </div> <!-- / .card -->
         
-        <%-- </c:choose> --%>
         
         
 		
@@ -264,34 +263,20 @@
 		<div class="text-center">
 			<button type="button" class="btn mb-2 btn-secondary ">작성하기</button>
 		</div>
-	
-	
-	
-
 	</main>
 	
-
 	<script>
 		
 		//선택한 양식 코드 가져오기
 		$('#formSelect').change(function(){
-			console.log($('#formSelect option:selected').val());
-			const selectedForm = $('#formSelect option:selected').val();
 			
-			$.ajax({
-				url : "${root}/approval/formSelect" ,
-				type : "GET" , 
-				data : {formCode : selectedForm} , 
-				success : function(data){
-					console.log(data)
-				} ,
-				error : function() {
-					console.log("양식 불러오기 실패");
-				}
-			});
+			const formCode = $('#formSelect option:selected').val();
+			location.href = '${root}/approval/write/' + formCode;
+			
 		});
 		
 
 	</script>
+	
 </body>
 </html>

@@ -33,7 +33,7 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	
 	//양식항목
 	@Override
-	public List<DocFormMapperVo> formSelect(SqlSessionTemplate sst, String formCode) {
+	public List<DocFormMapperVo> formSelect(SqlSessionTemplate sst, int formCode) {
 		return sst.selectList("approvalMapper.formSelectList", formCode);
 	}
 

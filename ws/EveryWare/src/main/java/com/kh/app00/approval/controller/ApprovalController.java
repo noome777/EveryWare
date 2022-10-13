@@ -2,11 +2,15 @@ package com.kh.app00.approval.controller;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.app00.approval.service.ApprovalService;
@@ -32,8 +36,8 @@ public class ApprovalController {
 	}
 	
 	//문서작성 화면
-	@GetMapping("write")
-	public String write(Model model) {
+	@GetMapping("write/{formCode}")
+	public String write(Model model, @PathVariable int formCode) {
 		
 		//문서종류 불러오기
 		List<DocFormVo> formList = service.selectFormList();
@@ -42,6 +46,10 @@ public class ApprovalController {
 		//보안등급 불러오기
 		List<DocSecurityVo> securityList = service.selectSecurityList();
 		
+		
+		List<DocFormMapperVo> formMappingList = service.formSelect(formCode);
+		System.out.println(formMappingList);
+		
 		model.addAttribute("formList", formList);
 		model.addAttribute("periodList", periodList);
 		model.addAttribute("securityList", securityList);
@@ -49,19 +57,19 @@ public class ApprovalController {
 		return "approval/write";
 	}
 	
-	//양식코드 받아와서 항목 그리기
-	@GetMapping("formSelect")
-	@ResponseBody
-	public String formSelect(String formCode) {
-		System.out.println("ajax 요청");
-		
-		DocFormMapperVo vo = new DocFormMapperVo();
-//		vo.getFormCode(formCode);
-		List<DocFormMapperVo> formMappingList = service.formSelect(formCode);
-		System.out.println(formMappingList);
-		
-		return "success";
-	}
+	
+	
+	
+	
+//	//양식코드 받아와서 항목 그리기
+//	@GetMapping("formSelect")
+//	@ResponseBody
+//	public String formSelect(int formCode, Model model) {
+//		
+//		List<DocFormMapperVo> formMappingList = service.formSelect(formCode);
+//		
+//		return null;
+//	}
 	
 	@GetMapping("approvalAdmin")
 	public String admin() {
