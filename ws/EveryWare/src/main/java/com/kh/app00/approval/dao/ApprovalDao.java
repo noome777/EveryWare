@@ -21,7 +21,7 @@ public interface ApprovalDao {
 	List<DocSecurityVo> selectSecurityList(SqlSessionTemplate sst);
 	
 	//양식항목
-	List<DocFormMapperVo> formSelect(SqlSessionTemplate sst, String formCode);
+	List<DocFormMapperVo> formSelect(SqlSessionTemplate sst, int formCode);
 
 	
 }

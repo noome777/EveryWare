@@ -15,7 +15,7 @@
           </div>
           
           <div class="btn-box w-100 mt-4 mb-1">
-            <button type="button" class="btn mb-2 btn-primary btn-lg btn-block" onclick="location.href='${root}/approval/write'">
+            <button type="button" class="btn mb-2 btn-primary btn-lg btn-block" onclick="location.href='${root}/approval/write/0'">
               <i class="fe fe-file-plus fe-12 mr-2"></i><span class="small">작성하기</span>
             </button>
           </div>

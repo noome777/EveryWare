@@ -44,7 +44,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 	
 	//양식항목
 	@Override
-	public List<DocFormMapperVo> formSelect(String formCode) {
+	public List<DocFormMapperVo> formSelect(int formCode) {
 		return dao.formSelect(sst, formCode);
 	}
 

@@ -19,7 +19,7 @@ public interface ApprovalService {
 	List<DocSecurityVo> selectSecurityList();
 
 	//양식 내용 불러오기
-	List<DocFormMapperVo> formSelect(String formCode);
+	List<DocFormMapperVo> formSelect(int formCode);
 
 	
 	

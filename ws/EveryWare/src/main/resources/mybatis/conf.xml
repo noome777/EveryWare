@@ -9,10 +9,16 @@
 	</settings>
 	
 	<typeAliases>
+		<!-- 전자결재 관련 -->
 		<typeAlias alias="DocFormVo" type="com.kh.app00.approval.vo.DocFormVo"/>
 		<typeAlias alias="DocPeriodVo" type="com.kh.app00.approval.vo.DocPeriodVo"/>
 		<typeAlias alias="DocSecurityVo" type="com.kh.app00.approval.vo.DocSecurityVo"/>
 		<typeAlias alias="DocFormMapperVo" type="com.kh.app00.approval.vo.DocFormMapperVo"/>
+		
+		
+		<!-- 인사 관련 -->
+		<typeAlias alias="EmpVo" type="com.kh.app00.emp.vo.EmpVo"/>
+		
 	</typeAliases>
 	
 </configuration>
