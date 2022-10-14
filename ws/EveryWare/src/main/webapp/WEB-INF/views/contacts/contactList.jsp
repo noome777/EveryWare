@@ -297,6 +297,8 @@
                   </table>
                 </div>
               </div>
+              
+              <!-- 페이징 -->
               <nav aria-label="Table Paging" class="my-3">
                 <ul class="pagination justify-content-end mb-0">
                   <li class="page-item"><a class="page-link" href="#">Previous</a></li>
@@ -306,6 +308,8 @@
                   <li class="page-item"><a class="page-link" href="#">Next</a></li>
                 </ul>
               </nav>
+              
+              
             </div> <!-- .col-12 -->
           </div> <!-- .row -->
         </div> <!-- .container-fluid -->
@@ -434,6 +438,8 @@
         </div>
       </main> <!-- main -->
     </div> <!-- .wrapper -->
+    
+    
     <script src="js/jquery.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/moment.min.js"></script>
@@ -444,7 +450,6 @@
     <script src="js/tinycolor-min.js"></script>
     <script src="js/config.js"></script>
     <script src="js/apps.js"></script>
-
 
 </body>
 </html>
