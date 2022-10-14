@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="commuteMapper">
+
+	<insert id="insertCommute">
+		INSERT INTO COMMUTE
+		(
+			 COM_CODE
+		   , ECODE
+		   , START_TIME
+		   , END_TIME
+		   , COM_STATUS
+		
+		)
+		VALUES
+		(
+			 SEQ_COM_CODE_NO.NEXTVAL
+		   , #{eCode}
+		   , #{startTime}
+		   , #{endTime}
+		   , #{comStatus}
+		
+		)
+	</insert>
+</mapper>
