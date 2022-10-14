@@ -93,17 +93,10 @@
 		width : 100%;
 		height : 7%;
 		border-bottom : 1px solid lightgray;
-		display: grid;
-		grid-template-columns: 1.5fr 8.5fr;
+		display: flex;
+		flex-direction: column;
 	}
-
-	.emp-info-bar > div {
-		width: 100%;
-		height: 100%;
-		border: 1px solid black;
-		align-content: center;
-		justify-content: center;
-	}
+	
 
 	button:hover {
 		border: 1px solid rgb(27, 104, 255);
@@ -183,6 +176,13 @@
 		padding-left: 20px;
 	}
 
+	.flex-wrap {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		height: 100%;
+	}
+
 	
 	
 </style>
@@ -213,7 +213,7 @@
 										<input type="text" id="search-bar" class="style-none" placeholder="임직원 검색"> 
 									</div>
 									<div id="search-icon-wrap">
-
+										
 									</div>
 								</div>
 							</div>
@@ -224,9 +224,11 @@
 									
 									<!-- emp-info-bar 클래스 클릭 시 js로 클래스 추가-->
 									<div class="emp-info-bar non-click click">
-										
+										<a href="#profile11" data-toggle="tab">프로필11</a>
 									</div>
-									<div class="emp-info-bar non-click"></div>
+									<div class="emp-info-bar non-click">
+										<a href="#profile12" data-toggle="tab">프로필22</a>
+									</div>
 									<div class="emp-info-bar non-click"></div>
 									<div class="emp-info-bar non-click"></div>
 									<div class="emp-info-bar non-click"></div>
@@ -235,154 +237,311 @@
 								</div>
 							</div>
 						</div>
-						<div id="profile-wrap" class="shadow">
-							<div id="profile-title"><h5>소속 이름</h5></div>
-							<div id="profile-area" class="or-scroll-bar">
-								<div class="profile shadow">
-									<div class="profile-image avatar avatar-lg">
-										<a href="">
-											<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
-										</a>
+
+						<div id="profile-wrap" class="shadow tab-content">
+
+
+							<!--프로필 11 -->
+							<div id="profile11" class="tab-pane container fade flex-wrap">
+								<div id="profile-title"><h5>소속 이름111111111</h5></div>
+								<div id="profile-area" class="or-scroll-bar">
+									<div class="profile shadow">
+										<div class="profile-image avatar avatar-lg">
+											<a href="">
+												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+											</a>
+										</div>
+										<div class="profile-text card-text">
+											<strong class="card-title my-0">조직</strong>
+											<p class="small my-0">과장</p>
+											<p class="small my-0">사원A</p>
+											<p class="small my-0">032-000-0000</p>
+										</div>
+									</div>	
+									<div class="profile shadow">
+										<div class="profile-image avatar avatar-lg">
+											<a href="">
+												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+											</a>
+										</div>
+										<div class="profile-text card-text">
+											<strong class="card-title my-0">조직</strong>
+											<p class="small my-0">과장</p>
+											<p class="small my-0">사원A</p>
+											<p class="small my-0">032-000-0000</p>
+										</div>
 									</div>
-									<div class="profile-text card-text">
-										<strong class="card-title my-0">조직</strong>
-										<p class="small my-0">과장</p>
-										<p class="small my-0">사원A</p>
-										<p class="small my-0">032-000-0000</p>
+									<div class="profile shadow">
+										<div class="profile-image avatar avatar-lg">
+											<a href="">
+												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+											</a>
+										</div>
+										<div class="profile-text card-text">
+											<strong class="card-title my-0">조직</strong>
+											<p class="small my-0">과장</p>
+											<p class="small my-0">사원A</p>
+											<p class="small my-0">032-000-0000</p>
+										</div>
 									</div>
-								</div>	
-								<div class="profile shadow">
-									<div class="profile-image avatar avatar-lg">
-										<a href="">
-											<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
-										</a>
+									<div class="profile shadow">
+										<div class="profile-image avatar avatar-lg">
+											<a href="">
+												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+											</a>
+										</div>
+										<div class="profile-text card-text">
+											<strong class="card-title my-0">조직</strong>
+											<p class="small my-0">과장</p>
+											<p class="small my-0">사원A</p>
+											<p class="small my-0">032-000-0000</p>
+										</div>
 									</div>
-									<div class="profile-text card-text">
-										<strong class="card-title my-0">조직</strong>
-										<p class="small my-0">과장</p>
-										<p class="small my-0">사원A</p>
-										<p class="small my-0">032-000-0000</p>
+									<div class="profile shadow">
+										<div class="profile-image avatar avatar-lg">
+											<a href="">
+												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+											</a>
+										</div>
+										<div class="profile-text card-text">
+											<strong class="card-title my-0">조직</strong>
+											<p class="small my-0">과장</p>
+											<p class="small my-0">사원A</p>
+											<p class="small my-0">032-000-0000</p>
+										</div>
 									</div>
-								</div>
-								<div class="profile shadow">
-									<div class="profile-image avatar avatar-lg">
-										<a href="">
-											<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
-										</a>
+									<div class="profile shadow">
+										<div class="profile-image avatar avatar-lg">
+											<a href="">
+												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+											</a>
+										</div>
+										<div class="profile-text card-text">
+											<strong class="card-title my-0">조직</strong>
+											<p class="small my-0">과장</p>
+											<p class="small my-0">사원A</p>
+											<p class="small my-0">032-000-0000</p>
+										</div>
 									</div>
-									<div class="profile-text card-text">
-										<strong class="card-title my-0">조직</strong>
-										<p class="small my-0">과장</p>
-										<p class="small my-0">사원A</p>
-										<p class="small my-0">032-000-0000</p>
+									<div class="profile shadow">
+										<div class="profile-image avatar avatar-lg">
+											<a href="">
+												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+											</a>
+										</div>
+										<div class="profile-text card-text">
+											<strong class="card-title my-0">조직</strong>
+											<p class="small my-0">과장</p>
+											<p class="small my-0">사원A</p>
+											<p class="small my-0">032-000-0000</p>
+										</div>
 									</div>
-								</div>
-								<div class="profile shadow">
-									<div class="profile-image avatar avatar-lg">
-										<a href="">
-											<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
-										</a>
+									<div class="profile shadow">
+										<div class="profile-image avatar avatar-lg">
+											<a href="">
+												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+											</a>
+										</div>
+										<div class="profile-text card-text">
+											<strong class="card-title my-0">조직</strong>
+											<p class="small my-0">과장</p>
+											<p class="small my-0">사원A</p>
+											<p class="small my-0">032-000-0000</p>
+										</div>
 									</div>
-									<div class="profile-text card-text">
-										<strong class="card-title my-0">조직</strong>
-										<p class="small my-0">과장</p>
-										<p class="small my-0">사원A</p>
-										<p class="small my-0">032-000-0000</p>
+									<div class="profile shadow">
+										<div class="profile-image avatar avatar-lg">
+											<a href="">
+												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+											</a>
+										</div>
+										<div class="profile-text card-text">
+											<strong class="card-title my-0">조직</strong>
+											<p class="small my-0">과장</p>
+											<p class="small my-0">사원A</p>
+											<p class="small my-0">032-000-0000</p>
+										</div>
 									</div>
-								</div>
-								<div class="profile shadow">
-									<div class="profile-image avatar avatar-lg">
-										<a href="">
-											<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
-										</a>
+									<div class="profile shadow">
+										<div class="profile-image avatar avatar-lg">
+											<a href="">
+												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+											</a>
+										</div>
+										<div class="profile-text card-text">
+											<strong class="card-title my-0">조직</strong>
+											<p class="small my-0">과장</p>
+											<p class="small my-0">사원A</p>
+											<p class="small my-0">032-000-0000</p>
+										</div>
 									</div>
-									<div class="profile-text card-text">
-										<strong class="card-title my-0">조직</strong>
-										<p class="small my-0">과장</p>
-										<p class="small my-0">사원A</p>
-										<p class="small my-0">032-000-0000</p>
-									</div>
-								</div>
-								<div class="profile shadow">
-									<div class="profile-image avatar avatar-lg">
-										<a href="">
-											<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
-										</a>
-									</div>
-									<div class="profile-text card-text">
-										<strong class="card-title my-0">조직</strong>
-										<p class="small my-0">과장</p>
-										<p class="small my-0">사원A</p>
-										<p class="small my-0">032-000-0000</p>
-									</div>
-								</div>
-								<div class="profile shadow">
-									<div class="profile-image avatar avatar-lg">
-										<a href="">
-											<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
-										</a>
-									</div>
-									<div class="profile-text card-text">
-										<strong class="card-title my-0">조직</strong>
-										<p class="small my-0">과장</p>
-										<p class="small my-0">사원A</p>
-										<p class="small my-0">032-000-0000</p>
-									</div>
-								</div>
-								<div class="profile shadow">
-									<div class="profile-image avatar avatar-lg">
-										<a href="">
-											<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
-										</a>
-									</div>
-									<div class="profile-text card-text">
-										<strong class="card-title my-0">조직</strong>
-										<p class="small my-0">과장</p>
-										<p class="small my-0">사원A</p>
-										<p class="small my-0">032-000-0000</p>
-									</div>
-								</div>
-								<div class="profile shadow">
-									<div class="profile-image avatar avatar-lg">
-										<a href="">
-											<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
-										</a>
-									</div>
-									<div class="profile-text card-text">
-										<strong class="card-title my-0">조직</strong>
-										<p class="small my-0">과장</p>
-										<p class="small my-0">사원A</p>
-										<p class="small my-0">032-000-0000</p>
-									</div>
-								</div>
-								<div class="profile shadow">
-									<div class="profile-image avatar avatar-lg">
-										<a href="">
-											<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
-										</a>
-									</div>
-									<div class="profile-text card-text">
-										<strong class="card-title my-0">조직</strong>
-										<p class="small my-0">과장</p>
-										<p class="small my-0">사원A</p>
-										<p class="small my-0">032-000-0000</p>
-									</div>
-								</div>
-								<div class="profile shadow">
-									<div class="profile-image avatar avatar-lg">
-										<a href="">
-											<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
-										</a>
-									</div>
-									<div class="profile-text card-text">
-										<strong class="card-title my-0">조직</strong>
-										<p class="small my-0">과장</p>
-										<p class="small my-0">사원A</p>
-										<p class="small my-0">032-000-0000</p>
-									</div>
-								</div>	
+									<div class="profile shadow">
+										<div class="profile-image avatar avatar-lg">
+											<a href="">
+												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+											</a>
+										</div>
+										<div class="profile-text card-text">
+											<strong class="card-title my-0">조직</strong>
+											<p class="small my-0">과장</p>
+											<p class="small my-0">사원A</p>
+											<p class="small my-0">032-000-0000</p>
+										</div>
+									</div>	
 								
 								
+								</div>
+							</div>
+							<!--프로필 12 -->
+							<div id="profile12" class="tab-pane container active flex-wrap">
+								<div id="profile-title"><h5>소속 이름2222222222222</h5></div>
+								<div id="profile-area" class="or-scroll-bar">
+									<div class="profile shadow">
+										<div class="profile-image avatar avatar-lg">
+											<a href="">
+												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+											</a>
+										</div>
+										<div class="profile-text card-text">
+											<strong class="card-title my-0">조직</strong>
+											<p class="small my-0">과장</p>
+											<p class="small my-0">사원A</p>
+											<p class="small my-0">032-000-0000</p>
+										</div>
+									</div>	
+									<div class="profile shadow">
+										<div class="profile-image avatar avatar-lg">
+											<a href="">
+												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+											</a>
+										</div>
+										<div class="profile-text card-text">
+											<strong class="card-title my-0">조직</strong>
+											<p class="small my-0">과장</p>
+											<p class="small my-0">사원A</p>
+											<p class="small my-0">032-000-0000</p>
+										</div>
+									</div>
+									<div class="profile shadow">
+										<div class="profile-image avatar avatar-lg">
+											<a href="">
+												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+											</a>
+										</div>
+										<div class="profile-text card-text">
+											<strong class="card-title my-0">조직</strong>
+											<p class="small my-0">과장</p>
+											<p class="small my-0">사원A</p>
+											<p class="small my-0">032-000-0000</p>
+										</div>
+									</div>
+									<div class="profile shadow">
+										<div class="profile-image avatar avatar-lg">
+											<a href="">
+												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+											</a>
+										</div>
+										<div class="profile-text card-text">
+											<strong class="card-title my-0">조직</strong>
+											<p class="small my-0">과장</p>
+											<p class="small my-0">사원A</p>
+											<p class="small my-0">032-000-0000</p>
+										</div>
+									</div>
+									<div class="profile shadow">
+										<div class="profile-image avatar avatar-lg">
+											<a href="">
+												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+											</a>
+										</div>
+										<div class="profile-text card-text">
+											<strong class="card-title my-0">조직</strong>
+											<p class="small my-0">과장</p>
+											<p class="small my-0">사원A</p>
+											<p class="small my-0">032-000-0000</p>
+										</div>
+									</div>
+									<div class="profile shadow">
+										<div class="profile-image avatar avatar-lg">
+											<a href="">
+												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+											</a>
+										</div>
+										<div class="profile-text card-text">
+											<strong class="card-title my-0">조직</strong>
+											<p class="small my-0">과장</p>
+											<p class="small my-0">사원A</p>
+											<p class="small my-0">032-000-0000</p>
+										</div>
+									</div>
+									<div class="profile shadow">
+										<div class="profile-image avatar avatar-lg">
+											<a href="">
+												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+											</a>
+										</div>
+										<div class="profile-text card-text">
+											<strong class="card-title my-0">조직</strong>
+											<p class="small my-0">과장</p>
+											<p class="small my-0">사원A</p>
+											<p class="small my-0">032-000-0000</p>
+										</div>
+									</div>
+									<div class="profile shadow">
+										<div class="profile-image avatar avatar-lg">
+											<a href="">
+												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+											</a>
+										</div>
+										<div class="profile-text card-text">
+											<strong class="card-title my-0">조직</strong>
+											<p class="small my-0">과장</p>
+											<p class="small my-0">사원A</p>
+											<p class="small my-0">032-000-0000</p>
+										</div>
+									</div>
+									<div class="profile shadow">
+										<div class="profile-image avatar avatar-lg">
+											<a href="">
+												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+											</a>
+										</div>
+										<div class="profile-text card-text">
+											<strong class="card-title my-0">조직</strong>
+											<p class="small my-0">과장</p>
+											<p class="small my-0">사원A</p>
+											<p class="small my-0">032-000-0000</p>
+										</div>
+									</div>
+									<div class="profile shadow">
+										<div class="profile-image avatar avatar-lg">
+											<a href="">
+												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+											</a>
+										</div>
+										<div class="profile-text card-text">
+											<strong class="card-title my-0">조직</strong>
+											<p class="small my-0">과장</p>
+											<p class="small my-0">사원A</p>
+											<p class="small my-0">032-000-0000</p>
+										</div>
+									</div>
+									<div class="profile shadow">
+										<div class="profile-image avatar avatar-lg">
+											<a href="">
+												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+											</a>
+										</div>
+										<div class="profile-text card-text">
+											<strong class="card-title my-0">조직</strong>
+											<p class="small my-0">과장</p>
+											<p class="small my-0">사원A</p>
+											<p class="small my-0">032-000-0000</p>
+										</div>
+									</div>	
+								
+								
+								</div>
 							</div>
 							
 						</div>
@@ -392,7 +551,6 @@
 			</div>
 		</main>
 		</div>
-
 
 		<script>
 

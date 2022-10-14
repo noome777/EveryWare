@@ -30,40 +30,42 @@
           </p>
           
           <ul class="navbar-nav flex-fill w-100 mb-2">
-          <li class="nav-item ">
-              <a href="${root}/organization/chart" data-toggle="collapse" aria-expanded="false" class="nav-link">
-                <i class="fe fe-users fe-16"></i>
-                <span class="ml-3 item-text ">조직도</span>
-              </a>
-          </li>
-          <li class="nav-item">
-              <a href="${root}/organization/chart" data-toggle="collapse" aria-expanded="false" class="nav-link">
-                <i class="fe fe-user-check fe-16"></i>
-                <span class="ml-3 item-text ">임직원 관리</span>
-              </a>
-          </li>
-          <li class="nav-item dropdown">    
-              <a href="${root}/organization/chart" data-toggle="collapse" href="${root}/approval/storage" aria-expanded="false" class="nav-link">
-                <i class="fe fe-user-plus fe-16"></i>
-                <span class="ml-3 item-text">직위/직무 설정</span>
-              </a>
-          </li> 
-              
-          <p class="text-muted nav-heading mt-4 mb-1">
-            <span>설정</span>
-          </p>
-          <li class="nav-item">
-              <a href="${root}/organization/chart" data-toggle="collapse" aria-expanded="false" class="nav-link">
-                <i class="fe fe-clipboard fe-16"></i>
-                <span class="ml-3 item-text">근로형태</span>
-              </a>
-           </li>
-           <li class="nav-item">
-              <a href="${root}/organization/chart" data-toggle="collapse" aria-expanded="false" class="nav-link">
-                <i class="fe fe-award fe-16"></i>
-                <span class="ml-3 item-text">권한관리</span>
-              </a>
+            <li class="nav-item ">
+                <a href="${root}/organization/chart" aria-expanded="false" class="nav-link">
+                  <i class="fe fe-users fe-16"></i>
+                  <span class="ml-3 item-text ">조직도</span>
+                </a>
             </li>
+
+            <p class="text-muted nav-heading mt-4 mb-1">
+              <span>인사관리</span>
+            </p>
+
+          
+            <li class="nav-item dropdown">
+              <a href="#ui-elements" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                <i class="fe fe-user-plus fe-16"></i>
+                <span class="ml-3 item-text">인사관리</span>
+              </a>
+              <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
+                <li class="nav-item">
+                  <a class="nav-link pl-3" href="./ui-color.html"><span class="ml-1 item-text">임직원관리</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3" href="./ui-typograpy.html"><span class="ml-1 item-text">직위/직무설정</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3" href="./ui-icons.html"><span class="ml-1 item-text">근로형태관리</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3" href="./ui-buttons.html"><span class="ml-1 item-text">권한관리</span></a>
+                </li>
+                
+              </ul>
+            </li>
+
+          
           </ul>
         </nav>
       </aside>
