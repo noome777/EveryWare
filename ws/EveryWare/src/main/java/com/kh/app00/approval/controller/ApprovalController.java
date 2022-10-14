@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.app00.approval.service.ApprovalService;
+import com.kh.app00.approval.vo.ApprovalDocVo;
+import com.kh.app00.approval.vo.DocDataVo;
 import com.kh.app00.approval.vo.DocFormMapperVo;
 import com.kh.app00.approval.vo.DocFormVo;
 import com.kh.app00.approval.vo.DocPeriodVo;
@@ -45,31 +47,31 @@ public class ApprovalController {
 		List<DocPeriodVo> periodList = service.selectPeriodList();
 		//보안등급 불러오기
 		List<DocSecurityVo> securityList = service.selectSecurityList();
-		
-		
+		//문서양식 불러오기
 		List<DocFormMapperVo> formMappingList = service.formSelect(formCode);
-		System.out.println(formMappingList);
+		
+		
+		DocFormMapperVo vo = new DocFormMapperVo();
+		String formCode_ = String.valueOf(formCode);
+		vo.setFormCode(formCode_);
 		
 		model.addAttribute("formList", formList);
 		model.addAttribute("periodList", periodList);
 		model.addAttribute("securityList", securityList);
+		model.addAttribute("formMappingList", formMappingList);
+		model.addAttribute("selectedFormCode", vo.getFormCode());
 		
 		return "approval/write";
 	}
 	
+	@PostMapping("write")
+	public String write(ApprovalDocVo docVo, DocDataVo dataVo) {
+		
+		
+		return"";
+	}
 	
 	
-	
-	
-//	//양식코드 받아와서 항목 그리기
-//	@GetMapping("formSelect")
-//	@ResponseBody
-//	public String formSelect(int formCode, Model model) {
-//		
-//		List<DocFormMapperVo> formMappingList = service.formSelect(formCode);
-//		
-//		return null;
-//	}
 	
 	@GetMapping("approvalAdmin")
 	public String admin() {

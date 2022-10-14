@@ -14,6 +14,8 @@
 		<typeAlias alias="DocPeriodVo" type="com.kh.app00.approval.vo.DocPeriodVo"/>
 		<typeAlias alias="DocSecurityVo" type="com.kh.app00.approval.vo.DocSecurityVo"/>
 		<typeAlias alias="DocFormMapperVo" type="com.kh.app00.approval.vo.DocFormMapperVo"/>
+		<typeAlias alias="ApprovalDocVo" type="com.kh.app00.approval.vo.ApprovalDocVo"/>
+		<typeAlias alias="DocDataVo" type="com.kh.app00.approval.vo.DocDataVo"/>
 		
 		
 		<!-- 인사 관련 -->
