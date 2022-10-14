@@ -102,9 +102,9 @@
 		border: 1px solid rgb(27, 104, 255);
 	}
 
-	.emp-info-bar:hover {
+	.non-click:hover {
 		cursor: pointer;
-		background-color: rgb(248, 249, 249)
+		background-color: rgb(235, 236, 237)
 	}
 
 	.non-click {
@@ -154,6 +154,7 @@
 	.profile {
 		display: flex;
 		flex-direction: column;
+		border-radius: 5px;
 	}
 
 	.profile>div {
@@ -183,6 +184,16 @@
 		height: 100%;
 	}
 
+	.nav-link {
+		width: 100%;
+		height: 100%;
+	}
+
+	.nav-pills> li > a .nav-pills .nav-pills>li{
+		-webkit-border-radius: 0;
+		-moz-border-radius: 0;
+		border-radius: 0;
+	}
 	
 	
 </style>
@@ -222,16 +233,28 @@
 								
 								<div id="list-bar" class="shadow or-scroll-bar">
 									
-									<!-- emp-info-bar 클래스 클릭 시 js로 클래스 추가-->
-									<div class="emp-info-bar non-click click">
-										<a href="#profile11" data-toggle="tab">프로필11</a>
-									</div>
-									<div class="emp-info-bar non-click">
-										<a href="#profile12" data-toggle="tab">프로필22</a>
-									</div>
-									<div class="emp-info-bar non-click"></div>
-									<div class="emp-info-bar non-click"></div>
-									<div class="emp-info-bar non-click"></div>
+									<ul class="nav nav-pills">
+										<li class="nav-item emp-info-bar non-click">
+											<a class="nav-link" data-toggle="pill" href="#profile11">프로필필 11</a>
+										</li>
+										<li class="nav-item emp-info-bar non-click">
+											<a class="nav-link" data-toggle="pill" href="#profile12">프로필필 22</a>
+										</li>
+										<li class="nav-item emp-info-bar non-click">
+											<a class="nav-link" data-toggle="pill" href="#profile11"> ㄴ 프로필필 11</a>
+										</li>
+										<li class="nav-item emp-info-bar non-click">
+											<a class="nav-link" data-toggle="pill" href="#profile11"> ㄴ 프로필필 11</a>
+										</li>
+										<li class="nav-item emp-info-bar non-click">
+											<a class="nav-link" data-toggle="pill" href="#profile11"> ㄴ 프로필필 11</a>
+										</li>
+										<li class="nav-item emp-info-bar non-click">
+											<a class="nav-link" data-toggle="pill" href="#profile11"> ㄴ 프로필필 11</a>
+										</li>
+										
+										
+									</ul>
 									
 
 								</div>
@@ -242,7 +265,7 @@
 
 
 							<!--프로필 11 -->
-							<div id="profile11" class="tab-pane container fade flex-wrap">
+							<div class="tab-pane container active flex-wrap" id="profile11" >
 								<div id="profile-title"><h5>소속 이름111111111</h5></div>
 								<div id="profile-area" class="or-scroll-bar">
 									<div class="profile shadow">
@@ -393,7 +416,7 @@
 								</div>
 							</div>
 							<!--프로필 12 -->
-							<div id="profile12" class="tab-pane container active flex-wrap">
+							<div class="tab-pane container fade flex-wrap" id="profile12">
 								<div id="profile-title"><h5>소속 이름2222222222222</h5></div>
 								<div id="profile-area" class="or-scroll-bar">
 									<div class="profile shadow">
@@ -543,6 +566,8 @@
 								
 								</div>
 							</div>
+							<!-- Nav tabs -->
+
 							
 						</div>
 					</div>
@@ -552,7 +577,9 @@
 		</main>
 		</div>
 
-		<script>
+		
+
+		<!-- <script>
 
 			const nonClick = document.querySelectorAll(".non-click");
 
@@ -574,7 +601,7 @@
 				e.addEventListener("click", handleClick);
 			});
 
-		</script>
+		</script> -->
 
 	  
 
