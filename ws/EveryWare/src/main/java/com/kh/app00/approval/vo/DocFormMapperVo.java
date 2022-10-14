@@ -7,4 +7,7 @@ public class DocFormMapperVo {
 	private String formCode;
 	private String formDetailCode;
 	private String formDetailSeq;
+
+	private String formDetailName;
+	private String formDetailType;
 }
