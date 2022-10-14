@@ -35,7 +35,7 @@
     float: right;
   }
   #company-img{
-    margin-left: 1000px;
+    margin-left: 1030px;
     width: 100px;
     height: 100px;
     margin-top: -200px;
@@ -196,7 +196,7 @@
           </form>
         </div> 
 
-        <img id="company-img" src="${root}/resources/img/EveryWare_logo_220919_small_2.png" alt="">
+        <img id="company-img" src="${root}/resources/img/EveryWareLogoSmall.png" alt="">
         
         <h6 class="card-title" style="margin-left: 20px;">조회 결과 {}건</h6>
         <table class="table table-hover">

@@ -66,7 +66,6 @@ public class CommuteController {
       }else {
           System.out.println("떙 다시");
       }
-      
 //      System.out.println(startTime);
 //      System.out.println(endTime);
 //      System.out.println(onTime);
