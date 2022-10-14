@@ -6,11 +6,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
  <style>
-  #mailall {
+  #noticeall {
   	font-size: 30px;
   }
   
-  #maillist {
+  #noticelist {
 	margin-top: 30px;  
   }
   
@@ -34,7 +34,7 @@
     <%@ include file="/WEB-INF/views/notice/sidemenu-content.jsp" %>
     <div class="main-content">
 		
-		<h1 id="mailall">사내 공지</h1>
+		<h1 id="noticeall">사내 공지</h1>
 		<br>
 		
 		<!-- <div class="input-group w-50" >
@@ -46,7 +46,7 @@
 		<input type="text" class="form-control" aria-label="mailSearch" id="mailSearch" placeholder="메일검색"  aria-describedby="basic-addon1">
 		</div> -->
 		
-		<table class="table table-striped" id="maillist">
+		<table class="table table-striped" id="noticelist">
 		
         <tr>
            	<th>번호</th>
