@@ -1,100 +1,109 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <c:set var="root" value="${pageContext.request.contextPath }" />
-<c:set var="alertMsg" value="${sessionScope.alertMsg}"/>
-<c:remove var="alertMsg" scope="session"/>
+<c:set var="alertMsg" value="${sessionScope.alertMsg}" />
+<c:remove var="alertMsg" scope="session" />
 <!doctype html>
 <html lang="ko">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="favicon.ico">
-    <title>EVERYWARE</title>
-    <!-- 제이쿼리 -->    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <!-- Simple bar CSS -->
-    <link rel="stylesheet" href="${root}/resources/css/simplebar.css">
-    <!-- Fonts CSS -->
-    <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <!-- Icons CSS -->
-    <link rel="stylesheet" href="${root}/resources/css/feather.css">
-    <link rel="stylesheet" href="${root}/resources/css/select2.css">
-    <link rel="stylesheet" href="${root}/resources/css/dropzone.css">
-    <link rel="stylesheet" href="${root}/resources/css/uppy.min.css">
-    <link rel="stylesheet" href="${root}/resources/css/jquery.steps.css">
-    <link rel="stylesheet" href="${root}/resources/css/jquery.timepicker.css">
-    <link rel="stylesheet" href="${root}/resources/css/quill.snow.css">
-    <!-- Date Range Picker CSS -->
-    <link rel="stylesheet" href="${root}/resources/css/daterangepicker.css">
-    <!-- App CSS -->
-    <link rel="stylesheet" href="${root}/resources/css/app-light.css" id="lightTheme">
-    <!-- <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled> -->
-  </head>
-  <body class="vertical  light  ">
-  
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="favicon.ico">
+<title>EVERYWARE</title>
+<!-- 제이쿼리 -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<!-- Simple bar CSS -->
+<link rel="stylesheet" href="${root}/resources/css/simplebar.css">
+<!-- Fonts CSS -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
+	rel="stylesheet">
+<!-- Icons CSS -->
+<link rel="stylesheet" href="${root}/resources/css/feather.css">
+<link rel="stylesheet" href="${root}/resources/css/select2.css">
+<link rel="stylesheet" href="${root}/resources/css/dropzone.css">
+<link rel="stylesheet" href="${root}/resources/css/uppy.min.css">
+<link rel="stylesheet" href="${root}/resources/css/jquery.steps.css">
+<link rel="stylesheet"
+	href="${root}/resources/css/jquery.timepicker.css">
+<link rel="stylesheet" href="${root}/resources/css/quill.snow.css">
+<!-- Date Range Picker CSS -->
+<link rel="stylesheet" href="${root}/resources/css/daterangepicker.css">
+<!-- App CSS -->
+<link rel="stylesheet" href="${root}/resources/css/app-light.css"
+	id="lightTheme">
+<!-- <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled> -->
+</head>
+<body class="vertical  light  ">
+
 	<nav class="topnav navbar navbar-light border-right bg-white shadow">
-	  <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
-	    <i class="fe fe-menu navbar-toggler-icon"></i>
-	  </button>
-	  <ul class="nav">
-	    <li class="nav-item nav-notif">
-	      <a class="nav-link text-muted my-2" href="./#" data-toggle="modal" data-target=".modal-notif">
-	        <span class="fe fe-bell fe-16"></span>
-	        <span class="dot dot-md bg-success"></span>
-	      </a>
-	    </li>
-	    <li class="nav-item dropdown">
-	      <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	        <span class="avatar avatar-sm mt-2">
-	          <img src="${root}/resources/assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">
-	        </span>
-	      </a>
-	      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-	        <a class="dropdown-item" href="#">Profile</a>
-	        <a class="dropdown-item" href="#">Settings</a>
-	        <a class="dropdown-item" href="#">Activities</a>
-	      </div>
-	    </li>
-	  </ul>
+		<button type="button"
+			class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
+			<i class="fe fe-menu navbar-toggler-icon"></i>
+		</button>
+		<ul class="nav">
+			<li class="nav-item nav-notif"><a
+				class="nav-link text-muted my-2" href="./#" data-toggle="modal"
+				data-target=".modal-notif"> <span class="fe fe-bell fe-16"></span>
+					<span class="dot dot-md bg-success"></span>
+			</a></li>
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle text-muted pr-0" href="#"
+				id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+				aria-haspopup="true" aria-expanded="false"> <span
+					class="avatar avatar-sm mt-2"> <img
+						src="${root}/resources/assets/avatars/face-1.jpg" alt="..."
+						class="avatar-img rounded-circle">
+				</span>
+			</a>
+				<div class="dropdown-menu dropdown-menu-right"
+					aria-labelledby="navbarDropdownMenuLink">
+					<a class="dropdown-item" href="#">Profile</a> <a
+						class="dropdown-item" href="#">Settings</a> <a
+						class="dropdown-item" href="#">Activities</a>
+				</div></li>
+		</ul>
 	</nav>
-	
+
 	<script src="${root}/resources/js/jquery.min.js"></script>
-    <script src="${root}/resources/js/popper.min.js"></script>
-    <script src="${root}/resources/js/moment.min.js"></script>
-    <script src="${root}/resources/js/bootstrap.min.js"></script>
-    <script src="${root}/resources/js/simplebar.min.js"></script>
-    <script src='${root}/resources/js/daterangepicker.js'></script>
-    <script src='${root}/resources/js/jquery.stickOnScroll.js'></script>
-    <script src="${root}/resources/js/tinycolor-min.js"></script>
-    <script src="${root}/resources/js/config.js"></script>
-    <script src="${root}/resources/js/d3.min.js"></script>
-    <script src="${root}/resources/js/topojson.min.js"></script>
-    <script src="${root}/resources/js/datamaps.all.min.js"></script>
-    <script src="${root}/resources/js/datamaps-zoomto.js"></script>
-    <script src="${root}/resources/js/datamaps.custom.js"></script>
-    <script src="${root}/resources/js/Chart.min.js"></script>
-    <script>
+	<script src="${root}/resources/js/popper.min.js"></script>
+	<script src="${root}/resources/js/moment.min.js"></script>
+	<script src="${root}/resources/js/bootstrap.min.js"></script>
+	<script src="${root}/resources/js/simplebar.min.js"></script>
+	<script src='${root}/resources/js/daterangepicker.js'></script>
+	<script src='${root}/resources/js/jquery.stickOnScroll.js'></script>
+	<script src="${root}/resources/js/tinycolor-min.js"></script>
+	<script src="${root}/resources/js/config.js"></script>
+	<script src="${root}/resources/js/d3.min.js"></script>
+	<script src="${root}/resources/js/topojson.min.js"></script>
+	<script src="${root}/resources/js/datamaps.all.min.js"></script>
+	<script src="${root}/resources/js/datamaps-zoomto.js"></script>
+	<script src="${root}/resources/js/datamaps.custom.js"></script>
+	<script src="${root}/resources/js/Chart.min.js"></script>
+	<script>
       /* defind global options */
       Chart.defaults.global.defaultFontFamily = base.defaultFontFamily;
       Chart.defaults.global.defaultFontColor = colors.mutedColor;
     </script>
-    <script src="${root}/resources/js/gauge.min.js"></script>
-    <script src="${root}/resources/js/jquery.sparkline.min.js"></script>
-    <script src="${root}/resources/js/apexcharts.min.js"></script>
-    <script src="${root}/resources/js/apexcharts.custom.js"></script>
-    <script src='${root}/resources/js/jquery.mask.min.js'></script>
-    <script src='${root}/resources/js/select2.min.js'></script>
-    <script src='${root}/resources/js/jquery.steps.min.js'></script>
-    <script src='${root}/resources/js/jquery.validate.min.js'></script>
-    <script src='${root}/resources/js/jquery.timepicker.js'></script>
-    <script src='${root}/resources/js/dropzone.min.js'></script>
-    <script src='${root}/resources/js/uppy.min.js'></script>
-    <script src='${root}/resources/js/quill.min.js'></script>
-    <script>
+	<script src="${root}/resources/js/gauge.min.js"></script>
+	<script src="${root}/resources/js/jquery.sparkline.min.js"></script>
+	<script src="${root}/resources/js/apexcharts.min.js"></script>
+	<script src="${root}/resources/js/apexcharts.custom.js"></script>
+	<script src='${root}/resources/js/jquery.mask.min.js'></script>
+	<script src='${root}/resources/js/select2.min.js'></script>
+	<script src='${root}/resources/js/jquery.steps.min.js'></script>
+	<script src='${root}/resources/js/jquery.validate.min.js'></script>
+	<script src='${root}/resources/js/jquery.timepicker.js'></script>
+	<script src='${root}/resources/js/dropzone.min.js'></script>
+	<script src='${root}/resources/js/uppy.min.js'></script>
+	<script src='${root}/resources/js/quill.min.js'></script>
+	<script>
       $('.select2').select2(
       {
         theme: 'bootstrap4',
@@ -274,7 +283,7 @@
         }, false);
       })();
     </script>
-    <script>
+	<script>
       var uptarg = document.getElementById('drag-drop-area');
       if (uptarg)
       {
@@ -297,8 +306,80 @@
         });
       }
     </script>
-    <script src="${root}/resources/js/apps.js"></script>
-	
-  </body>  
+	<script src="${root}/resources/js/apps.js"></script>
+	<div class="modal fade modal-notif modal-slide" tabindex="-1"
+		role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="defaultModalLabel">알림</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="list-group list-group-flush my-n3">
+
+						<div class="list-group-item bg-transparent">
+							<a href="#" style="text-decoration: none; color: black;">
+								<div class="row align-items-center">
+									<div class="col-auto">
+										<span class="fe fe-calendar fe-24"></span>
+									</div>
+									<div class="col">
+										<small><strong>10분 후 일정이 있습니다.</strong></small>
+										<div class="my-0 text-muted small">10분 후 회의 예정</div>
+										<small class="badge badge-pill badge-light text-muted">1분 전
+											</small>
+									</div>
+								</div>
+							</a>
+						</div>
+
+						<div class="list-group-item bg-transparent">
+							<a href="#" style="text-decoration: none; color: black;">
+								<div class="row align-items-center">
+									<div class="col-auto">
+										<span class="fe fe-calendar fe-24"></span>
+									</div>
+									<div class="col">
+										<small><strong>20분 후 일정이 있습니다.</strong></small>
+										<div class="my-0 text-muted small">20분 후 회의 예정</div>
+										<small class="badge badge-pill badge-light text-muted">10분 전
+											</small>
+									</div>
+								</div>
+							</a>
+						</div>
+						
+						<div class="list-group-item bg-transparent">
+							<a href="#" style="text-decoration: none; color: black;">
+								<div class="row align-items-center">
+									<div class="col-auto">
+										<span class="fe fe-calendar fe-24"></span>
+									</div>
+									<div class="col">
+										<small><strong>30분 후 일정이 있습니다.</strong></small>
+										<div class="my-0 text-muted small">30분 후 회의 예정</div>
+										<small class="badge badge-pill badge-light text-muted">20분 전
+											</small>
+									</div>
+								</div>
+							</a>
+						</div>
+						
+					</div>
+					<!-- / .list-group -->
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary btn-block"
+						data-dismiss="modal">Clear All</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
 </html>
 
