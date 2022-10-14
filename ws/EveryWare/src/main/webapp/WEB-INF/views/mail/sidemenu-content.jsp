@@ -1,52 +1,38 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
+  <nav>
         <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
           <i class="fe fe-x"><span class="sr-only"></span></i>
-        </a>
-        <nav class="vertnav navbar navbar-light">
+        </a> 
+        <ul class="vertnav navbar navbar-light">
           <!-- nav bar -->
           <div class="w-100 mb-4 d-flex">
-            <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="./index.html">
-              <img src="${root}/resources/img/EveryWareLogo.png" style="width:150px; height:22px;"alt="" class="logo">
-                <g>
-                  <polygon class="st0" points="78,105 15,105 24,87 87,87 	" />
-                  <polygon class="st0" points="96,69 33,69 42,51 105,51 	" />
-                  <polygon class="st0" points="78,33 15,33 24,15 87,15 	" />
-                  
-                </g>
-              </svg>
-             
+            <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="${root}">
+              <img src="${root}/resources/img/EveryWareLogo.png" alt="" class="logo">
             </a>
-            
           </div>
+          
+          <div class="btn-box w-100 mt-4 mb-1">
+            <button type="button" class="btn mb-2 btn-primary btn-lg btn-block" onclick="location.href='${root}/approval/write/0'">
+              <i class="fe fe-file-plus fe-12 mr-2"></i><span class="small">메일 작성하기</span>
+            </button>
+          </div>
+          
           <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item dropdown">
-             
-            </li>
-            <div class="btn-box w-100 mt-4 mb-1">
-              <button type="button" class="btn mb-2 btn-primary btn-lg btn-block">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                </svg>
-              <span class="small">메일 쓰기</span>
-              </button>
-            </div>
-          </ul>
-          <p class="text-muted nav-heading mt-4 mb-1">
-            <span>E-MAIL</span>
-          </p>
-          <ul class="navbar-nav flex-fill w-100 mb-2">
-           <li class="nav-item w-100">
-              <a class="nav-link" href="widgets.html">
+               <a class="nav-link" href="widgets.html">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
                   <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
                 </svg>
                 <span class="ml-3 item-text">전체 메일함</span>
               </a>
-            </li>
-            <li class="nav-item w-100">
+                 
+             
+          </ul>
+
+          <li class="nav-item w-100">
               <a class="nav-link" href="widgets.html">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box2" viewBox="0 0 16 16">
                   <path d="M2.95.4a1 1 0 0 1 .8-.4h8.5a1 1 0 0 1 .8.4l2.85 3.8a.5.5 0 0 1 .1.3V15a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4.5a.5.5 0 0 1 .1-.3L2.95.4ZM7.5 1H3.75L1.5 4h6V1Zm1 0v3h6l-2.25-3H8.5ZM15 5H1v10h14V5Z"/>
@@ -83,10 +69,6 @@
                 <span class="ml-3 item-text">휴지통</span>
               </a>
             </li>
-             
-        
-          </ul>
-         
-         
+            </ul>
         </nav>
       </aside>
