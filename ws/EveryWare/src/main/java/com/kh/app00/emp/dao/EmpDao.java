@@ -9,4 +9,7 @@ public interface EmpDao {
     //로그인
     EmpVo login(SqlSessionTemplate sst, EmpVo vo);
 
+    //아이디 찾기
+    EmpVo selectIdInfo(SqlSessionTemplate sst, EmpVo vo);
+
 }

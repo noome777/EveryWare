@@ -25,6 +25,12 @@ public class EmpServiceImpl implements EmpService {
         return dao.login(sst, vo);
     }
 
+    //아이디 찾기
+    @Override
+    public EmpVo selectIdInfo(EmpVo vo) {
+        return dao.selectIdInfo(sst, vo);
+    }
+
     
 
 }

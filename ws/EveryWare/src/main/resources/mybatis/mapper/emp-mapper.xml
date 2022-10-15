@@ -16,6 +16,15 @@
 		AND EMP_PWD = #{empPwd}
 		AND EMP_STATUS = 'N'
 	</select>
+	
+	<select id="selectIdInfo" resultType="EmpVo">
+		SELECT 
+			EMP_CODE
+		  , EMP_E_MAIL
+		FROM EMP
+		WHERE EMP_NAME  = #{empName}
+		AND EMP_PHONE = #{empPhone}
+	</select>
 
 
 </mapper>

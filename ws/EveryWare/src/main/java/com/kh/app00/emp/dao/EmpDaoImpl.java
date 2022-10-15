@@ -14,6 +14,12 @@ public class EmpDaoImpl implements EmpDao {
         return sst.selectOne("empMapper.selectOneByEmail", vo);
     }
 
+    //아이디 찾기
+    @Override
+    public EmpVo selectIdInfo(SqlSessionTemplate sst, EmpVo vo) {
+        return sst.selectOne("empMapper.selectIdInfo", vo);
+    }
+
     
 
 }
