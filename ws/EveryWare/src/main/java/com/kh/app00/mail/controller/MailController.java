@@ -24,4 +24,18 @@ public class MailController {
 		return "mail/mailReceive";
 	}
 	
+	@GetMapping("send")
+	public String mailSend() {
+		return "mail/mailSend";
+	}
+	
+	@GetMapping("self")
+	public String mailSelf() {
+		return "mail/mailSelf";
+	}
+	
+	@GetMapping("trash")
+	public String mailTrash() {
+		return "mail/mailTrash";
+	}
 }
