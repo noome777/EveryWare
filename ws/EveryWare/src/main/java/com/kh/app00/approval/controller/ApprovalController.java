@@ -13,13 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.app00.approval.doc.vo.DocDataVo;
+import com.kh.app00.approval.doc.vo.DocFormMapperVo;
+import com.kh.app00.approval.doc.vo.DocFormVo;
+import com.kh.app00.approval.doc.vo.DocPeriodVo;
+import com.kh.app00.approval.doc.vo.DocSecurityVo;
 import com.kh.app00.approval.service.ApprovalService;
 import com.kh.app00.approval.vo.ApprovalDocVo;
-import com.kh.app00.approval.vo.DocDataVo;
-import com.kh.app00.approval.vo.DocFormMapperVo;
-import com.kh.app00.approval.vo.DocFormVo;
-import com.kh.app00.approval.vo.DocPeriodVo;
-import com.kh.app00.approval.vo.DocSecurityVo;
+import com.kh.app00.approval.vo.ApprovalTypeVo;
 
 @Controller
 @RequestMapping("approval")
@@ -49,6 +50,9 @@ public class ApprovalController {
 		List<DocSecurityVo> securityList = service.selectSecurityList();
 		//문서양식 불러오기
 		List<DocFormMapperVo> formMappingList = service.formSelect(formCode);
+		//결재타입 불러오기
+		List<ApprovalTypeVo> approvalTypeList = service.selectTypeList();
+		//임직원 
 		
 		
 		DocFormMapperVo vo = new DocFormMapperVo();
@@ -60,6 +64,7 @@ public class ApprovalController {
 		model.addAttribute("securityList", securityList);
 		model.addAttribute("formMappingList", formMappingList);
 		model.addAttribute("selectedFormCode", vo.getFormCode());
+		model.addAttribute("approvalTypeList", approvalTypeList);
 		
 		return "approval/write";
 	}

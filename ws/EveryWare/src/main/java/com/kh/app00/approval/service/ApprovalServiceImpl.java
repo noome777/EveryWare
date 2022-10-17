@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.app00.approval.dao.ApprovalDao;
-import com.kh.app00.approval.vo.DocFormMapperVo;
-import com.kh.app00.approval.vo.DocFormVo;
-import com.kh.app00.approval.vo.DocPeriodVo;
-import com.kh.app00.approval.vo.DocSecurityVo;
+import com.kh.app00.approval.doc.vo.DocFormMapperVo;
+import com.kh.app00.approval.doc.vo.DocFormVo;
+import com.kh.app00.approval.doc.vo.DocPeriodVo;
+import com.kh.app00.approval.doc.vo.DocSecurityVo;
+import com.kh.app00.approval.vo.ApprovalTypeVo;
 
 @Service
 public class ApprovalServiceImpl implements ApprovalService {
@@ -46,6 +47,11 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public List<DocFormMapperVo> formSelect(int formCode) {
 		return dao.formSelect(sst, formCode);
+	}
+
+	@Override
+	public List<ApprovalTypeVo> selectTypeList() {
+		return dao.selectTypeList(sst);
 	}
 
 }
