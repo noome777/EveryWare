@@ -647,7 +647,7 @@
 											<div class="form-row">
 												<div class="form-group col-md-8">
 													<label for="eventType">타입</label> <select
-														id="eventType" class="form-control select2">
+														id="eventType" class="form-control select">
 														<option value="work">Work</option>
 														<option value="home">Home</option>
 													</select>
@@ -663,7 +663,7 @@
 															</div>
 														</div>
 														<input type="text" class="form-control drgpicker"
-															id="drgpicker-start" value="04/24/2020">
+															id="drgpicker-start" value="10/15/2022">
 													</div>
 												</div>
 												<div class="form-group col-md-6">
@@ -689,7 +689,7 @@
 															</div>
 														</div>
 														<input type="text" class="form-control drgpicker"
-															id="drgpicker-end" value="04/24/2020">
+															id="drgpicker-end" value="10/17/2022">
 													</div>
 												</div>
 												<div class="form-group col-md-6">
@@ -893,20 +893,20 @@
         {
           var calendar = new FullCalendar.Calendar(calendarEl,
           {
-        	googleCalendarApiKey : "AIzaSyBzIIqGuQHooyp3ivTkSS7P1GS6Nx7yZfg",
+        	/* googleCalendarApiKey : "AIzaSyBzIIqGuQHooyp3ivTkSS7P1GS6Nx7yZfg",
   		    eventSources :[ 
   		        {
   		            googleCalendarId : 'ko.south_korea.official#holiday@group.v.calendar.google.com'
   		            , color: 'white'   // an option!
   		            , textColor: 'red' // an option!
   		        } 
-  		    ],
-  		    eventClick : function(info) {	//휴일 클릭시 구글 캘린더 이동을 안하도록 설정
+  		    ], */
+  		    /* eventClick : function(info) {	//휴일 클릭시 구글 캘린더 이동을 안하도록 설정
 					info.jsEvent.stopPropagation();
 					info.jsEvent.preventDefault();
-				},
+				}, */
             plugins: ['dayGrid', 'timeGrid', 'list', 'bootstrap'],
-            timeZone: 'UTC',
+            timeZone: 'Asia/Seoul',
             themeSystem: 'bootstrap',
             header:
             {
@@ -921,15 +921,38 @@
               prevYear: 'left-double-arrow',
               nextYear: 'right-double-arrow'
             },
-            weekNumbers: true,
+            
             eventLimit: true, // allow "more" link when too many events
-            events: 'https://fullcalendar.io/demo-events.json',	//예시
+/*             events: 'https://fullcalendar.io/demo-events.json',	//예시 */
+ 			editable: true,
+			events: [
+			     {
+			       title: '회의',
+			       start: '2022-10-17',
+			       backgroundColor: '#8B0000',
+			       borderColor:'#8B0000'
+			     },
+			     {
+			       title: '휴가',
+			       start: '2022-10-18T16:00:00',
+			       end: '2022-10-19T19:00:00',
+			       backgroundColor: '#008404',
+			       borderColor:'#008404'         
+			     }],
             locale: 'ko'
           });
           calendar.render();
         });
       }
     </script>
+    <script src='${root}/resources/js/jquery.mask.min.js'></script>
+    <script src='${root}/resources/js/select2.min.js'></script>
+    <script src='${root}/resources/js/jquery.steps.min.js'></script>
+    <script src='${root}/resources/js/jquery.validate.min.js'></script>
+    <script src='${root}/resources/js/jquery.timepicker.js'></script>
+    <script src='${root}/resources/js/dropzone.min.js'></script>
+    <script src='${root}/resources/js/uppy.min.js'></script>
+    <script src='${root}/resources/js/quill.min.js'></script>
 	<script>
       $('.select2').select2(
       {
@@ -1133,5 +1156,6 @@
         });
       }
     </script>
+    
 </body>
 </html>
