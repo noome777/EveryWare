@@ -22,5 +22,9 @@
 		WHERE DF.FORM_CODE = #{formCode}
 		ORDER BY DFM.FORM_DETAIL_SEQ
 	</select>
+	
+	<select id="selectTypeList" resultType="ApprovalTypeVo">
+		SELECT APPR_TYPE_CODE, APPR_TYPE_NAME FROM APPROVAL_TYPE ORDER BY APPR_TYPE_CODE
+	</select>
 		
 </mapper>

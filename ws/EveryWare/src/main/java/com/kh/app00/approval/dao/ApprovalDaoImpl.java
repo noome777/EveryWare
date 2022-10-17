@@ -5,10 +5,11 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.kh.app00.approval.vo.DocFormMapperVo;
-import com.kh.app00.approval.vo.DocFormVo;
-import com.kh.app00.approval.vo.DocPeriodVo;
-import com.kh.app00.approval.vo.DocSecurityVo;
+import com.kh.app00.approval.doc.vo.DocFormMapperVo;
+import com.kh.app00.approval.doc.vo.DocFormVo;
+import com.kh.app00.approval.doc.vo.DocPeriodVo;
+import com.kh.app00.approval.doc.vo.DocSecurityVo;
+import com.kh.app00.approval.vo.ApprovalTypeVo;
 
 @Repository
 public class ApprovalDaoImpl implements ApprovalDao {
@@ -35,6 +36,12 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	@Override
 	public List<DocFormMapperVo> formSelect(SqlSessionTemplate sst, int formCode) {
 		return sst.selectList("approvalMapper.formSelectList", formCode);
+	}
+
+	//결재타입
+	@Override
+	public List<ApprovalTypeVo> selectTypeList(SqlSessionTemplate sst) {
+		return sst.selectList("approvalMapper.selectTypeList");
 	}
 
 }

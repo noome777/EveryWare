@@ -11,63 +11,39 @@
 		width: 70%;
 		padding: 10px
 	}
-	.form-group{
-		width: 100%;
-	}
 	#approval-table{
 		text-align: center;
 	}
 	#approval-table td{
 		width: 100px;
 	}
-	#custom-select {
-		align-items: center;
-		justify-content: center;
-	}
 	#approval-setting-table tr{
 		height: 10px;
 	}
-  .appr-table-color{
-    background-color: rgb(244, 249, 255);
-  }
   .appr-wid{
     width: 30%;
   }
   .right-btn{
     text-align: right; 
   }
-  /* #appr-layer{
-  	position: fixed;
-    width: 50%;
-    left: 50%;
-    margin-left: -20%;
-    height: 45%;
-    top: 37%;
-    margin-top: -150px; 
-    overflow: auto;
-
-
-    border: 1px solid #000;
-    background-color: #eee;
-    padding: 1em;
-    box-sizing: border-box;
-  } */
-  #appr-layer{
-    width: 600px;
-  }
-  .hidden{
-  	display: none;
-  }
   #appr-line-setting{
   	margin-top: 40px;
   	margin-bottom: 20px;
-    
   }
   #appr-line-setting:hover{
     cursor: pointer;
   }
   .modal-dialog-centered{
     width: 100px;
+  }
+  .h-150{
+    height: 150px;
+  }
+  .fe-24{
+    border-radius: 100%;
+  }
+  .fe-24:hover{
+    background-color: rgb(202, 222, 247);
   }
 </style>
 </head>
@@ -84,8 +60,8 @@
             <tr>
               <td class="appr-table-color">문서 종류</td>
               <td>
-                <div class="form-group mb-3">
-                <select class="custom-select form-control" id="formSelect" name="docFormCode">
+                <div class="form-group mb-3 w-100">
+                <select class="custom-select form-control align-items-center justify-content-center" id="formSelect" name="docFormCode">
                   <option value="0">선택</option>
                   <c:forEach items="${formList}" var="f">
                     <option value="${f.formCode}" <c:if test="${selectedFormCode == f.formCode}">selected="selected"</c:if>>${f.formName}</option>
@@ -96,7 +72,7 @@
               <td class="appr-table-color">보존연한</td>
               <td>
                 <div class="form-group mb-3">
-                  <select class="custom-select form-control" id="custom-select" name="periodCode">
+                  <select class="custom-select form-control align-items-center justify-content-center" id="custom-select" name="periodCode">
                     <c:forEach items="${periodList}" var="p">
                       <option value="${p.periodCode}">${p.period}</option>
                     </c:forEach>
@@ -110,7 +86,7 @@
               <td class="appr-table-color">보안등급</td>
               <td>
                 <div class="form-group mb-3">
-                  <select class="custom-select form-control" id="custom-select" name="securityCode">
+                  <select class="custom-select form-control align-items-center justify-content-center" id="custom-select" name="securityCode">
                     <option selected>선택</option>
                     <c:forEach items="${securityList}" var="s">
                       <option value="${s.securityCode}">${s.securityLevle}</option>
@@ -123,18 +99,18 @@
                  
                  
           <!-- 결재라인 -->
-          <div class="fe fe-settings fe-16 " data-toggle="modal" data-target="#verticalModal" id="appr-line-setting"> 결재라인 설정</div>
+          <div class="fe fe-settings fe-16 " id="appr-line-setting" data-toggle="modal" data-target="#verticalModal"> 결재라인 설정</div>
           <table id="approval-table" class="table table-bordered mb-0 shadow">
+
             <tr class="appr-table-color">
               <td rowspan="3" style="width: 100px;">신청</td>
-              <td class="fe fe-plus fe-12 mr-2"></td>
-              <td>대리</td>
-              <td>팀장</td>
+              <td class="fe fe-plus fe-12 mr-2">직급</td>
               <td></td>
-              <td rowspan="3" style="width: 100px;">처리</td>
-              <td>주임</td>
-              <td>과장</td>
-              <td>팀장</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
               <td></td>
             </tr>
             <tr style="height: 100px;">
@@ -149,12 +125,44 @@
             </tr>
             <tr>
               <td>이름</td>
-              <td>이름</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+
+            <tr class="appr-table-color">
+              <td rowspan="3" style="width: 100px;">처리</td>
+              <td class="fe fe-plus fe-12 mr-2">직급</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr style="height: 100px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
               <td>이름</td>
               <td></td>
-              <td>이름</td>
-              <td>이름</td>
-              <td>이름</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
               <td></td>
             </tr>
             
@@ -167,7 +175,7 @@
       </div>
         
         
-      
+     <c:if test="${not empty formMappingList}">
       <div class="card shadow mb-4">
         <div class="card-body" id="form-content">
           <div class="form-group mb-3">
@@ -189,54 +197,27 @@
           </c:forEach>	
         </div>
       </div>
-          
+     </c:if>     
           
           
       
       <!-- 첨부파일 -->
       <c:if test="${not empty formMappingList}">
-        <div class="">
           <div class="card shadow mb-4">
             <div class="card-header">
               <strong>첨부파일</strong>
             </div>
             <div class="card-body">
-              <!-- <form action="/file-upload" class="dropzone bg-light rounded-lg" id="tinydash-dropzone">
-                <div class="dz-message needsclick">
-                  <div class="circle circle-lg bg-primary">
-                    <i class="fe fe-upload fe-24 text-white"></i>
-                  </div>
-                  <h5 class="text-muted mt-4">Drop files here or click to upload</h5>
-                </div>
-              </form> -->
-              <!-- Preview -->
-              <!-- <div class="dropzone-previews mt-3" id="file-previews"></div> -->
-              <!-- file preview template -->
-              <div class="d-none" id="uploadPreviewTemplate">
-                <div class="card mt-1 mb-0 shadow-none border">
-                  <div class="p-2">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <img data-dz-thumbnail src="#" class="avatar-sm rounded bg-light" alt="">
-                      </div>
-                      <div class="col pl-0">
-                        <a href="javascript:void(0);" class="text-muted font-weight-bold" data-dz-name></a>
-                        <p class="mb-0" data-dz-size></p>
-                      </div>
-                      <div class="col-auto">
-                        <!-- Button -->
-                        <a href="" class="btn btn-link btn-lg text-muted" data-dz-remove>
-                          <i class="dripicons-cross"></i>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
+              <div class="form-group mb-3">
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" multiple id="customFile" name="file[]">
+                  <label class="custom-file-label" for="customFile">Choose file</label>
+                  <div id="file-name" class="m-1"></div>
                 </div>
               </div>
             </div> <!-- .card-body -->
           </div> <!-- .card -->
-        </div> <!-- .col -->
-      
+
         <div class="text-center">
           <input type="submit" class="btn mb-2 btn-secondary" value="작성하기">
         </div>
@@ -244,82 +225,182 @@
     </form>
 
 
-    
-    <!-- Button trigger modal -->
-    <button type="button" class="btn mb-2 btn-outline-success" data-toggle="modal" data-target="#verticalModal" data-backdrop="static"> Launch demo modal </button>
-    <!-- Modal -->
-    <div class="modal" id="verticalModal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+   
+
+    <div class="modal" id="verticalModal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true" data-backdrop="static">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="verticalModalTitle">Modal title</h5>
+            <h5 class="modal-title" id="verticalModalTitle">결재라인 설정</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla dui urna, cursus mollis cursus vitae, fringilla vel augue. In vitae dui ut ex fringilla consectetur. Sed vulputate ante arcu, non vehicula mauris porttitor quis. Praesent tempor varius orci sit amet sodales. Nullam feugiat condimentum posuere. Vivamus bibendum mattis mi, vitae placerat lorem sagittis nec. Proin ac magna iaculis, faucibus odio sit amet, volutpat felis. Proin eleifend suscipit eros, quis vulputate tellus condimentum eget. Maecenas eget dui velit. Aenean in maximus est, sit amet convallis tortor. In vel bibendum mauris, id rhoncus lectus. Suspendisse ullamcorper bibendum tellus a tincidunt. Donec feugiat dolor lectus, sed ullamcorper ante rutrum non. Mauris vestibulum, metus sit amet lobortis fringilla, dui est venenatis ligula, a euismod sem augue vel lorem. Nunc feugiat eget tortor vel tristique. Mauris lobortis efficitur ligula, et consectetur lectus maximus sed. 
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla dui urna, cursus mollis cursus vitae, fringilla vel augue. In vitae dui ut ex fringilla consectetur. Sed vulputate ante arcu, non vehicula mauris porttitor quis. Praesent tempor varius orci sit amet sodales. Nullam feugiat condimentum posuere. Vivamus bibendum mattis mi, vitae placerat lorem sagittis nec. Proin ac magna iaculis, faucibus odio sit amet, volutpat felis. Proin eleifend suscipit eros, quis vulputate tellus condimentum eget. Maecenas eget dui velit. Aenean in maximus est, sit amet convallis tortor. In vel bibendum mauris, id rhoncus lectus. Suspendisse ullamcorper bibendum tellus a tincidunt. Donec feugiat dolor lectus, sed ullamcorper ante rutrum non. Mauris vestibulum, metus sit amet lobortis fringilla, dui est venenatis ligula, a euismod sem augue vel lorem. Nunc feugiat eget tortor vel tristique. Mauris lobortis efficitur ligula, et consectetur lectus maximus sed.   
+
+          <div class="modal-body">
+
+            <div id="modal-appr-type" class="d-flex m-2">
+              <c:forEach items="${approvalTypeList}" var="a">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input mb-1" id="customCheck${a.apprTypeCode}" value="${a.apprTypeCode}" name="apprTypeCode">
+                  <label class="custom-control-label p-1 mr-2" for="customCheck${a.apprTypeCode}">${a.apprTypeName}</label>
+                </div>
+              </c:forEach>
+            </div>
+            <div class="form-group mb-3 w-25">
+              <select class="custom-select form-control" id="modal-appr-selectbox">
+                <option value="0">전체</option>
+                <option value="">부서명</option>
+                <option value="">쫘라락</option>
+              </select>
+            </div>
+
+            <div id="approver-select" class="d-flex">
+
+              <div id="name-list" class="w-50">
+                <select id="emp-name" multiple="multiple" class="custom-select form-control w-100 h-100 non-scroll">
+                  <option value="1">고은비(인사팀 - 사원)</option>
+                  <option value="2">금은비(재무팀 - 대리)</option>
+                </select>
+              </div>
+
+              <div class="w-75 d-flex flex-column">
+                <c:forEach items="${approvalTypeList}" var="a">
+                  <div class="d-flex">
+                    <div class="h-150 w-25 mx-4 d-flex flex-column justify-content-center align-items-center">
+                      <a id="add-user-1" class="fe fe-24 fe-arrow-right-circle mb-1" onclick="addUser();"></a>
+                      <a id="delete-user-1" class="fe fe-24 fe-arrow-left-circle"></a>
+                    </div>
+                    <div class="w-75 h-150">
+                      <span class="">${a.apprTypeName}</span>
+                      <select id="type${a.apprTypeCode}" multiple="multiple" class="custom-select form-control w-100 non-scroll mb-3">
+                        <option value="1">고은비(인사팀 - 사원)</option>
+                        <option value="2">금은비(재무팀 - 대리)</option>
+                      </select>
+                    </div>
+                  </div>
+                </c:forEach>
+              </div>
+
+            </div>
+
           </div>
+
           <div class="modal-footer">
-            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn mb-2 btn-primary">Save changes</button>
+            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">닫기</button>
+            <button type="button" class="btn mb-2 btn-primary">완료</button>
           </div>
         </div>
       </div>
-    </div>
-
-
+    </div> 
 
 
 
 	</main>
 	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	<script>
-		//confirm 분기문 수정 필요
 		$('document').ready(function () {
 			
 			//문서종류 불러오기, 선택 유지
-			$('#formSelect').change(function(){
-				const formCode = $('#formSelect option:selected').val();
-				const nonSelect = $('#formSelect option[value=0]');
-				
-				if(formCode != 0){
-					if(confirm('문서 종류를 바꾸시겠습니까? 작성한 내용은 저장되지 않습니다.')) {
-						location.href = '${root}/approval/write/' + formCode;
-					}
-				} else {
-					location.href = '${root}/approval/write/' + formCode;
-				}
-				
-			});
+      $('#formSelect').on('focus', function(){
+        previous = this.value;
+      }).change(function(){
+          const formCode = $('#formSelect option:selected').val();
+          
+          if(previous != 0){
+            if(confirm('문서 종류를 바꾸시겠습니까? 작성한 내용은 저장되지 않습니다.')) {
+              location.href = '${root}/approval/write/' + formCode;
+            }
+          } else {
+            location.href = '${root}/approval/write/' + formCode;
+          }
+          
+        });
 			
-			//결재라인 설정
-			$('#appr-line-setting').click(function() {	
-				const layer = $('#appr-layer');
-     		    layer.removeClass('hidden');
-			})
-			
-			
-			
-		})
+		});
+
+
+    //결재라인 설정
+    //결재자 추가
+
+    //ajax로 직원정보 가져오기
+    //결재자 수정 - 리스트 갱신(직원코드 받기)
+
+    let FIELD = {           
+      APPROVAL_LINE: {
+        approval: {
+          checkYn: 'N',
+          list:[
+            {
+              name: '고은비',
+              orgName: '인사팀',
+              orgCd: '144',
+              rankName: '사원',
+              rankCd: 'T4',
+              sort: 0
+            },
+            {
+              name: '금은비',
+              orgName: '재무팀',
+              orgCd: '150',
+              rankName: '대리',
+              rankCd: 'T6',
+              sort: 1
+            }
+          ]
+        },
+        regist: {
+          checkYn: 'N',
+          list:[
+            {
+              name: '고은비',
+              orgName: '인사팀',
+              orgCd: '144',
+              rankName: '사원',
+              rankCd: 'T4',
+              sort: 0
+            },
+            {
+              name: '금은비',
+              orgName: '재무팀',
+              orgCd: '150',
+              rankName: '대리',
+              rankCd: 'T6',
+              sort: 1
+            }
+          ]
+        }
+      }
+    }
+    
+    
+    function addUser(){
+
+      var userCode = $('#emp-name option:selected').val();
+      var userOption = $('#emp-name option[value=' + userCode + ']')[0].outerHTML;
+
+      $('#type1').append(userOption);
+      
+      
+    }
+
+
+
+
+    $("input[type='file']").on('change',function(){ 
+      var fileList = "";
+      let target = $('#customFile');
+      for(var i=0; i<$('#customFile')[0].files.length; i++){
+          fileList += event.target.files[i].name + '<br>';
+      } 
+      console.log(fileList);
+      $('#file-name').html(fileList);
+
+    });
 	</script>
-	
+
+	<script> 
+    
+  </script>  
 </body>
 </html>

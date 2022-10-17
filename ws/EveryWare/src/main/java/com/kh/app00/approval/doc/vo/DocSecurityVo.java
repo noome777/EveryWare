@@ -1,4 +1,4 @@
-package com.kh.app00.approval.vo;
+package com.kh.app00.approval.doc.vo;
 
 import lombok.Data;
 
