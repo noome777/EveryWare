@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="organizationMapper">
+
+	<select id="selectEmpList" resultType="EmpVo">
+		SELECT
+			EMP_CODE
+			, COM_CODE
+			, DEPT_CODE
+			, RANK_CODE
+			, JOB_TYPES_CODE
+			, EMP_JOB_CODE
+			, RIGHT_CODE
+			, EMP_NAME
+			, EMP_E_MAIL
+			, EMP_TEL
+			, EMP_PHONE
+			, EMP_JOIN_DATE
+			, EMP_PROFILE_NAME
+		 FROM EMP
+		 WHERE EMP_STATUS = 'N'
+	</select>
+	
+	<select id="selectEmpListByWord" resultType="EmpVo">
+		SELECT
+			EMP_CODE
+			, COM_CODE
+			, DEPT_CODE
+			, RANK_CODE
+			, JOB_TYPES_CODE
+			, EMP_JOB_CODE
+			, RIGHT_CODE
+			, EMP_NAME
+			, EMP_E_MAIL
+			, EMP_TEL
+			, EMP_PHONE
+			, EMP_JOIN_DATE
+			, EMP_PROFILE_NAME
+		 FROM EMP
+		 WHERE EMP_STATUS = 'N'
+		 AND EMP_NAME LIKE '%' ||  #{word} || '%'
+	</select>
+	
+</mapper>

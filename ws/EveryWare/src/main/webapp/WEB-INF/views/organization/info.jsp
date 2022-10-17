@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Organization Info</title>
+<title>임직원 정보</title>
 
 <style>
 
@@ -54,13 +54,24 @@
 		display: flex;
 	}
 
-	#search-icon-wrap {
-		width: 20%;
+	#search-container > form {
+		width: 100%;
 		height: 100%;
+		display: grid;
+		grid-template-columns: 4fr 1fr;
+	}
+
+	#search-icon-wrap {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 	}
 
 	#search-bar-wrap {
-		width: 80%;
+		width: 100%;
 		height: 100%;
 	}
 
@@ -102,9 +113,9 @@
 		border: 1px solid rgb(27, 104, 255);
 	}
 
-	.emp-info-bar:hover {
+	.non-click:hover {
 		cursor: pointer;
-		background-color: rgb(248, 249, 249)
+		background-color: rgb(235, 236, 237)
 	}
 
 	.non-click {
@@ -154,6 +165,7 @@
 	.profile {
 		display: flex;
 		flex-direction: column;
+		border-radius: 5px;
 	}
 
 	.profile>div {
@@ -172,10 +184,6 @@
 		padding: 5px;
 	}
 
-	.padding-left {
-		padding-left: 20px;
-	}
-
 	.flex-wrap {
 		display: flex;
 		flex-direction: column;
@@ -183,8 +191,34 @@
 		height: 100%;
 	}
 
+	.nav-link {
+		width: 100%;
+		height: 100%;
+	}
+
+	.nav-pills> li > a .nav-pills .nav-pills>li{
+		-webkit-border-radius: 0;
+		-moz-border-radius: 0;
+		border-radius: 0;
+	}
+
+	.padding-left-10px {
+		padding-left: 10px;
+	}	
 	
-	
+	.padding-left-20px {
+		padding-left: 20px;
+	}
+
+	#search-icon {
+		width: 34px;
+		height: 34px;
+	}
+
+	#search-icon:hover {
+		cursor: pointer;
+	}
+
 </style>
 </head>
 <body class="vertical  light">
@@ -199,7 +233,7 @@
 		        <div class="col-12">
 		            <div class="row align-items-center my-3">
                 		<div class="col">
-                			<h3 class="h4 mb-0 page-title padding-left">임직원 정보</h3>
+                			<h3 class="h4 mb-0 page-title padding-left-20px">임직원 정보</h3>
                 		</div>
                 		<div class="col-auto">
 			                <button type="button" class="btn shadow"><span class="fe fe-user fe-12 mr-2"></span>내 정보보기</button>
@@ -209,12 +243,14 @@
 						<div class="shadow" id="info-nav">
 							<div id="search-wrap">
 								<div class="shadow" id="search-container">
-									<div id="search-bar-wrap">
-										<input type="text" id="search-bar" class="style-none" placeholder="임직원 검색"> 
-									</div>
-									<div id="search-icon-wrap">
-										
-									</div>
+									<form action="${root}/organization/info" method="post">
+										<div id="search-bar-wrap">
+											<input type="text" id="search-bar" class="style-none" placeholder="임직원 검색" name="word"> 
+										</div>
+										<div id="search-icon-wrap">
+											<input type="image" name="submit" id="search-icon" src="${root}/resources/img/search.png">
+										</div>
+									</form>
 								</div>
 							</div>
 							<div id="list-wrap">
@@ -222,16 +258,28 @@
 								
 								<div id="list-bar" class="shadow or-scroll-bar">
 									
-									<!-- emp-info-bar 클래스 클릭 시 js로 클래스 추가-->
-									<div class="emp-info-bar non-click click">
-										<a href="#profile11" data-toggle="tab">프로필11</a>
-									</div>
-									<div class="emp-info-bar non-click">
-										<a href="#profile12" data-toggle="tab">프로필22</a>
-									</div>
-									<div class="emp-info-bar non-click"></div>
-									<div class="emp-info-bar non-click"></div>
-									<div class="emp-info-bar non-click"></div>
+									<ul class="nav nav-pills">
+										<li class="nav-item emp-info-bar non-click">
+											<a class="nav-link" data-toggle="pill" href="#profile11">프로필필 11</a>
+										</li>
+										<li class="nav-item emp-info-bar non-click">
+											<a class="nav-link" data-toggle="pill" href="#profile12">프로필필 22</a>
+										</li>
+										<li class="nav-item emp-info-bar non-click padding-left-10px">
+											<a class="nav-link" data-toggle="pill" href="#profile11">       ㄴ 프로필필 11</a>
+										</li>
+										<li class="nav-item emp-info-bar non-click">
+											<a class="nav-link" data-toggle="pill" href="#profile11"> ㄴ 프로필필 11</a>
+										</li>
+										<li class="nav-item emp-info-bar non-click">
+											<a class="nav-link" data-toggle="pill" href="#profile11"> ㄴ 프로필필 11</a>
+										</li>
+										<li class="nav-item emp-info-bar non-click">
+											<a class="nav-link" data-toggle="pill" href="#profile11"> ㄴ 프로필필 11</a>
+										</li>
+										
+										
+									</ul>
 									
 
 								</div>
@@ -242,8 +290,8 @@
 
 
 							<!--프로필 11 -->
-							<div id="profile11" class="tab-pane container fade flex-wrap">
-								<div id="profile-title"><h5>소속 이름111111111</h5></div>
+							<div class="tab-pane container active flex-wrap" id="profile11" >
+								<div id="profile-title"><h4>소속 이름111111111</h4></div>
 								<div id="profile-area" class="or-scroll-bar">
 									<div class="profile shadow">
 										<div class="profile-image avatar avatar-lg">
@@ -393,7 +441,7 @@
 								</div>
 							</div>
 							<!--프로필 12 -->
-							<div id="profile12" class="tab-pane container active flex-wrap">
+							<div class="tab-pane container fade flex-wrap" id="profile12">
 								<div id="profile-title"><h5>소속 이름2222222222222</h5></div>
 								<div id="profile-area" class="or-scroll-bar">
 									<div class="profile shadow">
@@ -543,6 +591,8 @@
 								
 								</div>
 							</div>
+							<!-- Nav tabs -->
+
 							
 						</div>
 					</div>
@@ -552,7 +602,9 @@
 		</main>
 		</div>
 
-		<script>
+		
+
+		<!-- <script>
 
 			const nonClick = document.querySelectorAll(".non-click");
 
@@ -574,7 +626,7 @@
 				e.addEventListener("click", handleClick);
 			});
 
-		</script>
+		</script> -->
 
 	  
 
