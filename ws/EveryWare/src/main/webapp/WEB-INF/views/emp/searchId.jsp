@@ -20,7 +20,11 @@
 	
 </style>
 </head>
-
+<script src="https://cdn.staticfile.org/jquery/3.1.1/jquery.min.js"></script>
+<!-- sweet alert -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- jQuery -->
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <!-- Simple bar CSS -->
 <link rel="stylesheet" href="${root}/resources/css/simplebar.css">
 <!-- Fonts CSS -->
@@ -42,7 +46,7 @@
       
       <div class="wrapper vh-100">
       <div class="row align-items-center h-100">
-        <form class="col-lg-3 col-md-4 col-10 mx-auto text-center">
+        <div id="formSerial" class="col-lg-3 col-md-4 col-10 mx-auto text-center" method="post">
          <div class="wrapper vh-100">
          <a href="${root}/emp/login">
           <img alt="searchId-logo" id="searchId-logo" src="${root}/resources/img/EveryWareLogo.png"><br><br>
@@ -50,23 +54,60 @@
           <h1 class="h6 mb-3">Find ID</h1>
           <div class="form-group">
             <label for="inputName" class="sr-only">Name</label>
-            <input type="text" id="inputName" class="form-control form-control-lg" placeholder="Name" required="" autofocus="">
+            <input type="text" id="empName" name="empName" class="form-control form-control-lg" placeholder="Name" required="" autofocus="">
           </div>
           <div class="form-group text">
-            <label for="inputTel" class="sr-only">Email address</label>
-            <input type="tel" id="inputTel" class="form-control form-control-lg" placeholder="Please enter your Telephone without '-'" required="">
+            <label for="inputTel" class="sr-only">Phone</label>
+            <input type="tel" id="empPhone" name="empPhone" class="form-control form-control-lg" placeholder="Please enter your phone without '-'" required="">
           </div>
-          <button class="btn btn-lg btn-outline-primary btn-block" type="submit">Find</button><br><br>
+          <button class="btn btn-lg btn-outline-primary btn-block" id="findIdBtn">Find</button><br><br>
           <!-- ajax로 변환 예정 -->
-          <div id="findIdResult"><h3>Your ID is <mark>hello</mark></h3></div><br><br><br>
+          <!-- <div id="findIdResult"><h3>Your ID is <mark id="findId">${idVo.empEMail}<mark></h3></div><br><br><br> -->
           <div>Don't you remember your PWD? 
           <a href="${root}/emp/searchPwd"> Find PWD</a>
           </div>
         
           <p class="mt-5 mb-3 text-muted">© 2022</p>
-        </form>
+        </div>
       </div>
     </div>
  
+
+    
+<script>
+  const findIdBtn = document.querySelector('#findIdBtn');
+  findIdBtn.addEventListener('click', function(){
+
+  const empName = document.querySelector('#empName').value;
+  const empPhone = document.querySelector('#empPhone').value;
+  const sendData = {"empName" : empName, "empPhone" : empPhone}
+
+    $.ajax({
+      url: "${root}/emp/searchId",
+      type: "POST",
+      data: sendData,
+      success: function(data){
+        const id = data['empId'];
+        Swal.fire('당신의 아이디는 ' + id +' 입니다.');
+
+      },
+      error: function(error){
+        console.log(error);
+        Swal.fire({
+            title : '회원정보가 일치하지 않습니다.',
+            icon : 'warning'
+          });
+
+      }
+      
+    });
+
+});
+
+
+</script>
+
+
+
 </body>
 </html>

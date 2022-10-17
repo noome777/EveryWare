@@ -21,9 +21,15 @@
   #search-pwd, #search-id{
     margin-left: 35px;
   }
+  .swal-wide{
+    width: 600px !important;
+  } 
 </style>
 </head>
-
+<!-- jQuery -->
+<script src="https://cdn.staticfile.org/jquery/3.1.1/jquery.min.js"></script>
+<!-- sweet alert -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Simple bar CSS -->
 <link rel="stylesheet" href="${root}/resources/css/simplebar.css">
 <!-- Fonts CSS -->
@@ -45,29 +51,64 @@
       
       <div class="wrapper vh-100">
       <div class="row align-items-center h-100">
-        <form class="col-lg-3 col-md-4 col-10 mx-auto text-center" method="post">
+        <div class="col-lg-3 col-md-4 col-10 mx-auto text-center" method="post">
           <img alt="login-logo" id="login-logo" src="${root}/resources/img/EveryWareLogoSmall.png"><br><br>
           <h1 class="h6 mb-3">Sign in</h1>
           <div class="form-group">
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input type="email" name="empEMail" id="email" value="${cookie.saveEmail.value}" class="form-control form-control-lg" placeholder="Email address" required="" autofocus="">
+            <label for="inputId" class="sr-only">ID</label>
+            <input type="text" name="empId" id="empId" value="${cookie.saveId.value}" class="form-control form-control-lg" placeholder="ID" required="" autofocus="">
           </div>
           <div class="form-group">
             <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" name="empPwd" id="password" class="form-control form-control-lg" placeholder="Password" required="">
+            <input type="password" name="empPwd" id="empPwd" class="form-control form-control-lg" placeholder="Password" required="">
           </div>
           <div class="checkbox mb-3">
             <label>
-            <input type="checkbox" value="true" name="saveEmail"> Stay logged in </label>
+            <input type="checkbox" value="true" id="saveId" name="saveId"> Stay logged in </label>
           </div>
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Let me in</button><br>
+          <button class="btn btn-lg btn-primary btn-block" id="loginBtn">Let me in</button><br>
           <a href="${root}/emp/searchId" id="search-id">search ID </a>
           |
           <a href="${root}/emp/searchPwd" id="search-pwd">  search Password</a>
           <p class="mt-5 mb-3 text-muted">© 2022</p>
-        </form>
+        </div>
       </div>
     </div>
    
+
+<script>
+  const loginBtn = document.querySelector('#loginBtn');
+  loginBtn.addEventListener('click', function(){
+
+  const empId = document.querySelector('#empId').value;
+  const empPwd = document.querySelector('#empPwd').value;
+  const saveId = document.querySelector('#saveId').value;
+
+    $.ajax({
+      url: "${root}/emp/login",
+      type: "POST",
+      data: {"empId" : empId , "empPwd" : empPwd, "saveId" : saveId},
+      success: function(data){
+        console.log(data);
+
+        if(data == 'success'){
+          location.href='${root}';
+        }else{
+          Swal.fire({
+            title : '아이디 또는 비밀번호를 확인해주세요',
+            customClass: 'swal-wide',
+
+          });
+        }
+      },
+      error: function(){
+        alert('ajax 통신 실패');
+      }
+
+    });
+
+  });
+
+</script>
 </body>
 </html>

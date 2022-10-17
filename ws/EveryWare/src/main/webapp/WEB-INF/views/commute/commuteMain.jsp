@@ -87,14 +87,14 @@
               <div class="row border-top">
               <div class="col-md-6 pt-4">
                 <h6 class="mb-0">
-                  <input type="button" value="출근하기🔜" id="enter" class="btn mb-2 btn-outline-primary commute" onclick="Alert(); entertime();">
-                  <button class="btn mb-2 btn-outline-success commute">QR생성</button>
+                  <input type="button" value="출근하기" id="enter" class="btn mb-2 btn-primary commute" onclick="Alert(); entertime();">
+                  <button class="btn mb-2 btn-light commute" >QR생성</button>
                   <input type="text" class="mb-0" name="startTime" id="enter-time" value="" style="font-size: 20px; background-color:transparent;  border:0px transparent solid;"></input>
                 </h6>
               </div>
               <div class="col-md-6 pt-4">
                 <h6 class="mb-0">
-                  <input type="button" value="퇴근하기🔚" id="exit" class="btn mb-2 btn-outline-primary commute" onclick="Alert(); exittime();">
+                  <input type="button" value="퇴근하기" id="exit" class="btn mb-2 btn-primary commute" onclick="Alert(); exittime();">
                   <input type="text" class="mb-0" name="endTime" id="exit-time" value="" style="font-size: 20px; background-color:transparent;  border:0px transparent solid;"></input>
                   <input type="submit" value="submit" class="btn mb-2 btn-outline-primary"  style="margin-left: 80px;">
                 </h6>
@@ -307,17 +307,6 @@
 
 </script>
 
-<!-- <script>
-  $(function(){
-    $('#enter').click(function(){
-      if(!confirm('출근 하시겠습니까?')){
-        return false;
-      }
-    });
-
-  });
-
-</script> -->
 
 <script type="text/javascript">
 
