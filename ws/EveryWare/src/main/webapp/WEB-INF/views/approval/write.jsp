@@ -53,134 +53,133 @@
   <%@ include file="/WEB-INF/views/approval/sidemenu-content.jsp" %>
  	<main role="main" class="main-content">
     
-    <form action="" method="post">
-      <div class="card shadow mb-4">
-        <div class="card-body">
-          <table class="table table-bordered mb-0 shadow" id="approval-setting-table">
-            <tr>
-              <td class="appr-table-color">문서 종류</td>
-              <td>
-                <div class="form-group mb-3 w-100">
-                <select class="custom-select form-control align-items-center justify-content-center" id="formSelect" name="docFormCode">
-                  <option value="0">선택</option>
-                  <c:forEach items="${formList}" var="f">
-                    <option value="${f.formCode}" <c:if test="${selectedFormCode == f.formCode}">selected="selected"</c:if>>${f.formName}</option>
+    <div class="card shadow mb-4">
+      <div class="card-body">
+        <table class="table table-bordered mb-0 shadow" id="approval-setting-table">
+          <tr>
+            <td class="appr-table-color">문서 종류</td>
+            <td>
+              <div class="form-group mb-3 w-100">
+              <select class="custom-select form-control align-items-center justify-content-center" id="formSelect" name="docFormCode">
+                <option value="0">선택</option>
+                <c:forEach items="${formList}" var="f">
+                  <option value="${f.formCode}" <c:if test="${selectedFormCode == f.formCode}">selected="selected"</c:if>>${f.formName}</option>
+                </c:forEach>
+              </select>
+              </div>
+            </td>
+            <td class="appr-table-color">보존연한</td>
+            <td>
+              <div class="form-group mb-3">
+                <select class="custom-select form-control align-items-center justify-content-center" id="custom-select" name="periodCode">
+                  <c:forEach items="${periodList}" var="p">
+                    <option value="${p.periodCode}">${p.period}</option>
                   </c:forEach>
                 </select>
-                </div>
-              </td>
-              <td class="appr-table-color">보존연한</td>
-              <td>
-                <div class="form-group mb-3">
-                  <select class="custom-select form-control align-items-center justify-content-center" id="custom-select" name="periodCode">
-                    <c:forEach items="${periodList}" var="p">
-                      <option value="${p.periodCode}">${p.period}</option>
-                    </c:forEach>
-                  </select>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="appr-table-color">작성자</td>
-              <td>고은비</td>
-              <td class="appr-table-color">보안등급</td>
-              <td>
-                <div class="form-group mb-3">
-                  <select class="custom-select form-control align-items-center justify-content-center" id="custom-select" name="securityCode">
-                    <option selected>선택</option>
-                    <c:forEach items="${securityList}" var="s">
-                      <option value="${s.securityCode}">${s.securityLevle}</option>
-                    </c:forEach>
-                  </select>
-                </div>
-              </td>
-            </tr>
-          </table>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="appr-table-color">작성자</td>
+            <td>고은비</td>
+            <td class="appr-table-color">보안등급</td>
+            <td>
+              <div class="form-group mb-3">
+                <select class="custom-select form-control align-items-center justify-content-center" id="custom-select" name="securityCode">
+                  <option selected>선택</option>
+                  <c:forEach items="${securityList}" var="s">
+                    <option value="${s.securityCode}">${s.securityLevle}</option>
+                  </c:forEach>
+                </select>
+              </div>
+            </td>
+          </tr>
+        </table>
                  
                  
-          <!-- 결재라인 -->
-          <div class="fe fe-settings fe-16 " id="appr-line-setting" data-toggle="modal" data-target="#verticalModal"> 결재라인 설정</div>
-          <table id="approval-table" class="table table-bordered mb-0 shadow">
+        <!-- 결재라인 -->
+        <div class="fe fe-settings fe-16 " id="appr-line-setting" data-toggle="modal" data-target="#verticalModal"> 결재라인 설정</div>
+        <table id="approval-table" class="table table-bordered mb-0 shadow">
 
-            <tr class="appr-table-color">
-              <td rowspan="3" style="width: 100px;">신청</td>
-              <td class="fe fe-plus fe-12 mr-2">직급</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr style="height: 100px;">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>이름</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
+          <tr class="appr-table-color">
+            <td rowspan="3" style="width: 100px;">신청</td>
+            <td class="fe fe-plus fe-12 mr-2">직급</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr style="height: 100px;">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>이름</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
 
-            <tr class="appr-table-color">
-              <td rowspan="3" style="width: 100px;">처리</td>
-              <td class="fe fe-plus fe-12 mr-2">직급</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr style="height: 100px;">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>이름</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            
-            <tr>
-              <td class="appr-table-color">참조인</td>
-              <td colspan="9"></td>
-            </tr>
-          </table>
-        </div>
+          <tr class="appr-table-color">
+            <td rowspan="3" style="width: 100px;">처리</td>
+            <td class="fe fe-plus fe-12 mr-2">직급</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr style="height: 100px;">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>이름</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td class="appr-table-color">참조인</td>
+            <td colspan="9"></td>
+          </tr>
+        </table>
       </div>
+    </div>
         
         
-     <c:if test="${not empty formMappingList}">
+    <c:if test="${not empty formMappingList}">
       <div class="card shadow mb-4">
         <div class="card-body" id="form-content">
           <div class="form-group mb-3">
-          	<label>제목</label>
-          	<input type="text" class="form-control" name="docTitle">
+            <label>제목</label>
+            <input type="text" class="form-control" name="docTitle">
           </div>	
           <c:forEach items="${formMappingList}" var="f">
             <div class="form-group mb-3">
@@ -197,32 +196,31 @@
           </c:forEach>	
         </div>
       </div>
-     </c:if>     
+    </c:if>     
           
           
       
-      <!-- 첨부파일 -->
-      <c:if test="${not empty formMappingList}">
-          <div class="card shadow mb-4">
-            <div class="card-header">
-              <strong>첨부파일</strong>
-            </div>
-            <div class="card-body">
-              <div class="form-group mb-3">
-                <div class="custom-file">
-                  <input type="file" class="custom-file-input" multiple id="customFile" name="file[]">
-                  <label class="custom-file-label" for="customFile">Choose file</label>
-                  <div id="file-name" class="m-1"></div>
-                </div>
+    <!-- 첨부파일 -->
+    <c:if test="${not empty formMappingList}">
+        <div class="card shadow mb-4">
+          <div class="card-header">
+            <strong>첨부파일</strong>
+          </div>
+          <div class="card-body">
+            <div class="form-group mb-3">
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" multiple id="customFile" name="file[]">
+                <label class="custom-file-label" for="customFile">Choose file</label>
+                <div id="file-name" class="m-1"></div>
               </div>
-            </div> <!-- .card-body -->
-          </div> <!-- .card -->
+            </div>
+          </div> <!-- .card-body -->
+        </div> <!-- .card -->
 
-        <div class="text-center">
-          <input type="submit" class="btn mb-2 btn-secondary" value="작성하기">
-        </div>
-      </c:if>
-    </form>
+      <div class="text-center">
+        <input type="submit" class="btn mb-2 btn-secondary" value="작성하기">
+      </div>
+    </c:if>
 
 
    
@@ -266,14 +264,14 @@
 
               <div class="w-75 d-flex flex-column">
                 <c:forEach items="${approvalTypeList}" var="a">
-                  <div class="d-flex">
+                  <div class="d-flex" apprTypeCode="${a.apprTypeCode}" id="arrow-box">
                     <div class="h-150 w-25 mx-4 d-flex flex-column justify-content-center align-items-center">
-                      <a id="add-user-1" class="fe fe-24 fe-arrow-right-circle mb-1" onclick="addUser();"></a>
-                      <a id="delete-user-1" class="fe fe-24 fe-arrow-left-circle"></a>
+                      <a id="add-user" class="fe fe-24 fe-arrow-right-circle mb-1  d-none"></a>
+                      <a id="delete-user" class="fe fe-24 fe-arrow-left-circle  d-none"></a>
                     </div>
-                    <div class="w-75 h-150">
+                    <div class="w-75 h-150 d-none" id="type-content">
                       <span class="">${a.apprTypeName}</span>
-                      <select id="type${a.apprTypeCode}" multiple="multiple" class="custom-select form-control w-100 non-scroll mb-3">
+                      <select id="type-select-box" multiple="multiple" class="custom-select form-control w-100 non-scroll mb-3">
                         <option value="1">고은비(인사팀 - 사원)</option>
                         <option value="2">금은비(재무팀 - 대리)</option>
                       </select>
@@ -373,13 +371,42 @@
       }
     }
     
+    //결재타입 체크박스 
+    $('#modal-appr-type input[type=checkbox]').on('click', function(){
+
+
+      // const checkbox = $('#modal-appr-type input[type=checkbox]').each(function () {
+
+      //   if(this.checked){
+      //     this.class
+      //   }
+      // })
+
+
+      // //체크한 체크박스 value 가져오기
+      // const checkboxList = checkbox.length;
+      // let checkedVal = [];
+      // $('#modal-appr-type input[type=checkbox]:checked').each(function () {
+      //   var checked = $(this).val();
+      //   checkedVal.push(checked);
+      // })
+      
+      // for(var i=0; i<=checkboxList; i++){
+      //   if(checkbox);
+      // }
+      
+
+
+    });
     
+
+
     function addUser(){
 
       var userCode = $('#emp-name option:selected').val();
       var userOption = $('#emp-name option[value=' + userCode + ']')[0].outerHTML;
 
-      $('#type1').append(userOption);
+      $('type1').append(userOption);
       
       
     }
