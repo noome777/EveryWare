@@ -16,10 +16,15 @@
     margin-top: 175px;
     margin-bottom: 30px;
 	}
+  .swal-wide{
+    width: 800px !important;
+  } 
 	
 </style>
 </head>
-
+<script src="https://cdn.staticfile.org/jquery/3.1.1/jquery.min.js"></script>
+<!-- sweet alert -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Simple bar CSS -->
 <link rel="stylesheet" href="${root}/resources/css/simplebar.css">
 <!-- Fonts CSS -->
@@ -41,7 +46,7 @@
       
       <div class="wrapper vh-100">
       <div class="row align-items-center h-100">
-        <form class="col-lg-3 col-md-4 col-10 mx-auto text-center">
+        <div class="col-lg-3 col-md-4 col-10 mx-auto text-center">
          <div class="wrapper vh-100">
          <a href="${root}/emp/login">
           <img alt="searchId-logo" id="searchId-logo" src="${root}/resources/img/EveryWareLogo.png"><br><br>
@@ -49,21 +54,63 @@
           <h1 class="h6 mb-3">Find PWD</h1>
           <div class="form-group">
             <label for="inputName" class="sr-only">Name</label>
-            <input type="text" id="inputName" class="form-control form-control-lg" placeholder="Name" required="" autofocus="">
+            <input type="text" id="empName" name="empName" class="form-control form-control-lg" placeholder="Name" required="" autofocus="">
           </div>
           <div class="form-group email">
             <label for="inputEmail" class="sr-only">Email address</label>
-            <input type="email" id="inputEmail" class="form-control form-control-lg" placeholder="Email address" required="">
+            <input type="email" id="empEMail" name="empEMail" class="form-control form-control-lg" placeholder="Email address" required="">
           </div>
-          <button class="btn btn-lg btn-outline-primary btn-block" type="submit"> Reset Password</button><br><br><br><br><br><br>
+          <button class="btn btn-lg btn-outline-primary btn-block" id="resetBtn" type="submit"> Reset Password</button><br><br><br><br><br><br>
           <div>Don't you remember your ID? 
           <a href="${root}/emp/searchId"> Find ID</a>
           </div>
         
           <p class="mt-5 mb-3 text-muted">© 2022</p>
-        </form>
+        </div>
       </div>
     </div>
+
+
+<script>
+const resetBtn = document.querySelector('#resetBtn');
+resetBtn.addEventListener('click', function(){
+
+  const empName = document.querySelector('#empName').value;
+  const empEMail = document.querySelector('#empEMail').value;
+  const sendData = {"empName" : empName, "empEMail" : empEMail}
+
+    $.ajax({
+      url: "${root}/emp/searchPwd",
+      type: "POST",
+      data: sendData,
+      success: function(data){
+        // const id = data['empId'];
+        // Swal.fire('당신의 아이디는 ' + id +' 입니다.');
+        // Swal.fire('입력하신 이메일로 임시 비밀번호를 전송하였습니다.');
+        if(data == 'success'){
+          Swal.fire({
+              title : '입력하신 이메일로 임시 비밀번호를 전송하였습니다.',
+              customClass: 'swal-wide',
+  
+            });
+        }else{
+          Swal.fire({
+              title : '이름 또는 이메일을 확인해주세요.',
+              customClass: 'swal-wide',
+  
+            });
+        }
+      },
+      error: function(error){
+        console.log(error);
+
+      }
+      
+    });
+
+});
+
+</script>
  
 </body>
 </html>
