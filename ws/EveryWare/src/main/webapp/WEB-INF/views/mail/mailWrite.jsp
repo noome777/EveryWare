@@ -4,14 +4,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- include summernote css/js -->
+
+  
+  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <title>메일홈 </title>
 
- <!-- include summernote css/js -->
-<script src="/js/summernote/summernote-lite.js"></script>
-<script src="/js/summernote/lang/summernote-ko-KR.js"></script>
-
-<link rel="stylesheet" href="/css/summernote/summernote-lite.css">
-	  
+ 
 <style>
   	#inputrec{
   		width: 1000px; 
@@ -102,20 +102,13 @@
 				<div class="container">
   					<textarea class="summernote" name="editordata"></textarea>    
 				</div>
-			<script>
-			$(document).ready(function() {
-				//여기 아래 부분
-				$('#summernote').summernote({
-					  height: 300,                 // 에디터 높이
-					  minHeight: null,             // 최소 높이
-					  maxHeight: null,             // 최대 높이
-					  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-					  lang: "ko-KR",					// 한글 설정
-					  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
-			          
-				});
-			});
-			    </script>
+			  <script>
+			        $('#summernote').summernote({
+						placeholder:'내용을 입력해주세요' ,
+						tabsize:2,
+						height: 400
+			    });
+			  </script>
 				
 		 	
 	</div>
