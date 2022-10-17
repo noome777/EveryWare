@@ -10,16 +10,24 @@
 	
 	<typeAliases>
 		<!-- 전자결재 관련 -->
-		<typeAlias alias="DocFormVo" type="com.kh.app00.approval.vo.DocFormVo"/>
-		<typeAlias alias="DocPeriodVo" type="com.kh.app00.approval.vo.DocPeriodVo"/>
-		<typeAlias alias="DocSecurityVo" type="com.kh.app00.approval.vo.DocSecurityVo"/>
-		<typeAlias alias="DocFormMapperVo" type="com.kh.app00.approval.vo.DocFormMapperVo"/>
+		<typeAlias alias="DocFormVo" type="com.kh.app00.approval.doc.vo.DocFormVo"/>
+		<typeAlias alias="DocPeriodVo" type="com.kh.app00.approval.doc.vo.DocPeriodVo"/>
+		<typeAlias alias="DocSecurityVo" type="com.kh.app00.approval.doc.vo.DocSecurityVo"/>
+		<typeAlias alias="DocFormMapperVo" type="com.kh.app00.approval.doc.vo.DocFormMapperVo"/>
+		<typeAlias alias="DocDataVo" type="com.kh.app00.approval.doc.vo.DocDataVo"/>
 		<typeAlias alias="ApprovalDocVo" type="com.kh.app00.approval.vo.ApprovalDocVo"/>
-		<typeAlias alias="DocDataVo" type="com.kh.app00.approval.vo.DocDataVo"/>
+		<typeAlias alias="ApprovalTypeVo" type="com.kh.app00.approval.vo.ApprovalTypeVo"/>
 		
 		
 		<!-- 인사 관련 -->
 		<typeAlias alias="EmpVo" type="com.kh.app00.emp.vo.EmpVo"/>
+		
+		
+		
+		<!-- 일정 관련 -->
+		<typeAlias alias="CalendarVo" type="com.kh.app00.calendar.vo.CalendarVo"/>
+		<!-- 파일매니저 관련 -->
+		<typeAlias alias="FilemanagerVo" type="com.kh.app00.filemanager.vo.FilemanagerVo"/>
 		
 	</typeAliases>
 	
