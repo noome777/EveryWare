@@ -49,17 +49,17 @@
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="./ui-color.html"><span class="ml-1 item-text">임직원관리</span>
+                  <a class="nav-link pl-3" href="${root}/organization/management/emp"><span class="ml-1 item-text">임직원관리</span>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="./ui-typograpy.html"><span class="ml-1 item-text">직위/직무설정</span></a>
+                  <a class="nav-link pl-3" href="${root}/organization/management/rank"><span class="ml-1 item-text">직위/직무설정</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="./ui-icons.html"><span class="ml-1 item-text">근로형태관리</span></a>
+                  <a class="nav-link pl-3" href="${root}/organization/management/jobTypes"><span class="ml-1 item-text">근로형태관리</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="./ui-buttons.html"><span class="ml-1 item-text">권한관리</span></a>
+                  <a class="nav-link pl-3" href="${root}/organization/management/right"><span class="ml-1 item-text">권한관리</span></a>
                 </li>
                 
               </ul>
