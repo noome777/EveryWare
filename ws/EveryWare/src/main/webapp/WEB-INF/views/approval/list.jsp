@@ -58,7 +58,7 @@
                   <td>2022.09.08</td>
                   <td><span class="badge badge-pill badge-warning">진행중</span></td>
                 </tr>
-                <tr>
+                <tr onclick="location.href='${root}/approval/approvalDocDetail'">
                   <td>2</td>
                   <td>지출결의서</td>
                   <td>220928_결재_지출결의서</td>

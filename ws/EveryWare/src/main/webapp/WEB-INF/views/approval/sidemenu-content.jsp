@@ -1,6 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+    <style>
+      *{
+        box-sizing: border-box; 
+      }
+      .non-scroll{
+        overflow: auto;
+      }
+      .appr-table-color{
+        background-color: rgb(244, 249, 255);
+      }
+      .appr-font-color{
+        color: rgb(119, 118, 118);
+      }
+    </style>
 <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
   <nav>
         <!-- <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
