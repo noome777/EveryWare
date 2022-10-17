@@ -11,7 +11,7 @@ public class EmpDaoImpl implements EmpDao {
     //로그인
     @Override
     public EmpVo login(SqlSessionTemplate sst, EmpVo vo) {
-        return sst.selectOne("empMapper.selectOneByEmail", vo);
+        return sst.selectOne("empMapper.selectOneById", vo);
     }
 
     //아이디 찾기
@@ -19,6 +19,14 @@ public class EmpDaoImpl implements EmpDao {
     public EmpVo selectIdInfo(SqlSessionTemplate sst, EmpVo vo) {
         return sst.selectOne("empMapper.selectIdInfo", vo);
     }
+
+    //회원 패스워드 불러오기
+    @Override
+    public EmpVo searchPwd(SqlSessionTemplate sst, EmpVo vo) {
+        return sst.selectOne("empMapper.searchPwd", vo);
+    }
+
+    //회원 패스워드 업데이트
 
     
 

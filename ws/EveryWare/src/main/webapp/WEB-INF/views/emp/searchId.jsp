@@ -87,8 +87,8 @@
       type: "POST",
       data: sendData,
       success: function(data){
-        const email = data['empEMail'];
-        Swal.fire('당신의 이메일 주소는 ' + email +' 입니다');
+        const id = data['empId'];
+        Swal.fire('당신의 아이디는 ' + id +' 입니다.');
 
       },
       error: function(error){

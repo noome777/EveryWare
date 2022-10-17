@@ -55,8 +55,8 @@
           <img alt="login-logo" id="login-logo" src="${root}/resources/img/EveryWareLogoSmall.png"><br><br>
           <h1 class="h6 mb-3">Sign in</h1>
           <div class="form-group">
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input type="email" name="empEMail" id="empEMail" value="${cookie.saveEmail.value}" class="form-control form-control-lg" placeholder="Email address" required="" autofocus="">
+            <label for="inputId" class="sr-only">ID</label>
+            <input type="text" name="empId" id="empId" value="${cookie.saveId.value}" class="form-control form-control-lg" placeholder="ID" required="" autofocus="">
           </div>
           <div class="form-group">
             <label for="inputPassword" class="sr-only">Password</label>
@@ -64,7 +64,7 @@
           </div>
           <div class="checkbox mb-3">
             <label>
-            <input type="checkbox" value="true" name="saveEmail"> Stay logged in </label>
+            <input type="checkbox" value="true" id="saveId" name="saveId"> Stay logged in </label>
           </div>
           <button class="btn btn-lg btn-primary btn-block" id="loginBtn">Let me in</button><br>
           <a href="${root}/emp/searchId" id="search-id">search ID </a>
@@ -80,13 +80,14 @@
   const loginBtn = document.querySelector('#loginBtn');
   loginBtn.addEventListener('click', function(){
 
-  const empEMail = document.querySelector('#empEMail').value;
+  const empId = document.querySelector('#empId').value;
   const empPwd = document.querySelector('#empPwd').value;
+  const saveId = document.querySelector('#saveId').value;
 
     $.ajax({
       url: "${root}/emp/login",
       type: "POST",
-      data: {"empEMail" : empEMail , "empPwd" : empPwd},
+      data: {"empId" : empId , "empPwd" : empPwd, "saveId" : saveId},
       success: function(data){
         console.log(data);
 

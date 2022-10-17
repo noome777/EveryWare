@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="empMapper">
 
-	<select id="selectOneByEmail" resultType="EmpVo">
+	<select id="selectOneById" resultType="EmpVo">
 		SELECT 
 			EMP_CODE
 		  , EMP_NAME
@@ -12,7 +12,7 @@
 		  , EMP_PHONE
 		  , EMP_ADDRESS1
 		FROM EMP
-		WHERE EMP_E_MAIL = #{empEMail}
+		WHERE EMP_ID = #{empId}
 		AND EMP_PWD = #{empPwd}
 		AND EMP_STATUS = 'N'
 	</select>
@@ -20,11 +20,13 @@
 	<select id="selectIdInfo" resultType="EmpVo">
 		SELECT 
 			EMP_CODE
-		  , EMP_E_MAIL
+		  , EMP_ID
 		FROM EMP
 		WHERE EMP_NAME  = #{empName}
 		AND EMP_PHONE = #{empPhone}
 	</select>
+	
+	
 
 
 </mapper>

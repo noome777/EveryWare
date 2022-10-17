@@ -11,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
@@ -64,11 +66,12 @@ public class EmpController {
     //로그인 실행 (ajax)
     @PostMapping("login")
     @ResponseBody
-    public String login(EmpVo vo, Model model, String saveEmail, HttpSession session, HttpServletResponse resp) {
+    public String login(EmpVo vo, Model model, String saveId, HttpSession session, HttpServletResponse resp) {
         
+        System.out.println(saveId);
         //아이디 저장 (쿠키)
-        if(saveEmail != null) {
-            Cookie cookie = new Cookie("saveEmail", vo.getEmpEMail());
+        if(saveId != null) {
+            Cookie cookie = new Cookie("saveId", vo.getEmpId());
             resp.addCookie(cookie);
         }
         
@@ -102,7 +105,7 @@ public class EmpController {
         EmpVo idVo = service.selectIdInfo(vo);
         
         Map<String, String> idMap = new HashMap<String, String>();
-        idMap.put("empEMail", idVo.getEmpEMail());
+        idMap.put("empId", idVo.getEmpId());
         System.out.println(idMap);
         
         Gson gson = new Gson();
@@ -144,8 +147,13 @@ public class EmpController {
 //        }
 //    }
     
+    //비밀번호 찾기 화면
     @GetMapping("searchPwd")
     public String searchPwd() {
         return "emp/searchPwd";
     }
+    
+  
+    
+    
 }
