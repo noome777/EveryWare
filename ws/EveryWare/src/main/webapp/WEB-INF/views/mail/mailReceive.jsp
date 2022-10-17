@@ -26,7 +26,9 @@
   	background-color: white;
  }
   
-  
+  .buttonSet{
+  	margin-bottom:20px;
+  }
 
 
 </style>
@@ -56,6 +58,15 @@
 		</span>
 		<input type="text" class="form-control" aria-label="mailSearch" id="mailSearch" placeholder="메일검색"  aria-describedby="basic-addon1">
 		</div> -->
+		
+		<br>
+		 	<div class="buttonSet">
+		 		<button type="button" id="sendBtn" class="btn btn-primary">삭제</button>
+		 		<button type="button" id="cancelBtn" class="btn btn-primary">답장</button>
+		 	</div>
+		 	
+		 	 <div class="card shadow">
+         		 <div class="card-body">
 		
 		<table class="table table-striped" id="maillist">
 		
@@ -128,6 +139,8 @@
 		</nav>
            
 	</div>
+	 </div>
+	 	</div>
 	 </div>
 </body>
 </html>

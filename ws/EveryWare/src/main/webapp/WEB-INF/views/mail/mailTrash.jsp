@@ -7,7 +7,7 @@
 <title>메일홈 </title>
 <style>
   
-  #mailall {
+  #mailReceive {
   	font-size: 20px;
   }
   
@@ -15,7 +15,7 @@
 	margin-top: 30px;  
   }
   
-
+ 
   .search-txt{
   	border-radius: 3px;
   	
@@ -26,12 +26,9 @@
   	background-color: white;
  }
   
-  
-  
   .buttonSet{
   	margin-bottom:20px;
   }
-  
 
 
 </style>
@@ -43,9 +40,9 @@
     <%@ include file="/WEB-INF/views/mail/sidemenu-content.jsp" %>
     <div class="main-content">
 		
-		<h2 id="mailall">전체 메일함</h2>
+		<h2 id="mailSend">휴지통</h2>
 		<br>
-		<div class="input-group w-50" style="margin-bottom: 20px;">
+		<div class="input-group w-50">
 		    <input class="search-txt" type="text" placeholder="메일 검색" id="basic-addon1"> 
 		    <button class="search-btn" type="submit">
 		    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -53,12 +50,6 @@
 			</svg>
 			</button>
 		</div>
-		
-		<br>
-		 	<div class="buttonSet">
-		 		<button type="button" id="sendBtn" class="btn btn-primary">삭제</button>
-		 		<button type="button" id="cancelBtn" class="btn btn-primary">답장</button>
-		 	</div>
 		<!-- <div class="input-group w-50" >
 		<span class="input-group-text" id="basic-addon1">
 		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -67,8 +58,16 @@
 		</span>
 		<input type="text" class="form-control" aria-label="mailSearch" id="mailSearch" placeholder="메일검색"  aria-describedby="basic-addon1">
 		</div> -->
-		 <div class="card shadow">
-          <div class="card-body">
+		
+		<br>
+		 	<div class="buttonSet">
+		 		<button type="button" id="sendBtn" class="btn btn-primary">삭제</button>
+		 		<button type="button" id="cancelBtn" class="btn btn-primary">답장</button>
+		 	</div>
+		 	
+		 	 <div class="card shadow">
+         		 <div class="card-body">
+		
 		<table class="table table-striped" id="maillist">
 		
         <tr>
@@ -141,7 +140,7 @@
            
 	</div>
 	 </div>
-	 </div>
+	 	</div>
 	 </div>
 </body>
 </html>
