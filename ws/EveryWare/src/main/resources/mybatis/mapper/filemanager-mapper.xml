@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="filemanagerMapper">
+	
+	
+	<select id="selectAll" resultType="filemanagerVo">
+		SELECT 
+	    FILE_CODE
+	    , EMP_CODE
+	    , FILE_TITLE
+	    , FILE_NAME
+	    , FILE_ORIGINNAME
+	    , FILE_URL
+	    , FILE_ENROLLDATE
+	    , FILE_CNT
+	    , FILE_BOOKMARK
+	    , FILE_DELDATE
+	    , FILE_RANGE
+	FROM FILECLOUD
+	WHERE FILE_DELDATE IS NULL
+	</select>
+</mapper>

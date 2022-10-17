@@ -1,17 +1,32 @@
 package com.kh.app00.filemanager.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.kh.app00.filemanager.service.FilemanagerService;
+import com.kh.app00.filemanager.vo.FilemanagerVo;
 
 @Controller
 @RequestMapping("filemanager")
 public class FilemanagerController {
 	
+	private final FilemanagerService service;
+	
+	@Autowired
+	public FilemanagerController(FilemanagerService service) {
+		this.service = service;
+	}
+
 	//파일함 조회
 	@GetMapping("select")
 	public String select() {
 
+		List<FilemanagerVo> list = service.selectAll();
+		
 		return "filemanager/fileManager";
 	}
 	
