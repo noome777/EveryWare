@@ -1,6 +1,5 @@
 package com.kh.app00.commute.controller;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.app00.commute.service.CommuteService;
-import com.kh.app00.commute.vo.CommuteStatusVo;
 import com.kh.app00.commute.vo.CommuteVo;
 import com.kh.app00.emp.vo.EmpVo;
 

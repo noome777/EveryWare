@@ -31,6 +31,12 @@ public class EmpServiceImpl implements EmpService {
         return dao.selectIdInfo(sst, vo);
     }
 
+    //비밀번호 찾기(이름 && 이메일이 사원과 일치 여부 조회)
+    @Override
+    public EmpVo selectPwdInfo(EmpVo vo) {
+        return dao.selectPwdInfo(sst, vo);
+    }
+
    
 
     

@@ -1,7 +1,5 @@
 package com.kh.app00.emp.service;
 
-import javax.servlet.http.HttpServletResponse;
-
 import com.kh.app00.emp.vo.EmpVo;
 
 public interface EmpService {
@@ -11,6 +9,9 @@ public interface EmpService {
 
     //아이디 찾기
     EmpVo selectIdInfo(EmpVo vo);
+
+    //비밀번호 찾기(이름 && 이메일이 사원과 일치 여부 조회)
+    EmpVo selectPwdInfo(EmpVo vo);
 
    
 
