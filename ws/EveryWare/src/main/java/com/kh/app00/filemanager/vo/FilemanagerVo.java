@@ -10,6 +10,7 @@ public class FilemanagerVo {
 	private String fileCode;
 	private String empCode;
 	private String fileTitle;
+	private String fileContent;
 	private String fileName;
 	private String fileOriginname;
 	private String fileUrl;

@@ -20,24 +20,26 @@
 						<br>
 					</div>
 					<div class="card-body">
-						<form class="needs-validation" novalidate="">
+						<form class="needs-validation" method="POST"
+							enctype="multipart/form-data">
 							<div class="form-row">
 								<div class="col-md-4 mb-3">
 									<label for="validationCustom3">제목</label> <input type="text"
-										class="form-control" id="validationCustom3" value="" required>
+										class="form-control" id="filetitle" value="" required>
 								</div>
 								<div class="col-md-4 mb-3">
 									<label for="validationCustom4">내용</label> <input type="text"
 										class="form-control" id="validationCustom4" value="" required>
 								</div>
 							</div>
-				<div class="form-group mb-3">
-                          <label for="customFile">Custom file input</label>
-                          <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="customFile">
-                            <label class="custom-file-label" for="customFile">Choose file</label>
-                          </div>
-                        </div>
+							<div class="form-group mb-3">
+								<br> <label for="customFile">파일 찾아보기</label>
+								<div class="custom-file">
+									<input type="file" class="custom-file-input" id="fileName"
+										multiple> <label class="custom-file-label"
+										for="fileName"></label>
+								</div>
+							</div>
 							<button class="btn btn-outline-primary" type="submit"
 								id="submit-btn">파일 등록</button>
 						</form>
