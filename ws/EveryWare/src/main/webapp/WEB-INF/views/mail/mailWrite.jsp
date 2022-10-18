@@ -37,7 +37,7 @@
 	
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     <%@ include file="/WEB-INF/views/mail/sidemenu-content.jsp" %>
-		 <div class="main-content">
+		<main role="main" class="main-content">
 		 	<h2 id="mailall">메일 쓰기</h2>
 		 	<br>
 		 	<div class="buttonSet">
@@ -111,6 +111,7 @@
 			  </script>
 				
 		 	
+	</main>
 	</div>
 	</div>
 	
