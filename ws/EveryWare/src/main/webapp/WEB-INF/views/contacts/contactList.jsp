@@ -15,6 +15,7 @@
 <div class="wrapper">
       
       <main role="main" class="main-content">
+      
         <div class="container-fluid">
           <div class="row justify-content-center">
             <div class="col-12">
@@ -298,11 +299,13 @@
                   <li class="page-item"><a class="page-link" href="#">Next</a></li>
                 </ul>
               </nav>
+              
             </div> <!-- .col-12 -->
           </div> <!-- .row -->
         </div> <!-- .container-fluid -->
         
       </main> <!-- main -->
+      
     </div> <!-- .wrapper -->
     
 </body>
