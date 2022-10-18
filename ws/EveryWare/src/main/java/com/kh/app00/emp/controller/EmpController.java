@@ -1,22 +1,14 @@
 package com.kh.app00.emp.controller;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.kh.app00.emp.service.EmpService;
 import com.kh.app00.emp.vo.EmpVo;
+import com.kh.app00.smtp.SmtpVo;
 
 @Controller
 @RequestMapping("emp")
@@ -158,36 +151,55 @@ public class EmpController {
         return "emp/searchPwd";
     }
     
-    //비밀번호 찾기 (ajax)
-    @PostMapping("searchPwd")
-    @ResponseBody
-    public String searchPwd(String empName, String empEMail) {
-        System.out.println(empName);
-        System.out.println(empEMail);
-        
-//        if() {
-//            return "success";
-//        }else {
-            return "fail";
-//        }
-    }
-    
-    //이메일 인증
-//    @GetMapping("mailCheck")
-//    public String mailCheck() {
-//        return "emp/mailCheck";
-//    }
-//    
-//    @PostMapping("mailCheck")
-//    @ResponseBody
-//    public String mailCheck(String email) {
-//        System.out.println("이메일 인증 요청이 들어옴!");
-//        System.out.println("이메일 인증 이메일 : " + email);
-//        return email;
+    //비밀번호 찾기
+//    @PostMapping("searchPwd")
+//    public String searchPwd(String empName, String empEMail, EmpVo vo, String subject, String content, String format, HttpServletRequest req) {
+//        //이름, 이메일이 사원의 정보와 일치한지 확인
+//        EmpVo pwdVo = service.selectPwdInfo(vo);
+//        
+//      //이메일이 ~인 회원의 비밀번호 랜덤 난수 설정하여 업데이트 하기(서비스에 하고 디비에서 업데이트 하기),
+////    String contentPwd = content.substring(19, 21);
+//      String contentPwd = "ILOVEU";
+//      String contentAll = content.substring(0, 20) + contentPwd + content.substring(20);
+//      
+//      
+//      //이후 메일을 update 한 비밀번호를 담은 내용으로 전송하기
+//      req.setAttribute("contentAll", contentAll);
+//        
+////        if(pwdVo != null) {
+//            return "stmp/sendProcess";
+////        }else {
+////            return "fail";
+////        }
 //    }
     
-  
    
+    
+    //이메일
+//    getmapping, postmapping searchPwd로 바꾸고, searchPwd.jsp를 emailSendMain.jsp에 맞게 변경하기
+    @GetMapping("mailMain")
+    public String email() {
+        return "stmp/EmailSendMain";
+    }
+   
+    @PostMapping("mailSend")
+    public String success(String empEMail, String content, HttpServletRequest req) {
+        System.out.println(empEMail);
+        System.out.println(content);
+        
+        
+        //이메일이 ~인 회원의 비밀번호 랜덤 난수 설정하여 업데이트 하기(서비스에 하고 디비에서 업데이트 하기),
+//      String contentPwd = content.substring(19, 21);
+        String contentPwd = "ILOVEU";
+        String contentAll = content.substring(0, 20) + contentPwd + content.substring(20);
+        
+        
+        //이후 메일을 update 한 비밀번호를 담은 내용으로 전송하기
+        req.setAttribute("contentAll", contentAll);
+        
+        
+        return "stmp/sendProcess";
+    }
     
     
 }

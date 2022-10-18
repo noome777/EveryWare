@@ -26,7 +26,13 @@
 		AND EMP_PHONE = #{empPhone}
 	</select>
 	
-	
+	<select id="selectPwdInfo" resultType="EmpVo">
+		SELECT 
+			EMP_CODE
+		FROM EMP 
+		WHERE EMP_NAME = #{empName}
+		AND EMP_E_MAIL = #{empEMail}
+	</select>
 
 
 </mapper>

@@ -20,13 +20,12 @@ public class EmpDaoImpl implements EmpDao {
         return sst.selectOne("empMapper.selectIdInfo", vo);
     }
 
-    //회원 패스워드 불러오기
+    //비밀번호 찾기(이름 && 이메일이 사원과 일치 여부 조회)
     @Override
-    public EmpVo searchPwd(SqlSessionTemplate sst, EmpVo vo) {
-        return sst.selectOne("empMapper.searchPwd", vo);
+    public EmpVo selectPwdInfo(SqlSessionTemplate sst, EmpVo vo) {
+        return sst.selectOne("empMapper.selectPwdInfo", vo);
     }
 
-    //회원 패스워드 업데이트
 
     
 
