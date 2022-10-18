@@ -21,7 +21,7 @@
 		
 		<!-- 인사 관련 -->
 		<typeAlias alias="EmpVo" type="com.kh.app00.emp.vo.EmpVo"/>
-		
+		<typeAlias alias="DeptVo" type="com.kh.app00.organization.vo.DeptVo"/>
 		
 		
 		<!-- 일정 관련 -->
