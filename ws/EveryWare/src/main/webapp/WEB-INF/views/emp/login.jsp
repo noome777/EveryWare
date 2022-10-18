@@ -69,7 +69,7 @@
           <button class="btn btn-lg btn-primary btn-block" id="loginBtn">Let me in</button><br>
           <a href="${root}/emp/searchId" id="search-id">search ID </a>
           |
-          <a href="${root}/emp/searchPwd" id="search-pwd">  search Password</a>
+          <a href="${root}/emp/mailMain" id="search-pwd">  search Password</a>
           <p class="mt-5 mb-3 text-muted">© 2022</p>
         </div>
       </div>

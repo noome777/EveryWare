@@ -73,7 +73,7 @@
             </div>
             <button class="btn btn-lg btn-outline-primary btn-block" id="resetBtn" type="submit"> Reset Password</button><br><br><br><br><br><br>
             <div>Don't you remember your ID? 
-            <a href="${root}/emp/searchId"> Find ID</a>
+            <a href="${root}/emp/mailMain"> Find ID</a>
             </div>
             <p class="mt-5 mb-3 text-muted">© 2022</p>
           </div>

@@ -28,11 +28,17 @@
 	
 	<select id="selectPwdInfo" resultType="EmpVo">
 		SELECT 
-			EMP_CODE
+			EMP_CODE,
+			EMP_PWD
 		FROM EMP 
 		WHERE EMP_NAME = #{empName}
 		AND EMP_E_MAIL = #{empEMail}
 	</select>
+	
+	<update id="updateTempPwd">
+		UPDATE EMP SET EMP_PWD = #{empPwd}
+		WHERE EMP_E_MAIL = #{empEMail}
+	</update>
 
 
 </mapper>

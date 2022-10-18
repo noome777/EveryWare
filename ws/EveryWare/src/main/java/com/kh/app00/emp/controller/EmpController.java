@@ -2,6 +2,7 @@ package com.kh.app00.emp.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -179,26 +180,50 @@ public class EmpController {
 //    getmapping, postmapping searchPwd로 바꾸고, searchPwd.jsp를 emailSendMain.jsp에 맞게 변경하기
     @GetMapping("mailMain")
     public String email() {
-        return "stmp/EmailSendMain";
+        return "smtp/EmailSendMain";
     }
    
     @PostMapping("mailSend")
-    public String success(String empEMail, String content, HttpServletRequest req) {
-        System.out.println(empEMail);
-        System.out.println(content);
+    public String success(EmpVo vo, HttpServletRequest req, Model model) {
+        
+        //이름, 이메일이 사원의 정보와 일치한지 확인
+        EmpVo pwdVo = service.selectPwdInfo(vo);
+        System.out.println(pwdVo);
+        
+        //해당 회원이 존재할 때만 메일을 보내준다.
+        if(pwdVo != null) {
+
+            //임시 비밀번호 생성(UUID이용) -> 비밀번호를 랜덤 난수로 설정하기
+            String tempPw = UUID.randomUUID().toString().replace("-", "");//-를 제거
+            tempPw = tempPw.substring(0,10);//tempPw를 앞에서부터 10자리 잘라줌
+            System.out.println(tempPw);
+            
+            
+            //이메일이 empEMail인 회원의 비밀번호를 랜덤 난수로 업데이트 하기 (서비스에 하고 디비에서 업데이트 하기)
+//            int result = service.updateTempPwd(vo, tempPw);
+            
+            //이메일이 ~인 회원의 비밀번호 랜덤 난수 설정하여 VO 업데이트 하기,
+            String content = "EveryWare 임시 비밀번호는 [] 입니다.";
+            String contentAll = content.substring(0, 20) + tempPw + content.substring(20);
+            
+            vo.setEmpPwd(tempPw);
+            System.out.println(vo);
+            
+            //db에서 업데이트 해주기
+            int result = service.updateTempPwd(vo);
+            
+            //업데이트가 완료되면, 메일 전송하기
+            //이후 메일을 update 한 비밀번호를 담은 내용으로 전송하기
+            req.setAttribute("contentAll", contentAll);
+            
+            return "smtp/sendProcess";
+        }else {
+            model.addAttribute("alertMsg", "입력하신 정보를 확인해주세요.");
+            return "error/404";
+        }
         
         
-        //이메일이 ~인 회원의 비밀번호 랜덤 난수 설정하여 업데이트 하기(서비스에 하고 디비에서 업데이트 하기),
-//      String contentPwd = content.substring(19, 21);
-        String contentPwd = "ILOVEU";
-        String contentAll = content.substring(0, 20) + contentPwd + content.substring(20);
-        
-        
-        //이후 메일을 update 한 비밀번호를 담은 내용으로 전송하기
-        req.setAttribute("contentAll", contentAll);
-        
-        
-        return "stmp/sendProcess";
+       
     }
     
     

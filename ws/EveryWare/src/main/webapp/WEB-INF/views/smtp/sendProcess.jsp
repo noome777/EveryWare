@@ -23,12 +23,17 @@
     try {
 	    NaverSMTP smtpServer = new NaverSMTP();  // 메일 전송 클래스 생성
 	    smtpServer.emailSending(emailInfo);      // 전송
-	    out.print("이메일 전송 성공");
+	    
+	    out.println("<script>");
+	    out.print("alert('입력하신 이메일 주소로 임시 비밀번호 메일을 전송하였습니다.')");
+	    out.println("</script>");
+
 	}
 	catch (Exception e) {
-	    out.print("이메일 전송 실패");
+	    out.print("alert('이메일 전송 실패')");
 	    e.printStackTrace();
 	}
+    
 	%>
 	
 	
