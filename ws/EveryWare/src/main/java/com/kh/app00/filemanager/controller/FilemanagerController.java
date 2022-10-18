@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -23,10 +24,13 @@ public class FilemanagerController {
 
 	//파일함 조회
 	@GetMapping("select")
-	public String select() {
+	public String select(Model model) {
 
-		List<FilemanagerVo> list = service.selectAll();
+		List<FilemanagerVo> flist = service.selectAll();
 		
+		model.addAttribute("flist", flist);
+		
+		System.out.println(flist);
 		return "filemanager/fileManager";
 	}
 	
