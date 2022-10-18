@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.app00.emp.vo.EmpVo;
 import com.kh.app00.organization.service.OrganizationService;
+import com.kh.app00.organization.vo.DeptVo;
 
 @Controller
 @RequestMapping("organization")
@@ -28,10 +29,12 @@ public class OrganizationController {
 	@GetMapping("info")
 	public String getEmpList(Model model, HttpSession session) {
 		
+		List<DeptVo> deptList = organizationService.selectDeptList();
 		List<EmpVo> empList = organizationService.selectEmpList();
 		
-		if(empList!=null) {
+		if(empList!=null && deptList!=null) {
 			model.addAttribute("empList",empList);
+			model.addAttribute("deptList",deptList);
 			return "organization/info";
 		} else {
 			session.setAttribute("errorMsg", "임직원 정보 불러오기에 실패하였습니다.");

@@ -6,6 +6,12 @@ import lombok.Data;
 public class EmpVo {
 
     private String empCode;
+	private String comCode;
+	private String deptCode;
+	private String rankCode;
+	private String jobTypesCode;
+	private String empJobCode;
+	private String rightCode;
     private String empName;
     private String empId;
     private String empPwd;

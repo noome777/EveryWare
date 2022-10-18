@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.app00.emp.vo.EmpVo;
 import com.kh.app00.organization.dao.OrganizationDao;
+import com.kh.app00.organization.vo.DeptVo;
 
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
@@ -35,6 +36,13 @@ public class OrganizationServiceImpl implements OrganizationService {
 	@Override
 	public List<EmpVo> selectEmpListByWord(String word) {
 		return organizationDao.selectEmpListByWord(sqlSessionTemplate, word);
+	}
+
+
+	//부서 정보 가져오기
+	@Override
+	public List<DeptVo> selectDeptList() {
+		return organizationDao.selectDeptList(sqlSessionTemplate);
 	}
 
 }

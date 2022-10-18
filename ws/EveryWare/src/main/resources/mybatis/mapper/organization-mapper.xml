@@ -4,41 +4,79 @@
 
 	<select id="selectEmpList" resultType="EmpVo">
 		SELECT
-			EMP_CODE
-			, COM_CODE
-			, DEPT_CODE
-			, RANK_CODE
-			, JOB_TYPES_CODE
-			, EMP_JOB_CODE
-			, RIGHT_CODE
-			, EMP_NAME
-			, EMP_E_MAIL
-			, EMP_TEL
-			, EMP_PHONE
-			, EMP_JOIN_DATE
-			, EMP_PROFILE_NAME
-		 FROM EMP
-		 WHERE EMP_STATUS = 'N'
+			E.EMP_CODE
+			, E.EMP_NAME
+			, E.EMP_E_MAIL 
+			, E.EMP_TEL 
+			, E.EMP_PHONE
+			, E.EMP_JOIN_DATE
+			, E.EMP_PROFILE_NAME
+			, C.COM_NAME AS COM_CODE
+			, D.DEPT_NAME AS DEPT_CODE
+			, R.RANK_NAME AS RANK_CODE
+			, J.JOB_NAME AS EMP_JOB_CODE
+			, T.RIGHT_NAME AS RIGHT_CODE
+		 FROM EMP E
+		 JOIN COM C
+  		ON E.COM_CODE = C.COM_CODE
+  		JOIN  DEPT D
+  		ON E.DEPT_CODE = D.DEPT_CODE
+  		JOIN RANK R
+  		ON E.RANK_CODE = R.RANK_CODE
+  		JOIN JOB J
+  		ON E.EMP_JOB_CODE = J.JOB_CODE
+  		JOIN RIGHT T
+  		ON E.RIGHT_CODE = T.RIGHT_CODE
+		WHERE EMP_STATUS = 'N'
+		OR EMP_STATUS ='R'
 	</select>
 	
 	<select id="selectEmpListByWord" resultType="EmpVo">
 		SELECT
-			EMP_CODE
-			, COM_CODE
-			, DEPT_CODE
-			, RANK_CODE
-			, JOB_TYPES_CODE
-			, EMP_JOB_CODE
-			, RIGHT_CODE
-			, EMP_NAME
-			, EMP_E_MAIL
-			, EMP_TEL
-			, EMP_PHONE
-			, EMP_JOIN_DATE
-			, EMP_PROFILE_NAME
-		 FROM EMP
-		 WHERE EMP_STATUS = 'N'
-		 AND EMP_NAME LIKE '%' ||  #{word} || '%'
+			E.EMP_CODE
+			, E.EMP_NAME
+			, E.EMP_E_MAIL 
+			, E.EMP_TEL 
+			, E.EMP_PHONE
+			, E.EMP_JOIN_DATE
+			, E.EMP_PROFILE_NAME
+			, C.COM_NAME AS COM_CODE
+			, D.DEPT_NAME AS DEPT_CODE
+			, R.RANK_NAME AS RANK_CODE
+			, J.JOB_NAME AS EMP_JOB_CODE
+			, T.RIGHT_NAME AS RIGHT_CODE
+		 FROM EMP E
+		 JOIN COM C
+  		ON E.COM_CODE = C.COM_CODE
+  		JOIN  DEPT D
+  		ON E.DEPT_CODE = D.DEPT_CODE
+  		JOIN RANK R
+  		ON E.RANK_CODE = R.RANK_CODE
+  		JOIN JOB J
+  		ON E.EMP_JOB_CODE = J.JOB_CODE
+  		JOIN RIGHT T
+  		ON E.RIGHT_CODE = T.RIGHT_CODE
+		WHERE EMP_STATUS = 'N'
+		AND EMP_NAME LIKE '%' ||  #{word} || '%'
+		OR EMP_STATUS ='R'
+		AND EMP_NAME LIKE '%' ||  #{word} || '%'
+	</select>
+	
+	<select id="selectDeptList" resultType="DeptVo">
+		SELECT 
+			A.DEPT_CODE
+			, (CASE 
+                WHEN A.HIGH_DEPT_CODE = null THEN A.DEPT_NAME
+                WHEN A.HIGH_DEPT_CODE = B.DEPT_CODE THEN B.DEPT_NAME
+            END) AS HIGHT_DEPT_CODE
+            , A.DEPT_NAME
+			, A.DEPT_HEAD_CODE
+			, A.DEPT_STATUS
+		FROM DEPT A
+        LEFT OUTER JOIN DEPT B
+        ON A.HIGH_DEPT_CODE = B.DEPT_CODE
+		WHERE A.DEPT_STATUS = 'N'
+		ORDER BY A.DEPT_CODE ASC
 	</select>
 	
 </mapper>
