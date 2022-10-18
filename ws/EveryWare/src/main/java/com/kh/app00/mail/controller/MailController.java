@@ -38,4 +38,9 @@ public class MailController {
 	public String mailTrash() {
 		return "mail/mailTrash";
 	}
+	
+	@GetMapping("detail")
+	public String mailDetail() {
+		return "mail/mailDetail";
+	}
 }

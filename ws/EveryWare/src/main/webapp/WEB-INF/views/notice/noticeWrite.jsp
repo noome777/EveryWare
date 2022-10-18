@@ -14,11 +14,33 @@
 
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+    
+   
 <style>
+
 	#noticetitle{
   		width: 1000px; 
   		margin-left: 50px;
   	}
+  	 .filebox label {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    vertical-align: middle;
+    background-color: #999999;
+    cursor: pointer;
+    height: 40px;
+    margin-left: 10px;
+}
+
+.filebox input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
 </style>
 </head>
 <body>
@@ -45,6 +67,13 @@
 		 				<div class="inputrecipe">
 		 					 <div><input type="text" class="form-control" name="ntitle" id="noticetitle"></div>
 		 				</div>
+		 			</td>
+		 			<td colspan="2">
+		 				<div class="filebox">
+							    <input class="upload-name" value="첨부파일" placeholder="첨부파일">
+							    <label for="file">파일찾기</label> 
+							    <input type="file" id="file">
+							</div>
 		 			</td>
 		 		</tr>
 		 		</table>	
