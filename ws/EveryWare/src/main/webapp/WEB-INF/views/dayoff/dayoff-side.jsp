@@ -19,7 +19,7 @@
           </div>
           <div class="btn-box w-100 mt-4 mb-1">
             <button type="button" class="btn mb-2 btn-primary btn-lg btn-block" onclick="location='${root}/dayoff/main'">
-              <span class="small">+ 연차 신청하기</span>
+              <span class="small">+ 휴가 신청하기</span>
             </button>
           </div>
          
@@ -46,14 +46,14 @@
             <li class="nav-item dropdown">
               <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
                 <i class="fe fe-pie-chart fe-16"></i>
-                <span class="ml-3 item-text">연차 관리</span>
+                <span class="ml-3 item-text">휴가 관리</span>
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="forms">
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/dayoff/main"><span class="ml-1 item-text">연차관리</span></a>
+                  <a class="nav-link pl-3" href="${root}/dayoff/main"><span class="ml-1 item-text">휴가관리</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/dayoff/calendar"><span class="ml-1 item-text">연차현황</span></a>
+                  <a class="nav-link pl-3" href="${root}/dayoff/calendar"><span class="ml-1 item-text">휴가현황</span></a>
                 </li>
               </ul>
             </li>

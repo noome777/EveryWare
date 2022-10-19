@@ -1,14 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
+<c:set var="alertMsg" value="${sessionScope.alertMsg}"/>
+<c:if test="${not empty alertMsg}">
+    <script>
+      alert('${alertMsg}');
+    </script>
+</c:if>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>EveryWare - 시간 외 근무</title>
 <style>
-.mb-0{
+/* .mb-0{
     margin-top: 10px;
-}
+} */
 #submit-btn{
     float: right;
 }
@@ -23,6 +32,12 @@
     margin: 30px;
     width: 80%;
 }
+#dayoff-regi{
+  margin-top: -15px;
+}
+#dayoff-status{
+  margin-bottom: -40px;
+}
    
 </style>
 </head>
@@ -32,56 +47,70 @@
         <%@ include file="/WEB-INF/views/common/header.jsp" %>
         <%@ include file="/WEB-INF/views/dayoff/dayoff-side.jsp" %>
 
-        <!-- 연차 신청 -->
-        <div class="card shadow mb-5">
-            <div class="card-header">
-            <h4 class="mb-0">연차 신청</h4><br>
+        <!-- 휴가 현황 -->
+        <div class="card shadow mb-5" id="dayoff-status">
+          <div class="card-header">
+          <h4 class="mb-0">휴가 현황</h4><br>
         </div>
         <div class="card-body">
-            <form class="needs-validation" novalidate="">
-              <div class="form-row">
-                <div class="col-md-4 mb-3">
-                  <label for="validationCustom3">부서명</label>
-                  <input type="text" class="form-control" id="validationCustom3" value="" required>
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label for="validationCustom4">성명</label>
-                  <input type="text" class="form-control" id="validationCustom4" value="" required>
-                </div>
-              </div> 
+            <div class="form-row mb-3">
+              <div class="col-4 text-center border-right mb-3">
+                <h4 class="mb-1">총 휴가</h4><br>
+                <p class="text-uppercase text-muted mb-1">총 휴가</p>
+              </div>
+              <div class="col-4 text-center mb-3 ">
+                <h4 class="mb-1">사용휴가</h4><br>
+                <p class="text-uppercase text-muted mb-1">사용휴가</p>
+              </div>
+              <div class="col-4 text-center border-left mb-3">
+                <h4 class="mb-1">잔여휴가</h4><br>
+                <p class="text-uppercase text-muted mb-1">잔여휴가</p><br>
+              </div>
+            </div>
+        </div>
+    </div> 
+        
+    <div class="wrapper">
+      <!-- 휴가 신청 -->
+        <div class="card shadow mb-5" id="dayoff-regi">
+            <div class="card-header">
+            <h4 class="mb-0">휴가 신청</h4><br>
+        </div>
+        <div class="card-body">
+            <form class="needs-validation" method="post">
               <div class="form-row mb-3">
                 <div class="col-md-4 mb-3">
                   <label for="date-input1">시작일시</label>
                   <div class="input-group">
-                    <input class="form-control" id="example-date" type="date" name="startDate" required>
+                    <input class="form-control" id="example-date" type="date" name="offStartDate" required>
                   </div>
                 </div>
                 <div class="col-md-4 mb-3">
                   <label for="date-input1">종료일시</label>
                   <div class="input-group">
-                    <input class="form-control" id="example-date" type="date" name="endDate" required>
+                    <input class="form-control" id="example-date" type="date" name="offEndDate" required>
                   </div>
                 </div>
                 <div class="col-md-4 mb-3">
                   <label for="validationCustom4">일수</label>
-                  <input type="text" class="form-control" id="validationCustom4" required="" name="days" required>
+                  <input type="text" class="form-control" id="validationCustom4" required="" name="offDays" required>
                 </div>
               </div>
               <div class="form-group mb-3">
                 <label for="validationTextarea1">사유</label>
-                <textarea class="form-control" id="validationTextarea1" placeholder="사유를 입력하세요. (사유 없을 시 비고 기재)" required rows="3"></textarea>
+                <textarea class="form-control" id="validationTextarea1" placeholder="사유를 입력하세요. (사유 없을 시 비고 기재)" required rows="3" name="offReason"></textarea>
               </div>
               <button class="btn btn-outline-primary" type="submit" id="submit-btn">Submit form</button>
             </form>
         </div>
-    </div> 
-     
-    <!-- 연차 조회 -->
+    </div>
+
+    <!-- 휴가 조회 -->
 
     <div class="card shadow mb-5" style="margin-top: -10px;">
 
       <div style="margin-left: 20px; margin-top: 20px;">
-        <h4 class="card-title">연차 조회</h4><br><br>
+        <h4 class="card-title">휴가 조회</h4><br><br>
 
         <form action="">
           <h6 class="card-title">기간 선택</h6>
