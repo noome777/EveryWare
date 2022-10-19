@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.app00.common.PageVo;
 import com.kh.app00.emp.vo.EmpVo;
 import com.kh.app00.organization.vo.DeptVo;
 
@@ -17,5 +18,11 @@ public interface OrganizationDao {
 
 	//부서 리스트 가져오기
 	List<DeptVo> selectDeptList(SqlSessionTemplate sqlSessionTemplate);
+
+	//임직원 관리 - 페이징 카운트
+	int selectCountAll(SqlSessionTemplate sqlSessionTemplate);
+
+	//임직원 관리 - 페이징
+	List<EmpVo> selectEmpListByPage(SqlSessionTemplate sqlSessionTemplate, PageVo pv);
 
 }
