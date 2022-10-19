@@ -34,8 +34,7 @@
                   <h2 class="h3 mb-0 page-title">임직원 관리</h2>
                 </div>
                 <div class="col-auto">
-                  <button type="button" class="btn btn-secondary"><span class="fe fe-trash fe-12 mr-2"></span>삭제하기</button>
-                  <button type="button" class="btn btn-primary"><span class="fe fe-filter fe-12 mr-2"></span>추가하기</button>
+                  <button type="button" class="btn shadow"><span class="fe fe-user-plus fe-12 mr-2"></span>사용자 추가</button>
                 </div>
               </div>
               <!-- table -->
@@ -145,6 +144,7 @@
             </div> <!-- .col-12 -->
           </div> <!-- .row -->
         </div> <!-- .container-fluid -->
+        
         
         
         

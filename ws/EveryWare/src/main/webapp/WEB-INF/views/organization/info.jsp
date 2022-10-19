@@ -257,19 +257,64 @@
 							</div>
 							<div id="list-wrap">
 
-								
 								<div id="list-bar" class="shadow or-scroll-bar">
 									
 									<ul class="nav nav-pills">
 										<li class="nav-item emp-info-bar non-click">
-												<a class="nav-link" data-toggle="pill" href="#all">전체보기</a>
-											</li>
-										<c:forEach items="${deptList}" var="dl" >
+											<a class="nav-link" data-toggle="pill" href="#all">전체보기</a>
+										</li>
+										
+										<c:forEach items="${deptMap['1']}" var="dl" >
 												<li class="nav-item emp-info-bar non-click">
 													<a class="nav-link" data-toggle="pill" href="#${dl.deptName}">${dl.deptName}</a>
+													
+													<c:forEach items="${deptMap['2']}" var="dl2" >
+														<c:if test="${dl2.highDeptCode eq dl.deptCode}">
+																<li class="nav-item emp-info-bar non-click">
+																	<a class="nav-link" data-toggle="pill" href="#${dl2.deptName}">+ ${dl2.deptName}</a>
+																		<c:forEach items="${deptMap['3']}" var="dl3" >
+																			<c:if test="${dl3.highDeptCode eq dl2.deptCode}">
+																				<li class="nav-item emp-info-bar non-click">
+																					<a class="nav-link" data-toggle="pill" href="#${dl3.deptName}">+ + ${dl3.deptName}</a>
+																						<c:forEach items="${deptMap['4']}" var="dl4" >
+																							<c:if test="${dl4.highDeptCode eq dl3.deptCode}">
+																								<li class="nav-item emp-info-bar non-click">
+																									<a class="nav-link" data-toggle="pill" href="#${dl4.deptName}">+ + +${dl4.deptName}</a>
+																										<c:forEach items="${deptMap['5']}" var="dl5" >
+																											<c:if test="${dl5.highDeptCode eq dl4.deptCode}">
+																												<li class="nav-item emp-info-bar non-click">
+																													<a class="nav-link" data-toggle="pill" href="#${dl5.deptName}">+ + + +${dl5.deptName}</a>
+																																
+																														<c:forEach items="${deptMap['6']}" var="dl3" >
+																															<c:if test="${dl6.highDeptCode eq dl5.deptCode}">
+																																<li class="nav-item emp-info-bar non-click">
+																																	<a class="nav-link" data-toggle="pill" href="#${dl6.deptName}">+ + + + + ${dl6.deptName}</a>
+																																		<c:forEach items="${deptMap['3']}" var="dl3" >
+																																			<c:if test="${dl3.highDeptCode eq dl2.deptCode}">
+																																				<li class="nav-item emp-info-bar non-click">
+																																					<a class="nav-link" data-toggle="pill" href="#${dl3.deptName}">+ + ${dl3.deptName}</a>
+																																				</li>
+																																			</c:if>
+																																		</c:forEach>
+																																</li>
+																															</c:if>
+																														</c:forEach>
+																												</li>
+																											</c:if>
+																										</c:forEach>
+																								</li>
+																							</c:if>
+																						</c:forEach>
+																				</li>
+																		</c:if>
+																	</c:forEach>
+																</li>
+														</c:if>
+													</c:forEach>
+													
 												</li>
 										</c:forEach>
-								
+										
 									</ul>
 								</div>
 							</div>

@@ -1,6 +1,9 @@
 package com.kh.app00.organization.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -36,8 +39,23 @@ public class OrganizationController {
 		List<DeptVo> deptList = organizationService.selectDeptList();
 		List<EmpVo> empList = organizationService.selectEmpList();
 		
+		/*
+		 * HashMap 통해서 key : level, value : DeptVo를 담은 list 전달 (level별로 묶음)
+		 */
+		
+		HashMap<String, ArrayList<DeptVo>> deptMap = new HashMap<String, ArrayList<DeptVo>>();
+		
+		for(DeptVo vo : deptList) {
+			String depth = vo.getDeptDepth();
+			ArrayList<DeptVo> list = deptMap.getOrDefault(depth, new ArrayList<DeptVo>());
+			list.add(vo);
+			deptMap.put(depth, list);
+		}
+		//
+		
 		if(empList!=null && deptList!=null) {
 			model.addAttribute("empList",empList);
+			model.addAttribute("deptMap",deptMap);
 			model.addAttribute("deptList",deptList);
 			return "organization/info";
 		} else {

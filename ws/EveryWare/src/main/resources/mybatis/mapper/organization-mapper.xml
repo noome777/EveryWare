@@ -63,12 +63,13 @@
 	</select>
 	
 	<select id="selectDeptList" resultType="DeptVo">
-		 SELECT 
+		SELECT 
 			A.DEPT_CODE
 			, (CASE 
                 WHEN A.HIGH_DEPT_CODE = null THEN A.DEPT_NAME
                 WHEN A.HIGH_DEPT_CODE = B.DEPT_CODE THEN B.DEPT_NAME
-            END) AS HIGHT_DEPT_CODE
+            END) AS HIGH_DEPT_NAME
+            , A.HIGH_DEPT_CODE
             , A.DEPT_NAME
 			, A.DEPT_HEAD_CODE
 			, A.DEPT_STATUS
@@ -77,7 +78,7 @@
         LEFT OUTER JOIN DEPT B
         ON A.HIGH_DEPT_CODE = B.DEPT_CODE
 		WHERE A.DEPT_STATUS = 'N'
-		ORDER BY A.DEPT_DEPTH, A.DEPT_CODE ASC
+		ORDER BY A.HIGH_DEPT_CODE, A.DEPT_DEPTH, A.DEPT_CODE ASC
 	</select>
 	
 	<select id="selectCountAll" resultType="int">

@@ -7,6 +7,7 @@ public class DeptVo {
 	
 	private String deptCode;
 	private String highDeptCode;
+	private String highDeptName;
 	private String deptName;
 	private String deptHeadCode;
 	private String deptStatus;
