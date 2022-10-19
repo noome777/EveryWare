@@ -1,5 +1,7 @@
 package com.kh.app00.commute.service;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,18 @@ public class CommuteServiceImpl implements CommuteService {
     public int insertOver(OverworkVo vo) {
         return dao.insertOver(sst, vo);
     }
+
+    //시간 외 근무 리스트
+    @Override
+    public List<OverworkVo> overworkList(OverworkVo vo) {
+        return dao.overworkList(sst, vo);
+    }
+
+    //사원의 근태 리스트 조회
+//    @Override
+//    public List<CommuteVo> commuteList() {
+//        return dao.commuteList(sst);
+//    }
 
     
    

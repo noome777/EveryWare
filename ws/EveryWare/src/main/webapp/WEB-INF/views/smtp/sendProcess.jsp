@@ -1,4 +1,3 @@
-<%@page import="com.kh.app00.smtp.SmtpVo"%>
 <%@ page import="java.io.BufferedReader"%>
 <%@ page import="java.io.FileReader"%>
 <%@ page import="java.util.HashMap"%>

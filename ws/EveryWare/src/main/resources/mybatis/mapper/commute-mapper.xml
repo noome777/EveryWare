@@ -45,4 +45,13 @@
 		
 		)
 	</insert>
+	
+	<select id="selectOverworkList" resultType="OverworkVo">
+		SELECT OVER_CODE, OVER_DATE, OVER_TIME, OVER_NAME, OVER_REASON, OVER_APPROVAL FROM OVERWORK
+		WHERE ECODE = #{eCode} ORDER BY OVER_CODE DESC
+	</select>
+	
+	<!-- <select id="selectCommuteList">
+		SELECT COM_CODE, ECODE, START_TIME, END_TIME, ENROLL_DATE, COM_STATUS FROM COMMUTE
+	</select> -->
 </mapper>
