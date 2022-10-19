@@ -5,10 +5,18 @@
 <head>
 <meta charset="UTF-8">
 <title>예약</title>
+<style>
+.form-group{
+    width: 150px;
+    margin-left: 30px;
+    margin-top: 18px;
+  }
+</style>
 </head>
+
 <body class="vertical  light  ">
 
- <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%@ include file="/WEB-INF/views/common/sidemenu-content.jsp" %>
 
 <div class="wrapper">
@@ -21,13 +29,61 @@
               <div class="row align-items-center my-4">
               
                 <div class="col">
-                  <h2 class="h3 mb-0 page-title">예약</h2>
+                  <h2 class="h3 mb-0 page-title">예약 목록</h2>
                 </div>
                 
-                
+	           <!-- 카테고리 -->
+		       <div class="form-group mb-3">
+		         <select class="custom-select" id="custom-select">
+		           <option selected>전체</option>
+		           <option value="1">비품</option>
+		           <option value="2">회의실</option>
+		         </select>
+		       </div>
+	       
                 <div class="col-auto">
                   <button type="button" class="btn btn-secondary"><span class="fe fe-trash fe-12 mr-2"></span>Delete</button>
-                  <button type="button" class="btn btn-primary"><span class="fe fe-filter fe-12 mr-2"></span>Create</button>
+                  
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#defaultModal"><span class="fe fe-filter fe-12 mr-2"></span> Create </button>
+                  
+                  <!-- Modal -->
+                  <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                           <h5 class="modal-title" id="defaultModalLabel">예약하기</h5>
+                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                             <span aria-hidden="true">&times;</span>
+                           </button>
+                        </div>
+                       <div class="modal-body">
+                       
+                       <!-- 카테고리 선택 -->
+                        <label for="example-select">자원 이름</label>
+                        <select class="form-control" id="example-select">
+                          <option>비품1</option>
+                          <option>비품2</option>
+                          <option>비품3</option>
+                        </select>
+                 
+                 	  <!-- 예약일자 -->      
+                        <label for="example-date">Date</label>
+                        <input class="form-control" id="example-date" type="date" name="date">
+                      
+                        <label for="example-time">Time</label>
+                        <input class="form-control" id="example-time" type="time" name="time">
+                       
+                       
+                       </div>
+                         <div class="modal-footer">
+                           <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">닫기</button>
+                           <button type="button" class="btn mb-2 btn-primary">저장</button>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                      
                 </div>
               </div>
               
@@ -45,11 +101,11 @@
                             <label class="custom-control-label" for="all2"></label>
                           </div>
                         </th>
-                        <th>ID</th>
-                        <th>User</th>
-                        <th>Company</th>
-                        <th>Phone</th>
-                        <th>Action</th>
+                        <th>번호</th>
+                        <th>자원명</th>
+                        <th>예약 시간</th>
+                        <th>상태</th>
+                        <th>...</th>
                       </tr>
                     </thead>
                     
@@ -62,230 +118,28 @@
                           </div>
                         </td>
                         <td>
-                          <div class="avatar avatar-sm">
-                            <img src="./assets/avatars/face-3.jpg" alt="..." class="avatar-img rounded-circle">
-                          </div>
+                          <p class="mb-0 text-muted"><strong>A1234</strong></p>
                         </td>
                         <td>
-                          <p class="mb-0 text-muted"><strong>김춘배</strong></p>
-                          <small class="mb-0 text-muted">2474</small>
+                          <p class="mb-0 text-muted">비품1</p>
+                          <small class="mb-0 text-muted">멀로하지고민중</small>
                         </td>
                         <td>
-                          <p class="mb-0 text-muted">Accumsan Consulting</p>
-                          <small class="mb-0 text-muted">Ap #331-7123 Lobortis Avenue</small>
+                          <p class="mb-0 text-muted">2020/10/10 15:00 ~ 2020/10/20 18:00</p>
                         </td>
-                        <td>
-                          <p class="mb-0 text-muted"><a href="#" class="text-muted">(958) 421-0798</a></p>
-                        </td>
+                        
+                        <td><span class="badge badge-primary">예약중</span></td>
+                        
                         <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="text-muted sr-only">Action</span>
                           </button>
                           <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Edit</a>
-                            <a class="dropdown-item" href="#">Remove</a>
-                            <a class="dropdown-item" href="#">Assign</a>
+                            <a class="dropdown-item" href="#">더보기</a>
+                            <a class="dropdown-item" href="#">반납</a>
                           </div>
                         </td>
                       </tr>
-                      
-                      <tr>
-                        <td>
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="2786">
-                            <label class="custom-control-label" for="2786"></label>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="avatar avatar-sm">
-                            <img src="./assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">
-                          </div>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted"><strong>김영철</strong></p>
-                          <small class="mb-0 text-muted">2786</small>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted">Fringilla Ornare Placerat Consulting</p>
-                          <small class="mb-0 text-muted">287-8300 Nisl. St</small>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted"><a href="#" class="text-muted">(899) 881-3833</a></p>
-                        </td>
-                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="text-muted sr-only">Action</span>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Edit</a>
-                            <a class="dropdown-item" href="#">Remove</a>
-                            <a class="dropdown-item" href="#">Assign</a>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="2747">
-                            <label class="custom-control-label" for="2747"></label>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="avatar avatar-sm">
-                            <img src="./assets/avatars/face-2.jpg" alt="..." class="avatar-img rounded-circle">
-                          </div>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted"><strong>팔봉춘</strong></p>
-                          <small class="mb-0 text-muted">2747</small>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted">Tristique Ltd</p>
-                          <small class="mb-0 text-muted">4577 Cras St.</small>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted"><a href="#" class="text-muted">(977) 220-6518</a></p>
-                        </td>
-                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="text-muted sr-only">Action</span>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Edit</a>
-                            <a class="dropdown-item" href="#">Remove</a>
-                            <a class="dropdown-item" href="#">Assign</a>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="2639">
-                            <label class="custom-control-label" for="2639"></label>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="avatar avatar-sm">
-                            <img src="./assets/avatars/face-4.jpg" alt="..." class="avatar-img rounded-circle">
-                          </div>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted"><strong>김파인애플</strong></p>
-                          <small class="mb-0 text-muted">2639</small>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted">Orci Luctus Et Inc.</p>
-                          <small class="mb-0 text-muted">P.O. Box 228, 7512 Lectus Ave</small>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted"><a href="#" class="text-muted">(537) 315-1481</a></p>
-                        </td>
-                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="text-muted sr-only">Action</span>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Edit</a>
-                            <a class="dropdown-item" href="#">Remove</a>
-                            <a class="dropdown-item" href="#">Assign</a>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="2238">
-                            <label class="custom-control-label" for="2238"></label>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="avatar avatar-sm">
-                            <img src="./assets/avatars/face-5.jpg" alt="..." class="avatar-img rounded-circle">
-                          </div>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted"><strong>김나비</strong></p>
-                          <small class="mb-0 text-muted">2238</small>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted">Sit Amet Lorem Industries</p>
-                          <small class="mb-0 text-muted">Ap #377-5357 Sed Road</small>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted"><a href="#" class="text-muted">(238) 386-0247</a></p>
-                        </td>
-                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="text-muted sr-only">Action</span>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Edit</a>
-                            <a class="dropdown-item" href="#">Remove</a>
-                            <a class="dropdown-item" href="#">Assign</a>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="2152">
-                            <label class="custom-control-label" for="2152"></label>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="avatar avatar-sm">
-                            <img src="./assets/avatars/face-6.jpg" alt="..." class="avatar-img rounded-circle">
-                          </div>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted"><strong>봉미선</strong></p>
-                          <small class="mb-0 text-muted">2152</small>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted">Suspendisse LLC</p>
-                          <small class="mb-0 text-muted">Ap #410-5363 Non, Avenue</small>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted"><a href="#" class="text-muted">(587) 675-3258</a></p>
-                        </td>
-                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="text-muted sr-only">Action</span>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Edit</a>
-                            <a class="dropdown-item" href="#">Remove</a>
-                            <a class="dropdown-item" href="#">Assign</a>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="2488">
-                            <label class="custom-control-label" for="2488"></label>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="avatar avatar-sm">
-                            <img src="./assets/avatars/face-7.jpg" alt="..." class="avatar-img rounded-circle">
-                          </div>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted"><strong>신짱아</strong></p>
-                          <small class="mb-0 text-muted">2488</small>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted">Dolor Incorporated</p>
-                          <small class="mb-0 text-muted">8250 Molestie St.</small>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted"><a href="#" class="text-muted">(934) 582-9495</a></p>
-                        </td>
-                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="text-muted sr-only">Action</span>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Edit</a>
-                            <a class="dropdown-item" href="#">Remove</a>
-                            <a class="dropdown-item" href="#">Assign</a>
-                          </div>
-                        </td>
-                      </tr>
+    
                     </tbody>
                   </table>
                 </div>
