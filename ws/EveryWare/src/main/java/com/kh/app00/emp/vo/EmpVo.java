@@ -29,4 +29,10 @@ public class EmpVo {
     private String empProfileName;
     private String empLastLoginDate;
     private String empFileName;
+    
+    
+    private String deptName;
+    private String rankName;
+    private String typesName;
+    private String jobName;
 }

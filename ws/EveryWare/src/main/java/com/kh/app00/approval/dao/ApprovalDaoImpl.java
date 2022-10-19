@@ -10,6 +10,8 @@ import com.kh.app00.approval.doc.vo.DocFormVo;
 import com.kh.app00.approval.doc.vo.DocPeriodVo;
 import com.kh.app00.approval.doc.vo.DocSecurityVo;
 import com.kh.app00.approval.vo.ApprovalTypeVo;
+import com.kh.app00.emp.vo.EmpVo;
+import com.kh.app00.organization.vo.DeptVo;
 
 @Repository
 public class ApprovalDaoImpl implements ApprovalDao {
@@ -42,6 +44,18 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	@Override
 	public List<ApprovalTypeVo> selectTypeList(SqlSessionTemplate sst) {
 		return sst.selectList("approvalMapper.selectTypeList");
+	}
+	
+	//부서 불러오기
+	@Override
+	public List<DeptVo> selectDeptList(SqlSessionTemplate sst) {
+		return sst.selectList("approvalMapper.selectDeptList");
+	}
+
+	//임직원 불러오기
+	@Override
+	public List<EmpVo> selectEmpList(SqlSessionTemplate sst) {
+		return sst.selectList("approvalMapper.selectEmpList");
 	}
 
 }

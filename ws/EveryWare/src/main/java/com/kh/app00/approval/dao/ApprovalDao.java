@@ -9,6 +9,8 @@ import com.kh.app00.approval.doc.vo.DocFormVo;
 import com.kh.app00.approval.doc.vo.DocPeriodVo;
 import com.kh.app00.approval.doc.vo.DocSecurityVo;
 import com.kh.app00.approval.vo.ApprovalTypeVo;
+import com.kh.app00.emp.vo.EmpVo;
+import com.kh.app00.organization.vo.DeptVo;
 
 public interface ApprovalDao {
 	
@@ -21,11 +23,17 @@ public interface ApprovalDao {
 	//보안등급 불러오기
 	List<DocSecurityVo> selectSecurityList(SqlSessionTemplate sst);
 	
-	//양식항목
+	//양식항목 불러오기
 	List<DocFormMapperVo> formSelect(SqlSessionTemplate sst, int formCode);
 	
 	//결재타입 불러오기
 	List<ApprovalTypeVo> selectTypeList(SqlSessionTemplate sst);
+
+	//부서 불러오기
+	List<DeptVo> selectDeptList(SqlSessionTemplate sst);
+
+	//임직원 불러오기
+	List<EmpVo> selectEmpList(SqlSessionTemplate sst);
 
 	
 }

@@ -24,6 +24,10 @@
 		<typeAlias alias="DeptVo" type="com.kh.app00.organization.vo.DeptVo"/>
 		
 		
+		<!-- 근태 관련 -->
+		<typeAlias alias="DayoffVo" type="com.kh.app00.dayoff.vo.DayoffVo"/>
+		
+		
 		<!-- 일정 관련 -->
 		<typeAlias alias="CalendarVo" type="com.kh.app00.calendar.vo.CalendarVo"/>
 		<!-- 파일매니저 관련 -->
