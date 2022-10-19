@@ -1,3 +1,5 @@
+<%@page import="com.kh.app00.calendar.vo.CalendarVo"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -633,23 +635,23 @@
 										</button>
 									</div>
 									<div class="modal-body p-4">
-										<form>
+										<form action="${root}/calendar/personal/insert" method="POST">
 											<div class="form-group">
-												<label for="eventTitle" class="col-form-label">제목</label>
-												<input type="text" class="form-control" id="eventTitle"
+												<label for="eventTitle" class="col-form-label">제목</label> <input
+													type="text" class="form-control" id="eventTitle" name="calTitle"
 													placeholder="Add event title">
 											</div>
 											<div class="form-group">
 												<label for="eventNote" class="col-form-label">메모</label>
-												<textarea class="form-control" id="eventNote"
+												<textarea class="form-control" id="eventNote" name="calContent"
 													placeholder="Add some note for your event"></textarea>
 											</div>
 											<div class="form-row">
 												<div class="form-group col-md-8">
-													<label for="eventType">타입</label> <select
-														id="eventType" class="form-control select">
-														<option value="work">Work</option>
-														<option value="home">Home</option>
+													<label for="eventType">타입</label> <select id="eventType" name="calType"
+														class="form-control select">
+														<option value="WORK">부서</option>
+														<option value="HOME">개인</option>
 													</select>
 												</div>
 											</div>
@@ -662,7 +664,7 @@
 																<span class="fe fe-calendar fe-16"></span>
 															</div>
 														</div>
-														<input type="text" class="form-control drgpicker"
+														<input type="text" class="form-control drgpicker" name="calStart"
 															id="drgpicker-start" value="10/15/2022">
 													</div>
 												</div>
@@ -674,8 +676,8 @@
 																<span class="fe fe-clock fe-16"></span>
 															</div>
 														</div>
-														<input type="text" class="form-control time-input"
-															id="start-time" placeholder="10:00 AM">
+														<input type="text" class="form-control time-input" name="startTime"
+															id="start-time" placeholder="00:00 AM">
 													</div>
 												</div>
 											</div>
@@ -688,7 +690,7 @@
 																<span class="fe fe-calendar fe-16"></span>
 															</div>
 														</div>
-														<input type="text" class="form-control drgpicker"
+														<input type="text" class="form-control drgpicker" name="calEnd"
 															id="drgpicker-end" value="10/17/2022">
 													</div>
 												</div>
@@ -700,20 +702,21 @@
 																<span class="fe fe-clock fe-16"></span>
 															</div>
 														</div>
-														<input type="text" class="form-control time-input"
-															id="end-time" placeholder="11:00 AM">
+														<input type="text" class="form-control time-input" name="EndTime"
+															id="end-time" placeholder="00:00 AM">
 													</div>
 												</div>
 											</div>
-										</form>
 									</div>
 									<div class="modal-footer d-flex justify-content-between">
 										<div class="custom-control custom-switch">
-											<input type="checkbox" class="custom-control-input"
+											<input type="checkbox" class="custom-control-input" name="calAllday"
 												id="RepeatSwitch" checked> <label
 												class="custom-control-label" for="RepeatSwitch">종일</label>
 										</div>
-										<button type="button" class="btn mb-2 btn-primary">저장</button>
+										<input type="submit" class="btn mb-2 btn-primary" value="저장">
+										
+										</form>
 									</div>
 								</div>
 							</div>
@@ -893,18 +896,6 @@
         {
           var calendar = new FullCalendar.Calendar(calendarEl,
           {
-        	/* googleCalendarApiKey : "AIzaSyBzIIqGuQHooyp3ivTkSS7P1GS6Nx7yZfg",
-  		    eventSources :[ 
-  		        {
-  		            googleCalendarId : 'ko.south_korea.official#holiday@group.v.calendar.google.com'
-  		            , color: 'white'   // an option!
-  		            , textColor: 'red' // an option!
-  		        } 
-  		    ], */
-  		    /* eventClick : function(info) {	//휴일 클릭시 구글 캘린더 이동을 안하도록 설정
-					info.jsEvent.stopPropagation();
-					info.jsEvent.preventDefault();
-				}, */
             plugins: ['dayGrid', 'timeGrid', 'list', 'bootstrap'],
             timeZone: 'Asia/Seoul',
             themeSystem: 'bootstrap',
@@ -926,33 +917,31 @@
 /*             events: 'https://fullcalendar.io/demo-events.json',	//예시 */
  			editable: true,
 			events: [
-			     {
-			       title: '회의',
-			       start: '2022-10-17',
-			       backgroundColor: '#8B0000',
-			       borderColor:'#8B0000'
-			     },
-			     {
-			       title: '휴가',
-			       start: '2022-10-18T16:00:00',
-			       end: '2022-10-19T19:00:00',
-			       backgroundColor: '#008404',
-			       borderColor:'#008404'         
-			     }],
+				<%List<CalendarVo> calendarList = (List<CalendarVo>) request.getAttribute("calendarList");%>
+	            <%if (calendarList != null) {%>
+	            <%for (CalendarVo vo : calendarList) {%>
+	            {
+	            	title : '<%=vo.getCalTitle()%>',
+	                start : '<%=vo.getCalStart()%>',
+	                end : '<%=vo.getCalEnd()%>',
+	                color : '#' + Math.round(Math.random() * 0xffffff).toString(16)
+	             },
+		<%}
+}%>],
             locale: 'ko'
           });
           calendar.render();
         });
       }
     </script>
-    <script src='${root}/resources/js/jquery.mask.min.js'></script>
-    <script src='${root}/resources/js/select2.min.js'></script>
-    <script src='${root}/resources/js/jquery.steps.min.js'></script>
-    <script src='${root}/resources/js/jquery.validate.min.js'></script>
-    <script src='${root}/resources/js/jquery.timepicker.js'></script>
-    <script src='${root}/resources/js/dropzone.min.js'></script>
-    <script src='${root}/resources/js/uppy.min.js'></script>
-    <script src='${root}/resources/js/quill.min.js'></script>
+	<script src='${root}/resources/js/jquery.mask.min.js'></script>
+	<script src='${root}/resources/js/select2.min.js'></script>
+	<script src='${root}/resources/js/jquery.steps.min.js'></script>
+	<script src='${root}/resources/js/jquery.validate.min.js'></script>
+	<script src='${root}/resources/js/jquery.timepicker.js'></script>
+	<script src='${root}/resources/js/dropzone.min.js'></script>
+	<script src='${root}/resources/js/uppy.min.js'></script>
+	<script src='${root}/resources/js/quill.min.js'></script>
 	<script>
       $('.select2').select2(
       {
@@ -1156,6 +1145,6 @@
         });
       }
     </script>
-    
+
 </body>
 </html>
