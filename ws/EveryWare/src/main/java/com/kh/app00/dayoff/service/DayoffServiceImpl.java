@@ -1,5 +1,7 @@
 package com.kh.app00.dayoff.service;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,12 @@ public class DayoffServiceImpl implements DayoffService {
     @Override
     public int insertOff(DayoffVo vo) {
         return dao.insertOff(sst, vo);
+    }
+
+    //휴가 목록 조회
+    @Override
+    public List<DayoffVo> dayoffList(DayoffVo vo) {
+        return dao.dayoffList(sst, vo);
     }
 
 }

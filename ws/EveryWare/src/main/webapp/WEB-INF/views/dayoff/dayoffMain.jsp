@@ -135,23 +135,33 @@
           <thead>
             <tr>
               <th>신청번호</th>
-              <th>일자</th>
-              <th>시간</th>
-              <th>업무내용</th>
+              <th>시작일자</th>
+              <th>종료일자</th>
+              <th>일수</th>
               <th>사유</th>
               <th>상태</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
+           <!--  <tr>
               <td>3224</td>
               <td>Keith Baird</td>
               <td>Enim Limited</td>
               <td>Apr 24, 2019</td>
               <td>비고</td>
               <td>승인완료</td>
-            </tr>
-            <tr>
+            </tr> -->
+             <c:forEach items="${voList}" var="x">
+            	<tr>
+	              <td>${x.offCode}</td>
+	              <td>${x.offStartDate}</td>
+	              <td>${x.offEndDate}</td>
+	              <td>${x.offDays}</td>
+	              <td>${x.offReason}</td>
+	              <td>${x.offApproval}</td>
+            	</tr>
+             </c:forEach>
+            <!-- <tr>
               <td>3218</td>
               <td>Graham Price</td>
               <td>Nunc Lectus Incorporated</td>
@@ -190,7 +200,7 @@
               <td>Jan 13, 2020</td>
               <td>비고</td>
               <td>승인완료</td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
       </div>
