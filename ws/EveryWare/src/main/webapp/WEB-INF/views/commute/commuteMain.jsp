@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,7 +58,7 @@
     margin-top: -30px;
     margin-right: 650px;
   }
-  
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
@@ -68,7 +69,7 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <%@ include file="/WEB-INF/views/commute/commute-side.jsp" %>
    	<main role="main" class="main-content">
-
+    <button onclick="location.href='${root}/emp/login'">로그아웃</button>
       <!-- 근무체크 -->
       <form action="" method="post">
         <div class="card shadow mb-4">
@@ -257,6 +258,8 @@
       </div>
 	</main>
 </div>
+
+
 
 <script>
   /*시간 출력하는 함수 호출*/

@@ -64,12 +64,12 @@
           </div>
           <div class="checkbox mb-3">
             <label>
-            <input type="checkbox" value="true" id="saveId" name="saveId"> Stay logged in </label>
+            <input type="checkbox" id="saveId" name="saveId"> Stay logged in </label>
           </div>
           <button class="btn btn-lg btn-primary btn-block" id="loginBtn">Let me in</button><br>
           <a href="${root}/emp/searchId" id="search-id">search ID </a>
           |
-          <a href="${root}/emp/searchPwd" id="search-pwd">  search Password</a>
+          <a href="${root}/emp/mailMain" id="search-pwd">  search Password</a>
           <p class="mt-5 mb-3 text-muted">© 2022</p>
         </div>
       </div>
@@ -82,7 +82,8 @@
 
   const empId = document.querySelector('#empId').value;
   const empPwd = document.querySelector('#empPwd').value;
-  const saveId = document.querySelector('#saveId').value;
+  // const saveId = document.querySelector('#saveId').value;
+  const saveId = $("input:checkbox[id='saveId']").prop("checked");
 
     $.ajax({
       url: "${root}/emp/login",

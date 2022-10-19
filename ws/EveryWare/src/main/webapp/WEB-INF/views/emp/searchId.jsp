@@ -64,7 +64,7 @@
           <!-- ajax로 변환 예정 -->
           <!-- <div id="findIdResult"><h3>Your ID is <mark id="findId">${idVo.empEMail}<mark></h3></div><br><br><br> -->
           <div>Don't you remember your PWD? 
-          <a href="${root}/emp/searchPwd"> Find PWD</a>
+          <a href="${root}/emp/mailMain"> Find PWD</a>
           </div>
         
           <p class="mt-5 mb-3 text-muted">© 2022</p>

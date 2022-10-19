@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.app00.commute.service.CommuteService;
 import com.kh.app00.commute.vo.CommuteVo;
+import com.kh.app00.commute.vo.OverworkVo;
 import com.kh.app00.emp.vo.EmpVo;
 
 @Controller
@@ -36,6 +37,13 @@ public class CommuteController {
       // 근태 메인화면에서 출퇴근 버튼 입력 후 submit시
       @PostMapping("main")
       public String commuteMain(CommuteVo vo, HttpSession session) throws ParseException {
+          
+       
+//      if(loginMember != null) {
+//          session.setAttribute("alertMsg", "로그인 후 접근 가능합니다 !");
+//          return "redirect:/emp/login";
+//      }
+      
       System.out.println(vo);
       
       //사원의 코드를 vo에 추가하기
@@ -56,14 +64,43 @@ public class CommuteController {
       
       Date startFormat = format.parse(starTime);
       Date endFormat = format.parse(endTime);
-      Date onTime = new SimpleDateFormat("HH:mm:ss").parse("02:13:00");
+      Date onTimeIn = new SimpleDateFormat("HH:mm:ss").parse("01:15:00");
+      Date onTimeOut = new SimpleDateFormat("HH:mm:ss").parse("01:15:00");
       
-      if(onTime.before(startFormat)) {
+      if(onTimeIn.after(startFormat)) {
+          //정상출근
           vo.setComStatus(normal);
-          System.out.println(vo);
-      }else {
-          System.out.println("떙 다시");
+      }else if(onTimeIn.before(startFormat) && onTimeOut.before(endFormat)) {
+          //지각
+          vo.setComStatus(late);
       }
+//      else if{
+//          //조기퇴근
+//      }else {
+//          //결근
+//      }
+      System.out.println(vo);
+      
+      int result = service.insertCommute(vo);
+      
+      
+      if(result == 1) {
+          //근태 테이블에 insert 성공
+          return "commute/commuteMain";
+      }else {
+          //실패
+          return "error/404";
+      }
+      
+    }
+      
+      
+      
+      
+      
+      
+      
+      
 //      System.out.println(startTime);
 //      System.out.println(endTime);
 //      System.out.println(onTime);
@@ -99,9 +136,9 @@ public class CommuteController {
       //사원의 근태 상태를 vo에 추가하기 -> 정상출근/결근/지각/조기퇴근
       //ORA-01400: NULL을 ("C##EVERYWARE"."COMMUTE"."END_TIME") 안에 삽입할 수 없습니다
       //CommuteVo(comCode=null, ecode=3, startTime=9:28:52 PM, endTime=, enrollDate=null, comStatus=null)
-//      if(9 to 6이면 정상출근) {
+//      if(9 to 6이면 정상출근 ) {
 //      
-//      }else if(9 이후에 오면 지각){
+//      }else if(9 이후에 출근 && 6시 이후 퇴근하면 지각){
 //      
 //      }else if(출퇴근 없으면 결근) {
 //      
@@ -116,18 +153,7 @@ public class CommuteController {
       
       
       
-      int result = service.insertCommute(vo);
       
-      
-      if(result == 1) {
-          //근태 테이블에 insert 성공
-          return "commute/commuteMain";
-      }else {
-          //실패
-          return "error/404";
-      }
-      
-    }
       
      
     @GetMapping("selectByMonth")
@@ -135,9 +161,33 @@ public class CommuteController {
         return "commute/selectByMonth";
     }
 
+    //시간 외 근무 화면
     @GetMapping("overwork")
     public String overwork() {
         return "commute/overwork";
+    }
+    
+    //시간 외 근무 신청
+    @PostMapping("overwork")
+    public String overwork(OverworkVo vo, HttpSession session) {
+        
+        //사원 정보 vo에 저장
+        EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
+        vo.setECode(loginMember.getEmpCode());
+        
+        System.out.println(vo);
+        
+        //DB에 신청 정보 insert
+        int result = service.insertOver(vo);
+        
+        if(result == 1) {
+            session.setAttribute("alertMsg", "연장 근무 신청이 완료 되었습니다.");
+            return "commute/overwork";
+        } else {
+            session.setAttribute("alertMsg", "신청에 실패하셨습니다.");
+            return "commute/overwork";
+        }
+        
     }
 
 }

@@ -37,6 +37,14 @@ public class EmpServiceImpl implements EmpService {
         return dao.selectPwdInfo(sst, vo);
     }
 
+    //비밀번호 랜덤값으로 업데이트
+    @Override
+    public int updateTempPwd(EmpVo vo) {
+        return dao.updateTempPwd(sst, vo);
+    }
+
+   
+
    
 
     

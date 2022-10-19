@@ -22,4 +22,27 @@
 		
 		)
 	</insert>
+	
+	<insert id="insertOverwork">
+		INSERT INTO OVERWORK
+		(
+			 OVER_CODE
+		   , ECODE
+		   , OVER_DATE
+		   , OVER_TIME
+		   , OVER_NAME
+		   , OVER_REASON
+		
+		)
+		VALUES
+		(
+			 SEQ_OVER_CODE_NO.NEXTVAL
+		   , #{eCode}
+		   , #{overDate}
+		   , #{overTime}
+		   , #{overName}
+		   , #{overReason}
+		
+		)
+	</insert>
 </mapper>

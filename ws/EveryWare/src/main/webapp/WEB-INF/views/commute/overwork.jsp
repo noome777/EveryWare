@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
+<c:set var="alertMsg" value="${sessionScope.alertMsg}"/>
+<c:if test="${not empty alertMsg}">
+    <script>
+      alert('${alertMsg}');
+    </script>
+</c:if>
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,36 +53,30 @@
             <h4 class="mb-0">시간 외 근무 신청</h4><br>
         </div>
         <div class="card-body">
-            <form class="needs-validation" novalidate="">
+            <form class="needs-validation" method="post">
                 <div class="form-row">
-                  <div class="col-md-4 mb-3">
-                    <label for="validationCustom3">부서명</label>
-                    <input type="text" class="form-control" id="validationCustom3" value="" required="">
-                  </div>
-                  <div class="col-md-4 mb-3">
+                  <!-- <div class="col-md-4 mb-3">
                     <label for="validationCustom4">성명</label>
-                    <input type="text" class="form-control" id="validationCustom4" value="" required="">
-                  </div>
-                </div> 
-                <div class="form-row mb-3">
+                    <input type="text" class="form-control" name="empName" id="validationCustom4" value="" required="">
+                  </div> -->
                   <div class="col-md-4 mb-3">
                     <label for="date-input1">예정일시</label>
                     <div class="input-group">
-                      <input class="form-control" id="example-date" type="date" name="date">
+                      <input class="form-control" id="example-date" type="date" name="overDate">
                     </div>
                   </div>
                   <div class="col-md-4 mb-3">
-                    <label for="validationCustom4">일수</label>
-                    <input type="text" class="form-control" id="validationCustom4" required="">
+                    <label for="validationCustom4">시간</label>
+                    <input type="text" class="form-control" id="validationCustom4" required="" name="overTime">
                   </div>
-                </div>
+                </div> 
                 <div class="form-group mb-3">
                   <label for="validationTextarea1">업무내용</label>
-                  <textarea class="form-control" id="validationTextarea1" placeholder="업무 내용을 입력하세요." required="" rows="3"></textarea>
+                  <textarea class="form-control" id="validationTextarea1" placeholder="업무 내용을 입력하세요." required="" rows="3" name="overName"></textarea>
                 </div>
                 <div class="form-group mb-3">
                   <label for="validationTextarea1">사유</label>
-                  <textarea class="form-control" id="validationTextarea1" placeholder="사유를 입력하세요. (사유 없을 시 비고 기재)" required="" rows="3"></textarea>
+                  <textarea class="form-control" id="validationTextarea1" placeholder="사유를 입력하세요. (사유 없을 시 비고 기재)" required="" rows="3" name="overReason"></textarea>
                 </div>
                 <button class="btn btn-outline-primary" type="submit" id="submit-btn">Submit form</button>
             </form>

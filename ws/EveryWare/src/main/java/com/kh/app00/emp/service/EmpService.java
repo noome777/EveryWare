@@ -13,6 +13,9 @@ public interface EmpService {
     //비밀번호 찾기(이름 && 이메일이 사원과 일치 여부 조회)
     EmpVo selectPwdInfo(EmpVo vo);
 
+    //비밀번호 랜덤값으로 업데이트
+    int updateTempPwd(EmpVo vo);
+
    
 
    

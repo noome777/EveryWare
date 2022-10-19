@@ -26,6 +26,13 @@ public class EmpDaoImpl implements EmpDao {
         return sst.selectOne("empMapper.selectPwdInfo", vo);
     }
 
+    //비밀번호 랜덤값으로 업데이트
+    @Override
+    public int updateTempPwd(SqlSessionTemplate sst, EmpVo vo) {
+        return sst.update("empMapper.updateTempPwd", vo);
+    }
+
+
 
     
 

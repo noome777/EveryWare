@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.app00.commute.dao.CommuteDao;
 import com.kh.app00.commute.vo.CommuteVo;
+import com.kh.app00.commute.vo.OverworkVo;
 
 @Service
 public class CommuteServiceImpl implements CommuteService {
@@ -23,6 +24,12 @@ public class CommuteServiceImpl implements CommuteService {
     @Override
     public int insertCommute(CommuteVo vo) {
         return dao.insertCommute(sst, vo);
+    }
+
+    //시간 외 근무 신청
+    @Override
+    public int insertOver(OverworkVo vo) {
+        return dao.insertOver(sst, vo);
     }
 
     
