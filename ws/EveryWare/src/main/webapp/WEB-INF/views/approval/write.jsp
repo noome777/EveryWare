@@ -45,6 +45,9 @@
   .fe-24:hover{
     background-color: rgb(202, 222, 247);
   }
+  #approver-select{
+    height: 600px;
+  }
 </style>
 </head>
 <body>
@@ -240,16 +243,17 @@
             <div id="modal-appr-type" class="d-flex m-2">
               <c:forEach items="${approvalTypeList}" var="a">
                 <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input mb-1" id="customCheck${a.apprTypeCode}" value="${a.apprTypeCode}" name="apprTypeCode">
+                  <input type="checkbox" class="custom-control-input mb-1" id="customCheck${a.apprTypeCode}" value="${a.apprTypeCode}" name="typeCheck[]">
                   <label class="custom-control-label p-1 mr-2" for="customCheck${a.apprTypeCode}">${a.apprTypeName}</label>
                 </div>
               </c:forEach>
             </div>
             <div class="form-group mb-3 w-25">
-              <select class="custom-select form-control" id="modal-appr-selectbox">
+              <select class="custom-select form-control" id="modal-dept-selectbox">
                 <option value="0">전체</option>
-                <option value="">부서명</option>
-                <option value="">쫘라락</option>
+                <c:forEach items="${deptList}" var="d" >
+	                <option value="${d.deptCode}">${d.deptName}</option>
+                </c:forEach>
               </select>
             </div>
 
@@ -257,24 +261,33 @@
 
               <div id="name-list" class="w-50">
                 <select id="emp-name" multiple="multiple" class="custom-select form-control w-100 h-100 non-scroll">
-                  <option value="1">고은비(인사팀 - 사원)</option>
-                  <option value="2">금은비(재무팀 - 대리)</option>
+                  <c:forEach items="${empList}" var="e">
+	                  <option value="${e.empCode}">${e.empName}(${e.deptName} - ${e.rankName})</option>
+                  </c:forEach>
                 </select>
               </div>
 
+
+
+
+
+
+
+
+
               <div class="w-75 d-flex flex-column">
                 <c:forEach items="${approvalTypeList}" var="a">
-                  <div class="d-flex" apprTypeCode="${a.apprTypeCode}" id="arrow-box">
-                    <div class="h-150 w-25 mx-4 d-flex flex-column justify-content-center align-items-center">
-                      <a id="add-user" class="fe fe-24 fe-arrow-right-circle mb-1  d-none"></a>
-                      <a id="delete-user" class="fe fe-24 fe-arrow-left-circle  d-none"></a>
-                    </div>
-                    <div class="w-75 h-150 d-none" id="type-content">
-                      <span class="">${a.apprTypeName}</span>
-                      <select id="type-select-box" multiple="multiple" class="custom-select form-control w-100 non-scroll mb-3">
-                        <option value="1">고은비(인사팀 - 사원)</option>
-                        <option value="2">금은비(재무팀 - 대리)</option>
-                      </select>
+                  <div class="d-none appr-custom-box" apprTypeCode="${a.apprTypeCode}">
+                    <div class="d-flex">
+                      <div class="h-150 w-25 mx-4 d-flex flex-column justify-content-center align-items-center">
+                        <a id="${a.apprTypeCode}" class="fe fe-24 fe-arrow-right-circle mb-1 add-user"></a>
+                        <a id="${a.apprTypeCode}" class="fe fe-24 fe-arrow-left-circle delete-user"></a>
+                      </div>
+                      <div class="w-75 h-150" id="type-content" apprTypeCode="${a.apprTypeCode}">
+                        <span class="">${a.apprTypeName}</span>
+                        <select id="${a.apprTypeCode}" multiple="multiple" class="custom-select form-control w-100 non-scroll mb-3 approver-select-box">
+                        </select>
+                      </div>
                     </div>
                   </div>
                 </c:forEach>
@@ -371,31 +384,21 @@
       }
     }
     
-    //결재타입 체크박스 
     $('#modal-appr-type input[type=checkbox]').on('click', function(){
 
-
-      // const checkbox = $('#modal-appr-type input[type=checkbox]').each(function () {
-
-      //   if(this.checked){
-      //     this.class
-      //   }
-      // })
-
-
-      // //체크한 체크박스 value 가져오기
-      // const checkboxList = checkbox.length;
-      // let checkedVal = [];
-      // $('#modal-appr-type input[type=checkbox]:checked').each(function () {
-      //   var checked = $(this).val();
-      //   checkedVal.push(checked);
-      // })
+      let checkedVal = [];
+      $('#modal-appr-type input[type=checkbox]:checked').each(function () {
+        var checked = $(this).val();
+        checkedVal.push(checked); 
+      })
       
-      // for(var i=0; i<=checkboxList; i++){
-      //   if(checkbox);
-      // }
-      
-
+      if($(this).prop('checked')){
+        for(var i=0; i<checkedVal.length; i++){
+          $('.appr-custom-box[apprTypeCode = '+ checkedVal[i] + ']').removeClass('d-none');
+        }
+      } else {
+        $('.appr-custom-box[apprTypeCode = '+ this.value + ']').addClass('d-none');
+      }
 
     });
     
@@ -403,13 +406,26 @@
 
     function addUser(){
 
-      var userCode = $('#emp-name option:selected').val();
-      var userOption = $('#emp-name option[value=' + userCode + ']')[0].outerHTML;
+      
+      
 
       $('type1').append(userOption);
       
       
     }
+
+    $('.add-user').on('click', function () {
+      let userCode = $('#emp-name option:selected').val();
+      var userOption = $('#emp-name option[value=' + userCode + ']')[0].outerHTML;
+      
+      let addTypeCode = $(this).attr('id'); 
+      let approverSelectBox = $('.approver-select-box').attr('id');
+      
+      $('.approver-select-box[id=' + addTypeCode + ']').append(userOption);
+
+
+
+    })
 
 
 
