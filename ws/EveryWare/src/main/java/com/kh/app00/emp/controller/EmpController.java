@@ -10,18 +10,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.kh.app00.emp.service.EmpService;
 import com.kh.app00.emp.vo.EmpVo;
-import com.kh.app00.smtp.SmtpVo;
 
 @Controller
 @RequestMapping("emp")
@@ -68,13 +67,12 @@ public class EmpController {
     @PostMapping("login")
     @ResponseBody
     public String login(EmpVo vo, Model model, String saveId, HttpSession session, HttpServletResponse resp) {
-        
         System.out.println(saveId);
         //아이디 저장 (쿠키)
-        if(saveId != null) {
-            Cookie cookie = new Cookie("saveId", vo.getEmpId());
-            resp.addCookie(cookie);
-        }
+//        if(saveId != "false") {
+//            Cookie cookie = new Cookie("saveId", vo.getEmpId());
+//            resp.addCookie(cookie);
+//        }
         
         //서비스 호출
         EmpVo loginMember = service.login(vo);
@@ -116,6 +114,13 @@ public class EmpController {
         }else {
             return "error/404";
         }
+    }
+    
+    //로그아웃
+    @GetMapping("logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
     }
     
     //아이디 찾기 실행
@@ -177,14 +182,13 @@ public class EmpController {
    
     
     //이메일
-//    getmapping, postmapping searchPwd로 바꾸고, searchPwd.jsp를 emailSendMain.jsp에 맞게 변경하기
     @GetMapping("mailMain")
     public String email() {
         return "smtp/EmailSendMain";
     }
    
     @PostMapping("mailSend")
-    public String success(EmpVo vo, HttpServletRequest req, Model model) {
+    public String success(EmpVo vo, HttpServletRequest req, HttpSession session) {
         
         //이름, 이메일이 사원의 정보와 일치한지 확인
         EmpVo pwdVo = service.selectPwdInfo(vo);
@@ -196,11 +200,8 @@ public class EmpController {
             //임시 비밀번호 생성(UUID이용) -> 비밀번호를 랜덤 난수로 설정하기
             String tempPw = UUID.randomUUID().toString().replace("-", "");//-를 제거
             tempPw = tempPw.substring(0,10);//tempPw를 앞에서부터 10자리 잘라줌
-            System.out.println(tempPw);
+            System.out.println("임시 비밀번호 ::: " + tempPw);
             
-            
-            //이메일이 empEMail인 회원의 비밀번호를 랜덤 난수로 업데이트 하기 (서비스에 하고 디비에서 업데이트 하기)
-//            int result = service.updateTempPwd(vo, tempPw);
             
             //이메일이 ~인 회원의 비밀번호 랜덤 난수 설정하여 VO 업데이트 하기,
             String content = "EveryWare 임시 비밀번호는 [] 입니다.";
@@ -209,17 +210,24 @@ public class EmpController {
             vo.setEmpPwd(tempPw);
             System.out.println(vo);
             
-            //db에서 업데이트 해주기
+            //비밀번호 암호화 진행해주기
+//            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//            String bcPwd = encoder.encode(vo.getEmpPwd());
+//            vo.setEmpPwd(bcPwd);
+//            System.out.println("암호화 된 비밀번호 ::: " + encoder);
+            
+            //랜덤난수 + 암호화 된 비밀번호 db에서 업데이트 해주기
             int result = service.updateTempPwd(vo);
             
             //업데이트가 완료되면, 메일 전송하기
             //이후 메일을 update 한 비밀번호를 담은 내용으로 전송하기
             req.setAttribute("contentAll", contentAll);
             
+            
             return "smtp/sendProcess";
         }else {
-            model.addAttribute("alertMsg", "입력하신 정보를 확인해주세요.");
-            return "error/404";
+            session.setAttribute("alertMsg", "이름 또는 이메일을 확인해주세요.");
+            return "redirect:/emp/mailMain";
         }
         
         
