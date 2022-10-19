@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.app00.common.PageVo;
 import com.kh.app00.emp.vo.EmpVo;
 import com.kh.app00.organization.dao.OrganizationDao;
 import com.kh.app00.organization.vo.DeptVo;
@@ -43,6 +44,20 @@ public class OrganizationServiceImpl implements OrganizationService {
 	@Override
 	public List<DeptVo> selectDeptList() {
 		return organizationDao.selectDeptList(sqlSessionTemplate);
+	}
+
+
+	//임직원 관리 위한 페이징
+	@Override
+	public int selectTotalCnt() {
+			return organizationDao.selectCountAll(sqlSessionTemplate);
+	}
+
+
+	//임직원 관리 - 페이징
+	@Override
+	public List<EmpVo> selectEmpListByPage(PageVo pv) {
+		return organizationDao.selectEmpListByPage(sqlSessionTemplate,pv);
 	}
 
 }

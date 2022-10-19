@@ -63,7 +63,7 @@
 	</select>
 	
 	<select id="selectDeptList" resultType="DeptVo">
-		SELECT 
+		 SELECT 
 			A.DEPT_CODE
 			, (CASE 
                 WHEN A.HIGH_DEPT_CODE = null THEN A.DEPT_NAME
@@ -72,11 +72,55 @@
             , A.DEPT_NAME
 			, A.DEPT_HEAD_CODE
 			, A.DEPT_STATUS
+            , A.DEPT_DEPTH
 		FROM DEPT A
         LEFT OUTER JOIN DEPT B
         ON A.HIGH_DEPT_CODE = B.DEPT_CODE
 		WHERE A.DEPT_STATUS = 'N'
-		ORDER BY A.DEPT_CODE ASC
+		ORDER BY A.DEPT_DEPTH, A.DEPT_CODE ASC
+	</select>
+	
+	<select id="selectCountAll" resultType="int">
+		SELECT COUNT(*)
+		FROM EMP
+		WHERE EMP_STATUS = 'N'
+		OR EMP_STATUS = 'R'
+	</select>
+	
+	<select id="selectEmpListByPage" resultType="EmpVo">
+		SELECT
+			E.EMP_CODE
+			, E.EMP_NAME
+			, E.EMP_E_MAIL 
+			, E.EMP_TEL 
+			, E.EMP_PHONE
+			, E.EMP_JOIN_DATE
+			, E.EMP_PROFILE_NAME
+			, E.EMP_BIRTHDAY
+			, E.EMP_PROMOTION_DATE
+			, E.EMP_ADDRESS1
+			, E.EMP_ADDRESS2
+			, E.EMP_ETC
+			, E.EMP_STATUS
+			, C.COM_NAME AS COM_CODE
+			, D.DEPT_NAME AS DEPT_CODE
+			, R.RANK_NAME AS RANK_CODE
+			, J.JOB_NAME AS EMP_JOB_CODE
+			, T.RIGHT_NAME AS RIGHT_CODE
+		 FROM EMP E
+		 JOIN COM C
+  		ON E.COM_CODE = C.COM_CODE
+  		JOIN  DEPT D
+  		ON E.DEPT_CODE = D.DEPT_CODE
+  		JOIN RANK R
+  		ON E.RANK_CODE = R.RANK_CODE
+  		JOIN JOB J
+  		ON E.EMP_JOB_CODE = J.JOB_CODE
+  		JOIN RIGHT T
+  		ON E.RIGHT_CODE = T.RIGHT_CODE
+		WHERE EMP_STATUS = 'N'
+		OR EMP_STATUS ='R'
+		ORDER BY E.EMP_CODE ASC
 	</select>
 	
 </mapper>

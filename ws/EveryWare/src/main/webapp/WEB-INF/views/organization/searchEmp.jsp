@@ -4,16 +4,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>임직원 정보</title>
+<title>임직원 검색</title>
 
 <style>
 
-	/*
+
 	.col-auto > button {
 		border: 1px solid lightgray;
-	} 
-	*/
-
+	}
+	
 	.grid-wrap {
 		height : 85vh;
 		display:grid;
@@ -25,7 +24,7 @@
 	}
 	.grid-wrap > div {
 		border-radius: 5px;
-		/* border : 1px solid lightgrey; */
+		border : 1px solid lightgrey;
 		background-color: white;
 	}
 
@@ -51,7 +50,7 @@
 		width: 85%;
 		height: 55%;
 		border-radius: 5px;
-		/* border : 1px solid lightgray;*/
+		border : 1px solid lightgray;
 		display: flex;
 	}
 
@@ -88,7 +87,7 @@
 		width: 85%;
 		height: 93%;
 		border-radius: 5px;
-		/*border: 1px solid lightgray;*/
+		border: 1px solid lightgray;
 	}
 
 	.style-none {
@@ -104,7 +103,7 @@
 	.emp-info-bar {
 		width : 100%;
 		height : 7%;
-		/*border-bottom : 1px solid lightgray;*/
+		border-bottom : 1px solid lightgray;
 		display: flex;
 		flex-direction: column;
 	}
@@ -146,7 +145,7 @@
 	}
 
 	#profile-area > div {
-		/*border: 1px solid lightgray;*/
+		border: 1px solid lightgray;
 	}
 
 	#profile-title {
@@ -235,7 +234,7 @@
 		        <div class="col-12">
 		            <div class="row align-items-center my-3">
                 		<div class="col">
-                			<h2 class="h3 mb-0 page-title">임직원 정보</h2>
+                			<h3 class="h4 mb-0 page-title padding-left-20px">검색결과</h3>
                 		</div>
                 		<div class="col-auto">
 			                <button type="button" class="btn shadow"><span class="fe fe-user fe-12 mr-2"></span>내 정보보기</button>
@@ -260,17 +259,7 @@
 								
 								<div id="list-bar" class="shadow or-scroll-bar">
 									
-									<ul class="nav nav-pills">
-										<li class="nav-item emp-info-bar non-click">
-												<a class="nav-link" data-toggle="pill" href="#all">전체보기</a>
-											</li>
-										<c:forEach items="${deptList}" var="dl" >
-												<li class="nav-item emp-info-bar non-click">
-													<a class="nav-link" data-toggle="pill" href="#${dl.deptName}">${dl.deptName}</a>
-												</li>
-										</c:forEach>
-								
-									</ul>
+									
 								</div>
 							</div>
 						</div>
@@ -278,8 +267,8 @@
 						<div id="profile-wrap" class="shadow tab-content">
 
 							<!--프로필 11 -->
-							<div class="tab-pane container active flex-wrap" id="all" >
-								<div id="profile-title"><h4>전체보기</h4></div>
+							<div class="tab-pane container active flex-wrap" id="result" >
+								<div id="profile-title"><h4>검색결과</h4></div>
 								<div id="profile-area" class="or-scroll-bar">
 								<c:forEach items="${empList}" var="el">
 									<div class="profile shadow">
@@ -298,31 +287,7 @@
 									</c:forEach>
 								</div>
 							</div>
-						<c:forEach items="${deptList}" var="dl">
-							<div class="tab-pane container fade flex-wrap" id="${dl.deptName}" >
-								<div id="profile-title"><h4>${dl.deptName}</h4></div>
-								<div id="profile-area" class="or-scroll-bar">
-									
-									<c:forEach items="${empList}" var="el">
-										<c:if test="${dl.deptName eq el.deptCode }">
-											<div class="profile shadow">
-												<div class="profile-image avatar avatar-lg">
-													<a href="">
-														<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
-													</a>
-												</div>
-												<div class="profile-text card-text">
-													<strong class="card-title my-0">${el.deptCode}</strong>
-													<p class="small my-0">${el.rankCode}</p>
-													<p class="small my-0">${el.empName}</p>
-													<p class="small my-0">${el.empTel}</p>
-												</div>
-											</div>
-										</c:if>	
-									</c:forEach>
-								</div>
-							</div>
-					</c:forEach>
+						
 							
 								
 								
@@ -337,31 +302,6 @@
 		</main>
 		</div>
 
-		
-
-		<!-- <script>
-
-			const nonClick = document.querySelectorAll(".non-click");
-
-			console.log(nonClick);
-
-			function handleClick(event) {
-				
-				//div에서 모든 "click 클래스 제거"
-				nonClick.forEach((e)=> {
-					e.classList.remove("click")
-				});
-
-				//클릭한 div만 "click" 클래스 추가
-				event.target.classList.add("click");
-
-			}
-
-			nonClick.forEach((e) => { 
-				e.addEventListener("click", handleClick);
-			});
-
-		</script> -->
 		
 	  
 

@@ -10,5 +10,6 @@ public class DeptVo {
 	private String deptName;
 	private String deptHeadCode;
 	private String deptStatus;
+	private String deptDepth;
 
 }
