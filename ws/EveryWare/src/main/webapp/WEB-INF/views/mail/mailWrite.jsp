@@ -7,9 +7,7 @@
 <!-- include summernote css/js -->
 
   
-  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<title>메일홈 </title>
+<title>메일작성 </title>
 
  
 <style>
@@ -26,7 +24,7 @@
   		margin-left: 50px;
   	}
   	
-  	.fileplus{
+  	.mb-3{
   		padding-top: 20px;
   		margin-left: 50px;
   	}
@@ -92,23 +90,17 @@
 		 			</th>
 		 			
 		 			<td colspan="2">
-		 				<div class="fileplus" >
-		 					<button type="button" id="sendBtn" class="btn btn-primary">내 pc</button>
-		 				</div>
+		 				<div class="mb-3">
+							  <label for="formFileMultiple" class="form-label"></label>
+							  <input class="form-control" type="file" id="formFileMultiple" multiple>
+							</div>
 		 			</td>
 		 		</tr>
 		 			
 		 	</table>
-				<div class="container">
-  					<textarea class="summernote" name="editordata"></textarea>    
-				</div>
-			  <script>
-			        $('#summernote').summernote({
-						placeholder:'내용을 입력해주세요' ,
-						tabsize:2,
-						height: 400
-			    });
-			  </script>
+		 	
+		 	<%@ include file="/WEB-INF/views/mail/summernote.jsp" %>
+			
 				
 		 	
 	</main>
