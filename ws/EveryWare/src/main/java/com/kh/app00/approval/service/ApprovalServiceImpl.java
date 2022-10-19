@@ -12,6 +12,8 @@ import com.kh.app00.approval.doc.vo.DocFormVo;
 import com.kh.app00.approval.doc.vo.DocPeriodVo;
 import com.kh.app00.approval.doc.vo.DocSecurityVo;
 import com.kh.app00.approval.vo.ApprovalTypeVo;
+import com.kh.app00.emp.vo.EmpVo;
+import com.kh.app00.organization.vo.DeptVo;
 
 @Service
 public class ApprovalServiceImpl implements ApprovalService {
@@ -48,10 +50,23 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public List<DocFormMapperVo> formSelect(int formCode) {
 		return dao.formSelect(sst, formCode);
 	}
-
+	
+	//결재타입
 	@Override
 	public List<ApprovalTypeVo> selectTypeList() {
 		return dao.selectTypeList(sst);
+	}
+	
+	//부서정보
+	@Override
+	public List<DeptVo> selectDeptList() {
+		return dao.selectDeptList(sst);
+	}
+
+	//임직원 정보
+	@Override
+	public List<EmpVo> selectEmpList() {
+		return dao.selectEmpList(sst);
 	}
 
 }

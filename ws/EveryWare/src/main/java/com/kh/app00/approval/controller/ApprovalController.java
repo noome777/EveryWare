@@ -21,6 +21,8 @@ import com.kh.app00.approval.doc.vo.DocSecurityVo;
 import com.kh.app00.approval.service.ApprovalService;
 import com.kh.app00.approval.vo.ApprovalDocVo;
 import com.kh.app00.approval.vo.ApprovalTypeVo;
+import com.kh.app00.emp.vo.EmpVo;
+import com.kh.app00.organization.vo.DeptVo;
 
 @Controller
 @RequestMapping("approval")
@@ -42,6 +44,7 @@ public class ApprovalController {
 	@GetMapping("write/{formCode}")
 	public String write(Model model, @PathVariable int formCode) {
 		
+		//문서
 		//문서종류 불러오기
 		List<DocFormVo> formList = service.selectFormList();
 		//보존연한 불러오기
@@ -50,9 +53,15 @@ public class ApprovalController {
 		List<DocSecurityVo> securityList = service.selectSecurityList();
 		//문서양식 불러오기
 		List<DocFormMapperVo> formMappingList = service.formSelect(formCode);
+		
+		
+		//결재라인
 		//결재타입 불러오기
 		List<ApprovalTypeVo> approvalTypeList = service.selectTypeList();
-		//임직원 
+		//부서 불러오기
+		List<DeptVo> deptList = service.selectDeptList();
+		//임직원 불러오기
+		List<EmpVo> empList = service.selectEmpList();
 		
 		
 		DocFormMapperVo vo = new DocFormMapperVo();
@@ -65,15 +74,18 @@ public class ApprovalController {
 		model.addAttribute("formMappingList", formMappingList);
 		model.addAttribute("selectedFormCode", vo.getFormCode());
 		model.addAttribute("approvalTypeList", approvalTypeList);
+		model.addAttribute("deptList", deptList);
+		model.addAttribute("empList", empList);
 		
 		return "approval/write";
 	}
 	
 	@PostMapping("write")
+	@ResponseBody
 	public String write(ApprovalDocVo docVo, DocDataVo dataVo) {
 		
 		
-		return"";
+		return"작성 성공";
 	}
 	
 	
