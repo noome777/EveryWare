@@ -16,8 +16,14 @@ public class NoticeController {
 		}
 	
 	@GetMapping("write")
-	public String noticewrite() {
+	public String noticeWrite() {
 		return "notice/noticeWrite";
+		
+		}
+	
+	@GetMapping("detail")
+	public String noticeDetail() {
+		return "notice/noticeDetail";
 		
 		}
 }
