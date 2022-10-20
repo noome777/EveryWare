@@ -69,4 +69,10 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return dao.selectEmpList(sst);
 	}
 
+	//부서별 임직원 정보
+	@Override
+	public List<EmpVo> selectDeptEmp(int deptCode) {
+		return dao.selectDeptEmp(sst, deptCode);
+	}
+
 }

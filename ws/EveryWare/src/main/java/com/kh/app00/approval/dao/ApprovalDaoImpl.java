@@ -58,4 +58,10 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		return sst.selectList("approvalMapper.selectEmpList");
 	}
 
+	//부서별 임직원 불러오기
+	@Override
+	public List<EmpVo> selectDeptEmp(SqlSessionTemplate sst, int deptCode) {
+		return sst.selectList("approvalMapper.selectDeptEmpList", deptCode);
+	}
+
 }

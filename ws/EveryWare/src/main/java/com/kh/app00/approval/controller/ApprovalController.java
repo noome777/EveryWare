@@ -2,7 +2,6 @@ package com.kh.app00.approval.controller;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.kh.app00.approval.doc.vo.DocDataVo;
 import com.kh.app00.approval.doc.vo.DocFormMapperVo;
 import com.kh.app00.approval.doc.vo.DocFormVo;
@@ -79,6 +79,18 @@ public class ApprovalController {
 		
 		return "approval/write";
 	}
+	
+	//결재라인 설정 - 부서별 임직원 조회
+	@PostMapping("selectDept")
+	@ResponseBody
+	public String selectDept(@RequestParam int deptCode) {
+		
+		List<EmpVo> deptEmpList = service.selectDeptEmp(deptCode);
+		String gson = new Gson().toJson(deptEmpList);
+		
+		return gson;
+	}
+	
 	
 	@PostMapping("write")
 	@ResponseBody

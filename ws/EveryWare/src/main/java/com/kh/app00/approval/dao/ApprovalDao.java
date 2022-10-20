@@ -35,5 +35,8 @@ public interface ApprovalDao {
 	//임직원 불러오기
 	List<EmpVo> selectEmpList(SqlSessionTemplate sst);
 
+	//부서별 임직원 불러오기
+	List<EmpVo> selectDeptEmp(SqlSessionTemplate sst, int deptCode);
+
 	
 }

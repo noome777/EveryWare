@@ -33,6 +33,10 @@ public interface ApprovalService {
 	//임직원 불러오기
 	List<EmpVo> selectEmpList();
 
+	//부서별 임직원 불러오기
+	List<EmpVo> selectDeptEmp(int deptCode);
+
+
 	
 	
 	
