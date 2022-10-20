@@ -3,15 +3,19 @@ package com.kh.app00.commute.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kh.app00.common.PageVo;
+import com.kh.app00.common.Pagination;
 import com.kh.app00.commute.service.CommuteService;
 import com.kh.app00.commute.vo.CommuteVo;
 import com.kh.app00.commute.vo.OverworkVo;
@@ -81,7 +85,12 @@ public class CommuteController {
 //      }
       System.out.println(vo);
       
+      //DB 에 사원의 근태 insert
       int result = service.insertCommute(vo);
+      
+      //사원의 근태 목록 조회 (+ 페이징)
+//      PageVo pv = Pagination.getPageVo(result, result, result, result);
+//      List<CommuteVo> voList = service.commuteList();
       
       
       if(result == 1) {
@@ -161,11 +170,23 @@ public class CommuteController {
         return "commute/selectByMonth";
     }
 
-    //시간 외 근무 화면
+    //시간 외 근무 화면 && 리스트 조회
     @GetMapping("overwork")
-    public String overwork() {
+    public String overwork(OverworkVo vo, Model model, HttpSession session) {
+        
+        //사원 정보 vo에 저장
+        EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
+        vo.setECode(loginMember.getEmpCode());
+        
+        //사원의 근태 목록 조회 (+ 페이징)
+//      PageVo pv = Pagination.getPageVo(result, result, result, result);
+        List<OverworkVo> voList = service.overworkList(vo);
+        System.out.println(voList.toString());
+        
+        model.addAttribute("voList", voList);
         return "commute/overwork";
     }
+    
     
     //시간 외 근무 신청
     @PostMapping("overwork")
@@ -177,12 +198,15 @@ public class CommuteController {
         
         System.out.println(vo);
         
+        
         //DB에 신청 정보 insert
         int result = service.insertOver(vo);
         
+      
+        
         if(result == 1) {
             session.setAttribute("alertMsg", "연장 근무 신청이 완료 되었습니다.");
-            return "commute/overwork";
+            return "redirect:/commute/overwork";
         } else {
             session.setAttribute("alertMsg", "신청에 실패하셨습니다.");
             return "commute/overwork";
@@ -190,4 +214,6 @@ public class CommuteController {
         
     }
 
+    
+    
 }

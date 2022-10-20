@@ -84,6 +84,7 @@
   const empPwd = document.querySelector('#empPwd').value;
   // const saveId = document.querySelector('#saveId').value;
   const saveId = $("input:checkbox[id='saveId']").prop("checked");
+  console.log(saveId);
 
     $.ajax({
       url: "${root}/emp/login",

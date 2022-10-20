@@ -122,15 +122,23 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>3224</td>
-              <td>Keith Baird</td>
-              <td>Enim Limited</td>
-              <td>Apr 24, 2019</td>
-              <td>비고</td>
-              <td>승인완료</td>
-            </tr>
-            <tr>
+             <c:forEach items="${voList}" var="x">
+            	<tr>
+	              <td>${x.overCode}</td>
+	              <td>${x.overDate}</td>
+	              <td>${x.overTime}</td>
+	              <td>${x.overName}</td>
+	              <td>${x.overReason}</td>
+	              <td>${x.overApproval}</td>
+            	</tr>
+             </c:forEach>
+           
+			    <%-- <div>${x.no}</div>
+			    <div><a href="${root}/board/detail/${x.no}">${x.title}</a></div>
+			    <div>${x.writer}</div>
+			    <div>${x.hit}</div> --%>
+		    
+            <!-- <tr>
               <td>3218</td>
               <td>Graham Price</td>
               <td>Nunc Lectus Incorporated</td>
@@ -169,7 +177,7 @@
               <td>Jan 13, 2020</td>
               <td>비고</td>
               <td>승인완료</td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
       </div>

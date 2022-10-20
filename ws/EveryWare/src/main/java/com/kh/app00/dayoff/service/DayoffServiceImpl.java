@@ -1,9 +1,12 @@
 package com.kh.app00.dayoff.service;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.app00.common.PageVo;
 import com.kh.app00.dayoff.dao.DayoffDao;
 import com.kh.app00.dayoff.vo.DayoffVo;
 
@@ -24,5 +27,23 @@ public class DayoffServiceImpl implements DayoffService {
     public int insertOff(DayoffVo vo) {
         return dao.insertOff(sst, vo);
     }
+
+    //휴가 목록 조회
+    @Override
+    public List<DayoffVo> dayoffList(DayoffVo vo, PageVo pv) {
+        return dao.dayoffList(sst, vo, pv);
+    }
+
+    //전체 신청 글 수 조회
+    @Override
+    public int selectTotalCnt(DayoffVo vo) {
+        return dao.selectTotalCnt(sst, vo);
+    }
+
+    //기간 선택 목록 조회
+//    @Override
+//    public List<DayoffVo> selectDateList(DayoffVo vo) {
+//        return dao.selectDateList(sst, vo);
+//    }
 
 }

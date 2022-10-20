@@ -38,12 +38,18 @@
 #dayoff-status{
   margin-bottom: -40px;
 }
+#page-area{
+  margin-left: 35%;
+  margin-top: 5%;
+}
+#page-area>a{
+  margin: 5px;
+}
    
 </style>
 </head>
 
     <div class="wrapper">
-        
         <%@ include file="/WEB-INF/views/common/header.jsp" %>
         <%@ include file="/WEB-INF/views/dayoff/dayoff-side.jsp" %>
 
@@ -68,10 +74,10 @@
               </div>
             </div>
         </div>
-    </div> 
+      </div> 
         
-    <div class="wrapper">
-      <!-- 휴가 신청 -->
+      <div class="wrapper">
+        <!-- 휴가 신청 -->
         <div class="card shadow mb-5" id="dayoff-regi">
             <div class="card-header">
             <h4 class="mb-0">휴가 신청</h4><br>
@@ -103,98 +109,80 @@
               <button class="btn btn-outline-primary" type="submit" id="submit-btn">Submit form</button>
             </form>
         </div>
-    </div>
+      </div>
 
-    <!-- 휴가 조회 -->
+      
+       <!-- 휴가 조회 -->
+      <div class="card shadow mb-5" style="margin-top: -10px;">
+        <div style="margin-left: 20px; margin-top: 20px;">
+          <h4 class="card-title">휴가 조회</h4><br><br>
 
-    <div class="card shadow mb-5" style="margin-top: -10px;">
-
-      <div style="margin-left: 20px; margin-top: 20px;">
-        <h4 class="card-title">휴가 조회</h4><br><br>
-
-        <form action="">
-          <h6 class="card-title">기간 선택</h6>
-          <div class="form-row mb-3">
-            <div class="col-md-4 mb-3">
-              <div class="input-group">
-                <input class="form-control" id="example-date" type="date" name="startDate" required>
+          <form action="" method="get">
+            <h6 class="card-title">기간 선택</h6>
+            <div class="form-row mb-3">
+              <div class="col-md-4 mb-3">
+                <div class="input-group">
+                  <input class="form-control" id="example-date" type="date" name="offStartDate" required>
+                </div>
+              </div>
+              ~ 
+              <div class="col-md-4 mb-3">
+                <div class="input-group">
+                  <input class="form-control" id="example-date" type="date" name="offEndDate" required>
+                </div>
               </div>
             </div>
-            ~ 
-            <div class="col-md-4 mb-3">
-              <div class="input-group">
-                <input class="form-control" id="example-date" type="date" name="endDate" required>
-              </div>
-            </div>
-          </div>
-          <button class="btn btn-outline-primary" type="submit" id="search-btn">search</button>
-        </form>
+            <button class="btn btn-outline-primary" type="submit" id="search-btn">search</button>
+          </form>
           
         <h6 class="card-title">조회 결과 {}건</h6>
         <table class="table table-hover">
           <thead>
             <tr>
               <th>신청번호</th>
-              <th>일자</th>
-              <th>시간</th>
-              <th>업무내용</th>
+              <th>시작일자</th>
+              <th>종료일자</th>
+              <th>일수</th>
               <th>사유</th>
               <th>상태</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>3224</td>
-              <td>Keith Baird</td>
-              <td>Enim Limited</td>
-              <td>Apr 24, 2019</td>
-              <td>비고</td>
-              <td>승인완료</td>
-            </tr>
-            <tr>
-              <td>3218</td>
-              <td>Graham Price</td>
-              <td>Nunc Lectus Incorporated</td>
-              <td>May 23, 2020</td>
-              <td>비고</td>
-              <td>대기</td>
-            </tr>
-            <tr>
-              <td>2651</td>
-              <td>Reuben Orr</td>
-              <td>Nisi Aenean Eget Limited</td>
-              <td>Nov 4, 2019</td>
-              <td>비고</td>
-              <td>승인완료</td>
-            </tr>
-            <tr>
-              <td>2636</td>
-              <td>Akeem Holder</td>
-              <td>Pellentesque Associates</td>
-              <td>Mar 27, 2020</td>
-              <td>비고</td>
-              <td>반려</td>
-            </tr>
-            <tr>
-              <td>2757</td>
-              <td>Beau Barrera</td>
-              <td>Augue Incorporated</td>
-              <td>Jan 13, 2020</td>
-              <td>비고</td>
-              <td>승인완료</td>
-            </tr>
-            <tr>
-              <td>2757</td>
-              <td>Beau Barrera</td>
-              <td>Augue Incorporated</td>
-              <td>Jan 13, 2020</td>
-              <td>비고</td>
-              <td>승인완료</td>
-            </tr>
+             <c:forEach items="${voList}" var="x">
+            	<tr>
+	              <td>${x.offCode}</td>
+	              <td>${x.offStartDate}</td>
+	              <td>${x.offEndDate}</td>
+	              <td>${x.offDays}</td>
+	              <td>${x.offReason}</td>
+	              <td>${x.offApproval}</td>
+            	</tr>
+             </c:forEach>
           </tbody>
         </table>
+        <div id="page-area">
+          <c:if test="${pv.startPage ne 1}">
+            <a href="${root}/dayoff/main/${pv.startPage - 1}" class="btn mb-2 btn-primary"><</a>
+          </c:if>
+          <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" var="i">
+              <a href="${root}/dayoff/main/${i}" class="btn mb-2 btn-primary">${i}</a>
+          </c:forEach>
+          <c:if test="${pv.endPage ne pv.maxPage }">
+            <a href="${root}/dayoff/main/${pv.endPage + 1}" class="btn mb-2 btn-primary">></a>
+          </c:if>	
+        </div>
+
+       
+
+
       </div>
     </div>
+
+    <script>
+      //const val = $('input[name=offStartDate]').val();/
+      const val = document.querySelector('input[name=offStartDate]').value;
+      console.log(val);
+    </script>
 </body>
 </html>
 

@@ -7,9 +7,18 @@
 		VALUES (SEQ_DAYOFF_CODE_NO.NEXTVAL, #{eCode}, #{offStartDate}, #{offEndDate}, #{offDays}, #{offReason})
 	</insert>
 
+	<select id="selectDayoffList" resultType="DayoffVo">
+		SELECT OFF_CODE, OFF_START_DATE, OFF_END_DATE, OFF_DAYS, OFF_REASON, OFF_APPROVAL
+		FROM DAYOFF WHERE ECODE = #{eCode} ORDER BY OFF_CODE DESC
+	</select>
 
-
-
+	<select id="selectTotalCnt" resultType="int">
+		SELECT COUNT(*) FROM DAYOFF WHERE ECODE = #{eCode}
+	</select>
+	
+	<!-- <select id="selectDateList" resultType="DayoffVo">
+		
+	</select> -->
 
 
 </mapper>
