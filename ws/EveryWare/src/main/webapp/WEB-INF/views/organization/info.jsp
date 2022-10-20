@@ -335,8 +335,8 @@
 										</div>
 										<div class="profile-text card-text">
 											<strong class=" card-title my-0">${el.empName}</strong>
-											<p class=" small my-0">${el.deptCode}</p>
-											<p class="small my-0">${el.rankCode}</p>
+											<p class=" small my-0">${el.deptName}</p>
+											<p class="small my-0">${el.rankName}</p>
 											<p class="small my-0">${el.empTel}</p>
 										</div>
 									</div>
@@ -349,7 +349,7 @@
 								<div id="profile-area" class="or-scroll-bar">
 									
 									<c:forEach items="${empList}" var="el">
-										<c:if test="${dl.deptName eq el.deptCode }">
+										<c:if test="${dl.deptName eq el.deptName }">
 											<div class="profile shadow">
 												<div class="profile-image avatar avatar-lg">
 													<a href="">
@@ -358,8 +358,8 @@
 												</div>
 												<div class="profile-text card-text">
 													<strong class=" card-title my-0">${el.empName}</strong>
-													<p class=" small my-0">${el.deptCode}</p>
-													<p class="small my-0">${el.rankCode}</p>
+													<p class=" small my-0">${el.deptName}</p>
+													<p class="small my-0">${el.rankName}</p>
 													<p class="small my-0">${el.empTel}</p>
 												</div>
 											</div>
