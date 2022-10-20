@@ -68,11 +68,23 @@ public class EmpController {
     @ResponseBody
     public String login(EmpVo vo, Model model, String saveId, HttpSession session, HttpServletResponse resp) {
         System.out.println(saveId);
+        
         //아이디 저장 (쿠키)
-//        if(saveId != "false") {
-//            Cookie cookie = new Cookie("saveId", vo.getEmpId());
-//            resp.addCookie(cookie);
-//        }
+        if(saveId.equals("true")) {
+            //아이디 저장 체크했을 경우
+            Cookie cookie = new Cookie("saveId", vo.getEmpId());
+            cookie.setMaxAge(60*60*24);
+            resp.addCookie(cookie);
+            
+        }else if(saveId.equals("false")) {
+            //아이디 저장 체크 안 했을 경우
+            
+            Cookie cookie = new Cookie("saveId", vo.getEmpId());
+            // 쿠키의 유효시간을 0으로 설정하여 만료시킨다
+            cookie.setMaxAge(0);
+            // 응답 헤더에 추가한다
+            resp.addCookie(cookie);
+        }
         
         //서비스 호출
         EmpVo loginMember = service.login(vo);
