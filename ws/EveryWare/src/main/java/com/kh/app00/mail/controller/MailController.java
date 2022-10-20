@@ -44,8 +44,4 @@ public class MailController {
 		return "mail/mailDetail";
 	}
 	
-	@GetMapping("summernote")
-	public String summernote() {
-		return "mail/summernote";
 	}
-}
