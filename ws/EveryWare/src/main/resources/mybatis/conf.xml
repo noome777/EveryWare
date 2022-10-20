@@ -33,6 +33,15 @@
 		<!-- 파일매니저 관련 -->
 		<typeAlias alias="FilemanagerVo" type="com.kh.app00.filemanager.vo.FilemanagerVo"/>
 		
+		<!-- 사내공지 관련 -->
+		<typeAlias alias="NoticeVo" type="com.kh.app00.notice.vo.NoticeVo"/>
+		
+		<!-- 시간 외 근무 -->
+		<typeAlias alias="OverworkVo" type="com.kh.app00.commute.vo.OverworkVo"/>
+
+		<!-- 휴가 -->
+		<typeAlias alias="DayoffVo" type="com.kh.app00.dayoff.vo.DayoffVo"/>
+		
 	</typeAliases>
 	
 </configuration>

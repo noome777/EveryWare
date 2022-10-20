@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="noticeMapper">
+
+	<select id="selectList" resultType="NoticeVo">
+		SELECT 
+		   	NOTICE_CODE
+			,NOTICE_TITLE
+			,NOTICE_CONTENT
+			,NOTICE_DATE
+		FROM NOTICE
+		ORDER BY NOTICE_CODE DESC
+	</select>
+</mapper>

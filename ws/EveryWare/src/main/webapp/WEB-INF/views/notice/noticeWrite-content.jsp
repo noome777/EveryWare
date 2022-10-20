@@ -31,6 +31,7 @@
 	<main role="main" class="main-content">
 			<h2 id="noticewrite">공지사항 작성</h2>
 			<br>
+			<form action="" method="post">
 			<div class="buttonSet">
 				<button type="button" id="sendBtn" class="btn btn-primary">확인</button>
 			</div>
@@ -42,7 +43,7 @@
 					<td colspan="2">
 						<div class="inputrecipe">
 							<div>
-								<input type="text" class="form-control" name="ntitle"
+								<input type="text" class="form-control" name="noticeTitle"
 									id="noticetitle">
 							</div>
 						</div>
@@ -63,7 +64,7 @@
 		 			</td>
 		 		</tr>
 			</table>
-	<div id="summernote"></div>
+	<div id="summernote" name="noticeContent"></div>
 	<script>
       $('#summernote').summernote({
         placeholder: 'Hello stand alone ui',
@@ -80,6 +81,7 @@
         ]
       });
     </script>
+    </form>
     </main>
 </body>
 </html>
