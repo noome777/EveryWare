@@ -12,7 +12,9 @@
 		FROM DAYOFF WHERE ECODE = #{eCode} ORDER BY OFF_CODE DESC
 	</select>
 
-
+	<select id="selectTotalCnt" resultType="int">
+		SELECT COUNT(*) FROM DAYOFF WHERE ECODE = #{eCode}
+	</select>
 
 
 </mapper>

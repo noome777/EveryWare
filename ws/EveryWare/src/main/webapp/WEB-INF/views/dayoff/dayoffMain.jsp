@@ -38,6 +38,13 @@
 #dayoff-status{
   margin-bottom: -40px;
 }
+#page-area{
+  margin-left: 35%;
+  margin-top: 5%;
+}
+#page-area>a{
+  margin: 5px;
+}
    
 </style>
 </head>
@@ -108,7 +115,6 @@
     <!-- 휴가 조회 -->
 
     <div class="card shadow mb-5" style="margin-top: -10px;">
-
       <div style="margin-left: 20px; margin-top: 20px;">
         <h4 class="card-title">휴가 조회</h4><br><br>
 
@@ -143,14 +149,6 @@
             </tr>
           </thead>
           <tbody>
-           <!--  <tr>
-              <td>3224</td>
-              <td>Keith Baird</td>
-              <td>Enim Limited</td>
-              <td>Apr 24, 2019</td>
-              <td>비고</td>
-              <td>승인완료</td>
-            </tr> -->
              <c:forEach items="${voList}" var="x">
             	<tr>
 	              <td>${x.offCode}</td>
@@ -161,48 +159,19 @@
 	              <td>${x.offApproval}</td>
             	</tr>
              </c:forEach>
-            <!-- <tr>
-              <td>3218</td>
-              <td>Graham Price</td>
-              <td>Nunc Lectus Incorporated</td>
-              <td>May 23, 2020</td>
-              <td>비고</td>
-              <td>대기</td>
-            </tr>
-            <tr>
-              <td>2651</td>
-              <td>Reuben Orr</td>
-              <td>Nisi Aenean Eget Limited</td>
-              <td>Nov 4, 2019</td>
-              <td>비고</td>
-              <td>승인완료</td>
-            </tr>
-            <tr>
-              <td>2636</td>
-              <td>Akeem Holder</td>
-              <td>Pellentesque Associates</td>
-              <td>Mar 27, 2020</td>
-              <td>비고</td>
-              <td>반려</td>
-            </tr>
-            <tr>
-              <td>2757</td>
-              <td>Beau Barrera</td>
-              <td>Augue Incorporated</td>
-              <td>Jan 13, 2020</td>
-              <td>비고</td>
-              <td>승인완료</td>
-            </tr>
-            <tr>
-              <td>2757</td>
-              <td>Beau Barrera</td>
-              <td>Augue Incorporated</td>
-              <td>Jan 13, 2020</td>
-              <td>비고</td>
-              <td>승인완료</td>
-            </tr> -->
           </tbody>
         </table>
+        <div id="page-area">
+          <c:if test="${pv.startPage ne 1}">
+            <a href="${root}/dayoff/main/${pv.startPage - 1}" class="btn mb-2 btn-primary"><</a>
+          </c:if>
+          <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" var="i">
+              <a href="${root}/dayoff/main/${i}" class="btn mb-2 btn-primary">${i}</a>
+          </c:forEach>
+          <c:if test="${pv.endPage ne pv.maxPage }">
+            <a href="${root}/dayoff/main/${pv.endPage + 1}" class="btn mb-2 btn-primary">></a>
+          </c:if>	
+        </div>
       </div>
     </div>
 </body>

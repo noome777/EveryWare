@@ -50,7 +50,7 @@
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="forms">
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/dayoff/main"><span class="ml-1 item-text">휴가관리</span></a>
+                  <a class="nav-link pl-3" href="${root}/dayoff/main/1"><span class="ml-1 item-text">휴가관리</span></a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link pl-3" href="${root}/dayoff/calendar"><span class="ml-1 item-text">휴가현황</span></a>
