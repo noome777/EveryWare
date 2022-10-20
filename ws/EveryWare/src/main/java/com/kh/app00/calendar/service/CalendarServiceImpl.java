@@ -10,48 +10,67 @@ import com.kh.app00.calendar.dao.CalendarDao;
 import com.kh.app00.calendar.vo.CalendarVo;
 
 @Service
-public class CalendarServiceImpl implements CalendarService{
+public class CalendarServiceImpl implements CalendarService {
 
 	final private CalendarDao dao;
 	private final SqlSessionTemplate sst;
+
 	@Autowired
 	public CalendarServiceImpl(CalendarDao dao, SqlSessionTemplate sst) {
 		this.dao = dao;
 		this.sst = sst;
 	}
 
-
 	@Override
-	public List<CalendarVo> getCalendar() {
-		return dao.getCalendar(sst);
+	public List<CalendarVo> getPerCalendar() {
+		return dao.getPerCalendar(sst);
 	}
-
+	
+	@Override
+	public List<CalendarVo> getDepartCalendar() {
+		return dao.getDepartCalendar(sst);
+	}
 	@Override
 	public int insertOne(CalendarVo vo) {
-		
-		// 일정에 끝나는 시간을 안적으면 종일로 바꾸기
-		if(vo.getEndTime().length() == 0) {
-			vo.setCalAllday("true");
-		}
-		
-		if(vo.getCalAllday() == null) {
-			vo.setCalAllday("false");
-		}else if(vo.getCalAllday().equals("on")) {
-			vo.setCalAllday("true");
+
+		int result = 0;
+
+		if (vo.getCalTitle().length() == 0) {
+			result = -2; // 알람 보내기
 		}
 
-		if(vo.getStartTime() != null) {
-			vo.setCalStart(vo.getCalStart() + vo.getStartTime().substring(0, 4));
+		// 일정에 끝나는 시간을 안적으면 종일로 바꾸기
+		if ((vo.getEndTime().length() == 0) || (vo.getStartTime().length() == 0)) {
+			vo.setCalAllday("TRUE");
+			vo.setStartTime(null);
+			vo.setEndTime(null);
+
 		}
-		
-		vo.getEndTime();
-		
-		//
-		vo.setCalStart(vo.getCalStart() + " "+ vo.getStartTime());
-		
-		
+
+		if (vo.getStartTime() != null) {
+			vo.setCalStart(vo.getCalStart() + " " + vo.getStartTime().substring(0, 5));
+		} else {
+			vo.setCalAllday("TRUE");
+		}
+
+		if (vo.getEndTime() != null) {
+			vo.setCalEnd(vo.getCalEnd() + " " + vo.getEndTime().substring(0, 5));
+			vo.setCalAllday("FALSE");
+		} else {
+			vo.setCalAllday("TRUE");
+		}
+
+		if (vo.getCalAllday() == null) {
+			vo.setCalAllday("FALSE");
+		} else if (vo.getCalAllday().equals("on")) {
+			vo.setCalAllday("TRUE");
+		}
+
 		System.out.println(vo);
-		return 0;
+		
+		
+		result = dao.insertOne(sst, vo);
+		return result;
 	}
 
 }
