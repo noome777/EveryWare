@@ -7,57 +7,64 @@
 <meta charset="UTF-8">
 <title>EveryWare - 근태</title>
 <style>
-  .card{
-    margin: 10px 30px;
-  }
-  .form-group{
-    width: 150px;
-    margin-left: 30px;
-  }
-  .mb-5{
-    /* display: flex; */
-    float: left;
-    margin: 30px;
-  }
-  .commute{
-    margin-left: 10px;
-  }
-  #enter-time, #exit-time{
-    margin-left: 20px;
-  }
-  .commute-status{
-    margin-top: 35px;
-  }
-  #profile-img{
-    margin-left: 1000px;
-    width: 100px;
-    height: 100px;
-    margin-top: -105px;
-    float: right;
-  }
-  #company-img{
-    margin-left: 1030px;
-    width: 100px;
-    height: 100px;
-    margin-top: -200px;
-    margin-bottom: 120px;
-    float: right;
-  }
-  .form-group{
-    margin-left: -5px;
-    display: flex;
-  }
-  .commute-yn>input:not(:first-of-type){
-    margin-left: 20px;
-  }
-  .commute-yn, .form-group{
-    margin-top: 10px;
-  }
-  #search{
-    float: right;
-    margin-top: -30px;
-    margin-right: 650px;
-  }
+.card{
+  margin: 10px 30px;
+}
+.form-group{
+  width: 150px;
+  margin-left: 30px;
+}
+.mb-5{
+  /* display: flex; */
+  float: left;
+  margin: 30px;
+}
+.commute{
+  margin-left: 10px;
+}
+#enter-time, #exit-time{
+  margin-left: 20px;
+}
+.commute-status{
+  margin-top: 35px;
+}
+#profile-img{
+  margin-left: 1000px;
+  width: 100px;
+  height: 100px;
+  margin-top: -105px;
+  float: right;
+}
+#company-img{
+  margin-left: 1030px;
+  width: 100px;
+  height: 100px;
+  margin-top: -200px;
+  margin-bottom: 120px;
+  float: right;
+}
+.form-group{
+  margin-left: -5px;
+  display: flex;
+}
+.commute-yn>input:not(:first-of-type){
+  margin-left: 20px;
+}
+.commute-yn, .form-group{
+  margin-top: 10px;
+}
+#search{
+  float: right;
+  margin-top: -30px;
+  margin-right: 650px;
+}
+#page-area{
+margin-left: 35%;
+margin-top: 5%;
+}
+#page-area>a{
+  margin: 5px;
+}
 
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
@@ -170,7 +177,7 @@
         
         <div id="select-condition" style="margin-left: 20px; margin-top: 20px;">
           <h4 class="card-title">근무결과 조회</h4><br><br>
-          <form action="">
+          <form action="" method="get">
             <h4 class="card-title">기간 선택</h4>
             <div class="form-row mb-3">
               <div class="col-md-4 mb-3">
@@ -211,48 +218,16 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>3224</td>
-              <td>Enim Limited</td>
-              <td>901-6206 Cras Av.</td>
-              <td>Apr 24, 2019</td>
-              <td><span class="badge badge-pill badge-warning">퇴근미체크</span></td>
-            </tr>
-            <tr>
-              <td>3218</td>
-              <td>Nunc Lectus Incorporated</td>
-              <td>Ap #705-5389 Id St.</td>
-              <td>May 23, 2020</td>
-              <td><span class="badge badge-pill badge-success">정상출근</span></td>
-            </tr>
-            <tr>
-              <td>2651</td>
-              <td>Nisi Aenean Eget Limited</td>
-              <td>7425 Malesuada Rd.</td>
-              <td>Nov 4, 2019</td>
-              <td><span class="badge badge-pill badge-warning">조기퇴근</span></td>
-            </tr>
-            <tr>
-              <td>2636</td>
-              <td>Pellentesque Associates</td>
-              <td>896 Sodales St.</td>
-              <td>Mar 27, 2020</td>
-              <td><span class="badge badge-pill badge-danger">결근</span></td>
-            </tr>
-            <tr>
-              <td>2757</td>
-              <td>Augue Incorporated</td>
-              <td>4583 Id St.</td>
-              <td>Jan 13, 2020</td>
-              <td><span class="badge badge-pill badge-success">정상출근</span></td>
-            </tr>
-            <tr>
-              <td>2757</td>
-              <td>Augue Incorporated</td>
-              <td>4583 Id St.</td>
-              <td>Jan 13, 2020</td>
-              <td><span class="badge badge-pill badge-warning">지각</span></td>
-            </tr>
+            <%-- <c:forEach items="${voList}" var="x">
+            	<tr>
+	              <td>${x.overCode}</td>
+	              <td>${x.offStartDate}</td>
+	              <td>${x.offEndDate}</td>
+	              <td>${x.offDays}</td>
+	              <td>${x.offReason}</td>
+	              <td>${x.offApproval}</td>
+            	</tr>
+             </c:forEach> --%>
           </tbody>
         </table>
       </div>

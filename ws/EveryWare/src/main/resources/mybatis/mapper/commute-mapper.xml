@@ -51,6 +51,10 @@
 		WHERE ECODE = #{eCode} ORDER BY OVER_CODE DESC
 	</select>
 	
+	<select id="selectTotalCnt" resultType="int">
+		SELECT COUNT(*) FROM OVERWORK WHERE ECODE = #{eCode}
+	</select>
+	
 	<!-- <select id="selectCommuteList">
 		SELECT COM_CODE, ECODE, START_TIME, END_TIME, ENROLL_DATE, COM_STATUS FROM COMMUTE
 	</select> -->

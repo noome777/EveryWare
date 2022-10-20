@@ -38,6 +38,13 @@
     margin-top: -70px;
     margin-right: 20px;
 }
+#page-area{
+  margin-left: 35%;
+  margin-top: 5%;
+}
+#page-area>a{
+  margin: 5px;
+}
    
 </style>
 </head>
@@ -109,7 +116,7 @@
         </form>
     
           
-        <h6 class="card-title">조회 결과 {}건</h6>
+        <h6 class="card-title">조회 결과 ${listCount} 건</h6>
         <table class="table table-hover">
           <thead>
             <tr>
@@ -138,48 +145,21 @@
 			    <div>${x.writer}</div>
 			    <div>${x.hit}</div> --%>
 		    
-            <!-- <tr>
-              <td>3218</td>
-              <td>Graham Price</td>
-              <td>Nunc Lectus Incorporated</td>
-              <td>May 23, 2020</td>
-              <td>비고</td>
-              <td>대기</td>
-            </tr>
-            <tr>
-              <td>2651</td>
-              <td>Reuben Orr</td>
-              <td>Nisi Aenean Eget Limited</td>
-              <td>Nov 4, 2019</td>
-              <td>비고</td>
-              <td>승인완료</td>
-            </tr>
-            <tr>
-              <td>2636</td>
-              <td>Akeem Holder</td>
-              <td>Pellentesque Associates</td>
-              <td>Mar 27, 2020</td>
-              <td>비고</td>
-              <td>반려</td>
-            </tr>
-            <tr>
-              <td>2757</td>
-              <td>Beau Barrera</td>
-              <td>Augue Incorporated</td>
-              <td>Jan 13, 2020</td>
-              <td>비고</td>
-              <td>승인완료</td>
-            </tr>
-            <tr>
-              <td>2757</td>
-              <td>Beau Barrera</td>
-              <td>Augue Incorporated</td>
-              <td>Jan 13, 2020</td>
-              <td>비고</td>
-              <td>승인완료</td>
-            </tr> -->
+          
           </tbody>
         </table>
+
+        <div id="page-area">
+          <c:if test="${pv.startPage ne 1}">
+            <a href="${root}/commute/overwork/${pv.startPage - 1}" class="btn mb-2 btn-primary"><</a>
+          </c:if>
+          <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" var="i">
+              <a href="${root}/commute/overwork/${i}" class="btn mb-2 btn-primary">${i}</a>
+          </c:forEach>
+          <c:if test="${pv.endPage ne pv.maxPage }">
+            <a href="${root}/commute/overwork/${pv.endPage + 1}" class="btn mb-2 btn-primary">></a>
+          </c:if>	
+        </div>
       </div>
     </div>
 </body>
