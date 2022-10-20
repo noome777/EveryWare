@@ -1,5 +1,8 @@
+<%@page import="com.kh.app00.calendar.vo.CalendarVo"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 
 <%-- 
 <!-- fullcalendar css -->
@@ -633,23 +636,18 @@
 										</button>
 									</div>
 									<div class="modal-body p-4">
-										<form>
+										<form action="${root}/calendar/personal/insert" method="POST">
 											<div class="form-group">
-												<label for="eventTitle" class="col-form-label">제목</label>
-												<input type="text" class="form-control" id="eventTitle"
-													placeholder="Add event title">
-											</div>
-											<div class="form-group">
-												<label for="eventNote" class="col-form-label">메모</label>
-												<textarea class="form-control" id="eventNote"
-													placeholder="Add some note for your event"></textarea>
+												<label for="eventTitle" class="col-form-label">제목</label> <input
+													type="text" class="form-control" id="eventTitle"
+													name="calTitle" placeholder="Add event title">
 											</div>
 											<div class="form-row">
 												<div class="form-group col-md-8">
-													<label for="eventType">타입</label> <select
-														id="eventType" class="form-control select">
-														<option value="work">Work</option>
-														<option value="home">Home</option>
+													<label for="eventType">타입</label> <select id="eventType"
+														name="calType" class="form-control select">
+														<option value="WORK">부서</option>
+														<option value="HOME">개인</option>
 													</select>
 												</div>
 											</div>
@@ -663,7 +661,7 @@
 															</div>
 														</div>
 														<input type="text" class="form-control drgpicker"
-															id="drgpicker-start" value="10/15/2022">
+															name="calStart" id="drgpicker-start" value="10/15/2022">
 													</div>
 												</div>
 												<div class="form-group col-md-6">
@@ -675,7 +673,7 @@
 															</div>
 														</div>
 														<input type="text" class="form-control time-input"
-															id="start-time" placeholder="10:00 AM">
+															name="startTime" id="start-time" placeholder="00:00 AM">
 													</div>
 												</div>
 											</div>
@@ -689,7 +687,7 @@
 															</div>
 														</div>
 														<input type="text" class="form-control drgpicker"
-															id="drgpicker-end" value="10/17/2022">
+															name="calEnd" id="drgpicker-end" value="10/17/2022">
 													</div>
 												</div>
 												<div class="form-group col-md-6">
@@ -701,19 +699,20 @@
 															</div>
 														</div>
 														<input type="text" class="form-control time-input"
-															id="end-time" placeholder="11:00 AM">
+															name="EndTime" id="end-time" placeholder="00:00 AM">
 													</div>
 												</div>
 											</div>
-										</form>
 									</div>
 									<div class="modal-footer d-flex justify-content-between">
 										<div class="custom-control custom-switch">
 											<input type="checkbox" class="custom-control-input"
-												id="RepeatSwitch" checked> <label
+												name="calAllday" id="RepeatSwitch" checked> <label
 												class="custom-control-label" for="RepeatSwitch">종일</label>
 										</div>
-										<button type="button" class="btn mb-2 btn-primary">저장</button>
+										<input type="submit" class="btn mb-2 btn-primary" value="저장">
+
+										</form>
 									</div>
 								</div>
 							</div>
@@ -893,20 +892,7 @@
         {
           var calendar = new FullCalendar.Calendar(calendarEl,
           {
-        	/* googleCalendarApiKey : "AIzaSyBzIIqGuQHooyp3ivTkSS7P1GS6Nx7yZfg",
-  		    eventSources :[ 
-  		        {
-  		            googleCalendarId : 'ko.south_korea.official#holiday@group.v.calendar.google.com'
-  		            , color: 'white'   // an option!
-  		            , textColor: 'red' // an option!
-  		        } 
-  		    ], */
-  		    /* eventClick : function(info) {	//휴일 클릭시 구글 캘린더 이동을 안하도록 설정
-					info.jsEvent.stopPropagation();
-					info.jsEvent.preventDefault();
-				}, */
             plugins: ['dayGrid', 'timeGrid', 'list', 'bootstrap'],
-            timeZone: 'Asia/Seoul',
             themeSystem: 'bootstrap',
             header:
             {
@@ -914,6 +900,11 @@
               center: 'title',
               right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
             },
+            navLinks: true,
+            eventLimit: true, // allow "more" link when too many events
+            editable: true,
+            selectable: true,
+            droppable: true, // this allows things to be dropped onto the calendar
             buttonIcons:
             {
               prev: 'fe-arrow-left',
@@ -922,38 +913,146 @@
               nextYear: 'right-double-arrow'
             },
             
-            eventLimit: true, // allow "more" link when too many events
-/*             events: 'https://fullcalendar.io/demo-events.json',	//예시 */
- 			editable: true,
+
+            // eventAdd: function () { // 이벤트가 추가되면 발생하는 이벤트
+            //     // console.log()
+            // },
+
+            /**
+             * 드래그로 이벤트 수정하기
+             */
+            eventDrop: function (info){
+                console.log(info);
+                if(confirm("'"+ info.event.title +"' 매니저의 일정을 수정하시겠습니까 ?")){
+                }
+                var events = new Array(); // Json 데이터를 받기 위한 배열 선언
+                var obj = new Object();
+
+                obj.title = info.event._def.title;
+                obj.start = info.event._instance.range.start;
+                obj.end = info.event._instance.range.end;
+                events.push(obj);
+
+                console.log(events);
+                $(function deleteData() {
+                    $.ajax({
+                        url: "/full-calendar/calendar-admin-update",
+                        method: "PATCH",
+                        dataType: "json",
+                        data: JSON.stringify(events),
+                        contentType: 'application/json',
+                    })
+                })
+            },
+
+            /**
+             * 드래그로 이벤트 추가하기
+             */
+            /* select: function (arg) { // 캘린더에서 이벤트를 생성할 수 있다.
+
+                var title = prompt('일정을 입력해주세요.');
+                if (title) {
+                    calendar.addEvent({
+                        title: title,
+                        start: arg.start,
+                        end: arg.end,
+                        allDay: arg.allDay,
+                    })
+                }
+
+                var allEvent = calendar.getEvents(); // .getEvents() 함수로 모든 이벤트를 Array 형식으로 가져온다. (FullCalendar 기능 참조)
+
+                var events = new Array(); // Json 데이터를 받기 위한 배열 선언
+                for (var i = 0; i < allEvent.length; i++) {
+                    var obj = new Object();     // Json 을 담기 위해 Object 선언
+                    // alert(allEvent[i]._def.title); // 이벤트 명칭 알람
+                    obj.title = allEvent[i]._def.title; // 이벤트 명칭  ConsoleLog 로 확인 가능.
+                    obj.start = allEvent[i]._instance.range.start; // 시작
+                    obj.end = allEvent[i]._instance.range.end; // 끝
+
+                    events.push(obj);
+                }
+                var jsondata = JSON.stringify(events);
+                console.log(jsondata);
+                // saveData(jsondata);
+
+                $(function saveData(jsondata) {
+                    $.ajax({
+                        url: "/full-calendar/calendar-admin-update",
+                        method: "POST",
+                        dataType: "json",
+                        data: JSON.stringify(events),
+                        contentType: 'application/json',
+                    })
+                        .done(function (result) {
+                            // alert(result);
+                        })
+                        .fail(function (request, status, error) {
+                             // alert("에러 발생" + error);
+                        });
+                    calendar.unselect()
+                });
+            },
+ */
+            /**
+             * 이벤트 선택해서 삭제하기
+             */
+            eventClick: function (info){
+                if(confirm("'"+ info.event.title +"' 매니저의 일정을 삭제하시겠습니까 ?")){
+                    // 확인 클릭 시
+                    info.event.remove();
+                }
+
+                console.log(info.event);
+                var events = new Array(); // Json 데이터를 받기 위한 배열 선언
+                var obj = new Object();
+                    obj.title = info.event._def.title;
+                    obj.start = info.event._instance.range.start;
+                    events.push(obj);
+
+                console.log(events);
+                $(function deleteData(){
+                    $.ajax({
+                        url: "/full-calendar/calendar-admin-update",
+                        method: "DELETE",
+                        dataType: "json",
+                        data: JSON.stringify(events),
+                        contentType: 'application/json',
+                    })
+                })
+            },
+            // eventRemove: function (obj) { // 이벤트가 삭제되면 발생하는 이벤트
+            //
+            // },
+ 			
 			events: [
-			     {
-			       title: '회의',
-			       start: '2022-10-17',
-			       backgroundColor: '#8B0000',
-			       borderColor:'#8B0000'
-			     },
-			     {
-			       title: '휴가',
-			       start: '2022-10-18T16:00:00',
-			       end: '2022-10-19T19:00:00',
-			       backgroundColor: '#008404',
-			       borderColor:'#008404'         
-			     }],
+				<%List<CalendarVo> calendarList = (List<CalendarVo>) request.getAttribute("calendarList");%>
+	            <%if (calendarList != null) {%>
+	            <%for (CalendarVo vo : calendarList) {%>
+	            {
+	            	title : '<%=vo.getCalTitle()%>',
+	                start : '<%=vo.getCalStart()%>',
+	                end : '<%=vo.getCalEnd()%>',
+	                color : '#' + Math.round(Math.random() * 0xffffff).toString(16)
+	             },
+		<%}
+}%>],
             locale: 'ko'
           });
           calendar.render();
         });
       }
+      
     </script>
-    <script src='${root}/resources/js/jquery.mask.min.js'></script>
-    <script src='${root}/resources/js/select2.min.js'></script>
-    <script src='${root}/resources/js/jquery.steps.min.js'></script>
-    <script src='${root}/resources/js/jquery.validate.min.js'></script>
-    <script src='${root}/resources/js/jquery.timepicker.js'></script>
-    <script src='${root}/resources/js/dropzone.min.js'></script>
-    <script src='${root}/resources/js/uppy.min.js'></script>
-    <script src='${root}/resources/js/quill.min.js'></script>
-	<script>
+	<script src='${root}/resources/js/jquery.mask.min.js'></script>
+	<script src='${root}/resources/js/select2.min.js'></script>
+	<script src='${root}/resources/js/jquery.steps.min.js'></script>
+	<script src='${root}/resources/js/jquery.validate.min.js'></script>
+	<script src='${root}/resources/js/jquery.timepicker.js'></script>
+	<script src='${root}/resources/js/dropzone.min.js'></script>
+	<script src='${root}/resources/js/uppy.min.js'></script>
+	<script src='${root}/resources/js/quill.min.js'></script>
+<!-- 	<script>
       $('.select2').select2(
       {
         theme: 'bootstrap4',
@@ -1155,7 +1254,7 @@
           console.log('Upload complete! We’ve uploaded these files:', result.successful)
         });
       }
-    </script>
-    
+    </script> -->
+
 </body>
 </html>

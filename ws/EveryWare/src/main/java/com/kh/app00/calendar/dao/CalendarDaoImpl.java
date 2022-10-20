@@ -11,10 +11,21 @@ import com.kh.app00.calendar.vo.CalendarVo;
 public class CalendarDaoImpl implements CalendarDao{
 
 
-
+	//개인일정 조회
 	@Override
-	public List<CalendarVo> getCalendar(SqlSessionTemplate sst) {
-		return sst.selectList("calendarMapper.selectAll");
+	public List<CalendarVo> getPerCalendar(SqlSessionTemplate sst) {
+		return sst.selectList("calendarMapper.selectPerAll");
+	}
+	
+	//부서일정 조회
+		@Override
+		public List<CalendarVo> getDepartCalendar(SqlSessionTemplate sst) {
+			return sst.selectList("calendarMapper.selectDepartAll");
+		}
+	
+	@Override
+	public int insertOne(SqlSessionTemplate sst, CalendarVo vo) {
+		return sst.insert("calendarMapper.insertOne", vo);
 	}
 
 }

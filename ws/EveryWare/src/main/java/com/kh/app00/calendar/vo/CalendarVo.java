@@ -9,7 +9,6 @@ public class CalendarVo {
 	private String calCode;
 	private String empCode;
 	private String calTitle;
-	private String calContent;
 	private String calType;
 	private String calStart;
 	private String startTime;

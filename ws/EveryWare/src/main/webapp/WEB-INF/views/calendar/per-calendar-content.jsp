@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+
 <%-- 
 <!-- fullcalendar css -->
 <link rel="stylesheet"
@@ -638,20 +639,15 @@
 										<form action="${root}/calendar/personal/insert" method="POST">
 											<div class="form-group">
 												<label for="eventTitle" class="col-form-label">제목</label> <input
-													type="text" class="form-control" id="eventTitle" name="calTitle"
-													placeholder="Add event title">
-											</div>
-											<div class="form-group">
-												<label for="eventNote" class="col-form-label">메모</label>
-												<textarea class="form-control" id="eventNote" name="calContent"
-													placeholder="Add some note for your event"></textarea>
+													type="text" class="form-control" id="eventTitle"
+													name="calTitle" placeholder="Add event title">
 											</div>
 											<div class="form-row">
 												<div class="form-group col-md-8">
-													<label for="eventType">타입</label> <select id="eventType" name="calType"
-														class="form-control select">
-														<option value="WORK">부서</option>
+													<label for="eventType">타입</label> <select id="eventType"
+														name="calType" class="form-control select">
 														<option value="HOME">개인</option>
+														<option value="WORK">부서</option>
 													</select>
 												</div>
 											</div>
@@ -664,8 +660,8 @@
 																<span class="fe fe-calendar fe-16"></span>
 															</div>
 														</div>
-														<input type="text" class="form-control drgpicker" name="calStart"
-															id="drgpicker-start" value="10/15/2022">
+														<input type="text" class="form-control drgpicker"
+															name="calStart" id="drgpicker-start" value="10/15/2022">
 													</div>
 												</div>
 												<div class="form-group col-md-6">
@@ -676,8 +672,8 @@
 																<span class="fe fe-clock fe-16"></span>
 															</div>
 														</div>
-														<input type="text" class="form-control time-input" name="startTime"
-															id="start-time" placeholder="00:00 AM">
+														<input type="text" class="form-control time-input"
+															name="startTime" id="start-time" placeholder="00:00 AM">
 													</div>
 												</div>
 											</div>
@@ -690,8 +686,8 @@
 																<span class="fe fe-calendar fe-16"></span>
 															</div>
 														</div>
-														<input type="text" class="form-control drgpicker" name="calEnd"
-															id="drgpicker-end" value="10/17/2022">
+														<input type="text" class="form-control drgpicker"
+															name="calEnd" id="drgpicker-end" value="10/17/2022">
 													</div>
 												</div>
 												<div class="form-group col-md-6">
@@ -702,20 +698,20 @@
 																<span class="fe fe-clock fe-16"></span>
 															</div>
 														</div>
-														<input type="text" class="form-control time-input" name="EndTime"
-															id="end-time" placeholder="00:00 AM">
+														<input type="text" class="form-control time-input"
+															name="EndTime" id="end-time" placeholder="00:00 AM">
 													</div>
 												</div>
 											</div>
 									</div>
 									<div class="modal-footer d-flex justify-content-between">
 										<div class="custom-control custom-switch">
-											<input type="checkbox" class="custom-control-input" name="calAllday"
-												id="RepeatSwitch" checked> <label
+											<input type="checkbox" class="custom-control-input"
+												name="calAllday" id="RepeatSwitch" checked> <label
 												class="custom-control-label" for="RepeatSwitch">종일</label>
 										</div>
 										<input type="submit" class="btn mb-2 btn-primary" value="저장">
-										
+
 										</form>
 									</div>
 								</div>
@@ -912,10 +908,34 @@
               prevYear: 'left-double-arrow',
               nextYear: 'right-double-arrow'
             },
-            
+            eventClick: function (info){
+                if(confirm("일정 이름 : '"+ info.event.title +"'  일정을 삭제하시겠습니까 ?")){
+                    // 확인 클릭 시
+                    info.event.remove();
+                }
+
+                console.log(info.event);
+                var events = new Array(); // Json 데이터를 받기 위한 배열 선언
+                var obj = new Object();
+                    obj.title = info.event._def.title;
+                    obj.start = info.event._instance.range.start;
+                    events.push(obj);
+
+                console.log(events);
+                $(function deleteData(){
+                    $.ajax({
+                        url: "${root}/calendar/delete",
+                        method: "GET",
+                        dataType: "json",
+                        data: JSON.stringify(events),
+                        contentType: 'application/json',
+                    })
+                })
+            },
             eventLimit: true, // allow "more" link when too many events
 /*             events: 'https://fullcalendar.io/demo-events.json',	//예시 */
  			editable: true,
+ 			droppable: true,
 			events: [
 				<%List<CalendarVo> calendarList = (List<CalendarVo>) request.getAttribute("calendarList");%>
 	            <%if (calendarList != null) {%>
@@ -933,6 +953,7 @@
           calendar.render();
         });
       }
+      
     </script>
 	<script src='${root}/resources/js/jquery.mask.min.js'></script>
 	<script src='${root}/resources/js/select2.min.js'></script>

@@ -2,7 +2,9 @@ package com.kh.app00.calendar.controller;
 
 import java.util.List;
 
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
@@ -28,11 +30,11 @@ public class CalendarController {
 	}
 	
 	@GetMapping("personal/select")
-	public ModelAndView getCalendarList(ModelAndView mv, HttpServletRequest request) {
+	public ModelAndView getPerCalendarList(ModelAndView mv, HttpServletRequest request) {
 		String viewpage = "calendar/per-calendar";
 		List<CalendarVo> calendar = null;
 		try {
-			calendar = service.getCalendar();
+			calendar = service.getPerCalendar();
 			request.setAttribute("calendarList", calendar);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -42,36 +44,47 @@ public class CalendarController {
 	}
 	
 	@PostMapping("personal/insert")
-	public String insert(CalendarVo vo) {
-		/*
-		 * String calTitle = (String) req.getAttribute("calTitle"); String calContent
-		 * =(String) req.getAttribute("calContent"); String calType =(String)
-		 * req.getAttribute("calType"); String calStart =(String)
-		 * req.getAttribute("calStart"); String startTime =(String)
-		 * req.getAttribute("startTime"); String calEnd =(String)
-		 * req.getAttribute("calEnd"); String EndTime =(String)
-		 * req.getAttribute("EndTime"); String calAllday =(String)
-		 * req.getAttribute("calAllday");
-		 * 
-		 * System.out.println(calTitle); System.out.println(calContent);
-		 * System.out.println(calType); System.out.println(calStart);
-		 * System.out.println(startTime); System.out.println(calEnd);
-		 * System.out.println(EndTime); System.out.println(calAllday);
-		 */
-		
+	public String insert(CalendarVo vo, HttpSession session) {
+
 		System.out.println(vo);
 		
 		int result = service.insertOne(vo); 
 		
-		return "redirect:/calendar/personal/select";
+		System.out.println(result);
+		
+		if(result == 1) {
+			return "redirect:/calendar/personal/select";			
+		}else if(result == -2) {
+			session.setAttribute("alertMsg", "제목과 내용을 채워주세요");
+		}
+		
+		return "redirect:/calendar/personal/select";			
+		
+		
 	}
-
 	
 	
 	
 	@GetMapping("department/select")
-	public String department() {
-		
-		return "calendar/department-calendar";
+	public ModelAndView getDepartCalendarList(ModelAndView mv, HttpServletRequest request) {
+		String viewpage = "calendar/department-calendar";
+		List<CalendarVo> calendar = null;
+		try {
+			calendar = service.getDepartCalendar();
+			request.setAttribute("calendarList", calendar);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mv.setViewName(viewpage);
+		return mv;
 	}
+	
+	@GetMapping("delete")
+	public int deleteOne() {
+		int result = 1;
+		System.out.println("옴");
+		return result;
+	}
+	
+	
 }

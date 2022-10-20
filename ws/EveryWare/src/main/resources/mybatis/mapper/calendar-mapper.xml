@@ -2,9 +2,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="calendarMapper">
-	<select id="selectAll" resultType="CalendarVo">
+	<select id="selectPerAll" resultType="CalendarVo">
 		SELECT *
 		FROM CALENDAR
+		WHERE CAL_TYPE = 'HOME'
 	</select>
 
+	<select id="selectDepartAll" resultType="CalendarVo">
+		SELECT *
+		FROM CALENDAR
+		WHERE CAL_TYPE = 'WORK'
+	</select>
+
+	<insert id="insertOne">
+		INSERT INTO CALENDAR
+		(	
+			CAL_CODE
+			, EMP_CODE
+			, CAL_TITLE
+			, CAL_TYPE
+			, CAL_START
+			, CAL_END
+			, CAL_ALLDAY
+		)
+		VALUES
+		(
+			SEQ_CAL_CODE.NEXTVAL
+			, 1
+			, #{calTitle}
+			, #{calType}
+			, TO_DATE(#{calStart}, 'MM/DD/YYYY HH:MI')
+			, TO_DATE(#{calEnd}, 'MM/DD/YYYY HH:MI')
+			, #{calAllday}
+		)
+	</insert>
 </mapper>
