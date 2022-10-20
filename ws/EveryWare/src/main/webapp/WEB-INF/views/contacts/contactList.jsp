@@ -42,7 +42,20 @@
                              <span aria-hidden="true">&times;</span>
                            </button>
                         </div>
-                       <div class="modal-body">주소록 추가 ~~~~</div>
+                       <div class="modal-body">
+                       
+                       <label for="simpleinput">Name</label>
+                        <input type="text" id="simpleinput" class="form-control" placeholder="Name">
+                       <label for="example-email">Email</label>
+                         <input type="email" id="example-email" name="example-email" class="form-control" placeholder="Email">
+                       <label for="simpleinput">Phone</label>
+                        <input type="text" id="simpleinput" class="form-control" placeholder="Phone">
+                       <label for="simpleinput">Company</label>
+                        <input type="text" id="simpleinput" class="form-control" placeholder="Company">
+                       <label for="example-textarea">Memo</label>
+                        <textarea class="form-control" id="example-textarea" rows="4"></textarea>
+                       
+                       </div>
                          <div class="modal-footer">
                            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">닫기</button>
                            <button type="button" class="btn mb-2 btn-primary">저장</button>
@@ -68,9 +81,9 @@
                             <label class="custom-control-label" for="all2"></label>
                           </div>
                         </th>
-                        <th>ID</th>
+                        <th>Image</th>
                         <th>User</th>
-                        <th>Company</th>
+                        <th>Company/Email</th>
                         <th>Phone</th>
                         <th>Action</th>
                       </tr>
@@ -95,10 +108,10 @@
                         </td>
                         <td>
                           <p class="mb-0 text-muted">Accumsan Consulting</p>
-                          <small class="mb-0 text-muted">Ap #331-7123 Lobortis Avenue</small>
+                          <small class="mb-0 text-muted">meow10@gmail.com</small>
                         </td>
                         <td>
-                          <p class="mb-0 text-muted"><a href="#" class="text-muted">(958) 421-0798</a></p>
+                          <p class="mb-0 text-muted"><a href="#" class="text-muted">(02) 421-0798</a></p>
                         </td>
                         <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="text-muted sr-only">Action</span>
