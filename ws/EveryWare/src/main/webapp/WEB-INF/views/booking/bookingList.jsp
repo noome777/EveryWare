@@ -11,6 +11,15 @@
     margin-left: 30px;
     margin-top: 18px;
   }
+#booking-date{
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.returnBtn{
+border: 0;
+outline: 0;
+background-color:transparent;
+}
 </style>
 </head>
 
@@ -44,10 +53,10 @@
                 <div class="col-auto">
                   <button type="button" class="btn btn-secondary"><span class="fe fe-trash fe-12 mr-2"></span>Delete</button>
                   
-                  <!-- Button trigger modal -->
+                  <!-- Button modal -->
                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#defaultModal"><span class="fe fe-filter fe-12 mr-2"></span> Create </button>
                   
-                  <!-- Modal -->
+                  <!-- Modal boutton-->
                   <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
@@ -57,8 +66,8 @@
                              <span aria-hidden="true">&times;</span>
                            </button>
                         </div>
-                       <div class="modal-body">
-                       
+                        
+                      <div class="modal-body">
                        <!-- 카테고리 선택 -->
                         <label for="example-select">자원 이름</label>
                         <select class="form-control" id="example-select">
@@ -67,23 +76,29 @@
                           <option>비품3</option>
                         </select>
                  
-                 	  <!-- 예약일자 -->      
-                        <label for="example-date">Date</label>
-                        <input class="form-control" id="example-date" type="date" name="date">
-                      
-                        <label for="example-time">Time</label>
-                        <input class="form-control" id="example-time" type="time" name="time">
-                       
-                       
+	                 	  <!-- 예약일자 -->      
+	                      <div id="booking-date">
+	                      <label for="example-date">예약기간</label>
+		                 	  <div class="input-group">
+		                        <input class="form-control" id="example-date" type="date" name="date">
+		                        <input class="form-control" id="example-time" type="time" name="time">
+		                      </div>
+		                      
+		                      <div class="input-group">
+		                      	<input class="form-control" id="example-date" type="date" name="date">
+		                        <input class="form-control" id="example-time" type="time" name="time">
+		                       </div>
+	                      </div>
                        </div>
+                       
                          <div class="modal-footer">
                            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">닫기</button>
                            <button type="button" class="btn mb-2 btn-primary">저장</button>
                          </div>
+                         
                        </div>
                      </div>
                    </div>
-                      
                 </div>
               </div>
               
@@ -101,11 +116,11 @@
                             <label class="custom-control-label" for="all2"></label>
                           </div>
                         </th>
-                        <th>번호</th>
+                        <th>이미지</th>
                         <th>자원명</th>
                         <th>예약 시간</th>
                         <th>상태</th>
-                        <th>...</th>
+                        <th>반납</th>
                       </tr>
                     </thead>
                     
@@ -118,29 +133,26 @@
                           </div>
                         </td>
                         <td>
-                          <p class="mb-0 text-muted"><strong>A1234</strong></p>
+                          <div class="avatar avatar-sm">
+                            <img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+                          </div>
                         </td>
                         <td>
-                          <p class="mb-0 text-muted">비품1</p>
-                          <small class="mb-0 text-muted">멀로하지고민중</small>
+                          <p class="mb-0 text-muted"><strong>비품1</strong></p>
+                          <small class="mb-0 text-muted">A1234</small>
                         </td>
                         <td>
                           <p class="mb-0 text-muted">2020/10/10 15:00 ~ 2020/10/20 18:00</p>
                         </td>
-                        
-                        <td><span class="badge badge-primary">예약중</span></td>
-                        
-                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="text-muted sr-only">Action</span>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">더보기</a>
-                            <a class="dropdown-item" href="#">반납</a>
-                          </div>
+                        <td>
+                          <span class="badge badge-primary">예약중</span>
                         </td>
+                        <td>
+                          <button class="returnBtn" onclick="javascript:btn()"><span class="badge badge-primary">반납하기</span></button>
+                        </td> 
                       </tr>
-    
                     </tbody>
+                    
                   </table>
                 </div>
               </div>
@@ -164,5 +176,11 @@
       
     </div> <!-- .wrapper -->
     
+    <script>
+		function btn(){
+		    alert('반납 처리 되었습니다.');
+		}
+	</script>
+
 </body>
 </html>
