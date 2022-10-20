@@ -33,6 +33,12 @@ public class DayoffDaoImpl implements DayoffDao {
     public int selectTotalCnt(SqlSessionTemplate sst, DayoffVo vo) {
         return sst.selectOne("dayoffMapper.selectTotalCnt", vo);
     }
+
+    //기간 선택 목록 조회
+//    @Override
+//    public List<DayoffVo> selectDateList(SqlSessionTemplate sst, DayoffVo vo) {
+//        return sst.selectList("dayoffMapper.selectDateList", vo);
+//    }
     
 
 }

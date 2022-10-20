@@ -32,12 +32,27 @@ public class DayoffController {
     
     //휴가 신청 화면 && 리스트 조회
     @GetMapping("main/{pno}")
-    public String main(DayoffVo vo, Model model, HttpSession session, @PathVariable int pno) {
+    public String main(DayoffVo vo, Model model, HttpSession session, @PathVariable int pno, String offStartDate, String offEndDate) {
+        System.out.println(offStartDate);
+        System.out.println(offEndDate);
         
         //사원 정보 vo에 저장
         EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
         vo.setECode(loginMember.getEmpCode());
         
+//        if(offStartDate == null && offEndDate == null) {
+//            //기간 선택을 하지 않았을 경우
+//            vo.setOffStartDate(offStartDate);
+//            vo.setOffEndDate(offEndDate);
+//            
+//            List<DayoffVo> dateList = service.selectDateList(vo);
+//        }else {
+//            //기간 선택을 했을 경우
+//            
+//        }
+        
+        //기간 선택하여 조회
+//        List<DayoffVo> 
         
         //리스트의 전체 신청글 수 조회
         int listCount = service.selectTotalCnt(vo);

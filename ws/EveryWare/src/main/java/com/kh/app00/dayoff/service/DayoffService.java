@@ -16,4 +16,7 @@ public interface DayoffService {
     //전체 신청 글 수 조회
     int selectTotalCnt(DayoffVo vo);
 
+    //기간 선택 목록 조회
+//    List<DayoffVo> selectDateList(DayoffVo vo);
+
 }

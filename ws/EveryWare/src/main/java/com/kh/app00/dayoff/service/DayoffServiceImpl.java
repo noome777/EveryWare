@@ -40,4 +40,10 @@ public class DayoffServiceImpl implements DayoffService {
         return dao.selectTotalCnt(sst, vo);
     }
 
+    //기간 선택 목록 조회
+//    @Override
+//    public List<DayoffVo> selectDateList(DayoffVo vo) {
+//        return dao.selectDateList(sst, vo);
+//    }
+
 }

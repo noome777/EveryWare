@@ -78,7 +78,6 @@ public class EmpController {
             
         }else if(saveId.equals("false")) {
             //아이디 저장 체크 안 했을 경우
-            
             Cookie cookie = new Cookie("saveId", vo.getEmpId());
             // 쿠키의 유효시간을 0으로 설정하여 만료시킨다
             cookie.setMaxAge(0);

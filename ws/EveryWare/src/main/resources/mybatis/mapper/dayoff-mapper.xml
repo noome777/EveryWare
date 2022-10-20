@@ -15,6 +15,10 @@
 	<select id="selectTotalCnt" resultType="int">
 		SELECT COUNT(*) FROM DAYOFF WHERE ECODE = #{eCode}
 	</select>
+	
+	<!-- <select id="selectDateList" resultType="DayoffVo">
+		
+	</select> -->
 
 
 </mapper>

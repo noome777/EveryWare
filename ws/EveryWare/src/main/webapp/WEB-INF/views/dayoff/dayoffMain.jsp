@@ -50,7 +50,6 @@
 </head>
 
     <div class="wrapper">
-        
         <%@ include file="/WEB-INF/views/common/header.jsp" %>
         <%@ include file="/WEB-INF/views/dayoff/dayoff-side.jsp" %>
 
@@ -75,10 +74,10 @@
               </div>
             </div>
         </div>
-    </div> 
+      </div> 
         
-    <div class="wrapper">
-      <!-- 휴가 신청 -->
+      <div class="wrapper">
+        <!-- 휴가 신청 -->
         <div class="card shadow mb-5" id="dayoff-regi">
             <div class="card-header">
             <h4 class="mb-0">휴가 신청</h4><br>
@@ -110,31 +109,31 @@
               <button class="btn btn-outline-primary" type="submit" id="submit-btn">Submit form</button>
             </form>
         </div>
-    </div>
+      </div>
 
-    <!-- 휴가 조회 -->
+      
+       <!-- 휴가 조회 -->
+      <div class="card shadow mb-5" style="margin-top: -10px;">
+        <div style="margin-left: 20px; margin-top: 20px;">
+          <h4 class="card-title">휴가 조회</h4><br><br>
 
-    <div class="card shadow mb-5" style="margin-top: -10px;">
-      <div style="margin-left: 20px; margin-top: 20px;">
-        <h4 class="card-title">휴가 조회</h4><br><br>
-
-        <form action="">
-          <h6 class="card-title">기간 선택</h6>
-          <div class="form-row mb-3">
-            <div class="col-md-4 mb-3">
-              <div class="input-group">
-                <input class="form-control" id="example-date" type="date" name="startDate" required>
+          <form action="" method="get">
+            <h6 class="card-title">기간 선택</h6>
+            <div class="form-row mb-3">
+              <div class="col-md-4 mb-3">
+                <div class="input-group">
+                  <input class="form-control" id="example-date" type="date" name="offStartDate" required>
+                </div>
+              </div>
+              ~ 
+              <div class="col-md-4 mb-3">
+                <div class="input-group">
+                  <input class="form-control" id="example-date" type="date" name="offEndDate" required>
+                </div>
               </div>
             </div>
-            ~ 
-            <div class="col-md-4 mb-3">
-              <div class="input-group">
-                <input class="form-control" id="example-date" type="date" name="endDate" required>
-              </div>
-            </div>
-          </div>
-          <button class="btn btn-outline-primary" type="submit" id="search-btn">search</button>
-        </form>
+            <button class="btn btn-outline-primary" type="submit" id="search-btn">search</button>
+          </form>
           
         <h6 class="card-title">조회 결과 {}건</h6>
         <table class="table table-hover">
@@ -172,8 +171,18 @@
             <a href="${root}/dayoff/main/${pv.endPage + 1}" class="btn mb-2 btn-primary">></a>
           </c:if>	
         </div>
+
+       
+
+
       </div>
     </div>
+
+    <script>
+      //const val = $('input[name=offStartDate]').val();/
+      const val = document.querySelector('input[name=offStartDate]').value;
+      console.log(val);
+    </script>
 </body>
 </html>
 
