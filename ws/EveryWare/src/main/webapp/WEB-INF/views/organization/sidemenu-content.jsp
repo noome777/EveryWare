@@ -56,9 +56,6 @@
                   <a class="nav-link pl-3" href="${root}/organization/management/rank"><span class="ml-1 item-text">직위/직무설정</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/organization/management/jobTypes"><span class="ml-1 item-text">근로형태관리</span></a>
-                </li>
-                <li class="nav-item">
                   <a class="nav-link pl-3" href="${root}/organization/management/right/1"><span class="ml-1 item-text">권한관리</span></a>
                 </li>
                 

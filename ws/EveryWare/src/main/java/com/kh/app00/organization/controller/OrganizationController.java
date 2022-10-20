@@ -96,6 +96,7 @@ public class OrganizationController {
 		return "organization/empManager";
 	}
 	
+	
 	@GetMapping("management/right/{pno}")
 		public String manageRight(Model model, @PathVariable int pno){
 		

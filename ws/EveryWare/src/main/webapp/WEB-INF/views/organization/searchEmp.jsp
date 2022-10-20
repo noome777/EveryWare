@@ -9,9 +9,6 @@
 <style>
 
 
-	.col-auto > button {
-		border: 1px solid lightgray;
-	}
 	
 	.grid-wrap {
 		height : 85vh;
@@ -24,7 +21,6 @@
 	}
 	.grid-wrap > div {
 		border-radius: 5px;
-		border : 1px solid lightgrey;
 		background-color: white;
 	}
 
@@ -50,7 +46,6 @@
 		width: 85%;
 		height: 55%;
 		border-radius: 5px;
-		border : 1px solid lightgray;
 		display: flex;
 	}
 
@@ -87,7 +82,6 @@
 		width: 85%;
 		height: 93%;
 		border-radius: 5px;
-		border: 1px solid lightgray;
 	}
 
 	.style-none {
@@ -103,7 +97,6 @@
 	.emp-info-bar {
 		width : 100%;
 		height : 7%;
-		border-bottom : 1px solid lightgray;
 		display: flex;
 		flex-direction: column;
 	}
@@ -142,10 +135,6 @@
 
 	#profile-area>div {
 		height: 220px;
-	}
-
-	#profile-area > div {
-		border: 1px solid lightgray;
 	}
 
 	#profile-title {
@@ -278,9 +267,9 @@
 											</a>
 										</div>
 										<div class="profile-text card-text">
-											<strong class="card-title my-0">${el.deptCode}</strong>
-											<p class="small my-0">${el.rankCode}</p>
-											<p class="small my-0">${el.empName}</p>
+											<strong class="card-title my-0">${el.empName}</strong>
+											<p class="small my-0">${el.deptName}</p>
+											<p class="small my-0">${el.rankName}</p>
 											<p class="small my-0">${el.empTel}</p>
 										</div>
 									</div>
