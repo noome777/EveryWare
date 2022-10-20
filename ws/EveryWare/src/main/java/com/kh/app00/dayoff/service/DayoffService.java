@@ -11,12 +11,15 @@ public interface DayoffService {
     int insertOff(DayoffVo vo);
 
     //휴가 목록 조회
-    List<DayoffVo> dayoffList(DayoffVo vo, PageVo pv);
+    List<DayoffVo> dayoffList(DayoffVo vo, PageVo pv1);
 
     //전체 신청 글 수 조회
     int selectTotalCnt(DayoffVo vo);
 
     //기간 선택 목록 조회
-//    List<DayoffVo> selectDateList(DayoffVo vo);
+    List<DayoffVo> selectDateList(DayoffVo vo, PageVo pv2);
+
+    //기간 선택한 글 수 조회
+    int selectDateCnt(DayoffVo vo);
 
 }

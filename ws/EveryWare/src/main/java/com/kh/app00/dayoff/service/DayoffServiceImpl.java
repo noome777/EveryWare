@@ -30,8 +30,8 @@ public class DayoffServiceImpl implements DayoffService {
 
     //휴가 목록 조회
     @Override
-    public List<DayoffVo> dayoffList(DayoffVo vo, PageVo pv) {
-        return dao.dayoffList(sst, vo, pv);
+    public List<DayoffVo> dayoffList(DayoffVo vo, PageVo pv1) {
+        return dao.dayoffList(sst, vo, pv1);
     }
 
     //전체 신청 글 수 조회
@@ -41,9 +41,15 @@ public class DayoffServiceImpl implements DayoffService {
     }
 
     //기간 선택 목록 조회
-//    @Override
-//    public List<DayoffVo> selectDateList(DayoffVo vo) {
-//        return dao.selectDateList(sst, vo);
-//    }
+    @Override
+    public List<DayoffVo> selectDateList(DayoffVo vo, PageVo pv2) {
+        return dao.selectDateList(sst, vo, pv2);
+    }
+
+    //기간 선택한 글 수 조회
+    @Override
+    public int selectDateCnt(DayoffVo vo) {
+        return dao.selectDateCnt(sst, vo);
+    }
 
 }

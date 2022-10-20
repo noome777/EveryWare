@@ -134,8 +134,15 @@
             </div>
             <button class="btn btn-outline-primary" type="submit" id="search-btn">search</button>
           </form>
-          
-        <h6 class="card-title">조회 결과 {}건</h6>
+        
+        <c:if test="${empty dateCount}">
+	        <h6 class="card-title">조회 결과 ${listCount} 건</h6>
+        </c:if>  
+        <c:if test="${empty listCount}">
+	        <h6 class="card-title">조회 결과 ${dateCount} 건</h6>
+        </c:if>
+        
+        
         <table class="table table-hover">
           <thead>
             <tr>
@@ -148,6 +155,7 @@
             </tr>
           </thead>
           <tbody>
+          	<c:if test="${empty dateList}">
              <c:forEach items="${voList}" var="x">
             	<tr>
 	              <td>${x.offCode}</td>
@@ -158,19 +166,50 @@
 	              <td>${x.offApproval}</td>
             	</tr>
              </c:forEach>
+          	</c:if>
+          	<c:if test="${empty voList}">
+          		<c:forEach items="${dateList}" var="y">
+            	<tr>
+	              <td>${y.offCode}</td>
+	              <td>${y.offStartDate}</td>
+	              <td>${y.offEndDate}</td>
+	              <td>${y.offDays}</td>
+	              <td>${y.offReason}</td>
+	              <td>${y.offApproval}</td>
+            	</tr>
+             </c:forEach>
+          	</c:if>
+          
           </tbody>
         </table>
-        <div id="page-area">
-          <c:if test="${pv.startPage ne 1}">
-            <a href="${root}/dayoff/main/${pv.startPage - 1}" class="btn mb-2 btn-primary"><</a>
-          </c:if>
-          <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" var="i">
-              <a href="${root}/dayoff/main/${i}" class="btn mb-2 btn-primary">${i}</a>
-          </c:forEach>
-          <c:if test="${pv.endPage ne pv.maxPage }">
-            <a href="${root}/dayoff/main/${pv.endPage + 1}" class="btn mb-2 btn-primary">></a>
-          </c:if>	
-        </div>
+
+        
+        <c:if test="${empty dateList && empty vo}">
+	        <div id="page-area">
+	          <c:if test="${pv.startPage ne 1}">
+	            <a href="${root}/dayoff/main/${pv.startPage - 1}" class="btn mb-2 btn-primary"><</a>
+	          </c:if>
+	          <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" var="i">
+	              <a href="${root}/dayoff/main/${i}" class="btn mb-2 btn-primary">${i}</a>
+	          </c:forEach>
+	          <c:if test="${pv.endPage ne pv.maxPage }">
+	            <a href="${root}/dayoff/main/${pv.endPage + 1}" class="btn mb-2 btn-primary">></a>
+	          </c:if>	
+	        </div>
+        </c:if>
+        <c:if test="${empty voList && not empty vo}">
+        	<div id="page-area">
+	          <c:if test="${pv.startPage ne 1}">
+	            <a href="${root}/dayoff/main/${pv.startPage - 1}?offStartDate=${vo.offStartDate}&offEndDate=${vo.offEndDate}" class="btn mb-2 btn-primary"><</a>
+	          </c:if>
+	          <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" var="i">
+	              <a href="${root}/dayoff/main/${i}?offStartDate=${vo.offStartDate}&offEndDate=${vo.offEndDate}" class="btn mb-2 btn-primary">${i}</a>
+	          </c:forEach>
+	          <c:if test="${pv.endPage ne pv.maxPage }">
+	            <a href="${root}/dayoff/main/${pv.endPage + 1}?offStartDate=${vo.offStartDate}&offEndDate=${vo.offEndDate}" class="btn mb-2 btn-primary">></a>
+	          </c:if>	
+	        </div>
+        </c:if>
 
        
 

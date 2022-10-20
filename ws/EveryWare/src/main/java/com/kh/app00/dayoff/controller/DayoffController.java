@@ -32,49 +32,62 @@ public class DayoffController {
     
     //휴가 신청 화면 && 리스트 조회
     @GetMapping("main/{pno}")
-    public String main(DayoffVo vo, Model model, HttpSession session, @PathVariable int pno, String offStartDate, String offEndDate) {
-        System.out.println(offStartDate);
-        System.out.println(offEndDate);
+    public String main(DayoffVo vo, Model model, HttpSession session, 
+            @PathVariable int pno, String offStartDate, String offEndDate) {
         
         //사원 정보 vo에 저장
         EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
         vo.setECode(loginMember.getEmpCode());
+
+        //기간 선택 조회 여부(휴가 메인의 전체리스트 || 기간 선택 후 리스트)
+        if(offStartDate != null && offEndDate != null) {
+            //기간 선택을 했을 경우
+            //사원의 기간 선택 목록 조회 (+페이징)
+            vo.setOffStartDate(offStartDate);
+            vo.setOffEndDate(offEndDate);
+            
+            //기간 선택 후 신청글 수 조회
+            int dateCount = service.selectDateCnt(vo);
+            PageVo pv2 = Pagination.getPageVo(dateCount, pno, 5, 5);
+            
+            List<DayoffVo> dateList = service.selectDateList(vo, pv2);
+            
+            model.addAttribute("dateList", dateList);
+            model.addAttribute("vo", vo);
+            model.addAttribute("pv", pv2);
+            model.addAttribute("dateCount", dateCount);
+        }else {
+            //기간 선택을 하지 않았을 경우
+            //리스트의 전체 신청글 수 조회
+            int listCount = service.selectTotalCnt(vo);
+            PageVo pv1 = Pagination.getPageVo(listCount, pno, 5, 5);
+            
+            List<DayoffVo> voList = service.dayoffList(vo, pv1);
+            
+            model.addAttribute("voList", voList);
+            model.addAttribute("pv", pv1);
+            model.addAttribute("listCount", listCount);
+        }
         
-//        if(offStartDate == null && offEndDate == null) {
-//            //기간 선택을 하지 않았을 경우
-//            vo.setOffStartDate(offStartDate);
-//            vo.setOffEndDate(offEndDate);
-//            
-//            List<DayoffVo> dateList = service.selectDateList(vo);
-//        }else {
-//            //기간 선택을 했을 경우
-//            
-//        }
-        
-        //기간 선택하여 조회
-//        List<DayoffVo> 
-        
-        //리스트의 전체 신청글 수 조회
-        int listCount = service.selectTotalCnt(vo);
-        
-        //사원의 휴가 목록 조회 (+ 페이징)
-        PageVo pv = Pagination.getPageVo(listCount, pno, 5, 5);
-        List<DayoffVo> voList = service.dayoffList(vo, pv);
-        
-        model.addAttribute("voList", voList);
-        model.addAttribute("pv", pv);
         return "dayoff/dayoffMain";
+        
+        
     }
     
 
     //휴가 신청
-    @PostMapping("main/1")
-    public String insertOff(DayoffVo vo, HttpSession session) {
-        
+    @PostMapping("main/{pno}")
+    public String insertOff(DayoffVo vo, HttpSession session, 
+            String offStartDate, String offEndDate, @PathVariable int pno) {
+
         //사원 정보 vo에 저장
         EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
         vo.setECode(loginMember.getEmpCode());
         
+        if(offStartDate.length() == 21 && offEndDate.length() == 21) {
+            vo.setOffStartDate(offStartDate.substring(11));
+            vo.setOffEndDate(offEndDate.substring(11));
+        }
         
         //DB에 신청 정보 insert
         int result = service.insertOff(vo);

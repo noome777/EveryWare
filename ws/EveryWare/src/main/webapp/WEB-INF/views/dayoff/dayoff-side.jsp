@@ -38,7 +38,7 @@
                   <a class="nav-link pl-3" href="${root}/commute/selectByMonth"><span class="ml-1 item-text">월 근무내역</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/commute/overwork"><span class="ml-1 item-text">시간 외 근무</span></a>
+                  <a class="nav-link pl-3" href="${root}/commute/overwork/1"><span class="ml-1 item-text">시간 외 근무</span></a>
                 </li>
               </ul>
             </li>
