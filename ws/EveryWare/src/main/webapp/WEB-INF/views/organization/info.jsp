@@ -334,9 +334,9 @@
 											</a>
 										</div>
 										<div class="profile-text card-text">
-											<strong class="card-title my-0">${el.deptCode}</strong>
+											<strong class=" card-title my-0">${el.empName}</strong>
+											<p class=" small my-0">${el.deptCode}</p>
 											<p class="small my-0">${el.rankCode}</p>
-											<p class="small my-0">${el.empName}</p>
 											<p class="small my-0">${el.empTel}</p>
 										</div>
 									</div>
@@ -357,9 +357,9 @@
 													</a>
 												</div>
 												<div class="profile-text card-text">
-													<strong class="card-title my-0">${el.deptCode}</strong>
+													<strong class=" card-title my-0">${el.empName}</strong>
+													<p class=" small my-0">${el.deptCode}</p>
 													<p class="small my-0">${el.rankCode}</p>
-													<p class="small my-0">${el.empName}</p>
 													<p class="small my-0">${el.empTel}</p>
 												</div>
 											</div>
