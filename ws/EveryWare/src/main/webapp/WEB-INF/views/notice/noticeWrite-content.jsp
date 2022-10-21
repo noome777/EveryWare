@@ -33,7 +33,7 @@
 			<br>
 			<form action="" method="post">
 			<div class="buttonSet">
-				<button type="button" id="sendBtn" class="btn btn-primary">확인</button>
+				<button type="submit" id="sendBtn" class="btn btn-primary">확인</button>
 			</div>
 
 			<hr>

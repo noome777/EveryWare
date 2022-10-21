@@ -76,7 +76,7 @@
 							<tr>
 								<c:forEach items="${nList}" var="x">
 								<td>${x.noticeCode}</td>
-								<td>${x.noticeTitle}</td>
+								<td><a href="${root}/notice/detail">${x.noticeTitle}</a> </td>
 								<td>${x.noticeDate}</td>
 								</c:forEach>
 							</tr>

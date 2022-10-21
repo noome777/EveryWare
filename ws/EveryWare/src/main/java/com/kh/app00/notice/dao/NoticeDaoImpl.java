@@ -14,5 +14,20 @@ public class NoticeDaoImpl implements NoticeDao {
 	public List<NoticeVo> selectList(SqlSessionTemplate sst) {
 		return sst.selectList("noticeMapper.selectList");
 	}
+
+	@Override
+	public int insertNotice(SqlSessionTemplate sst, NoticeVo vo) {
+		return sst.insert("noticeMapper.insertNotice", vo);
+	}
+
+	@Override
+	public NoticeVo selectOne(SqlSessionTemplate sst, String noticeCode) {
+		return sst.selectOne("noticeMapper.selectOne", noticeCode);
+	}
+
+	@Override
+	public int increaseHit(SqlSessionTemplate sst, String noticeCode) {
+		return sst.update("noticeMapper.increaseHit" , noticeCode);
+	}
 	
 }
