@@ -97,26 +97,31 @@
       <div style="margin-left: 20px; margin-top: 20px;">
         <h4 class="card-title">시간 외 근무 조회</h4><br><br>
 
-        <form action="">
+        <form action="" method="get">
           <h4 class="card-title">기간 선택</h4>
           <div class="form-row mb-3">
             <div class="col-md-4 mb-3">
               <div class="input-group">
-                <input class="form-control" id="example-date" type="date" name="startDate" required>
+                <input class="form-control" id="example-date" type="date" name="overDate" required>
               </div>
             </div>
-            ~ 
+            <!-- ~ 
             <div class="col-md-4 mb-3">
               <div class="input-group">
-                <input class="form-control" id="example-date" type="date" name="endDate" required>
+                <input class="form-control" id="example-date" type="date" name="overDate" required>
               </div>
-            </div>
+            </div> -->
           </div>
           <button class="btn btn-outline-primary" type="submit" id="search-btn">search</button>
         </form>
     
-          
-        <h6 class="card-title">조회 결과 ${listCount} 건</h6>
+        <c:if test="${empty dateCount}">
+	        <h6 class="card-title">조회 결과 ${listCount} 건</h6>
+        </c:if>  
+        <c:if test="${empty listCount}">
+	        <h6 class="card-title">조회 결과 ${dateCount} 건</h6>
+        </c:if>
+
         <table class="table table-hover">
           <thead>
             <tr>
@@ -129,6 +134,7 @@
             </tr>
           </thead>
           <tbody>
+            <c:if test="${empty dateList}">
              <c:forEach items="${voList}" var="x">
             	<tr>
 	              <td>${x.overCode}</td>
@@ -139,27 +145,50 @@
 	              <td>${x.overApproval}</td>
             	</tr>
              </c:forEach>
-           
-			    <%-- <div>${x.no}</div>
-			    <div><a href="${root}/board/detail/${x.no}">${x.title}</a></div>
-			    <div>${x.writer}</div>
-			    <div>${x.hit}</div> --%>
-		    
-          
+            </c:if>
+          	<c:if test="${empty voList}">
+          		<c:forEach items="${dateList}" var="y">
+                <tr>
+                  <td>${y.overCode}</td>
+                  <td>${y.overDate}</td>
+                  <td>${y.overTime}</td>
+                  <td>${y.overName}</td>
+                  <td>${y.overReason}</td>
+                  <td>${y.overApproval}</td>
+                </tr>
+              </c:forEach>
+          	</c:if>
           </tbody>
         </table>
 
-        <div id="page-area">
-          <c:if test="${pv.startPage ne 1}">
-            <a href="${root}/commute/overwork/${pv.startPage - 1}" class="btn mb-2 btn-primary"><</a>
-          </c:if>
-          <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" var="i">
-              <a href="${root}/commute/overwork/${i}" class="btn mb-2 btn-primary">${i}</a>
-          </c:forEach>
-          <c:if test="${pv.endPage ne pv.maxPage }">
-            <a href="${root}/commute/overwork/${pv.endPage + 1}" class="btn mb-2 btn-primary">></a>
-          </c:if>	
-        </div>
+      
+        <c:if test="${empty dateList && empty vo}">
+          <div id="page-area">
+            <c:if test="${pv.startPage ne 1}">
+              <a href="${root}/commute/overwork/${pv.startPage - 1}" class="btn mb-2 btn-primary"><</a>
+            </c:if>
+            <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" var="i">
+                <a href="${root}/commute/overwork/${i}" class="btn mb-2 btn-primary">${i}</a>
+            </c:forEach>
+            <c:if test="${pv.endPage ne pv.maxPage }">
+              <a href="${root}/commute/overwork/${pv.endPage + 1}" class="btn mb-2 btn-primary">></a>
+            </c:if>	
+          </div>
+        </c:if>
+        <c:if test="${empty voList && not empty vo}">
+          <div id="page-area">
+	          <c:if test="${pv.startPage ne 1}">
+	            <a href="${root}/commute/overwork/${pv.startPage - 1}?overDate=${vo.overDate}" class="btn mb-2 btn-primary"><</a>
+	          </c:if>
+	          <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" var="i">
+	              <a href="${root}/commute/overwork/${i}?overDate=${vo.overDate}" class="btn mb-2 btn-primary">${i}</a>
+	          </c:forEach>
+	          <c:if test="${pv.endPage ne pv.maxPage }">
+	            <a href="${root}/commute/overwork/${pv.endPage + 1}?overDate=${vo.overDate}" class="btn mb-2 btn-primary">></a>
+	          </c:if>	
+	        </div>
+        </c:if>
+
       </div>
     </div>
 </body>

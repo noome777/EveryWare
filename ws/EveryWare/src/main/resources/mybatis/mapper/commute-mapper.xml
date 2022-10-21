@@ -55,7 +55,13 @@
 		SELECT COUNT(*) FROM OVERWORK WHERE ECODE = #{eCode}
 	</select>
 	
-	<!-- <select id="selectCommuteList">
-		SELECT COM_CODE, ECODE, START_TIME, END_TIME, ENROLL_DATE, COM_STATUS FROM COMMUTE
-	</select> -->
+	<select id="selectDateCnt" resultType="int">
+		SELECT COUNT(*) FROM OVERWORK WHERE ECODE = #{eCode} 
+		AND OVER_DATE = TO_CHAR(#{overDate})
+	</select>
+	
+	<select id="selectDateList" resultType="OverworkVo">
+		SELECT OVER_CODE, OVER_DATE, OVER_TIME, OVER_NAME, OVER_REASON, OVER_APPROVAL FROM OVERWORK
+		WHERE ECODE = #{eCode} AND OVER_DATE = TO_CHAR(#{overDate}) ORDER BY OVER_CODE DESC
+	</select>
 </mapper>

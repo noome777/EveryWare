@@ -5,6 +5,7 @@ import java.util.List;
 import com.kh.app00.common.PageVo;
 import com.kh.app00.commute.vo.CommuteVo;
 import com.kh.app00.commute.vo.OverworkVo;
+import com.kh.app00.dayoff.vo.DayoffVo;
 
 public interface CommuteService {
 
@@ -20,7 +21,11 @@ public interface CommuteService {
     //리스트 전체 신청글 수 조회
     int selectTotalCnt(OverworkVo vo);
 
-    //사원의 근태 리스트 
-//    List<CommuteVo> commuteList();
+    //기간 선택 글 수 조회
+    int selectDateCnt(OverworkVo vo);
+
+    //기간 선택시 리스트 조회
+    List<OverworkVo> selectDateList(OverworkVo vo, PageVo pv2);
+
 
 }

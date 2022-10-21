@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.app00.common.PageVo;
 import com.kh.app00.commute.vo.CommuteVo;
 import com.kh.app00.commute.vo.OverworkVo;
+import com.kh.app00.dayoff.vo.DayoffVo;
 
 @Repository
 public class CommuteDaoImpl implements CommuteDao {
@@ -41,10 +42,22 @@ public class CommuteDaoImpl implements CommuteDao {
         return sst.selectOne("commuteMapper.selectTotalCnt", vo);
     }
 
-    //사원의 근태 리스트 조회
-//    @Override
-//    public List<CommuteVo> commuteList(SqlSessionTemplate sst) {
-//        return sst.selectList("commuteMapper.selectCommuteList");
-//    }
+    //기간 선택 글 수 조회
+    @Override
+    public int selectDateCnt(SqlSessionTemplate sst, OverworkVo vo) {
+        return sst.selectOne("commuteMapper.selectDateCnt", vo);
+    }
+
+    //기간 선택 시 리스트 조회
+    @Override
+    public List<OverworkVo> selectDateList(SqlSessionTemplate sst, OverworkVo vo, PageVo pv2) {
+        
+        int offset = (pv2.getCurrentPage()-1) * pv2.getBoardLimit();
+        RowBounds rb = new RowBounds(offset , pv2.getBoardLimit());
+        
+        return sst.selectList("commuteMapper.selectDateList", vo, rb);
+    }
+
+
 
 }

@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import com.kh.app00.common.PageVo;
 import com.kh.app00.commute.vo.CommuteVo;
 import com.kh.app00.commute.vo.OverworkVo;
+import com.kh.app00.dayoff.vo.DayoffVo;
 
 public interface CommuteDao   {
 
@@ -22,7 +23,12 @@ public interface CommuteDao   {
     //리스트 전체 신청글 수 조회
     int selectTotalCnt(SqlSessionTemplate sst, OverworkVo vo);
 
-    //사원의 근태 리스트 조회
-//    List<CommuteVo> commuteList(SqlSessionTemplate sst);
+    //기간 선택 글 수 조회
+    int selectDateCnt(SqlSessionTemplate sst, OverworkVo vo);
+
+    //기간 선택 시 리스트 조회
+    List<OverworkVo> selectDateList(SqlSessionTemplate sst, OverworkVo vo, PageVo pv2);
+
+
 
 }
