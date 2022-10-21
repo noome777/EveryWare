@@ -1,6 +1,8 @@
 package com.kh.app00.organization.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import com.kh.app00.common.SpaceRemover;
 import com.kh.app00.emp.vo.EmpVo;
 import com.kh.app00.organization.dao.OrganizationDao;
 import com.kh.app00.organization.vo.DeptVo;
+import com.kh.app00.organization.vo.JobVo;
+import com.kh.app00.organization.vo.RankVo;
 
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
@@ -55,16 +59,28 @@ public class OrganizationServiceImpl implements OrganizationService {
 	//임직원 관리 위한 페이징
 	@Override
 	public int selectTotalCnt() {
-			return organizationDao.selectCountAll(sqlSessionTemplate);
+		return organizationDao.selectCountAll(sqlSessionTemplate);
 	}
 
-
-	//임직원 관리 - 페이징
+	//임직원 관리 - 페이징 적용된 empList
 	@Override
 	public List<EmpVo> selectEmpListByPage(PageVo pv) {
 		return organizationDao.selectEmpListByPage(sqlSessionTemplate,pv);
 	}
+	
+	//임직원 관리 - 직위 리스트
+	@Override
+	public List<RankVo> selectRankList() {
+		return organizationDao.selectRankList(sqlSessionTemplate);
+	}
 
+
+	//임직원 관리 - 직무 리스트
+	@Override
+	public List<JobVo> selectJobList() {
+		return organizationDao.selectJobList(sqlSessionTemplate);
+	}
+	
 
 	//임직원 관리 - 임직원 추가
 	@Override
@@ -77,16 +93,29 @@ public class OrganizationServiceImpl implements OrganizationService {
 			EmpVo replacedEmpVo = SpaceRemover.removeEmpWhiteSpace(empVo);
 			replacedEmpVo.encodePwd(pwdEnc);
 			
-			//int result = organizationDao.insertEmp(sqlSessionTemplate,replacedEmpVo);
-//			if(result==1) {
-//				return result;
-//			} else {
-//				return -1;
-//			}
-			
-			return 1;
+				int result = organizationDao.insertEmp(sqlSessionTemplate,replacedEmpVo);
+			if(result==1) {
+				return result;
+			} else {
+				return -1;
+			}
 		}
 		
 	}
+
+
+	//아이디 중복 확인
+	@Override
+	public int checkIdDup(String id) {
+		return organizationDao.checkIdDup(sqlSessionTemplate,id);
+	}
+
+
+
+	
+
+
+
+	
 
 }

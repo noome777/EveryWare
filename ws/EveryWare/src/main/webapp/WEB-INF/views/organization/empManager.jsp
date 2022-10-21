@@ -8,6 +8,7 @@
 
 <link rel="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 
+
 <style>
 
 
@@ -96,6 +97,14 @@ height: 100%;
 width: 100%;
 height: 100%;
 padding: 10px;
+}
+
+.has-success {
+  color: darkblue;
+}
+
+.has-error {
+  color: red;
 }
 
 
@@ -326,7 +335,7 @@ padding: 10px;
               
               <div id="add-modal-wrap">
                 <div>이름</div>
-                <div><input type="text" id="emp-name" placeholder="사용자 이름" name="empNmae"></div>
+                <div><input type="text" id="emp-name" placeholder="사용자 이름" name="empName"></div>
                 <div>아이디</div>
                 <div><input type="text" id="emp-id" placeholder="아이디" name="empId"></div>
                 <div>비밀번호</div>
@@ -334,22 +343,28 @@ padding: 10px;
                   <input id="emp-pwd" type="password" placeholder="비밀번호" name="empPwd" >
                   <i class="fa-solid fa-eye"></i>
                 </div>
+                <div>부서</div>
+                <div>
+                  <select name="deptCode" id="dept-select">
+                    <c:forEach items="${deptList}" var="deptList">
+                    	<option value="${deptList.deptCode}">${deptList.deptName}</option>
+                    </c:forEach>
+                  </select> 
+                </div>
                 <div>직위</div>
                 <div> 
-                  <select name="rankName" id="rank-select">
-                    <option value=""></option>
+                  <select name="rankCode" id="rank-select">
+                    <c:forEach items="${rankList}" var="rankList">
+                    	<option value="${rankList.rankCode}">${rankList.rankName}</option>
+                    </c:forEach>
                   </select> 
                 </div>
                 <div>직무</div>
                 <div>
-                  <select name="jobName" id="job-select">
-                    <option value=""></option>
-                  </select> 
-                </div>
-                <div>부서</div>
-                <div>
-                  <select name="dpetName" id="dept-select">
-                    <option value=""></option>
+                  <select name="empJobCode" id="job-select">
+                    <c:forEach items="${jobList}" var="jobList">
+                    	<option value="${jobList.jobCode}">${jobList.jobName}</option>
+                    </c:forEach>
                   </select> 
                 </div>
                 </div>
@@ -406,8 +421,8 @@ padding: 10px;
         const nameHan = /^[ㄱ-ㅎ|가-힣]+$/;
 
       //비밀번호
-        if(pwd.length < 10 || pwd.lengthd > 20){
-          alert("비밀번호는 10자리 ~ 20자리 이내로 입력해주세요.");
+        if(pwd.length < 8 || pwd.lengthd > 20){
+          alert("비밀번호는 8자리 ~ 20자리 이내로 입력해주세요.");
           return false;
         }else if(pwd.search(/\s/) != -1){
           alert("비밀번호는 공백 없이 입력해주세요.");
@@ -434,7 +449,7 @@ padding: 10px;
           alert("이름에 한글을 사용해 주시길 바랍니다.")
           return false;
         }else {
-          return true;
+        	return true;
         }
 
       }
