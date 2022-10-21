@@ -5,7 +5,6 @@ import lombok.Data;
 @Data
 public class ApprovalDocVo {
 	private String docCode;
-	private String securityCode;
 	private String periodCode;
 	private String doc_formCode;
 	private String empCode;
@@ -13,4 +12,7 @@ public class ApprovalDocVo {
 	private String docEnrollDate;
 	private String docUpdated;
 	private String docStatus;
+	
+	private String formName;
+	private String empName;
 }

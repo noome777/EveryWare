@@ -5,8 +5,9 @@ import java.util.List;
 import com.kh.app00.approval.doc.vo.DocFormMapperVo;
 import com.kh.app00.approval.doc.vo.DocFormVo;
 import com.kh.app00.approval.doc.vo.DocPeriodVo;
-import com.kh.app00.approval.doc.vo.DocSecurityVo;
+import com.kh.app00.approval.vo.ApprovalDocVo;
 import com.kh.app00.approval.vo.ApprovalTypeVo;
+import com.kh.app00.common.PageVo;
 import com.kh.app00.emp.vo.EmpVo;
 import com.kh.app00.organization.vo.DeptVo;
 
@@ -18,9 +19,6 @@ public interface ApprovalService {
 	//보존연한 불러오기
 	List<DocPeriodVo> selectPeriodList();
 	
-	//보안등급 불러오기
-	List<DocSecurityVo> selectSecurityList();
-
 	//양식 내용 불러오기
 	List<DocFormMapperVo> formSelect(int formCode);
 	
@@ -35,6 +33,14 @@ public interface ApprovalService {
 
 	//부서별 임직원 불러오기
 	List<EmpVo> selectDeptEmp(int deptCode);
+
+	
+	
+	
+	//문서 갯수 조회
+	int selectTotalCnt();
+	//문서 목록 조회
+	List<ApprovalDocVo> selectDocList(PageVo pv);
 
 
 	

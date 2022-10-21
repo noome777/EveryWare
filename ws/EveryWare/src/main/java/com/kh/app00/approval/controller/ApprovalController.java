@@ -17,10 +17,11 @@ import com.kh.app00.approval.doc.vo.DocDataVo;
 import com.kh.app00.approval.doc.vo.DocFormMapperVo;
 import com.kh.app00.approval.doc.vo.DocFormVo;
 import com.kh.app00.approval.doc.vo.DocPeriodVo;
-import com.kh.app00.approval.doc.vo.DocSecurityVo;
 import com.kh.app00.approval.service.ApprovalService;
 import com.kh.app00.approval.vo.ApprovalDocVo;
 import com.kh.app00.approval.vo.ApprovalTypeVo;
+import com.kh.app00.common.PageVo;
+import com.kh.app00.common.Pagination;
 import com.kh.app00.emp.vo.EmpVo;
 import com.kh.app00.organization.vo.DeptVo;
 
@@ -35,8 +36,22 @@ public class ApprovalController {
 		this.service = service;
 	}
 	
-	@GetMapping("list")
-	public String list() {
+	@GetMapping("list/{pno}")
+	public String list(Model model, @PathVariable int pno) {
+		
+		int totalCount = service.selectTotalCnt();
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 3, 10);
+		
+		//list 조회
+		List<ApprovalDocVo> docList = service.selectDocList(pv);
+		
+		//문서종류 불러오기
+		List<DocFormVo> formList = service.selectFormList();
+		
+		
+		
+		model.addAttribute("formList", formList);
+		model.addAttribute("docList", docList);
 		return "approval/list";
 	}
 	
@@ -49,8 +64,6 @@ public class ApprovalController {
 		List<DocFormVo> formList = service.selectFormList();
 		//보존연한 불러오기
 		List<DocPeriodVo> periodList = service.selectPeriodList();
-		//보안등급 불러오기
-		List<DocSecurityVo> securityList = service.selectSecurityList();
 		//문서양식 불러오기
 		List<DocFormMapperVo> formMappingList = service.formSelect(formCode);
 		
@@ -70,7 +83,6 @@ public class ApprovalController {
 		
 		model.addAttribute("formList", formList);
 		model.addAttribute("periodList", periodList);
-		model.addAttribute("securityList", securityList);
 		model.addAttribute("formMappingList", formMappingList);
 		model.addAttribute("selectedFormCode", vo.getFormCode());
 		model.addAttribute("approvalTypeList", approvalTypeList);

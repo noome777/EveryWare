@@ -10,8 +10,9 @@ import com.kh.app00.approval.dao.ApprovalDao;
 import com.kh.app00.approval.doc.vo.DocFormMapperVo;
 import com.kh.app00.approval.doc.vo.DocFormVo;
 import com.kh.app00.approval.doc.vo.DocPeriodVo;
-import com.kh.app00.approval.doc.vo.DocSecurityVo;
+import com.kh.app00.approval.vo.ApprovalDocVo;
 import com.kh.app00.approval.vo.ApprovalTypeVo;
+import com.kh.app00.common.PageVo;
 import com.kh.app00.emp.vo.EmpVo;
 import com.kh.app00.organization.vo.DeptVo;
 
@@ -39,12 +40,6 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return dao.selectPeriodList(sst);
 	}
 
-	//보안등급
-	@Override
-	public List<DocSecurityVo> selectSecurityList() {
-		return dao.selectSecurityList(sst);
-	}
-	
 	//양식항목
 	@Override
 	public List<DocFormMapperVo> formSelect(int formCode) {
@@ -73,6 +68,21 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public List<EmpVo> selectDeptEmp(int deptCode) {
 		return dao.selectDeptEmp(sst, deptCode);
+	}
+
+	
+	
+	
+	//문서 갯수 조회
+	@Override
+	public int selectTotalCnt() {
+		return dao.selectCountAll(sst);
+	}
+
+	//문서 목록 조회
+	@Override
+	public List<ApprovalDocVo> selectDocList(PageVo pv) {
+		return dao.selectDocList(sst, pv);
 	}
 
 }

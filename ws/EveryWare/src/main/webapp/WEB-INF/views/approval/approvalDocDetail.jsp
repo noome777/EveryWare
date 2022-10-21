@@ -95,8 +95,8 @@
             <td>고은비</td>
           </tr>
           <tr>
-            <td class="appr-table-color">보안등급</td>
-            <td>C등급</td>
+            <td class="appr-table-color">문서상태</td>
+            <td>정상</td>
             <td class="appr-table-color">보존연한</td>
             <td>영구</td>
           </tr>

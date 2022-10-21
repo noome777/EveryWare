@@ -7,8 +7,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import com.kh.app00.approval.doc.vo.DocFormMapperVo;
 import com.kh.app00.approval.doc.vo.DocFormVo;
 import com.kh.app00.approval.doc.vo.DocPeriodVo;
-import com.kh.app00.approval.doc.vo.DocSecurityVo;
+import com.kh.app00.approval.vo.ApprovalDocVo;
 import com.kh.app00.approval.vo.ApprovalTypeVo;
+import com.kh.app00.common.PageVo;
 import com.kh.app00.emp.vo.EmpVo;
 import com.kh.app00.organization.vo.DeptVo;
 
@@ -19,9 +20,6 @@ public interface ApprovalDao {
 
 	//보존연한 불러오기
 	List<DocPeriodVo> selectPeriodList(SqlSessionTemplate sst);
-	
-	//보안등급 불러오기
-	List<DocSecurityVo> selectSecurityList(SqlSessionTemplate sst);
 	
 	//양식항목 불러오기
 	List<DocFormMapperVo> formSelect(SqlSessionTemplate sst, int formCode);
@@ -37,6 +35,13 @@ public interface ApprovalDao {
 
 	//부서별 임직원 불러오기
 	List<EmpVo> selectDeptEmp(SqlSessionTemplate sst, int deptCode);
+
+	
+	
+	//문서 갯수 조회
+	int selectCountAll(SqlSessionTemplate sst);
+	//문서 목록 조회
+	List<ApprovalDocVo> selectDocList(SqlSessionTemplate sst, PageVo pv);
 
 	
 }

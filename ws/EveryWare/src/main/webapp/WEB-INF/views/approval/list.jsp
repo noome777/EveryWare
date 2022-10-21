@@ -27,11 +27,10 @@
 	    <!-- simple table -->
 	       <div class="form-group mb-3">
 	         <select class="custom-select" id="custom-select">
-	           <option selected>전체</option>
-	           <option value="1">품의서</option>
-	           <option value="2">지출결의서</option>
-	           <option value="3">업무연락</option>
-	           <option value="4">기업용 공문</option>
+	           <option value="0" selected>전체</option>
+	           <c:forEach items="${formList}" var="f">
+                  <option value="${f.formCode}">${f.formName}</option>
+                </c:forEach>
 	         </select>
 	       </div>
         <div class="card shadow">
@@ -50,14 +49,16 @@
                 </tr>
               </thead>
               <tbody>
-                <tr onclick="location.href='${root}/approval/approvalDocDetail'">
-                  <td>1</td>
-                  <td>품의서</td>
-                  <td>220928_결재_품의</td>
-                  <td>고은비</td>
-                  <td>2022.09.08</td>
-                  <td><span class="badge badge-pill badge-warning">진행중</span></td>
-                </tr>
+              	<c:forEach items="${docList}" var="d">
+	                <tr onclick="location.href='${root}/approval/approvalDocDetail'">
+	                  <td>${d.docCode}</td>
+	                  <td>${d.formName}</td>
+	                  <td>${d.docTitle}</td>
+	                  <td>${d.empName}</td>
+	                  <td>날짜..</td>
+	                  <td><span>정상</span></td>
+	                </tr>
+              	</c:forEach>
                 <tr onclick="location.href='${root}/approval/approvalDocDetail'">
                   <td>2</td>
                   <td>지출결의서</td>
