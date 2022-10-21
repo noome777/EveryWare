@@ -78,6 +78,7 @@ public class CalendarController {
 		mv.setViewName(viewpage);
 		return mv;
 	}
+	   
 	
 	@GetMapping("delete")
 	public int deleteOne() {
