@@ -23,4 +23,7 @@ public interface OrganizationService {
 	//임직원 관리 - 페이징
 	List<EmpVo> selectEmpListByPage(PageVo pv);
 
+	//임직원 관리 - 임직원 추가
+	int insertEmp(EmpVo empVo);
+
 }

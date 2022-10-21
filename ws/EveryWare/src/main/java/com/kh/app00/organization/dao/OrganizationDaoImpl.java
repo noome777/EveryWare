@@ -46,6 +46,12 @@ public class OrganizationDaoImpl implements OrganizationDao {
 		
 		return sqlSessionTemplate.selectList("organizationMapper.selectEmpListByPage",null,rowBounds);
 	}
+
+	//임직원 추가
+	@Override
+	public int insertEmp(SqlSessionTemplate sqlSessionTemplate, EmpVo empVo) {
+		return sqlSessionTemplate.insert("organizationMapper.insertEmp",empVo);
+	}
 	
 	
 

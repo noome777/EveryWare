@@ -25,4 +25,7 @@ public interface OrganizationDao {
 	//임직원 관리 - 페이징
 	List<EmpVo> selectEmpListByPage(SqlSessionTemplate sqlSessionTemplate, PageVo pv);
 
+	//임직원 관리 - 임직원 추가
+	int insertEmp(SqlSessionTemplate sqlSessionTemplate, EmpVo replacedEmpVo);
+
 }

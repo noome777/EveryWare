@@ -20,6 +20,7 @@ import com.kh.app00.organization.service.OrganizationService;
 import com.kh.app00.organization.vo.DeptVo;
 import com.kh.app00.common.PageVo;
 import com.kh.app00.common.Pagination;
+import com.kh.app00.common.SpaceRemover;
 
 @Controller
 @RequestMapping("organization")
@@ -81,6 +82,7 @@ public class OrganizationController {
 		}
 	}
 	
+	// 임직원 관리 리스트
 	@GetMapping("management/emp/{pno}")
 	public String manageEmp(Model model, @PathVariable int pno) {
 		
@@ -96,12 +98,32 @@ public class OrganizationController {
 		return "organization/empManager";
 	}
 	
+	//임직원 관리 -> 임직원 추가
+	@PostMapping("management/emp/add")
+	public String addEmp (EmpVo empVo, HttpSession session) {
+		
+		int result = organizationService.insertEmp(empVo);
+		
+		if(result==1) {
+			return "redirect:/organization/management/emp/1";
+		} else {
+			session.setAttribute("errorMsg", "사용자 추가에 실패하였습니다.");
+			return "redirect:/organization/management/emp/1";
+		}
+	}
 	
+	//임직원 관리 -> 임직원 검색
+	
+	// 직위/직무설정
+	
+	//권한 관리 페이지
 	@GetMapping("management/right/{pno}")
 		public String manageRight(Model model, @PathVariable int pno){
 		
 		return "organization/rightManager";
 		
 	}
+	
+	//조직도
 
 }
