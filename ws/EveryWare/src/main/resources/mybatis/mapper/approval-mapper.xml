@@ -10,10 +10,6 @@
 		SELECT PERIOD_CODE, PERIOD FROM DOC_RETENTION_PERIOD ORDER BY PERIOD_CODE
 	</select>
 	
-	<select id="selectSecurityList" resultType="DocSecurityVo">
-		SELECT SECURITY_CODE, SECURITY_LEVLE, READABLE_POSITION FROM DOC_SECURITY_LEVLE ORDER BY SECURITY_CODE
-	</select>
-	
 	<select id="formSelectList" resultType="DocFormMapperVo" parameterType="java.lang.Integer">
 		SELECT  DF.FORM_CODE, DT.FORM_DETAIL_CODE, DFM.FORM_DETAIL_SEQ, DT.FORM_DETAIL_NAME, DT.FORM_DETAIL_TYPE
 		FROM DOC_FORM_MAPPING DFM
@@ -49,5 +45,20 @@
 			AND D.DEPT_CODE = #{deptCode}
 		</if>
 	</select>	
+	
+	
+	
+	<select id="selectCountAll" resultType="int">
+		SELECT COUNT(*) FROM APPROVAL_DOC WHERE DOC_STATUS = 'N'
+	</select>
+	
+	<select id="selectDocList" resultType="ApprovalDocVo">
+		SELECT D.DOC_CODE, D.PERIOD_CODE, D.DOC_FORM_CODE, D.EMP_CODE, D.DOC_TITLE, D.DOC_ENROLL_DATE, D.DOC_UPDATED, D.DOC_STATUS, F.FORM_NAME, E.EMP_NAME
+		FROM APPROVAL_DOC D
+		INNER JOIN DOC_FORM F ON D.DOC_FORM_CODE = F.FORM_CODE
+		INNER JOIN EMP E ON E.EMP_CODE = D.EMP_CODE
+		WHERE D.DOC_STATUS = 'N'
+		ORDER BY D.DOC_CODE DESC
+	</select>
 		
 </mapper>
