@@ -52,4 +52,16 @@ public class DayoffServiceImpl implements DayoffService {
         return dao.selectDateCnt(sst, vo);
     }
 
+    //사원별 전체 휴가 갯수 조회
+    @Override
+    public int offTotalCnt(DayoffVo vo) {
+        return dao.offTotalCnt(sst, vo);
+    }
+
+    //사원의 사용한 휴가 갯수 조회
+    @Override
+    public int offUsedCnt(DayoffVo vo) {
+        return dao.offUsedCnt(sst, vo);
+    }
+
 }

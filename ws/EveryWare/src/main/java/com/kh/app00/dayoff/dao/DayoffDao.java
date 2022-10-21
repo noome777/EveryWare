@@ -15,7 +15,6 @@ public interface DayoffDao {
     //휴가 목록 조회
     List<DayoffVo> dayoffList(SqlSessionTemplate sst, DayoffVo vo, PageVo pv1);
 
-
     //전체 신청 글 수 조회
     int selectTotalCnt(SqlSessionTemplate sst, DayoffVo vo);
 
@@ -24,5 +23,11 @@ public interface DayoffDao {
 
     //기간 선택한 글 수 조회
     int selectDateCnt(SqlSessionTemplate sst, DayoffVo vo);
+
+    //사원별 전체 휴가 갯수 조회
+    int offTotalCnt(SqlSessionTemplate sst, DayoffVo vo);
+
+    //사원의 사용한 휴가 갯수 조회
+    int offUsedCnt(SqlSessionTemplate sst, DayoffVo vo);
 
 }

@@ -22,4 +22,10 @@ public interface DayoffService {
     //기간 선택한 글 수 조회
     int selectDateCnt(DayoffVo vo);
 
+    //사원별 전체 휴가 갯수 조회
+    int offTotalCnt(DayoffVo vo);
+
+    //사원의 사용한 휴가 갯수 조회
+    int offUsedCnt(DayoffVo vo);
+
 }

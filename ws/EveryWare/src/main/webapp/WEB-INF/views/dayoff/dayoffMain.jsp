@@ -62,15 +62,15 @@
             <div class="form-row mb-3">
               <div class="col-4 text-center border-right mb-3">
                 <h4 class="mb-1">총 휴가</h4><br>
-                <p class="text-uppercase text-muted mb-1">총 휴가</p>
+                <p class="text-uppercase text-muted mb-1"><h4 class="mb-1">${offTotalCnt} 일</h4></p>
               </div>
               <div class="col-4 text-center mb-3 ">
                 <h4 class="mb-1">사용휴가</h4><br>
-                <p class="text-uppercase text-muted mb-1">사용휴가</p>
+                <p class="text-uppercase text-muted mb-1"><h4 class="mb-1">${offUsedCnt} 일</h4></p>
               </div>
               <div class="col-4 text-center border-left mb-3">
                 <h4 class="mb-1">잔여휴가</h4><br>
-                <p class="text-uppercase text-muted mb-1">잔여휴가</p><br>
+                <p class="text-uppercase text-muted mb-1"><h4 class="mb-1">${offLeftCnt} 일</h4></p><br>
               </div>
             </div>
         </div>

@@ -48,6 +48,18 @@ public class DayoffDaoImpl implements DayoffDao {
     public int selectDateCnt(SqlSessionTemplate sst, DayoffVo vo) {
         return sst.selectOne("dayoffMapper.selectDateCnt", vo);
     }
+
+    //사원별 전체 휴가 갯수 조회
+    @Override
+    public int offTotalCnt(SqlSessionTemplate sst, DayoffVo vo) {
+        return sst.selectOne("dayoffMapper.offTotalCnt", vo);
+    }
+
+    //사원의 사용한 휴가 갯수 조회
+    @Override
+    public int offUsedCnt(SqlSessionTemplate sst, DayoffVo vo) {
+        return sst.selectOne("dayoffMapper.offUsedCnt", vo);
+    }
     
 
 }

@@ -38,7 +38,12 @@ public class DayoffController {
         //사원 정보 vo에 저장
         EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
         vo.setECode(loginMember.getEmpCode());
-
+        
+        //휴가 현황 
+        int offTotalCnt = service.offTotalCnt(vo);
+        int offUsedCnt = service.offUsedCnt(vo);
+        int offLeftCnt = offTotalCnt - offUsedCnt;
+        
         //기간 선택 조회 여부(휴가 메인의 전체리스트 || 기간 선택 후 리스트)
         if(offStartDate != null && offEndDate != null) {
             //기간 선택을 했을 경우
@@ -69,9 +74,11 @@ public class DayoffController {
             model.addAttribute("listCount", listCount);
         }
         
+        model.addAttribute("offTotalCnt", offTotalCnt);
+        model.addAttribute("offUsedCnt", offUsedCnt);
+        model.addAttribute("offLeftCnt", offLeftCnt);
+        
         return "dayoff/dayoffMain";
-        
-        
     }
     
 

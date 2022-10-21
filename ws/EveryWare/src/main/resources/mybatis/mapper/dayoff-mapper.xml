@@ -30,5 +30,18 @@
 		ORDER BY OFF_START_DATE ASC
 	</select>
 
+	<select id="offTotalCnt" resultType="int">
+		SELECT D.OFF_ALL AS OFF_ALL
+		FROM EMP E
+		JOIN DAYOFF_COUNT D ON E.RANK_CODE = D.RANK_CODE
+		JOIN RANK R ON R.RANK_CODE = D.RANK_CODE
+		WHERE EMP_CODE = #{eCode}
+	</select>
+	
+	<select id="offUsedCnt" resultType="int">
+		SELECT NVL(SUM(OFF_DAYS), 0) AS OFF_USED 
+		FROM DAYOFF
+		WHERE ECODE = #{eCode}
+	</select>
 
 </mapper>
