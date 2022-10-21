@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -19,6 +20,7 @@ import com.kh.app00.common.Pagination;
 import com.kh.app00.commute.service.CommuteService;
 import com.kh.app00.commute.vo.CommuteVo;
 import com.kh.app00.commute.vo.OverworkVo;
+import com.kh.app00.dayoff.vo.DayoffVo;
 import com.kh.app00.emp.vo.EmpVo;
 
 @Controller
@@ -170,43 +172,73 @@ public class CommuteController {
         return "commute/selectByMonth";
     }
 
+    
+    
     //시간 외 근무 화면 && 리스트 조회
-    @GetMapping("overwork")
-    public String overwork(OverworkVo vo, Model model, HttpSession session) {
+    @GetMapping("overwork/{pno}")
+    public String overwork(OverworkVo vo, Model model, HttpSession session, 
+            @PathVariable int pno, String overDate) {
+        System.out.println(overDate);
         
         //사원 정보 vo에 저장
         EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
         vo.setECode(loginMember.getEmpCode());
         
-        //사원의 근태 목록 조회 (+ 페이징)
-//      PageVo pv = Pagination.getPageVo(result, result, result, result);
-        List<OverworkVo> voList = service.overworkList(vo);
-        System.out.println(voList.toString());
         
-        model.addAttribute("voList", voList);
+        //기간 선택 조회 여부(시간 외 근무 메인의 전체리스트 || 기간 선택 후 리스트)
+        if(overDate != null) {
+            //기간 선택을 했을 경우
+            //사원의 시간 외 근무 기간 선택 목록 조회 (+페이징)
+            vo.setOverDate(overDate);
+            
+            //기간 선택 후 신청글 수 조회
+            int dateCount = service.selectDateCnt(vo);
+            PageVo pv2 = Pagination.getPageVo(dateCount, pno, 5, 5);
+            
+            List<OverworkVo> dateList = service.selectDateList(vo, pv2);
+            System.out.println(dateList);
+            
+            model.addAttribute("dateList", dateList);
+            model.addAttribute("vo", vo);
+            model.addAttribute("pv", pv2);
+            model.addAttribute("dateCount", dateCount);
+            
+        }else {
+            //기간 선택을 안 했을 경우
+            //사원의 시간 외 근무 전체 목록 조회 (+ 페이징)
+            int listCount = service.selectTotalCnt(vo);
+            PageVo pv = Pagination.getPageVo(listCount, pno, 5, 5);
+            
+            List<OverworkVo> voList = service.overworkList(vo, pv);
+            
+            model.addAttribute("voList", voList);
+            model.addAttribute("pv", pv);
+            model.addAttribute("listCount", listCount);
+            
+        }
+        
         return "commute/overwork";
     }
     
     
     //시간 외 근무 신청
-    @PostMapping("overwork")
-    public String overwork(OverworkVo vo, HttpSession session) {
+    @PostMapping("overwork/{pno}")
+    public String overwork(OverworkVo vo, HttpSession session, @PathVariable int pno, String overDate) {
         
         //사원 정보 vo에 저장
         EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
         vo.setECode(loginMember.getEmpCode());
         
-        System.out.println(vo);
-        
+        if(overDate.length() == 21) {
+            vo.setOverDate(overDate.substring(11));
+        }
         
         //DB에 신청 정보 insert
         int result = service.insertOver(vo);
         
-      
-        
         if(result == 1) {
             session.setAttribute("alertMsg", "연장 근무 신청이 완료 되었습니다.");
-            return "redirect:/commute/overwork";
+            return "redirect:/commute/overwork/1";
         } else {
             session.setAttribute("alertMsg", "신청에 실패하셨습니다.");
             return "commute/overwork";

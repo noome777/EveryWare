@@ -67,7 +67,7 @@ public class EmpController {
     @PostMapping("login")
     @ResponseBody
     public String login(EmpVo vo, Model model, String saveId, HttpSession session, HttpServletResponse resp) {
-        System.out.println(saveId);
+//        System.out.println(saveId);
         
         //아이디 저장 (쿠키)
         if(saveId.equals("true")) {
