@@ -25,4 +25,19 @@ public class NoticeServiceImpl implements NoticeService {
 		return dao.selectList(sst);
 	}
 	
+	//사내공지 작성
+	@Override
+	public int write(NoticeVo vo) {
+		return dao.insertNotice(sst,vo);
+	}
+
+	@Override
+	public NoticeVo selectOne(String noticeCode) {
+		int result = dao.increaseHit(sst, noticeCode);
+		if(result == 1) {
+			return dao.selectOne(sst , noticeCode);
+		}else {
+			return null;
+		}
+	}
 }

@@ -9,6 +9,38 @@
 			,NOTICE_CONTENT
 			,NOTICE_DATE
 		FROM NOTICE
-		ORDER BY NOTICE_CODE DESC
+		ORDER BY NOTICE_CODE ASC
 	</select>
+	
+	<insert id="insertNotice">
+		INSERT INTO BOARD
+		(
+			NOTICE_CODE
+			,NOTICE_TITLE
+			,NOTICE_CONTENT
+			,NOTICE_DATE
+		)
+		VALUES
+		(
+			SEQ_NOTICE_CODE.NEXTVAL
+			, #{noticeTitle}
+			, #{noticeContent}
+		)
+	</insert>
+	
+	<select id="selectOne" resultType="NoticeVo">
+		SELECT 
+		   	NOTICE_CODE
+			,NOTICE_TITLE
+			,NOTICE_CONTENT
+			,NOTICE_DATE
+		FROM NOTICE
+		
+	</select>
+	
+	<update id="increaseHit">
+		UPDATE NOTICE
+			SET NOTICE_VIEWS = NOTICE_VIEWS + 1
+		WHERE NOTICE_CODE = #{NOTICE_CODE}
+	</update>
 </mapper>

@@ -35,9 +35,8 @@
 
 		<div class="card shadow">
 			<div class="card-body">
-				<div class="title">
-					<h2>title 입니다</h2>
-
+				<div class="title" name="noticeTitle">
+					<h2>${nvo.noticeTitle}</h2>
 				</div>
 				<div class="date_cover">
 					<p class="send_date">
@@ -50,17 +49,14 @@
 					</p>
 				</div>
 				<div class="date_cover">
-					<p class="send_date">
-						<span class="blind">2021-10-19 21:26:00</span>
-					</p>
+						<h2>${nvo.noticeDate}</h2>
 				</div>
 			</div>
 			<hr>
 			<div class="content">
 				<div
 					style="padding: 2em 2em; margin: 2em 0; color: black; background: #FFF; border: solid 0px #black; border-radius: 10px;">
-					<p>내용.</p>
-					<p>블라블라</p>
+						<h2>${nvo.noticeContent}</h2>
 				</div>
 				
 				<div id="reply-top">
