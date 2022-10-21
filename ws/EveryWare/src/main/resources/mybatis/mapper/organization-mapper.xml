@@ -125,4 +125,53 @@
 		ORDER BY E.EMP_CODE ASC
 	</select>
 	
+	<select id="selectRankList" resultType="RankVo">
+		SELECT 
+		    RANK_CODE
+		    , RANK_NAME
+		    , RANK_LEVEL
+		    FROM RANK
+		 WHERE RANK_STATUS = 'N'
+		 ORDER BY RANK_CODE ASC
+	</select>
+	
+	<select id="selectJobList" resultType="JobVo">
+		SELECT
+		    JOB_CODE
+		    , JOB_NAME
+		FROM JOB
+		WHERE JOB_STATUS = 'N'
+		ORDER BY JOB_CODE ASC
+	</select>
+	
+	<insert id="insertEmp">
+		INSERT INTO EMP (
+		    EMP_CODE
+		    , COM_CODE
+		    , DEPT_CODE
+		    , RANK_CODE
+		    , EMP_JOB_CODE
+		    , RIGHT_CODE
+		    , EMP_NAME
+		    , EMP_ID
+		    , EMP_PWD
+		) VALUES (
+		    SEQ_EMP_NO.NEXTVAL
+		    , 1
+		    , #{deptCode}
+		    , #{rankCode}
+		    , #{empJobCode}
+		    , 4
+		    , #{empName}
+		    , #{empId}
+		    , #{empPwd}
+		)
+	</insert>
+	
+	<select id="checkIdDup"  resultType="int">
+		SELECT COUNT(*) FROM EMP
+		WHERE
+			EMP_ID = #{id}
+	</select>
+	
 </mapper>

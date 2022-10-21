@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import com.kh.app00.common.PageVo;
 import com.kh.app00.emp.vo.EmpVo;
 import com.kh.app00.organization.vo.DeptVo;
+import com.kh.app00.organization.vo.JobVo;
+import com.kh.app00.organization.vo.RankVo;
 
 @Repository
 public class OrganizationDaoImpl implements OrganizationDao {
@@ -45,6 +47,30 @@ public class OrganizationDaoImpl implements OrganizationDao {
 		RowBounds rowBounds = new RowBounds(offset , pv.getBoardLimit()); //RowBounds(오프셋, 리밋)
 		
 		return sqlSessionTemplate.selectList("organizationMapper.selectEmpListByPage",null,rowBounds);
+	}
+
+	//임직원 추가
+	@Override
+	public int insertEmp(SqlSessionTemplate sqlSessionTemplate, EmpVo empVo) {
+		return sqlSessionTemplate.insert("organizationMapper.insertEmp",empVo);
+	}
+
+	//직위 리스트 가져오기
+	@Override
+	public List<RankVo> selectRankList(SqlSessionTemplate sqlSessionTemplate) {
+		return sqlSessionTemplate.selectList("organizationMapper.selectRankList");
+	}
+
+	//직무 리스트 가져오기
+	@Override
+	public List<JobVo> selectJobList(SqlSessionTemplate sqlSessionTemplate) {
+		return sqlSessionTemplate.selectList("organizationMapper.selectJobList");
+	}
+
+	//아이디 중복체크
+	@Override
+	public int checkIdDup(SqlSessionTemplate sqlSessionTemplate, String id) {
+		return sqlSessionTemplate.selectOne("organizationMapper.checkIdDup",id);
 	}
 	
 	

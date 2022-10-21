@@ -14,12 +14,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.app00.emp.vo.EmpVo;
 import com.kh.app00.organization.service.OrganizationService;
 import com.kh.app00.organization.vo.DeptVo;
+import com.kh.app00.organization.vo.JobVo;
+import com.kh.app00.organization.vo.RankVo;
 import com.kh.app00.common.PageVo;
 import com.kh.app00.common.Pagination;
+import com.kh.app00.common.SpaceRemover;
 
 @Controller
 @RequestMapping("organization")
@@ -81,6 +85,7 @@ public class OrganizationController {
 		}
 	}
 	
+	// 임직원 관리 리스트
 	@GetMapping("management/emp/{pno}")
 	public String manageEmp(Model model, @PathVariable int pno) {
 		
@@ -89,19 +94,57 @@ public class OrganizationController {
 		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
 		
 		List<EmpVo> empList = organizationService.selectEmpListByPage(pv);
+		List<DeptVo> deptList = organizationService.selectDeptList();
+		List<RankVo> rankList = organizationService.selectRankList();
+		List<JobVo> jobList = organizationService.selectJobList();
 		
 		model.addAttribute("empList",empList);
+		model.addAttribute("deptList",deptList);
+		model.addAttribute("rankList",rankList);
+		model.addAttribute("jobList",jobList);
 		model.addAttribute("pv", pv);
 		
 		return "organization/empManager";
 	}
 	
+	//임직원 관리 -> 임직원 추가
+	@PostMapping("management/emp/add")
+	public String addEmp (EmpVo empVo, HttpSession session) {
+		
+		int dupCheckCnt = organizationService.checkIdDup(empVo.getEmpId());
+		
+		if(dupCheckCnt==1) {
+			session.setAttribute("errorMsg", "사용자 추가 성공하였습니다.");
+			System.out.println("사용자 추가 실패 :: 아이디 중복");
+			return "redirect:/organization/management/emp/1";
+		}
+		
+		int result = organizationService.insertEmp(empVo);
+		
+		if(result==1) {
+			session.setAttribute("alertMsg", "사용자 추가 성공하였습니다.");
+			System.out.println("사용자 추가 성공");
+			return "redirect:/organization/management/emp/1";
+		} else {
+			session.setAttribute("errorMsg", "사용자 추가 성공하였습니다.");
+			System.out.println("사용자 추가 실패");
+			return "redirect:/organization/management/emp/1";
+		}
+		
+	}
 	
+	//임직원 관리 -> 임직원 검색
+	
+	// 직위/직무설정
+	
+	//권한 관리 페이지
 	@GetMapping("management/right/{pno}")
 		public String manageRight(Model model, @PathVariable int pno){
 		
 		return "organization/rightManager";
 		
 	}
+	
+	//조직도
 
 }

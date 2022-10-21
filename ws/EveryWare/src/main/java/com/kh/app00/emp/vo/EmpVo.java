@@ -1,5 +1,7 @@
 package com.kh.app00.emp.vo;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import lombok.Data;
 
 @Data
@@ -9,7 +11,6 @@ public class EmpVo {
 	private String comCode;
 	private String deptCode;
 	private String rankCode;
-	private String jobTypesCode;
 	private String empJobCode;
 	private String rightCode;
     private String empName;
@@ -33,6 +34,11 @@ public class EmpVo {
     
     private String deptName;
     private String rankName;
-    private String typesName;
     private String jobName;
+    
+    public void encodePwd(PasswordEncoder pwdEnc) {
+		
+		this.empPwd = pwdEnc.encode(empPwd);
+	}
+    
 }

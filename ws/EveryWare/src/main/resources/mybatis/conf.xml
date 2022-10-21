@@ -12,7 +12,6 @@
 		<!-- 전자결재 관련 -->
 		<typeAlias alias="DocFormVo" type="com.kh.app00.approval.doc.vo.DocFormVo"/>
 		<typeAlias alias="DocPeriodVo" type="com.kh.app00.approval.doc.vo.DocPeriodVo"/>
-		<typeAlias alias="DocSecurityVo" type="com.kh.app00.approval.doc.vo.DocSecurityVo"/>
 		<typeAlias alias="DocFormMapperVo" type="com.kh.app00.approval.doc.vo.DocFormMapperVo"/>
 		<typeAlias alias="DocDataVo" type="com.kh.app00.approval.doc.vo.DocDataVo"/>
 		<typeAlias alias="ApprovalDocVo" type="com.kh.app00.approval.vo.ApprovalDocVo"/>
@@ -22,6 +21,9 @@
 		<!-- 인사 관련 -->
 		<typeAlias alias="EmpVo" type="com.kh.app00.emp.vo.EmpVo"/>
 		<typeAlias alias="DeptVo" type="com.kh.app00.organization.vo.DeptVo"/>
+		<typeAlias alias="RankVo" type="com.kh.app00.organization.vo.RankVo"/>
+		<typeAlias alias="RIghtVo" type="com.kh.app00.organization.vo.RightVo"/>
+		<typeAlias alias="JobVo" type="com.kh.app00.organization.vo.JobVo"/>
 		
 		
 		<!-- 근태 관련 -->

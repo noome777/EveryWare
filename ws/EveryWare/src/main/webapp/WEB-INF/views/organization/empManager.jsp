@@ -8,6 +8,7 @@
 
 <link rel="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 
+
 <style>
 
 
@@ -53,6 +54,59 @@
   margin-right: 15px;
 }
 
+#search-wrap {
+
+display: flex;
+justify-content: center;
+align-items: center;
+width: 100%;
+height: 100%;
+
+}
+
+#search-container {
+width: 85%;
+height: 55%;
+border-radius: 5px;
+/* border : 1px solid lightgray;*/
+display: flex;
+}
+
+#search-container > form {
+width: 100%;
+height: 100%;
+display: grid;
+grid-template-columns: 4fr 1fr;
+}
+
+#search-icon-wrap {
+width: 100%;
+height: 100%;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+}
+
+#search-bar-wrap {
+width: 100%;
+height: 100%;
+}
+
+#search-bar {
+width: 100%;
+height: 100%;
+padding: 10px;
+}
+
+.has-success {
+  color: darkblue;
+}
+
+.has-error {
+  color: red;
+}
+
 
 	
 
@@ -74,7 +128,23 @@
                 <div class="col-auto">
                   <button type="button" class="btn shadow mb-2" data-toggle="modal" data-target=".modal-right"><span class="fe fe-user-plus fe-12 mr-2" ></span>사용자 추가</button>
                 </div>
+                
               </div>
+
+              <!--검색바-->
+              <!--<div id="search-wrap">
+								<div class="shadow" id="search-container">
+									<form action="${root}/organization/info" method="post">
+										<div id="search-bar-wrap">
+											<input type="text" id="search-bar" class="style-none" placeholder="임직원 검색" name="word"> 
+										</div>
+										<div id="search-icon-wrap">
+											<input type="image" name="submit" id="search-icon" src="${root}/resources/img/search.png">
+										</div>
+									</form>
+								</div>
+							</div> -->
+              
               <!-- table -->
               <div class="card shadow card-wrap">
                 <div class="card-body">
@@ -88,7 +158,7 @@
                           </div>
                         </th>
                         <th>프로필</th>
-                        <th>이름</th>
+                        <th>이름(사번)</th>
                         <th>ID</th>
                         <th>직위</th>
                         <th>소속</th>
@@ -255,7 +325,7 @@
 
 
     <div class="modal fade modal-right modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
-      <form action="">
+      <form action="${root}/organization/management/emp/add" method="post">
         <div class="modal-dialog modal-sm" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -265,30 +335,36 @@
               
               <div id="add-modal-wrap">
                 <div>이름</div>
-                <div><input type="text" placeholder="사용자 이름"></div>
+                <div><input type="text" id="emp-name" placeholder="사용자 이름" name="empName"></div>
                 <div>아이디</div>
-                <div><input type="text" placeholder="아이디"></div>
+                <div><input type="text" id="emp-id" placeholder="아이디" name="empId"></div>
                 <div>비밀번호</div>
                 <div>
-                  <input type="password" placeholder="비밀번호">
+                  <input id="emp-pwd" type="password" placeholder="비밀번호" name="empPwd" >
                   <i class="fa-solid fa-eye"></i>
+                </div>
+                <div>부서</div>
+                <div>
+                  <select name="deptCode" id="dept-select">
+                    <c:forEach items="${deptList}" var="deptList">
+                    	<option value="${deptList.deptCode}">${deptList.deptName}</option>
+                    </c:forEach>
+                  </select> 
                 </div>
                 <div>직위</div>
                 <div> 
-                  <select name="" id="">
-                    <option value=""></option>
+                  <select name="rankCode" id="rank-select">
+                    <c:forEach items="${rankList}" var="rankList">
+                    	<option value="${rankList.rankCode}">${rankList.rankName}</option>
+                    </c:forEach>
                   </select> 
                 </div>
                 <div>직무</div>
                 <div>
-                  <select name="" id="">
-                    <option value=""></option>
-                  </select> 
-                </div>
-                <div>부서</div>
-                <div>
-                  <select name="" id="">
-                    <option value=""></option>
+                  <select name="empJobCode" id="job-select">
+                    <c:forEach items="${jobList}" var="jobList">
+                    	<option value="${jobList.jobCode}">${jobList.jobName}</option>
+                    </c:forEach>
                   </select> 
                 </div>
                 </div>
@@ -296,7 +372,7 @@
               <div class="grid-col">
 
                 <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
-                <input type="submit"class="btn mb-2 btn-primary" value="저장">
+                <input type="submit"class="btn mb-2 btn-primary" value="저장" onclick="checkData();">
               </div>
 
             </div>
@@ -305,21 +381,8 @@
       </form>  
     </div>
 
-    <script>
-      $(document).ready(function(){
-        $('.main i').on('click',function(){
-            $('input').toggleClass('active');
-            if($('input').hasClass('active')){
-                $(this).attr('class',"fa fa-eye-slash fa-lg")
-                .prev('input').attr('type',"text");
-            }else{
-                $(this).attr('class',"fa fa-eye fa-lg")
-                .prev('input').attr('type','password');
-            }
-          });
-      });
-    </script>
-
+    
+    <!--체크박스 전부체크-->
   <script>
     $(document).ready(function() {
       $("#all").click(function() {
@@ -336,7 +399,62 @@
       });
     });
   </script>
-  
+
+  <!--아이디, 비밀번호, 이름 체크-->
+
+  <!--아이디 중복체크-->
+    <script>
+
+      function checkData(){
+
+        const id = $("#emp-id").val();
+        const idNum = id.search(/[0-9]/g);
+        const idEng = id.search(/[a-z]/ig);;
+        const idSpe = id.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+
+        const pwd = $("#emp-pwd").val();
+        const pwdNum = pwd.search(/[0-9]/g);
+        const pwdEng = pwd.search(/[a-z]/ig);
+        const pwdSpe = pwd.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+
+        const name = $("#emp-name").val();
+        const nameHan = /^[ㄱ-ㅎ|가-힣]+$/;
+
+      //비밀번호
+        if(pwd.length < 8 || pwd.lengthd > 20){
+          alert("비밀번호는 8자리 ~ 20자리 이내로 입력해주세요.");
+          return false;
+        }else if(pwd.search(/\s/) != -1){
+          alert("비밀번호는 공백 없이 입력해주세요.");
+          return false;
+        }else if( (pwdNum < 0 && pwdEng < 0) || (pwdEng < 0 && pwdSpe < 0) || (pwdSpe < 0 && pwdNum < 0) ){
+          alert("영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력해주세요.");
+          return false;
+        }else if (id.length < 5 || id.length >20) {
+          alert("아이디는 5자리 ~ 20자리 이내로 입력해주세요.");
+          return false;
+        }else if (id.search(/\s/) != -1) {
+          alert("아이디는 공백 없이 입력해주세요.");
+          return false;
+        }else if ((idNum < 0 && idEng < 0)) {
+          alert("아이디는 영문,숫자를 조합하여 입력해주세요.");
+          return false;
+        }else if(name.length<2 || name.length>5) {
+          alert("이름은 2글자 이상, 5글자 이하로 입력해주세요.");
+          return false;
+        } else if (name.search(/\s/) != -1) {
+          alert("이름은 공백 없이 입력해주세요.");
+          return false;
+        } else if(!(nameHan.test(name))) {
+          alert("이름에 한글을 사용해 주시길 바랍니다.")
+          return false;
+        }else {
+        	return true;
+        }
+
+      }
+
+    </script>
 
 		
 
