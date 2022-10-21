@@ -51,11 +51,11 @@ background-color:transparent;
 		       </div>
 	       
                 <div class="col-auto">
-                  <button type="button" class="btn btn-secondary"><span class="fe fe-trash fe-12 mr-2"></span>Delete</button>
                   
                   <!-- Button modal -->
                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#defaultModal"><span class="fe fe-filter fe-12 mr-2"></span> Create </button>
-                  
+                  <button type="button" class="btn btn-secondary"><span class="fe fe-trash fe-12 mr-2"></span>Delete</button>
+                   
                   <!-- Modal boutton-->
                   <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">

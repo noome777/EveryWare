@@ -27,10 +27,10 @@
                 
                 
                 <div class="col-auto">
-                  <button type="button" class="btn btn-secondary"><span class="fe fe-trash fe-12 mr-2"></span>Delete</button>
                   
                   <!-- Button trigger modal -->
                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#defaultModal"><span class="fe fe-filter fe-12 mr-2"></span> Create </button>
+                  <button type="button" class="btn btn-secondary"><span class="fe fe-trash fe-12 mr-2"></span>Delete</button>
                   
                   <!-- Modal -->
                   <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
@@ -54,6 +54,11 @@
                         <input type="text" id="simpleinput" class="form-control" placeholder="Company">
                        <label for="example-textarea">Memo</label>
                         <textarea class="form-control" id="example-textarea" rows="4"></textarea>
+                       <label for="customFile">Image file</label>
+                       <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="customFile">
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                       </div>
                        
                        </div>
                          <div class="modal-footer">
@@ -102,7 +107,7 @@
                             <img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
                           </div>
                         </td>
-                        <td>
+                        <td data-toggle="modal" data-target="#verticalModal">
                           <p class="mb-0 text-muted"><strong>김춘배</strong></p>
                           <small class="mb-0 text-muted">2474</small>
                         </td>
@@ -113,15 +118,40 @@
                         <td>
                           <p class="mb-0 text-muted"><a href="#" class="text-muted">(02) 421-0798</a></p>
                         </td>
-                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="text-muted sr-only">Action</span>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">수정</a>
-                            <a class="dropdown-item" href="#">삭제</a>
-                          </div>
+                        <td>
+                        
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn mb-2 btn-primary btn-sm">Edit</button>
+                        <button type="button" class="btn mb-2 btn-secondary btn-sm">Delete</button>
+                        </div>
+                        
                         </td>
                       </tr>
+                      
+                      
+                      <!-- Dtail Modal -->
+                      <div class="modal fade" id="verticalModal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="verticalModalTitle">상세보기</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                            
+                            <span>내용어쩌구</span>
+                            
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn mb-2 btn-primary">Edit</button>
+                              <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
     
                     </tbody>
                   </table>
