@@ -128,19 +128,41 @@ public class DayoffController {
     
     //휴가의 관리자 페이지
     @GetMapping("admin/{pno}")
-    public String dayoffAdmin(@PathVariable int pno, Model model, DayoffVo vo){
+    public String dayoffAdmin(@PathVariable int pno, Model model, DayoffVo vo, 
+            String offStartDate, String offEndDate){
         
-        //사원의 휴가 결재를 위한 목록 조회
-        int adListCount = service.selectAdminTotalCnt();
-        PageVo pv = Pagination.getPageVo(adListCount, pno, 5, 10);
-        
-        List<DayoffVo> voList = service.adminDayoffList(pv);
-        
-        model.addAttribute("adListCount", adListCount);
-        model.addAttribute("pv", pv);
-        model.addAttribute("voList", voList);
+        //기간 선택 조회 여부(휴가 메인의 전체리스트 || 기간 선택 후 리스트)
+        if(offStartDate != null && offEndDate != null) {
+            //기간 선택을 했을 경우
+            //기간 선택 목록 조회 (+페이징)
+            vo.setOffStartDate(offStartDate);
+            vo.setOffEndDate(offEndDate);
+            
+            //기간 선택 후 신청글 수 조회
+            int adDateCount = service.selectAdDateCnt(vo);
+            PageVo pv2 = Pagination.getPageVo(adDateCount, pno, 5, 10);
+            
+            List<DayoffVo> AdDateList = service.selectAdDateList(vo, pv2);
+            
+            model.addAttribute("AdDateList", AdDateList);
+            model.addAttribute("vo", vo);
+            model.addAttribute("pv", pv2);
+            model.addAttribute("adDateCount", adDateCount);
+        }else {
+            //기간 선택을 하지 않았을 경우
+            //휴가 결재를 위한 전체 목록 조회 (+ 페이징)
+            int adListCount = service.selectAdminTotalCnt();
+            PageVo pv = Pagination.getPageVo(adListCount, pno, 5, 10);
+            
+            List<DayoffVo> voList = service.adminDayoffList(pv);
+            
+            model.addAttribute("adListCount", adListCount);
+            model.addAttribute("pv", pv);
+            model.addAttribute("voList", voList);
+        }
         
         return "dayoff/adminDayoff";
+       
     }
     
     

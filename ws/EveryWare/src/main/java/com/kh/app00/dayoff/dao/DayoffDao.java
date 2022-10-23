@@ -44,4 +44,10 @@ public interface DayoffDao {
     //사원의 부서 정보 조회
     DayoffVo getDeptVo(SqlSessionTemplate sst, DayoffVo vo);
 
+    //관리자 기간 선택시 게시글 수 조회
+    int selectAdDateCnt(SqlSessionTemplate sst, DayoffVo vo);
+
+    //관리자 기산 선택시 게시글 리스트 조회
+    List<DayoffVo> selectAdDateList(SqlSessionTemplate sst, DayoffVo vo, PageVo pv2);
+
 }

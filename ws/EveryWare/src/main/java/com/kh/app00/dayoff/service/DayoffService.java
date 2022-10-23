@@ -42,4 +42,10 @@ public interface DayoffService {
     //사원의 부서 정보 조회
     DayoffVo getDeptVo(DayoffVo vo);
 
+    //관리자 기간 선택시 게시글 수 조회
+    int selectAdDateCnt(DayoffVo vo);
+
+    //관리자 기산 선택시 게시글 리스트 조회
+    List<DayoffVo> selectAdDateList(DayoffVo vo, PageVo pv2);
+
 }

@@ -90,6 +90,22 @@ public class DayoffDaoImpl implements DayoffDao {
     public DayoffVo getDeptVo(SqlSessionTemplate sst, DayoffVo vo) {
         return sst.selectOne("dayoffMapper.selectDeptVo", vo);
     }
+
+    //관리자 기간 선택시 게시글 수 조회
+    @Override
+    public int selectAdDateCnt(SqlSessionTemplate sst, DayoffVo vo) {
+        return sst.selectOne("dayoffMapper.selectAdDateCnt", vo);
+    }
+
+    //관리자 기산 선택시 게시글 리스트 조회
+    @Override
+    public List<DayoffVo> selectAdDateList(SqlSessionTemplate sst, DayoffVo vo, PageVo pv2) {
+        
+        int offset = (pv2.getCurrentPage()-1) * pv2.getBoardLimit();
+        RowBounds rb = new RowBounds(offset , pv2.getBoardLimit());
+        
+        return sst.selectList("dayoffMapper.selectAdDateList", vo, rb);
+    }
     
 
 }

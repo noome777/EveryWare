@@ -59,26 +59,32 @@
     <div class="card shadow mb-5" style="margin-top: 25px;">
 
       <div style="margin-left: 20px; margin-top: 20px;">
-        <h4 class="card-title">시간 외 근무 결재</h4><br><br>
+        <h4 class="card-title">휴가 결재</h4><br><br>
 
         <form action="" method="get">
-          <h4 class="card-title">기간 선택</h4>
-          <div class="form-row mb-3">
-            <div class="col-md-4 mb-3">
-              <div class="input-group">
-                <input class="form-control" id="example-date" type="date" name="overDate" required>
-              </div>
+            <h6 class="card-title">기간 선택</h6>
+            <div class="form-row mb-3">
+                <div class="col-md-4 mb-3">
+                <div class="input-group">
+                    <input class="form-control" id="example-date" type="date" name="offStartDate" required>
+                </div>
+                </div>
+                ~ 
+                <div class="col-md-4 mb-3">
+                <div class="input-group">
+                    <input class="form-control" id="example-date" type="date" name="offEndDate" required>
+                </div>
+                </div>
             </div>
-          </div>
-          <button class="btn btn-outline-primary" type="submit" id="search-btn">search</button>
+            <button class="btn btn-outline-primary" type="submit" id="search-btn">search</button>
         </form>
     
-        <!-- <c:if test="${empty dateCount}"> -->
-	        <!-- <h6 class="card-title">조회 결과 ${listCount} 건</h6> -->
-        <!-- </c:if>   -->
-        <!-- <c:if test="${empty listCount}"> -->
-	        <h6 class="card-title">조회 결과  건</h6>
-        <!-- </c:if> -->
+        <c:if test="${empty adDateCount}">
+	        <h6 class="card-title">조회 결과 ${listCount} 건</h6>
+        </c:if>  
+        <c:if test="${empty adListCount}">
+	        <h6 class="card-title">조회 결과  ${adDateCount} 건</h6>
+        </c:if>
 
         <table class="table table-hover">
           <thead>
@@ -95,29 +101,59 @@
             </tr>
           </thead>
           <tbody>
-            <c:forEach items="${voList}" var="x">
-                <tr>
-                    <td>${x.offCode}</td>
-                    <td>${x.ECode}</td>
-                    <td>${x.deptCode}</td>
-                    <td>${x.offStartDate}</td>
-                    <td>${x.offEndDate}</td>
-                    <td>${x.offDays}</td>
-                    <td>${x.offReason}</td>
-                    <c:if test="${x.offApproval == 'W'}">
-                        <td><span class="badge badge-pill badge-warning">결재대기중</span></td>
-                      </c:if>
-                      <c:if test="${x.offApproval == 'A'}">
-                        <td><span class="badge badge-pill badge-success">승인완료</span></td>
-                      </c:if>
-                      <c:if test="${x.offApproval == 'C'}">
-                        <td><span class="badge badge-pill badge-danger">반려</span></td>
-                      </c:if>
-                    <td>${x.offEnrolldate}</td>
-                </tr>
-            </c:forEach>
+            <c:if test="${empty AdDateList}">
+                <c:forEach items="${voList}" var="x">
+                    <tr>
+                        <td>${x.offCode}</td>
+                        <td>${x.deptCode}</td>
+                        <td>${x.ECode}</td>
+                        <td>${x.offStartDate}</td>
+                        <td>${x.offEndDate}</td>
+                        <td>${x.offDays}</td>
+                        <td>${x.offReason}</td>
+                        <td>
+                            <select name="" id="">
+                                <option value="">결재대기중</option>
+                                <option value="">승인완료</option>
+                                <option value="">반려</option>
+                            </select>
+                        </td>
+                        <td>${x.offEnrolldate}</td>
+                    </tr>
+                </c:forEach>
+            </c:if>
+            <c:if test="${empty voList}">
+                <c:forEach items="${AdDateList}" var="y">
+                    <tr>
+                        <td>${y.offCode}</td>
+                        <td>${y.ECode}</td>
+                        <td>${y.deptCode}</td>
+                        <td>${y.offStartDate}</td>
+                        <td>${y.offEndDate}</td>
+                        <td>${y.offDays}</td>
+                        <td>${y.offReason}</td>
+                        <td>
+                            <select name="" id="">
+                                <option value="">결재대기중</option>
+                                <option value="">승인완료</option>
+                                <option value="">반려</option>
+                            </select>
+                        </td>
+                        <td>${y.offEnrolldate}</td>
+                    </tr>
+                </c:forEach>
+            </c:if>
           </tbody>
         </table>
+        <!-- <c:if test="${y.offApproval == 'W'}">
+            <td><span class="badge badge-pill badge-warning">결재대기중</span></td>
+        </c:if>
+        <c:if test="${y.offApproval == 'A'}">
+            <td><span class="badge badge-pill badge-success">승인완료</span></td>
+        </c:if>
+        <c:if test="${y.offApproval == 'C'}">
+            <td><span class="badge badge-pill badge-danger">반려</span></td>
+        </c:if> -->
 
         <!-- <span class="badge badge-pill badge-warning">퇴근미체크</span>
         <span class="badge badge-pill badge-success">정상출근 </span>
@@ -128,7 +164,7 @@
         <!-- <span class="badge badge-pill badge-warning">결재대기중</span>
         <span class="badge badge-pill badge-success">승인완료 </span>
         <span class="badge badge-pill badge-danger">반려</span> -->
-        <!-- <c:if test="${empty dateList && empty vo}"> -->
+        <c:if test="${empty AdDateList && empty vo}">
           <div id="page-area">
             <c:if test="${pv.startPage ne 1}">
               <a href="${root}/dayoff/admin/${pv.startPage - 1}" class="btn mb-2 btn-primary"><</a>
@@ -140,20 +176,20 @@
               <a href="${root}/dayoff/admin/${pv.endPage + 1}" class="btn mb-2 btn-primary">></a>
             </c:if>	
           </div>
-        <!-- </c:if> -->
-        <!-- <c:if test="${empty voList && not empty vo}">
-          <div id="page-area">
+        </c:if>
+        <c:if test="${empty voList && not empty vo}">
+        	<div id="page-area">
 	          <c:if test="${pv.startPage ne 1}">
-	            <a href="${root}/commute/overwork/${pv.startPage - 1}?overDate=${vo.overDate}" class="btn mb-2 btn-primary"><</a>
+	            <a href="${root}/dayoff/admin/${pv.startPage - 1}?offStartDate=${vo.offStartDate}&offEndDate=${vo.offEndDate}" class="btn mb-2 btn-primary"><</a>
 	          </c:if>
 	          <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" var="i">
-	              <a href="${root}/commute/overwork/${i}?overDate=${vo.overDate}" class="btn mb-2 btn-primary">${i}</a>
+	              <a href="${root}/dayoff/admin/${i}?offStartDate=${vo.offStartDate}&offEndDate=${vo.offEndDate}" class="btn mb-2 btn-primary">${i}</a>
 	          </c:forEach>
 	          <c:if test="${pv.endPage ne pv.maxPage }">
-	            <a href="${root}/commute/overwork/${pv.endPage + 1}?overDate=${vo.overDate}" class="btn mb-2 btn-primary">></a>
+	            <a href="${root}/dayoff/admin/${pv.endPage + 1}?offStartDate=${vo.offStartDate}&offEndDate=${vo.offEndDate}" class="btn mb-2 btn-primary">></a>
 	          </c:if>	
 	        </div>
-        </c:if> -->
+        </c:if>
 
       </div>
     </div>

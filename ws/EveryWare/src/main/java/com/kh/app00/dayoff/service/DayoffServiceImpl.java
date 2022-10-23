@@ -90,4 +90,16 @@ public class DayoffServiceImpl implements DayoffService {
         return dao.getDeptVo(sst, vo);
     }
 
+    //관리자 기간 선택시 게시글 수 조회
+    @Override
+    public int selectAdDateCnt(DayoffVo vo) {
+        return dao.selectAdDateCnt(sst, vo);
+    }
+
+    //관리자 기산 선택시 게시글 리스트 조회
+    @Override
+    public List<DayoffVo> selectAdDateList(DayoffVo vo, PageVo pv2) {
+        return dao.selectAdDateList(sst, vo, pv2);
+    }
+
 }
