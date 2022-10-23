@@ -3,8 +3,8 @@
 <mapper namespace="dayoffMapper">
 
 	<insert id="insertOff">
-		INSERT INTO DAYOFF (OFF_CODE, ECODE, OFF_START_DATE, OFF_END_DATE, OFF_DAYS, OFF_REASON)
-		VALUES (SEQ_DAYOFF_CODE_NO.NEXTVAL, #{eCode}, #{offStartDate}, #{offEndDate}, #{offDays}, #{offReason})
+		INSERT INTO DAYOFF (OFF_CODE, ECODE, DEPT_CODE, OFF_START_DATE, OFF_END_DATE, OFF_DAYS, OFF_REASON)
+		VALUES (SEQ_DAYOFF_CODE_NO.NEXTVAL, #{eCode}, #{deptCode}, #{offStartDate}, #{offEndDate}, #{offDays}, #{offReason})
 	</insert>
 
 	<select id="selectDayoffList" resultType="DayoffVo">
@@ -60,6 +60,10 @@
 		FROM DAYOFF O
 		JOIN EMP E ON E.EMP_CODE = O.ECODE
 		JOIN DEPT D ON E.DEPT_CODE = D.DEPT_CODE
+	</select>
+	
+	<select id="selectDeptVo" resultType="DayoffVo">
+		SELECT DISTINCT DEPT_CODE FROM DAYOFF WHERE ECODE = #{eCode}
 	</select>
 
 </mapper>

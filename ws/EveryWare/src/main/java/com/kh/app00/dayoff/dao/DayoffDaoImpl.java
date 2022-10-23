@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.app00.common.PageVo;
 import com.kh.app00.dayoff.vo.DayoffVo;
 import com.kh.app00.emp.vo.EmpVo;
+import com.kh.app00.organization.vo.DeptVo;
 
 @Repository
 public class DayoffDaoImpl implements DayoffDao {
@@ -82,6 +83,12 @@ public class DayoffDaoImpl implements DayoffDao {
         RowBounds rb = new RowBounds(offset , pv.getBoardLimit());
         
         return sst.selectList("dayoffMapper.selectAdminDayoffList", null, rb);
+    }
+
+    //사원의 부서 정보 조회
+    @Override
+    public DayoffVo getDeptVo(SqlSessionTemplate sst, DayoffVo vo) {
+        return sst.selectOne("dayoffMapper.selectDeptVo", vo);
     }
     
 

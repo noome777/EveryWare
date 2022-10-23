@@ -10,6 +10,7 @@ import com.kh.app00.common.PageVo;
 import com.kh.app00.dayoff.dao.DayoffDao;
 import com.kh.app00.dayoff.vo.DayoffVo;
 import com.kh.app00.emp.vo.EmpVo;
+import com.kh.app00.organization.vo.DeptVo;
 
 @Service
 public class DayoffServiceImpl implements DayoffService {
@@ -81,6 +82,12 @@ public class DayoffServiceImpl implements DayoffService {
     @Override
     public List<DayoffVo> adminDayoffList(PageVo pv) {
         return dao.selectAdminDayoffList(sst, pv);
+    }
+
+    //사원의 부서 정보 조회
+    @Override
+    public DayoffVo getDeptVo(DayoffVo vo) {
+        return dao.getDeptVo(sst, vo);
     }
 
 }

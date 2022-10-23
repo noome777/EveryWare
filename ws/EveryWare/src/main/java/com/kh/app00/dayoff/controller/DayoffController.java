@@ -40,6 +40,7 @@ public class DayoffController {
         //로그인 유저의 정보 vo에 저장
         EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
         vo.setECode(loginMember.getEmpCode());
+        vo.setDeptCode(loginMember.getDeptCode());
         
         //만약, 로그인 유저가 관리자, 결재 관리자, 인사 관리자 등등이면 다른 페이지 보여주기 (RIGHT_CODE가 4가 아닐 때)
         //RIGHT_CODE 조회하기
@@ -98,9 +99,13 @@ public class DayoffController {
     public String insertOff(DayoffVo vo, HttpSession session, 
             String offStartDate, String offEndDate, @PathVariable int pno) {
 
-        //사원 정보 vo에 저장
+        //로그인 유저 정보 vo에 저장
         EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
         vo.setECode(loginMember.getEmpCode());
+        
+        //사원의 부서 정보 vo에 저장
+        DayoffVo deptVo = service.getDeptVo(vo);
+        vo.setDeptCode(deptVo.getDeptCode());
         
         if(offStartDate.length() == 21 && offEndDate.length() == 21) {
             vo.setOffStartDate(offStartDate.substring(11));

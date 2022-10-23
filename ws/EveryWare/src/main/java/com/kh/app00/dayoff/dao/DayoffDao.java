@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import com.kh.app00.common.PageVo;
 import com.kh.app00.dayoff.vo.DayoffVo;
 import com.kh.app00.emp.vo.EmpVo;
+import com.kh.app00.organization.vo.DeptVo;
 
 public interface DayoffDao {
 
@@ -39,5 +40,8 @@ public interface DayoffDao {
 
     //관리자 결재 리스트 조회
     List<DayoffVo> selectAdminDayoffList(SqlSessionTemplate sst, PageVo pv);
+
+    //사원의 부서 정보 조회
+    DayoffVo getDeptVo(SqlSessionTemplate sst, DayoffVo vo);
 
 }
