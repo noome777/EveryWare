@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.app00.common.PageVo;
 import com.kh.app00.dayoff.dao.DayoffDao;
 import com.kh.app00.dayoff.vo.DayoffVo;
+import com.kh.app00.emp.vo.EmpVo;
 
 @Service
 public class DayoffServiceImpl implements DayoffService {
@@ -62,6 +63,24 @@ public class DayoffServiceImpl implements DayoffService {
     @Override
     public int offUsedCnt(DayoffVo vo) {
         return dao.offUsedCnt(sst, vo);
+    }
+
+    //로그인 유저의 권한 코드 조회
+    @Override
+    public EmpVo selectRightVo(DayoffVo vo) {
+        return dao.selectRightVo(sst, vo);
+    }
+
+    //관리자 결재 리스트를 위한 사원 신청 글 수 조회
+    @Override
+    public int selectAdminTotalCnt() {
+        return dao.selectAdminTotalCnt(sst);
+    }
+
+    //관리자 결재 리스트 조회
+    @Override
+    public List<DayoffVo> adminDayoffList(PageVo pv) {
+        return dao.selectAdminDayoffList(sst, pv);
     }
 
 }

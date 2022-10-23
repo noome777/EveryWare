@@ -17,6 +17,8 @@ import com.kh.app00.common.Pagination;
 import com.kh.app00.dayoff.service.DayoffService;
 import com.kh.app00.dayoff.vo.DayoffVo;
 import com.kh.app00.emp.vo.EmpVo;
+import com.kh.app00.organization.vo.DeptVo;
+import com.kh.app00.organization.vo.RightVo;
 
 @Controller
 @RequestMapping("dayoff")
@@ -35,9 +37,18 @@ public class DayoffController {
     public String main(DayoffVo vo, Model model, HttpSession session, 
             @PathVariable int pno, String offStartDate, String offEndDate) {
         
-        //사원 정보 vo에 저장
+        //로그인 유저의 정보 vo에 저장
         EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
         vo.setECode(loginMember.getEmpCode());
+        
+        //만약, 로그인 유저가 관리자, 결재 관리자, 인사 관리자 등등이면 다른 페이지 보여주기 (RIGHT_CODE가 4가 아닐 때)
+        //RIGHT_CODE 조회하기
+        EmpVo rvo = service.selectRightVo(vo);
+//        System.out.println(rvo);
+        
+        if(!rvo.getRightCode().equals("4")) {
+            return "redirect:/dayoff/admin/1";
+        }
         
         //휴가 현황 
         int offTotalCnt = service.offTotalCnt(vo);
@@ -110,7 +121,22 @@ public class DayoffController {
         
     }
     
-    
+    //휴가의 관리자 페이지
+    @GetMapping("admin/{pno}")
+    public String dayoffAdmin(@PathVariable int pno, Model model, DayoffVo vo){
+        
+        //사원의 휴가 결재를 위한 목록 조회
+        int adListCount = service.selectAdminTotalCnt();
+        PageVo pv = Pagination.getPageVo(adListCount, pno, 5, 10);
+        
+        List<DayoffVo> voList = service.adminDayoffList(pv);
+        
+        model.addAttribute("adListCount", adListCount);
+        model.addAttribute("pv", pv);
+        model.addAttribute("voList", voList);
+        
+        return "dayoff/adminDayoff";
+    }
     
     
     @GetMapping("calendar")

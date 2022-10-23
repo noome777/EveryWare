@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.app00.common.PageVo;
 import com.kh.app00.dayoff.vo.DayoffVo;
+import com.kh.app00.emp.vo.EmpVo;
 
 @Repository
 public class DayoffDaoImpl implements DayoffDao {
@@ -59,6 +60,28 @@ public class DayoffDaoImpl implements DayoffDao {
     @Override
     public int offUsedCnt(SqlSessionTemplate sst, DayoffVo vo) {
         return sst.selectOne("dayoffMapper.offUsedCnt", vo);
+    }
+
+    //로그인 유저의 권한 코드 조회
+    @Override
+    public EmpVo selectRightVo(SqlSessionTemplate sst, DayoffVo vo) {
+        return sst.selectOne("dayoffMapper.selectRightVo", vo);
+    }
+
+    //관리자 결재 리스트를 위한 사원 신청 글 수 조회
+    @Override
+    public int selectAdminTotalCnt(SqlSessionTemplate sst) {
+        return sst.selectOne("dayoffMapper.selectAdminTotalCnt");
+    }
+
+    //관리자 결재 리스트 조회
+    @Override
+    public List<DayoffVo> selectAdminDayoffList(SqlSessionTemplate sst, PageVo pv) {
+        
+        int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+        RowBounds rb = new RowBounds(offset , pv.getBoardLimit());
+        
+        return sst.selectList("dayoffMapper.selectAdminDayoffList", null, rb);
     }
     
 

@@ -43,5 +43,23 @@
 		FROM DAYOFF
 		WHERE ECODE = #{eCode}
 	</select>
+	
+	<select id="selectRightVo" resultType="EmpVo">
+		SELECT R.RIGHT_CODE, E.EMP_CODE, E.EMP_NAME
+		FROM EMP E
+		JOIN RIGHT R ON E.RIGHT_CODE = R.RIGHT_CODE
+		WHERE E.EMP_CODE = #{eCode}
+	</select>
+	
+	<select id="selectAdminTotalCnt" resultType="int">
+		SELECT COUNT(*) FROM DAYOFF
+	</select>
+	
+	<select id="selectAdminDayoffList" resultType="DayoffVo">
+		SELECT O.OFF_CODE, E.EMP_NAME AS ECODE, D.DEPT_NAME AS DEPT_CODE, OFF_START_DATE, OFF_END_DATE, OFF_REASON, OFF_ENROLLDATE, OFF_APPROVAL
+		FROM DAYOFF O
+		JOIN EMP E ON E.EMP_CODE = O.ECODE
+		JOIN DEPT D ON E.DEPT_CODE = D.DEPT_CODE
+	</select>
 
 </mapper>

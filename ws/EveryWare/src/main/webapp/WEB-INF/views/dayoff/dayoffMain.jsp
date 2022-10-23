@@ -163,7 +163,15 @@
 	              <td>${x.offEndDate}</td>
 	              <td>${x.offDays}</td>
 	              <td>${x.offReason}</td>
-	              <td>${x.offApproval}</td>
+                <c:if test="${x.offApproval == 'W'}">
+                  <td><span class="badge badge-pill badge-warning">결재대기중</span></td>
+                </c:if>
+                <c:if test="${x.offApproval == 'A'}">
+                  <td><span class="badge badge-pill badge-success">승인완료</span></td>
+                </c:if>
+                <c:if test="${x.offApproval == 'C'}">
+                  <td><span class="badge badge-pill badge-danger">반려</span></td>
+                </c:if>
             	</tr>
              </c:forEach>
           	</c:if>
@@ -175,8 +183,15 @@
 	              <td>${y.offEndDate}</td>
 	              <td>${y.offDays}</td>
 	              <td>${y.offReason}</td>
-	              <td>${y.offApproval}</td>
-            	</tr>
+	              <c:if test="${y.offApproval == 'W'}">
+                  <td><span class="badge badge-pill badge-warning">결재대기중</span></td>
+                </c:if>
+                <c:if test="${y.offApproval == 'A'}">
+                  <td><span class="badge badge-pill badge-success">승인완료</span></td>
+                </c:if>
+                <c:if test="${y.offApproval == 'C'}">
+                  <td><span class="badge badge-pill badge-danger">반려</span></td>
+                </c:if>
              </c:forEach>
           	</c:if>
           </tbody>
