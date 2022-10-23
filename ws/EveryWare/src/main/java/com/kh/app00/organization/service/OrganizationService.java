@@ -40,5 +40,8 @@ public interface OrganizationService {
 	//아이디 중복 확인
 	int checkIdDup(String id);
 
+	//임직원 관리 - 임직원 검색
+	List<EmpVo> selectEmpListByEmpData(String empData);
+
 
 }

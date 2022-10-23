@@ -72,6 +72,13 @@ public class OrganizationDaoImpl implements OrganizationDao {
 	public int checkIdDup(SqlSessionTemplate sqlSessionTemplate, String id) {
 		return sqlSessionTemplate.selectOne("organizationMapper.checkIdDup",id);
 	}
+
+	//임직원 검색
+	@Override
+	public List<EmpVo> selectEmpListByEmpData(SqlSessionTemplate sqlSessionTemplate,String empData) {
+		return sqlSessionTemplate.selectList("organizationMapper.selectEmpListByEmpName",empData);
+	}
+
 	
 	
 

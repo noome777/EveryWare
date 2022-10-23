@@ -174,4 +174,46 @@
 			EMP_ID = #{id}
 	</select>
 	
+	<select id="selectEmpListByEmpName" resultType="EmpVo">
+		SELECT
+			E.EMP_CODE
+			, E.EMP_NAME
+			, E.EMP_E_MAIL 
+			, E.EMP_TEL 
+			, E.EMP_PHONE
+			, E.EMP_ID
+			, TO_CHAR(E.EMP_JOIN_DATE,'YYYY-MM-DD') AS EMP_JOIN_DATE
+			, E.EMP_PROFILE_NAME
+			, E.EMP_BIRTHDAY
+			, E.EMP_PROMOTION_DATE
+			, E.EMP_ADDRESS1
+			, E.EMP_ADDRESS2
+			, E.EMP_ETC
+			, E.EMP_STATUS
+			, C.COM_NAME AS COM_NAME
+			, D.DEPT_NAME AS DEPT_NAME
+			, R.RANK_NAME AS RANK_NAME
+			, J.JOB_NAME AS JOB_NAME
+			, T.RIGHT_NAME AS RIGHT_NAME
+		 FROM EMP E
+		 JOIN COM C
+  		ON E.COM_CODE = C.COM_CODE
+  		JOIN  DEPT D
+  		ON E.DEPT_CODE = D.DEPT_CODE
+  		JOIN RANK R
+  		ON E.RANK_CODE = R.RANK_CODE
+  		JOIN JOB J
+  		ON E.EMP_JOB_CODE = J.JOB_CODE
+  		JOIN RIGHT T
+  		ON E.RIGHT_CODE = T.RIGHT_CODE
+		WHERE EMP_STATUS = 'N'
+		AND EMP_NAME LIKE '%' ||  #{empData} || '%'
+		OR EMP_STATUS = 'N'
+		AND UPPER(EMP_ID) LIKE UPPER('%' ||  #{empData} || '%')
+		OR EMP_STATUS ='R'
+		AND EMP_NAME LIKE '%' ||  #{empData} || '%'
+		OR EMP_STATUS ='R'
+		AND UPPER(EMP_ID) LIKE ('%' ||  #{empData} || '%')
+	</select>
+	
 </mapper>
