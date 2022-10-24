@@ -71,13 +71,13 @@
           </p>
           <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item w-100">
-              <a class="nav-link" href="calendar.html">
+              <a class="nav-link" href="${root}/booking/bookingList">
                 <i class="fe fe-calendar fe-16"></i>
                 <span class="ml-3 item-text">예약</span>
               </a>
             </li>
             <li class="nav-item dropdown">
-              <a href="#contact" aria-expanded="false" class=" nav-link">
+              <a href="${root}/contacts/contactList" aria-expanded="false" class=" nav-link">
                 <i class="fe fe-book fe-16"></i>
                 <span class="ml-3 item-text">주소록</span>
               </a>
@@ -95,7 +95,7 @@
               </a>
             </li>
             <li class="nav-item dropdown">
-              <a href="#support" aria-expanded="false" class="nav-link">
+              <a href="${root}/faq/faqList" aria-expanded="false" class="nav-link">
                 <i class="fe fe-compass fe-16"></i>
                 <span class="ml-3 item-text">FAQ</span>
               </a>
