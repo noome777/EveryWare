@@ -17,6 +17,8 @@
 		<typeAlias alias="ApprovalDocVo" type="com.kh.app00.approval.vo.ApprovalDocVo"/>
 		<typeAlias alias="ApprovalTypeVo" type="com.kh.app00.approval.vo.ApprovalTypeVo"/>
 		
+		<typeAlias alias="DocFormDetailTemplateVo" type="com.kh.app00.approval.doc.vo.DocFormDetailTemplateVo"/>
+		
 		
 		<!-- 인사 관련 -->
 		<typeAlias alias="EmpVo" type="com.kh.app00.emp.vo.EmpVo"/>
