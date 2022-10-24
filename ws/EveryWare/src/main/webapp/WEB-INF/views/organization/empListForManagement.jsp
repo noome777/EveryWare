@@ -149,7 +149,7 @@ padding: 10px;
 }
 
 .profile-wrap {
-  margin: 25px;
+  margin: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -458,6 +458,14 @@ padding: 10px;
     }
 
   </script>
+
+  <c:if test="${empty empList}">
+    <script>
+      $(document).ready(function() {
+        alert("검색된 임직원이 없습니다. 검색어를 확인 후 다시 시도해주세요.");
+      });
+    </script>
+  </c:if>
 
 	<c:forEach items="${empList}" var="empList">
 	

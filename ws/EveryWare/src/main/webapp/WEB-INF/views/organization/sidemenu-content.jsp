@@ -31,7 +31,7 @@
           
           <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item ">
-                <a href="${root}/organization/chart" aria-expanded="false" class="nav-link">
+                <a href="${root}/organization/management/chart" aria-expanded="false" class="nav-link">
                   <i class="fe fe-users fe-16"></i>
                   <span class="ml-3 item-text ">조직도</span>
                 </a>
@@ -53,7 +53,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/organization/management/rank"><span class="ml-1 item-text">직위/직무설정</span></a>
+                  <a class="nav-link pl-3" href="${root}/organization/management/position"><span class="ml-1 item-text">직위/직무설정</span></a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link pl-3" href="${root}/organization/management/right/1"><span class="ml-1 item-text">권한관리</span></a>

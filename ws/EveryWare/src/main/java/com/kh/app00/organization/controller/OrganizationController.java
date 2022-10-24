@@ -169,14 +169,21 @@ public class OrganizationController {
 	
 	// 직위/직무설정
 	
+	@GetMapping("management/position")
+	public String managePosition() {
+		return "organization/positionManager";
+	}
+	
 	//권한 관리 페이지
 	@GetMapping("management/right/{pno}")
 		public String manageRight(Model model, @PathVariable int pno){
 		
 		return "organization/rightManager";
-		
 	}
 	
 	//조직도
-
+	@GetMapping("management/chart")
+	public String manageChart() {
+		return "organization/chartManager";
+	}
 }

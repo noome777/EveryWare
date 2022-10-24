@@ -9,6 +9,7 @@
 		align-content: center;
 		gap : 30px;
 	}
+	
 	.grid-wrap > div {
 		border-radius: 5px;
 		background-color: white;

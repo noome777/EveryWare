@@ -129,7 +129,7 @@ padding: 10px;
 }
 
 .profile-wrap {
-  margin: 25px;
+  margin: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -159,6 +159,23 @@ padding: 10px;
 .preview-img:hover {
   cursor: pointer;
 }
+
+#option-area {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#checkNum-area {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  padding-top: 11px;
+}
+
 
 
 
@@ -201,14 +218,25 @@ padding: 10px;
                         </div>
                       </form>
                     </div>
-                    <p>asdsadsadasdsadaassadasdsadaassadasdsadaassadasdsadaassadasdsadaasasdsadaas</p>
+                    <div id="option-area">
+                      <div id="checkNum-area" class="fade">
+                      
+                      </div>
+                      <div id="option-button-area" class="fade">
+                        <button type="button" class="btn shadow">직위 변경</button>
+                        <button type="button" class="btn shadow">직무 변경</button>
+                        <button type="button" class="btn shadow">부서 변경</button>
+                        <button type="button" class="btn shadow">상태 변경</button>
+                        <button type="button" class="btn shadow">프로필 변경</button>
+                      </div>
+                    </div>
                   </div>
                   <table class="table table-borderless table-hover">
                     <thead>
                       <tr>
                         <th>
                           <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="all">
+                            <input type="checkbox" class="custom-control-input" id="all" onchange="readCheckNum();">
                             <label class="custom-control-label" for="all"></label>
                           </div>
                         </th>
@@ -230,7 +258,7 @@ padding: 10px;
                       <tr>
                         <td>
                           <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="${empList.empCode}" name="check">
+                            <input type="checkbox" class="custom-control-input" id="${empList.empCode}" name="check" onchange="readCheckNum();">
                             <label class="custom-control-label" for="${empList.empCode}"></label>
                           </div>
                         </td>
@@ -648,6 +676,28 @@ padding: 10px;
       }
     }
 
+  </script>
+  
+  <script>
+    
+    function readCheckNum() {
+        const checkNum = $("input:checkbox[name='check']:checked").length;
+        const checkNumArea = $("#checkNum-area");
+        const buttons = $("#option-button-area");
+
+        checkNumArea.removeClass("fade");
+        checkNumArea.html("<p>"+"check : "+checkNum+"</p>");
+        buttons.removeClass("fade");
+
+
+        var total = $("input[name=check]").length;
+        var checked = $("input[name=check]:checked").length;
+        if(checked==0) {
+          buttons.addClass("fade");
+          checkNumArea.addClass("fade");
+        }
+    }
+      
   </script>
 
 		
