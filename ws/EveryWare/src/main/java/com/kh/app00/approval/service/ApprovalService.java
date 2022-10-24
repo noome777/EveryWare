@@ -1,7 +1,9 @@
 package com.kh.app00.approval.service;
 
 import java.util.List;
+import java.util.Map;
 
+import com.kh.app00.approval.doc.vo.DocFormDetailTemplateVo;
 import com.kh.app00.approval.doc.vo.DocFormMapperVo;
 import com.kh.app00.approval.doc.vo.DocFormVo;
 import com.kh.app00.approval.doc.vo.DocPeriodVo;
@@ -41,6 +43,15 @@ public interface ApprovalService {
 	int selectTotalCnt();
 	//문서 목록 조회
 	List<ApprovalDocVo> selectDocList(PageVo pv);
+
+	
+	//문서 양식상세 항목 불러오기
+	List<DocFormDetailTemplateVo> selectFormDetailList();
+	//문서양식 insert
+	int insertForm(DocFormVo formVo, List<String> detaiCodelList, List<String> detaiSeqList);
+
+
+
 
 
 	

@@ -53,7 +53,7 @@
 	</select>
 	
 	<select id="selectDocList" resultType="ApprovalDocVo">
-		SELECT D.DOC_CODE, D.PERIOD_CODE, D.DOC_FORM_CODE, D.EMP_CODE, D.DOC_TITLE, D.DOC_ENROLL_DATE, D.DOC_UPDATED, D.DOC_STATUS, F.FORM_NAME, E.EMP_NAME
+		SELECT D.DOC_CODE, D.PERIOD_CODE, D.DOC_FORM_CODE, D.EMP_CODE, D.DOC_TITLE, TO_CHAR(D.DOC_ENROLL_DATE, 'YYYY.MM.DD') AS DOC_ENROLL_DATE, TO_CHAR(D.DOC_UPDATED, 'YYYY.MM.DD') AS DOC_UPDATED, D.DOC_STATUS, F.FORM_NAME, E.EMP_NAME
 		FROM APPROVAL_DOC D
 		INNER JOIN DOC_FORM F ON D.DOC_FORM_CODE = F.FORM_CODE
 		INNER JOIN EMP E ON E.EMP_CODE = D.EMP_CODE
@@ -61,4 +61,21 @@
 		ORDER BY D.DOC_CODE DESC
 	</select>
 		
+	<select id="selectFormDetailList" resultType="DocFormDetailTemplateVo">
+		SELECT FORM_DETAIL_CODE, FORM_DETAIL_NAME, FORM_DETAIL_TYPE FROM DOC_FORM_DETAIL_TEMPLATE
+	</select>
+	
+	
+	<insert id="insertDocForm"  keyProperty="FORM_CODE">
+		INSERT INTO DOC_FORM (FORM_CODE, FORM_NAME, FORM_INTRO, FORM_USE_YN)
+		VALUES (SEQ_DOC_FORM_CODE.NEXTVAL, #{formName}, #{formIntro}, #{formUseYn})
+	</insert>
+
+	<insert id="insertDocFormMapping" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" ">
+			INTO DOC_FORM_MAPPING (FORM_CODE, FORM_DETAIL_CODE, FORM_DETAIL_SEQ)
+			VALUES ((SELECT MAX(FORM_CODE) FROM DOC_FORM), #{item.formDetailCode}, #{item.formDetailSeq})
+		</foreach>
+	</insert>
+	
 </mapper>

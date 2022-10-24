@@ -1,12 +1,16 @@
 package com.kh.app00.approval.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.app00.approval.dao.ApprovalDao;
+import com.kh.app00.approval.doc.vo.DocFormDetailTemplateVo;
 import com.kh.app00.approval.doc.vo.DocFormMapperVo;
 import com.kh.app00.approval.doc.vo.DocFormVo;
 import com.kh.app00.approval.doc.vo.DocPeriodVo;
@@ -84,5 +88,39 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public List<ApprovalDocVo> selectDocList(PageVo pv) {
 		return dao.selectDocList(sst, pv);
 	}
+
+	
+	
+	
+	
+	//문서 양식상세 항목 불러오기
+	@Override
+	public List<DocFormDetailTemplateVo> selectFormDetailList() {
+		return dao.selectFormDetailList(sst);
+	}
+
+	//문서양식 insert
+	@Override
+	@Transactional(rollbackFor = {Exception.class})
+	public int insertForm(DocFormVo formVo, List<String> detaiCodelList, List<String> detaiSeqList) {
+
+		int docFormResult = dao.insertDocForm(sst, formVo);
+		
+		
+		List<DocFormMapperVo> mappingList = new ArrayList<DocFormMapperVo>();
+		for(int i=0; i<detaiCodelList.size(); i++) {
+			DocFormMapperVo mappingVo = new DocFormMapperVo();
+			mappingVo.setFormDetailCode(detaiCodelList.get(i));
+			mappingVo.setFormDetailSeq(detaiSeqList.get(i));
+			mappingList.add(mappingVo);
+		}
+		int docFormMappingResult = dao.insertDocFormMapping(sst, mappingList);
+		
+		return docFormResult * docFormMappingResult;
+	}
+
+	
+	
+	
 
 }

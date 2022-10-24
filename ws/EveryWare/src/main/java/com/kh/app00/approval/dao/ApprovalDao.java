@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.app00.approval.doc.vo.DocFormDetailTemplateVo;
 import com.kh.app00.approval.doc.vo.DocFormMapperVo;
 import com.kh.app00.approval.doc.vo.DocFormVo;
 import com.kh.app00.approval.doc.vo.DocPeriodVo;
@@ -42,6 +43,18 @@ public interface ApprovalDao {
 	int selectCountAll(SqlSessionTemplate sst);
 	//문서 목록 조회
 	List<ApprovalDocVo> selectDocList(SqlSessionTemplate sst, PageVo pv);
+
+	
+	
+	//문서 양식상세 항목 불러오기
+	List<DocFormDetailTemplateVo> selectFormDetailList(SqlSessionTemplate sst);
+	//문서양식 insert
+	//docForm insert
+	int insertDocForm(SqlSessionTemplate sst, DocFormVo formVo);
+	//docFormMapping insert
+	int insertDocFormMapping(SqlSessionTemplate sst, List<DocFormMapperVo> mappingList);
+
+
 
 	
 }
