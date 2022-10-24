@@ -7,6 +7,7 @@ public class OverworkVo {
 
     private String overCode;
     private String eCode;
+    private String deptCode;
     private String overDate;
     private String overTime;
     private String overName;

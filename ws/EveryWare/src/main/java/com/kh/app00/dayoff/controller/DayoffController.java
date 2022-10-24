@@ -45,7 +45,6 @@ public class DayoffController {
         //만약, 로그인 유저가 관리자, 결재 관리자, 인사 관리자 등등이면 다른 페이지 보여주기 (RIGHT_CODE가 4가 아닐 때)
         //RIGHT_CODE 조회하기
         EmpVo rvo = service.selectRightVo(vo);
-//        System.out.println(rvo);
         
         if(!rvo.getRightCode().equals("4")) {
             return "redirect:/dayoff/admin/1";

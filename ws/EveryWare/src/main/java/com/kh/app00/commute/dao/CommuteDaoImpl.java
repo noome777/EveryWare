@@ -10,6 +10,7 @@ import com.kh.app00.common.PageVo;
 import com.kh.app00.commute.vo.CommuteVo;
 import com.kh.app00.commute.vo.OverworkVo;
 import com.kh.app00.dayoff.vo.DayoffVo;
+import com.kh.app00.emp.vo.EmpVo;
 
 @Repository
 public class CommuteDaoImpl implements CommuteDao {
@@ -56,6 +57,50 @@ public class CommuteDaoImpl implements CommuteDao {
         RowBounds rb = new RowBounds(offset , pv2.getBoardLimit());
         
         return sst.selectList("commuteMapper.selectDateList", vo, rb);
+    }
+
+    //로그인 유저의 권한코드 조회
+    @Override
+    public EmpVo selectRightVo(SqlSessionTemplate sst, OverworkVo vo) {
+        return sst.selectOne("commuteMapper.selectRightVo", vo);
+    }
+
+    //사원의 부서 정보 조회
+    @Override
+    public DayoffVo getDeptVo(SqlSessionTemplate sst, OverworkVo vo) {
+        return sst.selectOne("commuteMapper.selectDeptVo", vo);
+    }
+
+    //관리자 기간 선택시 게시글 수 조회
+    @Override
+    public int selectAdDateCnt(SqlSessionTemplate sst, OverworkVo vo) {
+        return sst.selectOne("commuteMapper.selectAdDateCnt", vo);
+    }
+
+    //관리자 기간 선택시 게시글 리스트 조회
+    @Override
+    public List<OverworkVo> selectAdDateList(SqlSessionTemplate sst, OverworkVo vo, PageVo pv2) {
+        
+        int offset = (pv2.getCurrentPage()-1) * pv2.getBoardLimit();
+        RowBounds rb = new RowBounds(offset , pv2.getBoardLimit());
+        
+        return sst.selectList("commuteMapper.selectAdDateList", vo, rb);
+    }
+
+    //관리자 결재 리스트를 위한 사원 신청 글 수 조회
+    @Override
+    public int selectAdminTotalCnt(SqlSessionTemplate sst) {
+        return sst.selectOne("commuteMapper.selectAdminTotalCnt");
+    }
+
+    //관리자 결재 리스트 조회
+    @Override
+    public List<OverworkVo> selectAdminOverworkList(SqlSessionTemplate sst, PageVo pv) {
+        
+        int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+        RowBounds rb = new RowBounds(offset , pv.getBoardLimit());
+        
+        return sst.selectList("commuteMapper.selectAdminOverworkList", null, rb);
     }
 
 

@@ -181,9 +181,18 @@ public class CommuteController {
         System.out.println(overDate);
         
         //사원 정보 vo에 저장
+        //로그인 유저의 정보 vo에 저장
         EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
         vo.setECode(loginMember.getEmpCode());
+        vo.setDeptCode(loginMember.getDeptCode());
         
+        //만약, 로그인 유저가 관리자, 결재 관리자, 인사 관리자 등등이면 다른 페이지 보여주기 (RIGHT_CODE가 4가 아닐 때)
+        //RIGHT_CODE 조회하기
+        EmpVo rvo = service.selectRightVo(vo);
+        
+        if(!rvo.getRightCode().equals("4")) {
+            return "redirect:/commute/admin/1";
+        }
         
         //기간 선택 조회 여부(시간 외 근무 메인의 전체리스트 || 기간 선택 후 리스트)
         if(overDate != null) {
@@ -229,6 +238,10 @@ public class CommuteController {
         EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
         vo.setECode(loginMember.getEmpCode());
         
+        //사원의 부서 정보 vo에 저장
+        DayoffVo deptVo = service.getDeptVo(vo);
+        vo.setDeptCode(deptVo.getDeptCode());
+        
         if(overDate.length() == 21) {
             vo.setOverDate(overDate.substring(11));
         }
@@ -244,6 +257,45 @@ public class CommuteController {
             return "commute/overwork";
         }
         
+    }
+    
+    //시간 외 근무의 관리자 페이지
+    @GetMapping("admin/{pno}")
+    public String overworkAdmin(@PathVariable int pno, Model model, OverworkVo vo, 
+            String overDate) {
+        
+        //기간 선택 조회 여부(시간 외 근무 메인의 전체리스트 || 기간 선택 후 리스트)
+        if(overDate != null) {
+            //기간 선택을 했을 경우
+            //사원의 시간 외 근무 기간 선택 목록 조회 (+페이징)
+            vo.setOverDate(overDate);
+            
+            //기간 선택 후 신청글 수 조회
+            int adDateCount = service.selectAdDateCnt(vo);
+            PageVo pv2 = Pagination.getPageVo(adDateCount, pno, 5, 10);
+            
+            List<OverworkVo> AdDateList = service.selectAdDateList(vo, pv2);
+            
+            model.addAttribute("AdDateList", AdDateList);
+            model.addAttribute("vo", vo);
+            model.addAttribute("pv", pv2);
+            model.addAttribute("adDateCount", adDateCount);
+            
+        }else {
+            //기간 선택을 안 했을 경우
+            //사원의 시간 외 근무 전체 목록 조회 (+ 페이징)
+            int adListCount = service.selectAdminTotalCnt();
+            PageVo pv = Pagination.getPageVo(adListCount, pno, 5, 10);
+            
+            List<OverworkVo> voList = service.adminOverworkList(pv);
+            
+            model.addAttribute("voList", voList);
+            model.addAttribute("pv", pv);
+            model.addAttribute("adListCount", adListCount);
+            
+        }
+        
+        return "commute/adminOverwork";
     }
 
     

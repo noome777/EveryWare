@@ -66,13 +66,7 @@
             <div class="form-row mb-3">
                 <div class="col-md-4 mb-3">
                 <div class="input-group">
-                    <input class="form-control" id="example-date" type="date" name="offStartDate" required>
-                </div>
-                </div>
-                ~ 
-                <div class="col-md-4 mb-3">
-                <div class="input-group">
-                    <input class="form-control" id="example-date" type="date" name="offEndDate" required>
+                    <input class="form-control" id="example-date" type="date" name="overDate" required>
                 </div>
                 </div>
             </div>
@@ -92,9 +86,9 @@
               <th>신청번호</th>
               <th>부서명</th>
               <th>이름</th>
-              <th>시작일자</th>
-              <th>종료일자</th>
-              <th>일수</th>
+              <th>일자</th>
+              <th>시간</th>
+              <th>업무명</th>
               <th>사유</th>
               <th>상태</th>
               <th>등록일자</th>
@@ -104,13 +98,13 @@
             <c:if test="${empty AdDateList}">
                 <c:forEach items="${voList}" var="x">
                     <tr>
-                        <td>${x.offCode}</td>
+                        <td>${x.overCode}</td>
                         <td>${x.deptCode}</td>
                         <td>${x.ECode}</td>
-                        <td>${x.offStartDate}</td>
-                        <td>${x.offEndDate}</td>
-                        <td>${x.offDays}</td>
-                        <td>${x.offReason}</td>
+                        <td>${x.overDate}</td>
+                        <td>${x.overTime}</td>
+                        <td>${x.overName}</td>
+                        <td>${x.overReason}</td>
                         <td>
                             <select name="" id="">
                                 <option value="">결재대기중</option>
@@ -118,20 +112,20 @@
                                 <option value="">반려</option>
                             </select>
                         </td>
-                        <td>${x.offEnrolldate}</td>
+                        <td>${x.overEnrolldate}</td>
                     </tr>
                 </c:forEach>
             </c:if>
             <c:if test="${empty voList}">
                 <c:forEach items="${AdDateList}" var="y">
                     <tr>
-                        <td>${y.offCode}</td>
-                        <td>${y.ECode}</td>
+                        <td>${y.overCode}</td>
                         <td>${y.deptCode}</td>
-                        <td>${y.offStartDate}</td>
-                        <td>${y.offEndDate}</td>
-                        <td>${y.offDays}</td>
-                        <td>${y.offReason}</td>
+                        <td>${y.ECode}</td>
+                        <td>${y.overDate}</td>
+                        <td>${y.overTime}</td>
+                        <td>${y.overName}</td>
+                        <td>${y.overReason}</td>
                         <td>
                             <select name="" id="">
                                 <option value="">결재대기중</option>
@@ -139,7 +133,7 @@
                                 <option value="">반려</option>
                             </select>
                         </td>
-                        <td>${y.offEnrolldate}</td>
+                        <td>${y.overEnrolldate}</td>
                     </tr>
                 </c:forEach>
             </c:if>
@@ -159,26 +153,26 @@
         <c:if test="${empty AdDateList && empty vo}">
           <div id="page-area">
             <c:if test="${pv.startPage ne 1}">
-              <a href="${root}/dayoff/admin/${pv.startPage - 1}" class="btn mb-2 btn-primary"><</a>
+              <a href="${root}/commute/admin/${pv.startPage - 1}" class="btn mb-2 btn-primary"><</a>
             </c:if>
             <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" var="i">
-                <a href="${root}/dayoff/admin/${i}" class="btn mb-2 btn-primary">${i}</a>
+                <a href="${root}/commute/admin/${i}" class="btn mb-2 btn-primary">${i}</a>
             </c:forEach>
             <c:if test="${pv.endPage ne pv.maxPage }">
-              <a href="${root}/dayoff/admin/${pv.endPage + 1}" class="btn mb-2 btn-primary">></a>
+              <a href="${root}/commute/admin/${pv.endPage + 1}" class="btn mb-2 btn-primary">></a>
             </c:if>	
           </div>
         </c:if>
         <c:if test="${empty voList && not empty vo}">
         	<div id="page-area">
 	          <c:if test="${pv.startPage ne 1}">
-	            <a href="${root}/dayoff/admin/${pv.startPage - 1}?offStartDate=${vo.offStartDate}&offEndDate=${vo.offEndDate}" class="btn mb-2 btn-primary"><</a>
+	            <a href="${root}/commute/admin/${pv.startPage - 1}?offStartDate=${vo.offStartDate}&offEndDate=${vo.offEndDate}" class="btn mb-2 btn-primary"><</a>
 	          </c:if>
 	          <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" var="i">
-	              <a href="${root}/dayoff/admin/${i}?offStartDate=${vo.offStartDate}&offEndDate=${vo.offEndDate}" class="btn mb-2 btn-primary">${i}</a>
+	              <a href="${root}/commute/admin/${i}?offStartDate=${vo.offStartDate}&offEndDate=${vo.offEndDate}" class="btn mb-2 btn-primary">${i}</a>
 	          </c:forEach>
 	          <c:if test="${pv.endPage ne pv.maxPage }">
-	            <a href="${root}/dayoff/admin/${pv.endPage + 1}?offStartDate=${vo.offStartDate}&offEndDate=${vo.offEndDate}" class="btn mb-2 btn-primary">></a>
+	            <a href="${root}/commute/admin/${pv.endPage + 1}?offStartDate=${vo.offStartDate}&offEndDate=${vo.offEndDate}" class="btn mb-2 btn-primary">></a>
 	          </c:if>	
 	        </div>
         </c:if>
