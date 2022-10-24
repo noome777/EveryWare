@@ -205,7 +205,6 @@ public class CommuteController {
             PageVo pv2 = Pagination.getPageVo(dateCount, pno, 5, 5);
             
             List<OverworkVo> dateList = service.selectDateList(vo, pv2);
-            System.out.println(dateList);
             
             model.addAttribute("dateList", dateList);
             model.addAttribute("vo", vo);

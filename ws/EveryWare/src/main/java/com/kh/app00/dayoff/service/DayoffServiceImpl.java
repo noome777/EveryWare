@@ -102,4 +102,10 @@ public class DayoffServiceImpl implements DayoffService {
         return dao.selectAdDateList(sst, vo, pv2);
     }
 
+    //관리자의 결재 정보 업데이트
+    @Override
+    public int updateApproval(DayoffVo vo) {
+        return dao.updateApproval(sst, vo);
+    }
+
 }

@@ -45,6 +45,15 @@
 #page-area>a{
   margin: 5px;
 }
+#no{
+  border: none;
+  border-right: 0px;
+  border-top: 0px;
+  border-left: 0px;
+  border-bottom: 0px;
+  width: 40px;
+  height: 30px;
+}
    
 </style>
 </head>
@@ -86,6 +95,7 @@
 	        <h6 class="card-title">조회 결과  ${adDateCount} 건</h6>
         </c:if>
 
+      <form action="${root}/dayoff/sendApproval" method="post">
         <table class="table table-hover">
           <thead>
             <tr>
@@ -102,22 +112,34 @@
           </thead>
           <tbody>
             <c:if test="${empty AdDateList}">
+              <input type="hidden" id="no" value="${voList[0].offCode}" name="no">
                 <c:forEach items="${voList}" var="x">
                     <tr>
-                        <td>${x.offCode}</td>
+                        <td>
+                          ${x.offCode}
+                        </td>
                         <td>${x.deptCode}</td>
                         <td>${x.ECode}</td>
                         <td>${x.offStartDate}</td>
                         <td>${x.offEndDate}</td>
                         <td>${x.offDays}</td>
                         <td>${x.offReason}</td>
-                        <td>
-                            <select name="" id="">
-                                <option value="">결재대기중</option>
-                                <option value="">승인완료</option>
-                                <option value="">반려</option>
-                            </select>
-                        </td>
+                          <c:if test="${x.offApproval == 'W'}">
+                            <td>
+                              <select onchange="this.form.submit()" name="approval" id="approval">
+                                  <option value="W" name="W">결재대기중</option>
+                                  <option value="A" name="A">승인완료</option>
+                                  <option value="C" name="C">반려</option>
+                              </select>
+                            </td>
+                          </c:if>
+                          <c:if test="${x.offApproval == 'A'}">
+                          <td><span class="badge badge-pill badge-success">승인완료</span></td>
+                          </c:if>
+                          <c:if test="${x.offApproval == 'C'}">
+                          <td><span class="badge badge-pill badge-danger">반려</span></td>
+                          </c:if>
+                        
                         <td>${x.offEnrolldate}</td>
                     </tr>
                 </c:forEach>
@@ -133,11 +155,20 @@
                         <td>${y.offDays}</td>
                         <td>${y.offReason}</td>
                         <td>
-                            <select name="" id="">
-                                <option value="">결재대기중</option>
-                                <option value="">승인완료</option>
-                                <option value="">반려</option>
-                            </select>
+                          <select name="" id="">
+                            <c:if test="${y.offApproval == 'W'}">
+                                <td><option class="badge badge-pill badge-warning">결재대기중</option></td>
+                            </c:if>
+                            <c:if test="${y.offApproval == 'A'}">
+                                <td><option class="badge badge-pill badge-success">승인완료</option></td>
+                            </c:if>
+                            <c:if test="${y.offApproval == 'C'}">
+                                <td><option class="badge badge-pill badge-danger">반려</option></td>
+                            </c:if>
+                              <option value="">결재대기중</option>
+                              <option value="">승인완료</option>
+                              <option value="">반려</option>
+                          </select>
                         </td>
                         <td>${y.offEnrolldate}</td>
                     </tr>
@@ -145,7 +176,10 @@
             </c:if>
           </tbody>
         </table>
-        <!-- <c:if test="${y.offApproval == 'W'}">
+        <!-- <input type="submit" id="submit"> -->
+      </form>
+      
+        <c:if test="${y.offApproval == 'W'}">
             <td><span class="badge badge-pill badge-warning">결재대기중</span></td>
         </c:if>
         <c:if test="${y.offApproval == 'A'}">
@@ -153,7 +187,7 @@
         </c:if>
         <c:if test="${y.offApproval == 'C'}">
             <td><span class="badge badge-pill badge-danger">반려</span></td>
-        </c:if> -->
+        </c:if>
 
        
         <c:if test="${empty AdDateList && empty vo}">
@@ -182,9 +216,42 @@
 	          </c:if>	
 	        </div>
         </c:if>
-
       </div>
     </div>
+
+
+<script>
+// const submit = document.querySelector('#submit');
+// submit.addEventListener('click', function(){
+
+// const no = $("#no").val();
+// const approval = $('#approval option:selected').val();
+
+// console.log(no);
+// console.log(approval);
+
+//   $.ajax({
+//     url: "${root}/dayoff/sendApproval",
+//     type: "POST",
+//     data: {"no" : no , "approval" : approval},
+//     success: function(data){
+//       console.log(data);
+
+//       if(data == 'success'){
+//         location.href='${root}/dayoff/admin/1';
+//       }else{
+//         alert('결재 실패하였습니다.');
+//       }
+//     },
+//     error: function(){
+//       alert('ajax 통신 실패');
+//     }
+
+//   });
+
+// });
+
+</script>
 </body>
 </html>
 

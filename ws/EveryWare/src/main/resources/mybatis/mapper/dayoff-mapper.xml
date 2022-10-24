@@ -57,7 +57,7 @@
 	<select id="offUsedCnt" resultType="int">
 		SELECT NVL(SUM(OFF_DAYS), 0) AS OFF_USED 
 		FROM DAYOFF
-		WHERE ECODE = #{eCode}
+		WHERE ECODE = #{eCode} AND OFF_APPROVAL = 'A' 
 	</select>
 	
 	<select id="selectRightVo" resultType="EmpVo">
@@ -76,10 +76,15 @@
 		FROM DAYOFF O
 		JOIN EMP E ON E.EMP_CODE = O.ECODE
 		JOIN DEPT D ON E.DEPT_CODE = D.DEPT_CODE
+		ORDER BY(CASE WHEN OFF_APPROVAL = 'W' THEN 1 ELSE 2 END)
 	</select>
 	
 	<select id="selectDeptVo" resultType="DayoffVo">
 		SELECT DISTINCT DEPT_CODE FROM DAYOFF WHERE ECODE = #{eCode}
 	</select>
+	
+	<update id="updateApproval">
+		UPDATE DAYOFF SET OFF_APPROVAL = #{offApproval} WHERE OFF_CODE = #{offCode}
+	</update>
 
 </mapper>

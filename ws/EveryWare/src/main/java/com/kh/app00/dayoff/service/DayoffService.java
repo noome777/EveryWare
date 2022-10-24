@@ -47,5 +47,8 @@ public interface DayoffService {
 
     //관리자 기산 선택시 게시글 리스트 조회
     List<DayoffVo> selectAdDateList(DayoffVo vo, PageVo pv2);
+    
+    //관리자 결재 정보 업데이트
+    int updateApproval(DayoffVo vo);
 
 }

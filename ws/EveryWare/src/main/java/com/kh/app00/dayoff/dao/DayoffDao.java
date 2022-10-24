@@ -50,4 +50,7 @@ public interface DayoffDao {
     //관리자 기산 선택시 게시글 리스트 조회
     List<DayoffVo> selectAdDateList(SqlSessionTemplate sst, DayoffVo vo, PageVo pv2);
 
+    //관리자의 결재 정보 업데이트
+    int updateApproval(SqlSessionTemplate sst, DayoffVo vo);
+
 }

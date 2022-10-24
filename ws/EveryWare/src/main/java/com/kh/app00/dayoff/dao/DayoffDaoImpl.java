@@ -106,6 +106,12 @@ public class DayoffDaoImpl implements DayoffDao {
         
         return sst.selectList("dayoffMapper.selectAdDateList", vo, rb);
     }
+
+    //관리자의 결재 정보 업데이트
+    @Override
+    public int updateApproval(SqlSessionTemplate sst, DayoffVo vo) {
+        return sst.update("dayoffMapper.updateApproval", vo);
+    }
     
 
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.app00.common.PageVo;
 import com.kh.app00.common.Pagination;
@@ -162,6 +163,29 @@ public class DayoffController {
         
         return "dayoff/adminDayoff";
        
+    }
+    
+    //관리자의 결재 상태 반영
+    @PostMapping("sendApproval")
+    public String sendApproval(String no, String approval, DayoffVo vo, Model model) {
+        
+        //결재 상태 바꾸는 게시글 setting 해주기
+        approval = approval.substring(0,1);
+        
+        vo.setOffCode(no);;
+        vo.setOffApproval(approval);
+        
+        System.out.println(vo);
+        int result = service.updateApproval(vo);
+        
+        if(result == 1) {
+            return "redirect:/dayoff/admin/1";
+        }else {
+            model.addAttribute("alertMsg", "결재 실패");
+            return "dayoff/adminDayoff";
+        }
+        
+        
     }
     
     
