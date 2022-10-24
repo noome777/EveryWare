@@ -35,6 +35,7 @@ public class EmpVo {
     private String deptName;
     private String rankName;
     private String jobName;
+    private String rightName;
     
     public void encodePwd(PasswordEncoder pwdEnc) {
 		

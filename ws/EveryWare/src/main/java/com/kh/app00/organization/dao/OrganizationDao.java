@@ -40,6 +40,9 @@ public interface OrganizationDao {
 	//아이디 확인
 	int checkIdDup(SqlSessionTemplate sqlSessionTemplate, String id);
 
+	//임직원 관리 - 임직원 검색
+	List<EmpVo> selectEmpListByEmpData(SqlSessionTemplate sqlSessionTemplate, String empData);
+
 
 
 }

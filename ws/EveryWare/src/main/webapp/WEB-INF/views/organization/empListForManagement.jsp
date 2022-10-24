@@ -94,7 +94,7 @@ height: 100%;
 }
 
 #search-bar {
-width: 100%;
+width: 95%;
 height: 100%;
 padding: 10px;
 }
@@ -104,6 +104,21 @@ padding: 10px;
   height: 34px;
   margin: none;
   padding: none;
+}
+
+#search-icon-wrap {
+	display:flex;
+	flex-direction:row;
+}
+
+#return{
+	width : 34px;
+	height : 34px;
+  margin-left: 8px;
+}
+
+#return:hover {
+  cursor: pointer;
 }
 
 #search-wrap {
@@ -116,7 +131,7 @@ padding: 10px;
 }
 
 #search-container {
-  width: 16%;
+  width: 18%;
 }
 
 #search-bar {
@@ -126,6 +141,11 @@ padding: 10px;
 
 #search-wrap {
   margin : 0px 10px 5px 10px;
+}
+
+.or-scroll-wrap {
+	overflow-y:auto;
+  overflow-x: hidden;
 }
 
 .profile-wrap {
@@ -160,24 +180,6 @@ padding: 10px;
   cursor: pointer;
 }
 
-#option-area {
-  width: 80%;
-  height: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-#checkNum-area {
-  display: flex;
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-  padding-top: 11px;
-}
-
-
-
 
 
 
@@ -205,8 +207,8 @@ padding: 10px;
               </div>
               
               <!-- table -->
-              <div class="card shadow card-wrap">
-                <div class="card-body">
+              <div class="card shadow card-wrap ">
+                <div class="card-body or-scroll-wrap">
                   <div id="search-wrap">
                     <div id="search-container">
                       <form action="${root}/organization/management/emp/1" method="post">
@@ -215,28 +217,17 @@ padding: 10px;
                         </div>
                         <div id="search-icon-wrap">
                           <input type="image" name="submit" id="search-icon" src="${root}/resources/img/search.png" onclick="return checkBlank();">
+                        	<img src="${root}/resources/img/return.png" alt="되돌리기 버튼" id="return" onclick="location.href='${root}/organization/management/emp/1';">
                         </div>
                       </form>
-                    </div>
-                    <div id="option-area">
-                      <div id="checkNum-area" class="fade">
-                      
-                      </div>
-                      <div id="option-button-area" class="fade">
-                        <button type="button" class="btn shadow">직위 변경</button>
-                        <button type="button" class="btn shadow">직무 변경</button>
-                        <button type="button" class="btn shadow">부서 변경</button>
-                        <button type="button" class="btn shadow">상태 변경</button>
-                        <button type="button" class="btn shadow">프로필 변경</button>
-                      </div>
                     </div>
                   </div>
                   <table class="table table-borderless table-hover">
                     <thead>
-                      <tr>
+                      <tr id="tr">
                         <th>
                           <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="all" onchange="readCheckNum();">
+                            <input type="checkbox" class="custom-control-input" id="all">
                             <label class="custom-control-label" for="all"></label>
                           </div>
                         </th>
@@ -258,7 +249,7 @@ padding: 10px;
                       <tr>
                         <td>
                           <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="${empList.empCode}" name="check" onchange="readCheckNum();">
+                            <input type="checkbox" class="custom-control-input" id="${empList.empCode}" name="check">
                             <label class="custom-control-label" for="${empList.empCode}"></label>
                           </div>
                         </td>
@@ -272,7 +263,7 @@ padding: 10px;
                           <small class="mb-0 text-muted">${empList.empCode}</small>
                         </td>
                         <td>
-                          <p class="mb-0 text-muted"><a href="#" class="text-muted">${empList.empId}</a></p>
+                          <p class="mb-0 text-muted"><a class="text-muted"  href="#">${empList.empId}</a></p>
                         </td>
                         <td>
                           <p class="mb-0 text-muted">${empList.rankName}</p>
@@ -310,42 +301,10 @@ padding: 10px;
                       
                     </tbody>
                   </table>
+
                 </div>
               </div>
-              <nav aria-label="Table Paging" class="my-3">
-                <ul class="pagination justify-content-end mb-0">
-                <c:if test = "${pv.currentPage ne 1}">
-                	<li class="page-item">
-                    <a class="page-link" href="${root}/organization/management/emp/${pv.currentPage-1}" class="btn btn-primary btn-sm">이전</a>
-                  </li>
-                </c:if>
-              <c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
-                <c:choose>
-                  <c:when test="${i eq pv.currentPage}">
-                    <li class="page-item active">
-                      <a class="page-link" href="${root}/organization/management/emp/${i}">${i}</a>
-                    </li>
-                  </c:when>
-                  <c:otherwise>
-                    <li class="page-item">
-                      <a class="page-link" href="${root}/organization/management/emp/${i}">${i}</a>
-                    </li>
-                  </c:otherwise>
-                </c:choose>
-              </c:forEach>
-				<c:if test = "${pv.currentPage ne pv.maxPage}">
-                	<li class="page-item">
-						<a class="page-link" href="${root}/organization/management/emp/${pv.currentPage+1}" class="btn btn-primary btn-sm">다음</a>
-					</li>
-				</c:if>
-                 </ul>
-              </nav>
-            </div> <!-- .col-12 -->
-          </div> <!-- .row -->
-        </div> <!-- .container-fluid -->
-        
-        
-        
+              
         
         
       </main> <!-- main -->
@@ -408,184 +367,6 @@ padding: 10px;
         </div>
       </form>  
     </div>
-
-    <c:forEach items="${empList}" var="empList">
-	
-      <div class="modal fade" id="emp-profile-${empList.empCode}" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="verticalModalTitle">임직원 상세정보</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body profile-wrap"> 
-                <div class="profile-img-wrap">
-                  <div class="avatar avatar-xl">
-                    <label for="file-input">
-                      <img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle preview-img" id="preview-img">
-                    </label>
-                    <input id="file-input" class="input-img" type="file" style="display:none;" onchange="readURL(this);">
-                    </div>
-                </div>
-                <div class="profile-texts-wrap">
-                  <div class="flex-items">
-                    <div>
-                      <p class="mb-0 text-muted"><strong>이름</strong></p>
-                    </div>
-                    <div>
-                      <p class="mb-0">${empList.empName}</p>
-                    </div>
-                  </div>
-                  <div class="flex-items">
-                    <div>
-                      <p class="mb-0 text-muted"><strong>사번</strong></p>
-                    </div>
-                    <div>
-                      <p class="mb-0">${empList.empCode}</p>
-                    </div>
-                  </div>
-                  <div class="flex-items">
-                    <div>
-                      <p class="mb-0 text-muted"><strong>아이디</strong></p>
-                    </div>
-                    <div>
-                      <p class="mb-0">${empList.empId}</p>
-                    </div>
-                  </div>
-                  <div class="flex-items">
-                    <div>
-                      <p class="mb-0 text-muted"><strong>비밀번호</strong></p>
-                    </div>
-                    <div>
-                      <p class="mb-0" class="modal-pwd-area">******</p>
-                    </div>
-                  </div>
-                  <div class="flex-items">
-                    <div>
-                      <p class="mb-0 text-muted"><strong>직위</strong></p>
-                    </div>
-                    <div>
-                      <p class="mb-0" class="modal-rank-area">${empList.rankName}</p>
-                    </div>
-                  </div>
-                  <div class="flex-items">
-                    <div>
-                      <p class="mb-0 text-muted"><strong>직무</strong></p>
-                    </div>
-                    <div>
-                      <p class="mb-0" class="modal-job-area">${empList.jobName}</p>
-                    </div>
-                  </div>
-                  <div class="flex-items">
-                    <div>
-                      <p class="mb-0 text-muted"><strong>소속</strong></p>
-                    </div>
-                    <div>
-                      <p class="mb-0" class="modal-dept-area">${empList.deptName}</p>
-                    </div>
-                  </div>
-                  <div class="flex-items">
-                    <div>
-                      <p class="mb-0 text-muted"><strong>생년월일</strong></p>
-                    </div>
-                    <div>
-                      <p class="mb-0" class="modal-birthday-area">${empList.empBirthday}</p>
-                    </div>
-                  </div>
-                  <div class="flex-items">
-                    <div>
-                      <p class="mb-0 text-muted" ><strong>사내전화</strong></p>
-                    </div>
-                    <div>
-                      <p class="mb-0" class="modal-tel-area">${empList.empTel}</p>
-                    </div>
-                  </div>
-                  <div class="flex-items">
-                    <div>
-                      <p class="mb-0 text-muted"><strong>휴대전화</strong></p>
-                    </div>
-                    <div>
-                      <p class="mb-0"  class="modal-phone-area">${empList.empPhone}</p>
-                    </div>
-                  </div>
-                  <div class="flex-items">
-                    <div>
-                      <p class="mb-0 text-muted" ><strong>e-mail</strong></p>
-                    </div>
-                    <div>
-                      <p class="mb-0" class="modal-email-area">${empList.empEMail}</p>
-                    </div>
-                  </div>
-                  <div class="flex-items">
-                    <div>
-                      <p class="mb-0 text-muted"><strong>자택주소1</strong></p>
-                    </div>
-                    <div>
-                      <p class="mb-0"  class="modal-addr1-area">${empList.empAddress1}</p>
-                    </div>
-                  </div>
-                  <div class="flex-items">
-                    <div>
-                      <p class="mb-0 text-muted" ><strong>자택주소2</strong></p>
-                    </div>
-                    <div>
-                      <p class="mb-0" class="modal-addr2-area">${empList.empAddress2}</p>
-                    </div>
-                  </div>
-                  <div class="flex-items">
-                    <div>
-                      <p class="mb-0 text-muted" ><strong>입사일</strong></p>
-                    </div>
-                    <div>
-                      <p class="mb-0" class="modal-joinDate-area">${empList.empJoinDate}</p>
-                    </div>
-                  </div>
-                  <div class="flex-items">
-                    <div>
-                      <p class="mb-0 text-muted"><strong>진급일</strong></p>
-                    </div>
-                    <div>
-                      <p class="mb-0">${empList.empPromotionDate}</p>
-                    </div>
-                  </div>
-                  <div class="flex-items">
-                    <div>
-                      <p class="mb-0 text-muted" ><strong>기타정보</strong></p>
-                    </div>
-                    <div>
-                      <p class="mb-0" class="modal-etc-area">${empList.empEtc}</p>
-                    </div>
-                  </div>
-                  <div class="flex-items">
-                    <div>
-                      <p class="mb-0 text-muted"><strong>권한</strong></p>
-                    </div>
-                    <div>
-                      <p class="mb-0">${empList.rightName}</p>
-                    </div>
-                  </div>
-                  <div class="flex-items">
-                    <div>
-                      <p class="mb-0 text-muted" ><strong>재직상태</strong></p>
-                    </div>
-                    <div>
-                      <p class="mb-0" class="modal-right-area">${empList.empStatus}</p>
-                    </div>
-                  </div>
-      
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn mb-2 btn-primary">저장</button>
-                <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      
-    </c:forEach>
 
     
     <!--체크박스 전부체크-->
@@ -663,13 +444,13 @@ padding: 10px;
     </script>
 
   <script>
-      
+        
     const searchBar = $("#search-bar");
     
     function checkBlank() {
 
       if(searchBar.val() === "") {
-        alert("검색창에 글자를 입력하여 주시길 바랍니다.");
+    	  console.log("검색창에 글자를 입력하여 주시길 바랍니다.");
         return false;
       } else {
         return true;
@@ -677,30 +458,216 @@ padding: 10px;
     }
 
   </script>
-  
-  <script>
-    
-    function readCheckNum() {
-        const checkNum = $("input:checkbox[name='check']:checked").length;
-        const checkNumArea = $("#checkNum-area");
-        const buttons = $("#option-button-area");
 
-        checkNumArea.removeClass("fade");
-        checkNumArea.html("<p>"+"check : "+checkNum+"</p>");
-        buttons.removeClass("fade");
+  <c:if test="${empty empList}">
+    <script>
+      $(document).ready(function() {
+        alert("검색된 임직원이 없습니다. 검색어를 확인 후 다시 시도해주세요.");
+      });
+    </script>
+  </c:if>
 
+	<c:forEach items="${empList}" var="empList">
+	
+		<div class="modal fade" id="emp-profile-${empList.empCode}" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+		    <div class="modal-dialog modal-dialog-centered" role="document">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <h5 class="modal-title" id="verticalModalTitle">임직원 상세정보</h5>
+		          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		            <span aria-hidden="true">&times;</span>
+		          </button>
+		        </div>
+		        <div class="modal-body profile-wrap"> 
+		          <div class="profile-img-wrap">
+		            <div class="avatar avatar-xl">
+                  <label for="file-input">
+		                <img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle preview-img" id="preview-img">
+                  </label>
+                  <input id="file-input" class="input-img" type="file" style="display:none;" onchange="readURL(this);">
+                  </div>
+		          </div>
+		          <div class="profile-texts-wrap">
+		            <div class="flex-items">
+		              <div>
+		                <p class="mb-0 text-muted"><strong>이름</strong></p>
+		              </div>
+		              <div>
+		                <p class="mb-0">${empList.empName}</p>
+		              </div>
+		            </div>
+		            <div class="flex-items">
+		              <div>
+		                <p class="mb-0 text-muted"><strong>사번</strong></p>
+		              </div>
+		              <div>
+		                <p class="mb-0">${empList.empCode}</p>
+		              </div>
+		            </div>
+		            <div class="flex-items">
+		              <div>
+		                <p class="mb-0 text-muted"><strong>아이디</strong></p>
+		              </div>
+		              <div>
+		                <p class="mb-0">${empList.empId}</p>
+		              </div>
+		            </div>
+		            <div class="flex-items">
+		              <div>
+		                <p class="mb-0 text-muted"><strong>비밀번호</strong></p>
+		              </div>
+		              <div>
+		                <p class="mb-0" class="modal-pwd-area">******</p>
+		              </div>
+		            </div>
+		            <div class="flex-items">
+		              <div>
+		                <p class="mb-0 text-muted"><strong>직위</strong></p>
+		              </div>
+		              <div>
+		                <p class="mb-0" class="modal-rank-area">${empList.rankName}</p>
+		              </div>
+		            </div>
+		            <div class="flex-items">
+		              <div>
+		                <p class="mb-0 text-muted"><strong>직무</strong></p>
+		              </div>
+		              <div>
+		                <p class="mb-0" class="modal-job-area">${empList.jobName}</p>
+		              </div>
+		            </div>
+		            <div class="flex-items">
+		              <div>
+		                <p class="mb-0 text-muted"><strong>소속</strong></p>
+		              </div>
+		              <div>
+		                <p class="mb-0" class="modal-dept-area">${empList.deptName}</p>
+		              </div>
+		            </div>
+		            <div class="flex-items">
+		              <div>
+		                <p class="mb-0 text-muted"><strong>생년월일</strong></p>
+		              </div>
+		              <div>
+		                <p class="mb-0" class="modal-birthday-area">${empList.empBirthday}</p>
+		              </div>
+		            </div>
+		            <div class="flex-items">
+		              <div>
+		                <p class="mb-0 text-muted" ><strong>사내전화</strong></p>
+		              </div>
+		              <div>
+		                <p class="mb-0" class="modal-tel-area">${empList.empTel}</p>
+		              </div>
+		            </div>
+		            <div class="flex-items">
+		              <div>
+		                <p class="mb-0 text-muted"><strong>휴대전화</strong></p>
+		              </div>
+		              <div>
+		                <p class="mb-0"  class="modal-phone-area">${empList.empPhone}</p>
+		              </div>
+		            </div>
+		            <div class="flex-items">
+		              <div>
+		                <p class="mb-0 text-muted" ><strong>e-mail</strong></p>
+		              </div>
+		              <div>
+		                <p class="mb-0" class="modal-email-area">${empList.empEMail}</p>
+		              </div>
+		            </div>
+		            <div class="flex-items">
+		              <div>
+		                <p class="mb-0 text-muted"><strong>자택주소1</strong></p>
+		              </div>
+		              <div>
+		                <p class="mb-0"  class="modal-addr1-area">${empList.empAddress1}</p>
+		              </div>
+		            </div>
+		            <div class="flex-items">
+		              <div>
+		                <p class="mb-0 text-muted" ><strong>자택주소2</strong></p>
+		              </div>
+		              <div>
+		                <p class="mb-0" class="modal-addr2-area">${empList.empAddress2}</p>
+		              </div>
+		            </div>
+		            <div class="flex-items">
+		              <div>
+		                <p class="mb-0 text-muted" ><strong>입사일</strong></p>
+		              </div>
+		              <div>
+		                <p class="mb-0" class="modal-joinDate-area">${empList.empJoinDate}</p>
+		              </div>
+		            </div>
+		            <div class="flex-items">
+		              <div>
+		                <p class="mb-0 text-muted"><strong>진급일</strong></p>
+		              </div>
+		              <div>
+		                <p class="mb-0">${empList.empPromotionDate}</p>
+		              </div>
+		            </div>
+		            <div class="flex-items">
+		              <div>
+		                <p class="mb-0 text-muted" ><strong>기타정보</strong></p>
+		              </div>
+		              <div>
+		                <p class="mb-0" class="modal-etc-area">${empList.empEtc}</p>
+		              </div>
+		            </div>
+		            <div class="flex-items">
+		              <div>
+		                <p class="mb-0 text-muted"><strong>권한</strong></p>
+		              </div>
+		              <div>
+		                <p class="mb-0">${empList.rightName}</p>
+		              </div>
+		            </div>
+		            <div class="flex-items">
+		              <div>
+		                <p class="mb-0 text-muted" ><strong>재직상태</strong></p>
+		              </div>
+		              <div>
+		                <p class="mb-0" class="modal-right-area">${empList.empStatus}</p>
+		              </div>
+		            </div>
+		
+		          </div>
+		        </div>
+		        <div class="modal-footer">
+		          <button type="button" class="btn mb-2 btn-primary">저장</button>
+		          <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		
+	</c:forEach>
 
-        var total = $("input[name=check]").length;
-        var checked = $("input[name=check]:checked").length;
-        if(checked==0) {
-          buttons.addClass("fade");
-          checkNumArea.addClass("fade");
+    <script>
+      function readURL(input) {
+        if (input.files && input.files[0]) {
+
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            document.getElementById('preview-img').src = e.target.result;
+          };
+          reader.readAsDataURL(input.files[0]);
+        } else {
+          document.getElementById('preview-img').src = "";
         }
-    }
-      
-  </script>
+      }
+
+    </script>
+
+
+  
+
+
+  
 
 		
 
 </body>
-</html>
+</html>>

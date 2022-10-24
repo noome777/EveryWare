@@ -42,7 +42,6 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 
 	//검색으로 임직원 정보 불러오기
-	//TODO 영어 및 숫자 입력 시 RETURN NULL
 	@Override
 	public List<EmpVo> selectEmpListByWord(String word) {
 		return organizationDao.selectEmpListByWord(sqlSessionTemplate, word);
@@ -108,6 +107,15 @@ public class OrganizationServiceImpl implements OrganizationService {
 	@Override
 	public int checkIdDup(String id) {
 		return organizationDao.checkIdDup(sqlSessionTemplate,id);
+	}
+
+
+
+
+	//임직원 관리 - 임직원 검색
+	@Override
+	public List<EmpVo> selectEmpListByEmpData(String empData) {
+		return organizationDao.selectEmpListByEmpData(sqlSessionTemplate,empData);
 	}
 
 

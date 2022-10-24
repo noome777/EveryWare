@@ -67,6 +67,7 @@ public class OrganizationController {
 			return "redirect:/";
 		}
 	}
+	
 	//임직원 정보 검색
 	@PostMapping("info")
 	public String searchEmp(String word,HttpSession session, Model model) {
@@ -75,7 +76,7 @@ public class OrganizationController {
 			List<EmpVo> empList = organizationService.selectEmpListByWord(word);
 			if(empList!=null) {
 				model.addAttribute("empList", empList);
-				return "organization/searchEmp";
+				return "organization/empSearchList";
 			} else {
 				session.setAttribute("alertMsg", "임직원의 정보를 불러올 수 없습니다.  검색하시려는 임직원의 성함을 올바르게 적어주시길 바랍니다.");
 				return "redirect:/";
@@ -135,16 +136,54 @@ public class OrganizationController {
 	
 	//임직원 관리 -> 임직원 검색
 	
+	@PostMapping("management/emp/1")
+	public String searchEmpForManagement (String empData, HttpSession session, Model model) {
+		
+		if(empData!=null) {
+			
+			List<EmpVo> empList = organizationService.selectEmpListByEmpData(empData);
+			
+			if(empList!=null) {
+				
+				
+				List<DeptVo> deptList = organizationService.selectDeptList();
+				List<RankVo> rankList = organizationService.selectRankList();
+				List<JobVo> jobList = organizationService.selectJobList();
+				
+				model.addAttribute("empList",empList);
+				model.addAttribute("deptList",deptList);
+				model.addAttribute("rankList",rankList);
+				model.addAttribute("jobList",jobList);
+				
+				return "organization/empListForManagement";
+				
+			} else {
+				session.setAttribute("errorMsg", "임직원의 정보를 불러올 수 없습니다.  검색하시려는 임직원의 성함을 올바르게 적어주시길 바랍니다.");
+				return "redirect:/";
+			}
+		} else {
+			session.setAttribute("errorMsg", "임직원의 정보를 불러올 수 없습니다.  검색하시려는 임직원의 성함을 올바르게 적어주시길 바랍니다.");
+			return "redirect:/";
+		}
+	}
+	
 	// 직위/직무설정
+	
+	@GetMapping("management/position")
+	public String managePosition() {
+		return "organization/positionManager";
+	}
 	
 	//권한 관리 페이지
 	@GetMapping("management/right/{pno}")
 		public String manageRight(Model model, @PathVariable int pno){
 		
 		return "organization/rightManager";
-		
 	}
 	
 	//조직도
-
+	@GetMapping("management/chart")
+	public String manageChart() {
+		return "organization/chartManager";
+	}
 }

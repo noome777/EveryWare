@@ -7,226 +7,37 @@
 <title>임직원 정보</title>
 
 <style>
-
-	/*
-	.col-auto > button {
-		border: 1px solid lightgray;
-	} 
-	*/
-
-	.grid-wrap {
-		height : 85vh;
-		display:grid;
-		grid-template-columns: 22% 78%;
-		grid-template-rows: 100%;
-		justify-content: center;
-		align-content: center;
-		gap : 30px;
-	}
-	.grid-wrap > div {
-		border-radius: 5px;
-		/* border : 1px solid lightgrey; */
-		background-color: white;
-	}
-
-	#info-nav {
-		display: grid;
-		width: 100%;
-		height: 100%;
-		grid-auto-rows: 13% 87%;
-	}
-
-
-	#list-wrap, #search-wrap {
-
+	.modal-profile-wrap {
+		margin: 25px;
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		width: 100%;
-		height: 100%;
-
 	}
-
-	#search-container {
+	  
+	.modal-profile-texts-wrap {
+	  	margin-top: 20px;
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
 		width: 85%;
-		height: 55%;
-		border-radius: 5px;
-		/* border : 1px solid lightgray;*/
-		display: flex;
 	}
-
-	#search-container > form {
-		width: 100%;
-		height: 100%;
+	  
+	.flex-items {
+		height: 38px;
 		display: grid;
-		grid-template-columns: 4fr 1fr;
-	}
-
-	#search-icon-wrap {
-		width: 100%;
-		height: 100%;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
+		grid-template-columns: 1fr 2fr;
 		align-items: center;
+		justify-items: center;
 	}
-
-	#search-bar-wrap {
-		width: 100%;
-		height: 100%;
-	}
-
-	#search-bar {
-		width: 100%;
-		height: 100%;
-		padding: 10px;
-	}
-
-	
-
-	#list-bar {
-		width: 85%;
-		height: 93%;
-		border-radius: 5px;
-		/*border: 1px solid lightgray;*/
-	}
-
-	.style-none {
-		border : none;
-		border : 0px 0px 0px 0px;
-		border-radius: 5px;
-	}
-
-	input:focus{
-		outline: none;
-	}
-	
-	.emp-info-bar {
-		width : 100%;
-		height : 7%;
-		/*border-bottom : 1px solid lightgray;*/
-		display: flex;
-		flex-direction: column;
-	}
-	
-
-	button:hover {
-		border: 1px solid rgb(27, 104, 255);
-	}
-
-	.non-click:hover {
-		cursor: pointer;
-		background-color: rgb(235, 236, 237)
-	}
-
-	.non-click {
-		background-color: white;
-	}
-
-	.click {
-		background-color: lightgray;
-	}
-
-	#profile-wrap {
-		display: flex;
-		flex-direction: column;
-	}
-
-	#profile-area {
-		width: 100%;
-		height: 92%;
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		gap: 40px;
-		padding: 38px;
-	}
-
-	#profile-area>div {
-		height: 220px;
-	}
-
-	#profile-area > div {
-		/*border: 1px solid lightgray;*/
-	}
-
-	#profile-title {
-		width: 100%;
-		height: 8%;
-		padding: 30px;
-	}
-
-	.or-scroll-bar {
-		overflow: auto;
-	}
-
-	.grid-h4 {
-		grid-column: 3;
-	}
-
-	.profile {
-		display: flex;
-		flex-direction: column;
-		border-radius: 5px;
-	}
-
-	.profile>div {
-		width: 100%;
-		height: 50%;
-	}
-
-	.profile-image {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-
-	.profile-text {
-		text-align: center;
-		padding: 5px;
-	}
-
-	.flex-wrap {
-		display: flex;
-		flex-direction: column;
-		width: 100%;
-		height: 100%;
-	}
-
-	.nav-link {
-		width: 100%;
-		height: 100%;
-	}
-
-	.nav-pills> li > a .nav-pills .nav-pills>li{
-		-webkit-border-radius: 0;
-		-moz-border-radius: 0;
-		border-radius: 0;
-	}
-
-	.padding-left-10px {
-		padding-left: 10px;
-	}	
-	
-	.padding-left-20px {
-		padding-left: 20px;
-	}
-
-	#search-icon {
-		width: 34px;
-		height: 34px;
-	}
-
-	#search-icon:hover {
-		cursor: pointer;
-	}
-	
-
 </style>
 </head>
 <body class="vertical  light">
 
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     <%@ include file="/WEB-INF/views/organization/sidemenu-content.jsp" %>
+    
+    <link rel="stylesheet" href="${root}/resources/css/organization/info.css">
     
 	<div class="wrapper">
 	    <main role="main" class="main-content">
@@ -245,12 +56,12 @@
 						<div class="shadow" id="info-nav">
 							<div id="search-wrap">
 								<div class="shadow" id="search-container">
-									<form action="${root}/organization/info" method="post">
+									<form action="${root}/organization/info" method="post" id="search-form" >
 										<div id="search-bar-wrap">
 											<input type="text" id="search-bar" class="style-none" placeholder="임직원 검색" name="word"> 
 										</div>
 										<div id="search-icon-wrap">
-											<input type="image" name="submit" id="search-icon" src="${root}/resources/img/search.png">
+											<input type="image" name="submit" id="search-icon" src="${root}/resources/img/search.png" onclick=" return checkBlank();">
 										</div>
 									</form>
 								</div>
@@ -270,29 +81,29 @@
 													
 													<c:forEach items="${deptMap['2']}" var="dl2" >
 														<c:if test="${dl2.highDeptCode eq dl.deptCode}">
-																<li class="nav-item emp-info-bar non-click">
-																	<a class="nav-link" data-toggle="pill" href="#${dl2.deptName}">+ ${dl2.deptName}</a>
+																<li class="nav-item emp-info-bar non-click padding-left-10px">
+																	<a class="nav-link" data-toggle="pill" href="#${dl2.deptName}">${dl2.deptName}</a>
 																		<c:forEach items="${deptMap['3']}" var="dl3" >
 																			<c:if test="${dl3.highDeptCode eq dl2.deptCode}">
-																				<li class="nav-item emp-info-bar non-click">
-																					<a class="nav-link" data-toggle="pill" href="#${dl3.deptName}">+ + ${dl3.deptName}</a>
+																				<li class="nav-item emp-info-bar non-click padding-left-20px">
+																					<a class="nav-link" data-toggle="pill" href="#${dl3.deptName}">${dl3.deptName}</a>
 																						<c:forEach items="${deptMap['4']}" var="dl4" >
 																							<c:if test="${dl4.highDeptCode eq dl3.deptCode}">
-																								<li class="nav-item emp-info-bar non-click">
-																									<a class="nav-link" data-toggle="pill" href="#${dl4.deptName}">+ + +${dl4.deptName}</a>
+																								<li class="nav-item emp-info-bar non-click padding-left-30px">
+																									<a class="nav-link" data-toggle="pill" href="#${dl4.deptName}">${dl4.deptName}</a>
 																										<c:forEach items="${deptMap['5']}" var="dl5" >
 																											<c:if test="${dl5.highDeptCode eq dl4.deptCode}">
-																												<li class="nav-item emp-info-bar non-click">
-																													<a class="nav-link" data-toggle="pill" href="#${dl5.deptName}">+ + + +${dl5.deptName}</a>
+																												<li class="nav-item emp-info-bar non-click padding-left-40px">
+																													<a class="nav-link" data-toggle="pill" href="#${dl5.deptName}">${dl5.deptName}</a>
 																																
-																														<c:forEach items="${deptMap['6']}" var="dl3" >
+																														<c:forEach items="${deptMap['6']}" var="dl6" >
 																															<c:if test="${dl6.highDeptCode eq dl5.deptCode}">
-																																<li class="nav-item emp-info-bar non-click">
-																																	<a class="nav-link" data-toggle="pill" href="#${dl6.deptName}">+ + + + + ${dl6.deptName}</a>
-																																		<c:forEach items="${deptMap['3']}" var="dl3" >
-																																			<c:if test="${dl3.highDeptCode eq dl2.deptCode}">
-																																				<li class="nav-item emp-info-bar non-click">
-																																					<a class="nav-link" data-toggle="pill" href="#${dl3.deptName}">+ + ${dl3.deptName}</a>
+																																<li class="nav-item emp-info-bar non-click padding-left-50px">
+																																	<a class="nav-link" data-toggle="pill" href="#${dl6.deptName}"></a>${dl6.deptName}</a>
+																																		<c:forEach items="${deptMap['7']}" var="dl7" >
+																																			<c:if test="${dl7.highDeptCode eq dl6.deptCode}">
+																																				<li class="nav-item emp-info-bar non-click padding-left-60px">
+																																					<a class="nav-link" data-toggle="pill" href="#${dl7.deptName}">${dl7.deptName}</a>
 																																				</li>
 																																			</c:if>
 																																		</c:forEach>
@@ -329,7 +140,7 @@
 								<c:forEach items="${empList}" var="el">
 									<div class="profile shadow">
 										<div class="profile-image avatar avatar-lg">
-											<a href="">
+											<a href="#emp-profile-${el.empCode}" data-toggle="modal">
 												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
 											</a>
 										</div>
@@ -371,7 +182,7 @@
 							
 								
 								
-							<!-- Nav tabs -->
+							
 
 							
 						</div>
@@ -382,31 +193,128 @@
 		</main>
 		</div>
 
+	<c:forEach items="${empList}" var="empList">
+	
+      <div class="modal fade" id="emp-profile-${empList.empCode}" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body modal-profile-wrap"> 
+                <div class="profile-img-wrap">
+                  <div class="avatar avatar-xl">
+                    <img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle preview-img" id="preview-img">
+				  </div>
+                </div>
+                <div class="modal-profile-texts-wrap">
+                  <div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted"><strong>이름</strong></p>
+                    </div>
+                    <div>
+                      <p class="mb-0">${empList.empName}</p>
+                    </div>
+                  </div>
+                  <div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted"><strong>직위</strong></p>
+                    </div>
+                    <div>
+                      <p class="mb-0" class="modal-rank-area">${empList.rankName}</p>
+                    </div>
+                  </div>
+                  <div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted"><strong>소속</strong></p>
+                    </div>
+                    <div>
+                      <p class="mb-0" class="modal-dept-area">${empList.deptName}</p>
+                    </div>
+                  </div>
+				  <div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted"><strong>직무</strong></p>
+                    </div>
+                    <div>
+                      <p class="mb-0" class="modal-job-area">${empList.jobName}</p>
+                    </div>
+                  </div>
+                  <!--<div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted"><strong>생년월일</strong></p>
+                    </div>
+                    <div>
+                      <p class="mb-0" class="modal-birthday-area">${empList.empBirthday}</p>
+                    </div>
+                  </div>-->
+                  <div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted" ><strong>사내전화</strong></p>
+                    </div>
+                    <div>
+                      <p class="mb-0" class="modal-tel-area">${empList.empTel}</p>
+                    </div>
+                  </div>
+                  <!--<div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted"><strong>휴대전화</strong></p>
+                    </div>
+                    <div>
+                      <p class="mb-0"  class="modal-phone-area">${empList.empPhone}</p>
+                    </div>
+                  </div>-->
+                  <div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted" ><strong>e-mail</strong></p>
+                    </div>
+                    <div>
+                      <p class="mb-0" class="modal-email-area">${empList.empEMail}</p>
+                    </div>
+                  </div>
+      
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+    </c:forEach>
+
+		<script>
 		
+			const searchBar = $("#search-bar");
+			
+			function checkBlank() {
 
-		<!-- <script>
+				const searchNum = searchBar.val().search(/[0-9]/g);
+				const searchEng = searchBar.val().search(/[a-z]/ig);
+				const searchSpe = searchBar.val().search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 
-			const nonClick = document.querySelectorAll(".non-click");
-
-			console.log(nonClick);
-
-			function handleClick(event) {
-				
-				//div에서 모든 "click 클래스 제거"
-				nonClick.forEach((e)=> {
-					e.classList.remove("click")
-				});
-
-				//클릭한 div만 "click" 클래스 추가
-				event.target.classList.add("click");
-
+				if(searchBar.val() === "") {
+					alert("검색창에 글자를 입력하여 주시길 바랍니다.");
+					return false;
+				} else if(searchNum != -1) {
+					alert("검색창에는 한글만 적어주시길 바랍니다.");
+					return false;
+				} else if(searchEng != -1) {
+					alert("검색창에는 한글만 적어주시길 바랍니다.");
+					return false;
+				} else if(searchSpe != -1) {
+					alert("검색창에는 한글만 적어주시길 바랍니다.");
+					return false;
+				} else {
+					return true;
+				}
 			}
 
-			nonClick.forEach((e) => { 
-				e.addEventListener("click", handleClick);
-			});
+		</script>
 
-		</script> -->
+
+
+		<div></div>
 		
 	  
 
