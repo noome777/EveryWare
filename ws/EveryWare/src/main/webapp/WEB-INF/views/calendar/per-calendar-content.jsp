@@ -605,6 +605,14 @@
 	id="darkTheme" disabled>
 </head>
 <body class="vertical  light  ">
+	<script src='${root}/resources/js/jquery.mask.min.js'></script>
+	<script src='${root}/resources/js/select2.min.js'></script>
+	<script src='${root}/resources/js/jquery.steps.min.js'></script>
+	<script src='${root}/resources/js/jquery.validate.min.js'></script>
+	<script src='${root}/resources/js/jquery.timepicker.js'></script>
+	<script src='${root}/resources/js/dropzone.min.js'></script>
+	<script src='${root}/resources/js/uppy.min.js'></script>
+	<script src='${root}/resources/js/quill.min.js'></script>
 	<div class="wrapper">
 		<main role="main" class="main-content">
 			<div class="container-fluid">
@@ -944,6 +952,9 @@
 	            	title : '<%=vo.getCalTitle()%>',
 	                start : '<%=vo.getCalStart()%>',
 	                end : '<%=vo.getCalEnd()%>',
+	                <%if (vo.getCalAllday().equals("TRUE ")) {%>
+                	allDay : 'TRUE',
+                	<% } %>
 	                color : '#' + Math.round(Math.random() * 0xffffff).toString(16)
 	             },
 		<%}
@@ -955,14 +966,7 @@
       }
       
     </script>
-	<script src='${root}/resources/js/jquery.mask.min.js'></script>
-	<script src='${root}/resources/js/select2.min.js'></script>
-	<script src='${root}/resources/js/jquery.steps.min.js'></script>
-	<script src='${root}/resources/js/jquery.validate.min.js'></script>
-	<script src='${root}/resources/js/jquery.timepicker.js'></script>
-	<script src='${root}/resources/js/dropzone.min.js'></script>
-	<script src='${root}/resources/js/uppy.min.js'></script>
-	<script src='${root}/resources/js/quill.min.js'></script>
+
 	<script>
       $('.select2').select2(
       {
