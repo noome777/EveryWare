@@ -80,7 +80,10 @@
 	</select>
 	
 	<select id="selectDeptVo" resultType="DayoffVo">
-		SELECT DISTINCT DEPT_CODE FROM DAYOFF WHERE ECODE = #{eCode}
+		SELECT E.DEPT_CODE 
+		FROM EMP E
+		JOIN DEPT D ON D.DEPT_CODE = E.DEPT_CODE
+		WHERE EMP_CODE = #{eCode}
 	</select>
 	
 	<update id="updateApproval">

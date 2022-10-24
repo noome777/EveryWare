@@ -59,7 +59,7 @@
     <div class="card shadow mb-5" style="margin-top: 25px;">
 
       <div style="margin-left: 20px; margin-top: 20px;">
-        <h4 class="card-title">휴가 결재</h4><br><br>
+        <h4 class="card-title">시간 외 근무 결재</h4><br><br>
 
         <form action="" method="get">
             <h6 class="card-title">기간 선택</h6>
@@ -74,7 +74,7 @@
         </form>
     
         <c:if test="${empty adDateCount}">
-	        <h6 class="card-title">조회 결과 ${listCount} 건</h6>
+	        <h6 class="card-title">조회 결과 ${adListCount} 건</h6>
         </c:if>  
         <c:if test="${empty adListCount}">
 	        <h6 class="card-title">조회 결과  ${adDateCount} 건</h6>
