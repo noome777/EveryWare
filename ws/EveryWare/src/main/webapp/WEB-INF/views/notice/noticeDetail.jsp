@@ -31,8 +31,9 @@
 	</div>
 
 	<main role="main" class="main-content">
-
-
+		<div class="buttonSet">
+				<button type="button" id="sendBtn" class="btn btn-primary">삭제</button>
+		</div>
 		<div class="card shadow">
 			<div class="card-body">
 				<div class="title" name="noticeTitle">
