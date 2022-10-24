@@ -3,47 +3,13 @@
 <mapper namespace="commuteMapper">
 
 	<insert id="insertCommute">
-		INSERT INTO COMMUTE
-		(
-			 COM_CODE
-		   , ECODE
-		   , START_TIME
-		   , END_TIME
-		   , COM_STATUS
-		
-		)
-		VALUES
-		(
-			 SEQ_COM_CODE_NO.NEXTVAL
-		   , #{eCode}
-		   , #{startTime}
-		   , #{endTime}
-		   , #{comStatus}
-		
-		)
+		INSERT INTO COMMUTE (COM_CODE, ECODE, START_TIME, END_TIME, COM_STATUS)
+		VALUES(SEQ_COM_CODE_NO.NEXTVAL, #{eCode}, #{startTime}, #{endTime}, #{comStatus})
 	</insert>
 	
 	<insert id="insertOverwork">
-		INSERT INTO OVERWORK
-		(
-			 OVER_CODE
-		   , ECODE
-		   , OVER_DATE
-		   , OVER_TIME
-		   , OVER_NAME
-		   , OVER_REASON
-		
-		)
-		VALUES
-		(
-			 SEQ_OVER_CODE_NO.NEXTVAL
-		   , #{eCode}
-		   , #{overDate}
-		   , #{overTime}
-		   , #{overName}
-		   , #{overReason}
-		
-		)
+		INSERT INTO OVERWORK(OVER_CODE, ECODE, DEPT_CODE, OVER_DATE, OVER_TIME, OVER_NAME, OVER_REASON)
+		VALUES(SEQ_OVER_CODE_NO.NEXTVAL, #{eCode}, #{deptCode}, #{overDate}, #{overTime}, #{overName}, #{overReason})
 	</insert>
 	
 	<select id="selectOverworkList" resultType="OverworkVo">
@@ -63,5 +29,40 @@
 	<select id="selectDateList" resultType="OverworkVo">
 		SELECT OVER_CODE, OVER_DATE, OVER_TIME, OVER_NAME, OVER_REASON, OVER_APPROVAL FROM OVERWORK
 		WHERE ECODE = #{eCode} AND OVER_DATE = TO_CHAR(#{overDate}) ORDER BY OVER_CODE DESC
+	</select>
+	
+	<select id="selectRightVo" resultType="EmpVo">
+		SELECT R.RIGHT_CODE, E.EMP_CODE, E.EMP_NAME
+		FROM EMP E
+		JOIN RIGHT R ON E.RIGHT_CODE = R.RIGHT_CODE
+		WHERE E.EMP_CODE = #{eCode}
+	</select>
+	
+	<select id="selectDeptVo" resultType="DayoffVo">
+		SELECT DISTINCT DEPT_CODE FROM OVERWORK WHERE ECODE = #{eCode}
+	</select>
+	
+	<select id="selectAdDateCnt" resultType="int">
+		SELECT COUNT(*) FROM OVERWORK 
+		WHERE OVER_DATE = TO_CHAR(#{overDate})
+	</select>
+	
+	<select id="selectAdDateList" resultType="OverworkVo">
+		SELECT O.OVER_CODE, E.EMP_NAME AS ECODE, D.DEPT_NAME AS DEPT_CODE, OVER_DATE, OVER_TIME, OVER_NAME, OVER_REASON, OVER_ENROLLDATE, OVER_APPROVAL
+		FROM OVERWORK O
+		JOIN EMP E ON E.EMP_CODE = O.ECODE
+		JOIN DEPT D ON E.DEPT_CODE = D.DEPT_CODE
+		WHERE OVER_DATE = TO_CHAR(#{overDate}) ORDER BY OVER_CODE DESC
+	</select>
+	
+	<select id="selectAdminTotalCnt" resultType="int">
+		SELECT COUNT(*) FROM OVERWORK
+	</select>
+	
+	<select id="selectAdminOverworkList" resultType="OverworkVo">
+		SELECT O.OVER_CODE, E.EMP_NAME AS ECODE, D.DEPT_NAME AS DEPT_CODE, OVER_DATE, OVER_TIME, OVER_NAME, OVER_REASON, OVER_ENROLLDATE, OVER_APPROVAL
+		FROM OVERWORK O
+		JOIN EMP E ON E.EMP_CODE = O.ECODE
+		JOIN DEPT D ON E.DEPT_CODE = D.DEPT_CODE
 	</select>
 </mapper>

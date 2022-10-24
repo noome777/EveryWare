@@ -3,8 +3,8 @@
 <mapper namespace="dayoffMapper">
 
 	<insert id="insertOff">
-		INSERT INTO DAYOFF (OFF_CODE, ECODE, OFF_START_DATE, OFF_END_DATE, OFF_DAYS, OFF_REASON)
-		VALUES (SEQ_DAYOFF_CODE_NO.NEXTVAL, #{eCode}, #{offStartDate}, #{offEndDate}, #{offDays}, #{offReason})
+		INSERT INTO DAYOFF (OFF_CODE, ECODE, DEPT_CODE, OFF_START_DATE, OFF_END_DATE, OFF_DAYS, OFF_REASON)
+		VALUES (SEQ_DAYOFF_CODE_NO.NEXTVAL, #{eCode}, #{deptCode}, #{offStartDate}, #{offEndDate}, #{offDays}, #{offReason})
 	</insert>
 
 	<select id="selectDayoffList" resultType="DayoffVo">
@@ -29,6 +29,22 @@
 		OR OFF_START_DATE BETWEEN TO_CHAR(#{offStartDate}) AND TO_CHAR(#{offEndDate})
 		ORDER BY OFF_START_DATE ASC
 	</select>
+	
+	<select id="selectAdDateCnt" resultType="int">
+		SELECT COUNT(*) FROM DAYOFF
+		WHERE OFF_END_DATE BETWEEN TO_CHAR(#{offStartDate}) AND TO_CHAR(#{offEndDate})
+		OR OFF_START_DATE BETWEEN TO_CHAR(#{offStartDate}) AND TO_CHAR(#{offEndDate})
+	</select>
+	
+	<select id="selectAdDateList" resultType="DayoffVo">
+		SELECT O.OFF_CODE, E.EMP_NAME AS ECODE, D.DEPT_NAME AS DEPT_CODE, OFF_START_DATE, OFF_END_DATE, OFF_DAYS, OFF_REASON, OFF_ENROLLDATE, OFF_APPROVAL 
+		FROM DAYOFF O
+		JOIN EMP E ON E.EMP_CODE = O.ECODE
+		JOIN DEPT D ON E.DEPT_CODE = D.DEPT_CODE
+		WHERE OFF_END_DATE BETWEEN TO_CHAR(#{offStartDate}) AND TO_CHAR(#{offEndDate})
+		OR OFF_START_DATE BETWEEN TO_CHAR(#{offStartDate}) AND TO_CHAR(#{offEndDate})
+		ORDER BY OFF_START_DATE ASC
+	</select>
 
 	<select id="offTotalCnt" resultType="int">
 		SELECT D.OFF_ALL AS OFF_ALL
@@ -41,7 +57,34 @@
 	<select id="offUsedCnt" resultType="int">
 		SELECT NVL(SUM(OFF_DAYS), 0) AS OFF_USED 
 		FROM DAYOFF
-		WHERE ECODE = #{eCode}
+		WHERE ECODE = #{eCode} AND OFF_APPROVAL = 'A' 
 	</select>
+	
+	<select id="selectRightVo" resultType="EmpVo">
+		SELECT R.RIGHT_CODE, E.EMP_CODE, E.EMP_NAME
+		FROM EMP E
+		JOIN RIGHT R ON E.RIGHT_CODE = R.RIGHT_CODE
+		WHERE E.EMP_CODE = #{eCode}
+	</select>
+	
+	<select id="selectAdminTotalCnt" resultType="int">
+		SELECT COUNT(*) FROM DAYOFF
+	</select>
+	
+	<select id="selectAdminDayoffList" resultType="DayoffVo">
+		SELECT O.OFF_CODE, E.EMP_NAME AS ECODE, D.DEPT_NAME AS DEPT_CODE, OFF_START_DATE, OFF_END_DATE, OFF_DAYS, OFF_REASON, OFF_ENROLLDATE, OFF_APPROVAL
+		FROM DAYOFF O
+		JOIN EMP E ON E.EMP_CODE = O.ECODE
+		JOIN DEPT D ON E.DEPT_CODE = D.DEPT_CODE
+		ORDER BY(CASE WHEN OFF_APPROVAL = 'W' THEN 1 ELSE 2 END)
+	</select>
+	
+	<select id="selectDeptVo" resultType="DayoffVo">
+		SELECT DISTINCT DEPT_CODE FROM DAYOFF WHERE ECODE = #{eCode}
+	</select>
+	
+	<update id="updateApproval">
+		UPDATE DAYOFF SET OFF_APPROVAL = #{offApproval} WHERE OFF_CODE = #{offCode}
+	</update>
 
 </mapper>

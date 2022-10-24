@@ -8,6 +8,7 @@ import com.kh.app00.common.PageVo;
 import com.kh.app00.commute.vo.CommuteVo;
 import com.kh.app00.commute.vo.OverworkVo;
 import com.kh.app00.dayoff.vo.DayoffVo;
+import com.kh.app00.emp.vo.EmpVo;
 
 public interface CommuteDao   {
 
@@ -28,6 +29,24 @@ public interface CommuteDao   {
 
     //기간 선택 시 리스트 조회
     List<OverworkVo> selectDateList(SqlSessionTemplate sst, OverworkVo vo, PageVo pv2);
+
+    //로그인 유저의 권한코드 조회
+    EmpVo selectRightVo(SqlSessionTemplate sst, OverworkVo vo);
+
+    //사원의 부서 정보 조회
+    DayoffVo getDeptVo(SqlSessionTemplate sst, OverworkVo vo);
+
+    //관리자 기간 선택시 게시글 수 조회
+    int selectAdDateCnt(SqlSessionTemplate sst, OverworkVo vo);
+
+    //관리자 기간 선택시 게시글 리스트 조회
+    List<OverworkVo> selectAdDateList(SqlSessionTemplate sst, OverworkVo vo, PageVo pv2);
+
+    //관리자 결재 리스트를 위한 사원 신청 글 수 조회
+    int selectAdminTotalCnt(SqlSessionTemplate sst);
+
+    //관리자 결재 리스트 조회
+    List<OverworkVo> selectAdminOverworkList(SqlSessionTemplate sst, PageVo pv);
 
 
 

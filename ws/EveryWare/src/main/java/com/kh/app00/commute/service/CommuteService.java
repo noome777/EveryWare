@@ -6,6 +6,7 @@ import com.kh.app00.common.PageVo;
 import com.kh.app00.commute.vo.CommuteVo;
 import com.kh.app00.commute.vo.OverworkVo;
 import com.kh.app00.dayoff.vo.DayoffVo;
+import com.kh.app00.emp.vo.EmpVo;
 
 public interface CommuteService {
 
@@ -26,6 +27,24 @@ public interface CommuteService {
 
     //기간 선택시 리스트 조회
     List<OverworkVo> selectDateList(OverworkVo vo, PageVo pv2);
+
+    //로그인 유저의 권한코드 조회
+    EmpVo selectRightVo(OverworkVo vo);
+
+    //사원의 부서 정보 조회
+    DayoffVo getDeptVo(OverworkVo vo);
+
+    //관리자 기간 선택시 게시글 수 조회
+    int selectAdDateCnt(OverworkVo vo);
+
+    //관리자 기산 선택시 게시글 리스트 조회
+    List<OverworkVo> selectAdDateList(OverworkVo vo, PageVo pv2);
+
+    //관리자 결재 리스트를 위한 사원 신청 글 수 조회
+    int selectAdminTotalCnt();
+
+    //관리자 결재 리스트 조회
+    List<OverworkVo> adminOverworkList(PageVo pv);
 
 
 }

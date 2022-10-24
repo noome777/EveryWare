@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.kh.app00.common.PageVo;
 import com.kh.app00.dayoff.dao.DayoffDao;
 import com.kh.app00.dayoff.vo.DayoffVo;
+import com.kh.app00.emp.vo.EmpVo;
+import com.kh.app00.organization.vo.DeptVo;
 
 @Service
 public class DayoffServiceImpl implements DayoffService {
@@ -62,6 +64,48 @@ public class DayoffServiceImpl implements DayoffService {
     @Override
     public int offUsedCnt(DayoffVo vo) {
         return dao.offUsedCnt(sst, vo);
+    }
+
+    //로그인 유저의 권한 코드 조회
+    @Override
+    public EmpVo selectRightVo(DayoffVo vo) {
+        return dao.selectRightVo(sst, vo);
+    }
+
+    //관리자 결재 리스트를 위한 사원 신청 글 수 조회
+    @Override
+    public int selectAdminTotalCnt() {
+        return dao.selectAdminTotalCnt(sst);
+    }
+
+    //관리자 결재 리스트 조회
+    @Override
+    public List<DayoffVo> adminDayoffList(PageVo pv) {
+        return dao.selectAdminDayoffList(sst, pv);
+    }
+
+    //사원의 부서 정보 조회
+    @Override
+    public DayoffVo getDeptVo(DayoffVo vo) {
+        return dao.getDeptVo(sst, vo);
+    }
+
+    //관리자 기간 선택시 게시글 수 조회
+    @Override
+    public int selectAdDateCnt(DayoffVo vo) {
+        return dao.selectAdDateCnt(sst, vo);
+    }
+
+    //관리자 기산 선택시 게시글 리스트 조회
+    @Override
+    public List<DayoffVo> selectAdDateList(DayoffVo vo, PageVo pv2) {
+        return dao.selectAdDateList(sst, vo, pv2);
+    }
+
+    //관리자의 결재 정보 업데이트
+    @Override
+    public int updateApproval(DayoffVo vo) {
+        return dao.updateApproval(sst, vo);
     }
 
 }

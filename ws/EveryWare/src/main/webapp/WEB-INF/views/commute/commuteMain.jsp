@@ -233,7 +233,11 @@ margin-top: 5%;
       </div>
 	</main>
 </div>
-
+<!-- <span class="badge badge-pill badge-warning">퇴근미체크</span>
+<span class="badge badge-pill badge-success">정상출근 </span>
+<span class="badge badge-pill badge-warning">조기퇴근</span>
+<span class="badge badge-pill badge-danger">결근</span>
+<span class="badge badge-pill badge-danger">지각</span> -->
 
 
 <script>
