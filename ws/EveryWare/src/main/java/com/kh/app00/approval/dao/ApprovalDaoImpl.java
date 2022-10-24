@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.app00.approval.doc.vo.DocFormDetailTemplateVo;
 import com.kh.app00.approval.doc.vo.DocFormMapperVo;
 import com.kh.app00.approval.doc.vo.DocFormVo;
 import com.kh.app00.approval.doc.vo.DocPeriodVo;
@@ -77,5 +78,28 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		
 		return sst.selectList("approvalMapper.selectDocList", null, rb);
 	}
+
+	
+	
+	
+	//문서 상세항목 불러오기
+	@Override
+	public List<DocFormDetailTemplateVo> selectFormDetailList(SqlSessionTemplate sst) {
+		return sst.selectList("approvalMapper.selectFormDetailList");
+	}
+
+	//문서양식 insert
+	//docForm insert
+	@Override
+	public int insertDocForm(SqlSessionTemplate sst, DocFormVo formVo) {
+		return sst.insert("approvalMapper.insertDocForm", formVo);
+	}
+	//docFormMapping insert
+	@Override
+	public int insertDocFormMapping(SqlSessionTemplate sst, List<DocFormMapperVo> mappingList) {
+		return sst.insert("approvalMapper.insertDocFormMapping", mappingList);
+	}
+	
+	
 
 }

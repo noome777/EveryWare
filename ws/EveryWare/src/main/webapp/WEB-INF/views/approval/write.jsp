@@ -51,7 +51,7 @@
   .fe-24:hover{
     background-color: rgb(202, 222, 247);
   }
-  #approver-select{
+  #approver-select, #ref-select, #selected-ref{
     height: 600px;
   }
   table td{
@@ -63,6 +63,7 @@
 
   <%@ include file="/WEB-INF/views/common/header.jsp" %>
   <%@ include file="/WEB-INF/views/approval/sidemenu-content.jsp" %>
+
  	<main role="main" class="main-content">
     
     <div class="card shadow mb-4">
@@ -109,7 +110,7 @@
         <table id="approval-ref-table" class="table table-bordered mb-0 shadow">
           <tr>
             <td class="appr-table-color">참조인</td>
-            <td colspan="9" class="text-left">
+            <td colspan="9" class="text-left" id="ref-selected">
               <span id="appr-ref-setting" class="fe fe-plus fe-16 w-25 text-info" data-toggle="modal" data-target="#refModal">
                 편집하기
               </span>
@@ -164,13 +165,13 @@
         </div> <!-- .card -->
 
       <div class="text-center">
-        <input type="submit" class="btn mb-2 btn-secondary" value="작성하기">
+        <input type="submit" class="btn mb-2 btn-secondary" value="작성하기" onclick="insert();">
       </div>
     </c:if>
 
 
    
-
+    <!-- 결재라인 설정 모달창 -->
     <div class="modal" id="verticalModal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true" data-backdrop="static">
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -240,6 +241,68 @@
     </div> 
 
 
+
+
+
+    <!-- 참조인 설정 모달창 -->
+    <div class="modal" id="refModal" tabindex="-1" role="dialog" aria-labelledby="refModalTitle" aria-hidden="true" data-backdrop="static">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="refModalTitle">참조인 설정</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+
+            <div class="form-group mb-3 w-25">
+              <select class="custom-select form-control" id="ref-dept-selectbox">
+                <option value="0">전체</option>
+                <c:forEach items="${deptList}" var="d" >
+	                <option value="${d.deptCode}">${d.deptName}</option>
+                </c:forEach>
+              </select>
+            </div>
+
+            <div id="ref-select" class="d-flex">
+              <div id="ref-name-list" class="w-50">
+                <select id="ref-emp-name" multiple="multiple" class="custom-select form-control w-100 h-100 non-scroll">
+                  <c:forEach items="${empList}" var="e">
+	                  <option value="${e.empCode}">${e.empName} (${e.deptName} - ${e.rankName})</option>
+                  </c:forEach>
+                </select>
+              </div>
+              <div class="w-75 d-flex flex-column">
+                <div class="ref-custom-box">
+                  <div class="d-flex">
+                    <div class="h-150 w-25 mx-4 d-flex flex-column justify-content-center align-items-center">
+                      <a id="ref-add-user" class="fe fe-24 fe-arrow-right-circle mb-1"></a>
+                      <a id="ref-delete-user" class="fe fe-24 fe-arrow-left-circle"></a>
+                    </div>
+                    <div class="w-75 h-150" id="ref-content">
+                      <select id="selected-ref" multiple="multiple" class="custom-select form-control w-100 non-scroll mb-3 ref-select-box">
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">닫기</button>
+            <button type="button" class="btn mb-2 btn-primary" data-dismiss="modal" id="ref-submit">완료</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
 	</main>
 	
 	<script>
@@ -270,11 +333,10 @@
 			
 		});
 
-
-    //부서별 임직원 불러오기
-    $('#appr-dept-selectbox').on('change', function () {
-      let deptCode = $('#appr-dept-selectbox option:selected').val();
-      let paramData = JSON.stringify({"deptCode" : $('#appr-dept-selectbox option:selected').val()});
+    //부서별 임직원 불러오기 - 결재라인
+    $('#ref-dept-selectbox').on('change', function () {
+      let deptCode = $('#ref-dept-selectbox option:selected').val();
+      let paramData = JSON.stringify({"deptCode" : $('#ref-dept-selectbox option:selected').val()});
 
       $.ajax({
         url : "${root}/approval/selectDept" ,
@@ -283,13 +345,13 @@
         dataType : 'json' ,
         success : function(deptEmpList){
 
-          $('#emp-name option').remove();
+          $('#ref-emp-name option').remove();
           let str;
           $.each(deptEmpList, function (i) {
             str += '<option value="'  + deptEmpList[i].empCode + '">' + deptEmpList[i].empName + ' (' + deptEmpList[i].deptName + ' - ' +
                     deptEmpList[i].rankName + ')</option>'
           })
-          $('#emp-name').append(str);
+          $('#ref-emp-name').append(str);
           
         } , 
         error : (error) => {
@@ -298,18 +360,8 @@
       })
     })
 
-
-    
-    
     //체크박스 체크 시 해당 결재타입 보이기
     $('#modal-appr-type input[type=checkbox]').on('click', function(){
-
-      // let checkedVal = [];
-      // $('#modal-appr-type input[type=checkbox]:checked').each(function () {
-      //   var checked = $(this).val();
-      //   checkedVal.push(checked); 
-      // })
-
       let clickedBox = $('.appr-custom-box[apprTypeCode = '+ this.value + ']');
       
       if($(this).prop('checked')){
@@ -319,7 +371,6 @@
       }
 
     });
-    
 
     //결재자 추가하기
     $('.add-user').on('click', function () {
@@ -328,39 +379,33 @@
       let addTypeCode = $(this).attr('id');
       let apprSelectBox = $('.approver-select-box[id=' + addTypeCode + ']');
       let selectedOption = apprSelectBox.find('option').val();
-
-      apprSelectBox.append(userOption);
-
-      // 중복체크 진행중
-      // if(selectedOption == 0 ){
-      //     apprSelectBox.append(userOption);
-      // } else {
-      //   for(var i=0; i<selectedOption.length; i++){
-      //     if(userCode != selectedOption.value){
-      //       apprSelectBox.append(userOption);
-      //     } else{
-      //       alert('이미 선택한 결재자는 중복 선택할 수 없습니다.')
-      //     }
-      //   }
-      // }
       
-
+      //중복체크
+      let selectedOptionVal = [];
+      $($('.approver-select-box[id=' + addTypeCode + '] option')).each(function () {
+        var selected = $(this).val();
+        selectedOptionVal.push(selected);
+      })
+      
+      if($.inArray(userCode, selectedOptionVal) != -1){
+        alert('해당 결재타입에 추가한 결재자는 중복추가 할 수 없습니다.');
+      } else {
+        apprSelectBox.append(userOption);
+      }
     })
-
+    
     //결재자 삭제하기
     $('.delete-user').on('click', function () {
       let userCode = $('.approver-select-box option:selected').val();
       let userOption = $('.approver-select-box option[value=' + userCode +']');
-
-      let addTypeCode = $(this).attr('id');
-
-      $('.approver-select-box[id='+ addTypeCode +'] option[value=' + userCode +']').remove();
-
       
+      let addTypeCode = $(this).attr('id');
+      
+      $('.approver-select-box[id='+ addTypeCode +'] option[value=' + userCode +']').remove();
     })
     
 
-
+    
 
     //결재라인 설정 완료하기
     $('#approver-submit').on('click', function () {
@@ -416,9 +461,86 @@
       })
         $('#approval-table').append(apprTableHtml);
     });
+    
+    //부서별 임직원 불러오기 - 참조인
+    $('#appr-dept-selectbox').on('change', function () {
+      let deptCode = $('#appr-dept-selectbox option:selected').val();
+      let paramData = JSON.stringify({"deptCode" : $('#appr-dept-selectbox option:selected').val()});
 
-    $('#appr-ref-setting').on('click', function () {
-      
+      $.ajax({
+        url : "${root}/approval/selectDept" ,
+        method : "POST" ,
+        data : {deptCode : deptCode } ,
+        dataType : 'json' ,
+        success : function(deptEmpList){
+
+          $('#emp-name option').remove();
+          let str;
+          $.each(deptEmpList, function (i) {
+            str += '<option value="'  + deptEmpList[i].empCode + '">' + deptEmpList[i].empName + ' (' + deptEmpList[i].deptName + ' - ' +
+                    deptEmpList[i].rankName + ')</option>'
+          })
+          $('#emp-name').append(str);
+          
+        } , 
+        error : (error) => {
+          console.log(JSON.stringify(error));
+        }
+      })
+    })
+
+    //참조인 추가하기
+    $('#ref-add-user').on('click', function () {
+      let userCode = $('#ref-emp-name option:selected').val();
+      let userOption = $('#ref-emp-name option[value=' + userCode + ']')[0].outerHTML;
+
+      //중복체크
+      let selectedOptionVal = [];
+      $($('.ref-select-box option')).each(function () {
+        var selected = $(this).val();
+        selectedOptionVal.push(selected);
+      })
+
+      if($.inArray(userCode, selectedOptionVal) != -1){
+        alert('이미 추가한 참조인 입니다.');
+      } else {
+        $('.ref-select-box').append(userOption);
+      }
+    })
+
+    //참조인 삭제하기
+    $('#ref-delete-user').on('click', function () {
+      let userCode = $('.ref-select-box option:selected').val();
+      let userOption = $('.ref-select-box option[value=' + userCode +']');
+
+      $('.ref-select-box option[value=' + userCode +']').remove();
+    })
+    
+    //참조인 설정 완료
+    $('#ref-submit').on('click', function () {
+      let userCode = $('.ref-select-box option').val();
+      $('#ref-selected .ref-name').remove();
+
+      let refVal = [];
+      $('.ref-select-box option').each(function (i) {
+        let selected = $(this).val();
+        refVal.push(selected);
+      })
+      console.log(refVal);
+
+
+      let refHtml = '';
+      $.each(refVal, function (i) {
+        let refEmp = $('.ref-select-box option[value=' + refVal[i] + ']')[0].innerHTML;
+        let empInfo = refEmp.split(' ');
+        empName = empInfo[0];
+
+        refHtml += '<span id="'+ refVal[i] + '" class="ref-name"> ' + empName + '</span>';
+      })
+
+      $('#ref-selected').prepend(refHtml);
+
+
     })
 
 
@@ -426,15 +548,103 @@
     $("input[type='file']").on('change',function(){ 
       var fileList = "";
       let target = $('#customFile');
-      for(var i=0; i<$('#customFile')[0].files.length; i++){
-          fileList += event.target.files[i].name + '<br>';
+
+      var formData = new FormData();
+      for(var i=0; i<$('#customFile')[0].files.length; i++){  
+        formData.append("file", $('#customFile')[0].files[i]);
+        fileList += event.target.files[i].name + '<br>';
       } 
       console.log(fileList);
-      $('#file-name').html(fileList);
-
+      console.log(formData); 
+      // 업로드 폼 데이터 준비됐으면 선 업로드 호출
+      // $.ajax({
+      //   type: 'POST',
+      //   url: '/board/save',
+      //   processData: false, // 필수
+      //   contentType: false, // 필수
+      //   data: formData,
+      //   success: function(data) {
+      //     $('#file-name').html(fileList);
+      //     x버튼 추가
+      //   },
+          
     });
+    
+    //진행중
+    function insert () {
+      let docContentList = [];
+      $('[name=docContent]').each(function() {
+        let object = {
+          detailCode : $(this).attr('detailCode'),
+          value : $(this).val()  
+        }
+        docContentList.push(object);
+      })
+
+      console.log(docContentList);
+      
+      let approverList = [];
+      ///////////////////////////////////////////////////////////////////////////////////
+      //결재타입 -> 결재타입코드, 결재자코드, 결재순서 (진행상태 - default insert)
+      let checkedVal = [];
+      $('#modal-appr-type input[type=checkbox]:checked').each(function () {
+        var checked = $(this).val();
+        checkedVal.push(checked); 
+      })
+      
+      let approverVal = [];
+      let approverSeq = [];
+      $.each(checkedVal, function(i){
+        
+        $('.approver-select-box[id='+ checkedVal[i] +'] option').each(function (j) {
+          var selected = $(this).val();
+          approverVal.push(selected);
+          var apprSeq = $(this).attr('approverSeq');
+          approverSeq.push(apprSeq);
+
+          let object = {
+            apprTypeCode : checkedVal[i], 
+            apprEmpCode : '',
+            apprSeq : ''
+          }
+
+        })
+        
+
+       
+        
+      })
+        
 
 
+
+      let param = {
+        periodCode : $('#custom-select').val(),
+        formCode : $('#formSelect').val(),
+        empCode : '1', 
+        doctitle : $('[name=docTitle]').val(),
+        
+       
+        chumbooFile : '서버에 업로드된 경로 리스트',
+        docContentList : docContentList 
+
+      }
+      console.log(param);
+      // $.ajax({
+      //   url : "${root}/approval/selectDept" ,
+      //   method : "POST" ,
+      //   data : param ,
+      //   dataType : 'application/json' ,
+      //   success : function(data){
+      //     // 페이지 이동 구문
+      //   } , 
+      //   error : (error) => {
+      //     console.log(JSON.stringify(error));
+      //   }
+      // })
+
+
+    }
 
     // let FIELD = {           
     //   APPROVAL_LINE: {

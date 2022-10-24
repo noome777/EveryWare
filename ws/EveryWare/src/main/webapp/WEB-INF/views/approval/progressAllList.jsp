@@ -55,52 +55,34 @@
 	                  <td>${d.formName}</td>
 	                  <td>${d.docTitle}</td>
 	                  <td>${d.empName}</td>
-	                  <td>날짜..</td>
-	                  <td><span>정상</span></td>
+	                  <td>${d.docEnrollDate}</td>
+	                  <%-- <c:choose>
+	                  	<c:when test="">
+		                  <td>진행중</td>
+	                  	</c:when>
+	                  	<c:when test="">
+		                  <td>완료</td>
+	                  	</c:when>
+	                  </c:choose> --%>
 	                </tr>
               	</c:forEach>
-                <tr onclick="location.href='${root}/approval/approvalDocDetail'">
-                  <td>2</td>
-                  <td>지출결의서</td>
-                  <td>220928_결재_지출결의서</td>
-                  <td>고은비</td>
-                  <td>2022.09.08</td>
-                  <td><span class="badge badge-pill badge-success">완료</span></td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>지출결의서</td>
-                  <td>220928_결재_지출결의서</td>
-                  <td>고은비</td>
-                  <td>2022.09.08</td>
-                  <td><span class="badge badge-pill badge-warning">진행중</span></td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>업무연락</td>
-                  <td>220928_결재_업무연락</td>
-                  <td>고은비</td>
-                  <td>2022.09.08</td>
-                  <td><span class="badge badge-pill badge-danger">삭제</span></td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>기업용 공문</td>
-                  <td>220928_결재_기업용 공문</td>
-                  <td>고은비</td>
-                  <td>2022.09.08</td>
-                  <td><span class="badge badge-pill badge-success">완료</span></td>
-                </tr>
               </tbody>
             </table>
             
             <nav aria-label="Table Paging" class="my-3">
               <ul class="pagination justify-content-center mb-0">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+              	<c:if test="${pv.startPage ne 1}">
+            	    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                </c:if>
+                
+                <c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
+                	<li class="page-item"><a class="page-link" href="${root}/approval/progressAllList/${i}">${i}</a></li>
+                </c:forEach>
+<!--                 <li class="page-item active"><a class="page-link" href="#">1</a></li> -->
+                
+                <c:if test="${pv.endPage ne pv.maxPage}">
+           	     <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </c:if>
               </ul>
             </nav>
 

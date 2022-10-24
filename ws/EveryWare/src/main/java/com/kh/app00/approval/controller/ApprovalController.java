@@ -1,6 +1,8 @@
 package com.kh.app00.approval.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.kh.app00.approval.doc.vo.DocDataVo;
+import com.kh.app00.approval.doc.vo.DocFormDetailTemplateVo;
 import com.kh.app00.approval.doc.vo.DocFormMapperVo;
 import com.kh.app00.approval.doc.vo.DocFormVo;
 import com.kh.app00.approval.doc.vo.DocPeriodVo;
@@ -36,7 +39,7 @@ public class ApprovalController {
 		this.service = service;
 	}
 	
-	@GetMapping("list/{pno}")
+	@GetMapping("progressAllList/{pno}")
 	public String list(Model model, @PathVariable int pno) {
 		
 		int totalCount = service.selectTotalCnt();
@@ -48,11 +51,10 @@ public class ApprovalController {
 		//문서종류 불러오기
 		List<DocFormVo> formList = service.selectFormList();
 		
-		
-		
 		model.addAttribute("formList", formList);
 		model.addAttribute("docList", docList);
-		return "approval/list";
+		model.addAttribute("pv", pv);
+		return "approval/progressAllList";
 	}
 	
 	//문서작성 화면
@@ -144,9 +146,26 @@ public class ApprovalController {
 		return "approval/formEdit";
 	}
 	
+	
+	
 	@GetMapping("formInsert")
-	public String formInsert() {
+	public String formInsert(Model model) {
+		
+		//양식상세 항목 보여주기
+		List<DocFormDetailTemplateVo> formDetailList = service.selectFormDetailList();
+		model.addAttribute("formDetailList", formDetailList);
+		
 		return "approval/formInsert";
+	}
+	
+	@PostMapping("formInsert")
+	@ResponseBody
+	public String formInsert(@RequestParam(value="formDetailCodeList[]")List<String> detaiCodelList , 
+							 @RequestParam(value="formDetailSeqList[]")List<String> detaiSeqList ,DocFormVo formVo) {
+		
+		int formInsert = service.insertForm(formVo, detaiCodelList, detaiSeqList);
+		
+		return "성공";
 	}
 	
 }
