@@ -13,7 +13,7 @@
 	</select>
 	
 	<insert id="insertNotice">
-		INSERT INTO BOARD
+		INSERT INTO NOTICE
 		(
 			NOTICE_CODE
 			,NOTICE_TITLE
@@ -25,6 +25,7 @@
 			SEQ_NOTICE_CODE.NEXTVAL
 			, #{noticeTitle}
 			, #{noticeContent}
+			, #{noticeDate}
 		)
 	</insert>
 	

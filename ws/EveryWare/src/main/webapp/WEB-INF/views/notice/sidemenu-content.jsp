@@ -19,6 +19,7 @@
             <li class="nav-item dropdown">
              
             </li>
+            <c:if test="${ loginMember.empId eq 'ADMIN' }">
             <div class="btn-box w-100 mt-4 mb-1" onclick="location.href='${root}/notice/write'">
               <button type="button" class="btn mb-2 btn-primary btn-lg btn-block">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -28,6 +29,7 @@
               <span class="small">글 쓰기</span>
               </button>
             </div>
+            </c:if>
           </ul>
           <p class="text-muted nav-heading mt-4 mb-1">
             <span>사내 공지</span>
