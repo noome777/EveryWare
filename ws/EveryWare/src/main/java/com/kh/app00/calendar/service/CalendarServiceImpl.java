@@ -25,11 +25,12 @@ public class CalendarServiceImpl implements CalendarService {
 	public List<CalendarVo> getPerCalendar() {
 		return dao.getPerCalendar(sst);
 	}
-	
+
 	@Override
 	public List<CalendarVo> getDepartCalendar() {
 		return dao.getDepartCalendar(sst);
 	}
+
 	@Override
 	public int insertOne(CalendarVo vo) {
 
@@ -67,8 +68,7 @@ public class CalendarServiceImpl implements CalendarService {
 		}
 
 		System.out.println(vo);
-		
-		
+
 		result = dao.insertOne(sst, vo);
 		return result;
 	}

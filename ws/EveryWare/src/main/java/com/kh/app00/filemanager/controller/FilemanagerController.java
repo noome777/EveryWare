@@ -2,10 +2,13 @@ package com.kh.app00.filemanager.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.app00.filemanager.service.FilemanagerService;
@@ -22,50 +25,73 @@ public class FilemanagerController {
 		this.service = service;
 	}
 
-	//파일함 조회
+	//메인 파일함 조회(화면)
 	@GetMapping("select")
 	public String select(Model model) {
 
 		List<FilemanagerVo> flist = service.selectAll();
+		List<FilemanagerVo> flistRecent = service.selectRecent();
 		
 		model.addAttribute("flist", flist);
+		model.addAttribute("flistRecent", flistRecent);
 		
-		System.out.println(flist);
 		return "filemanager/fileManager";
 	}
 	
-	//최근 업로드 파일함
+	//최근 업로드 파일함(화면)
 	@GetMapping("recent")
-	public String recent() {
+	public String recent(Model model) {
+		List<FilemanagerVo> flist = service.selectRecent();
+		model.addAttribute("flist", flist);
 		
 		return "filemanager/recent-fileManager";
 	}
 	
-	//즐겨찾기 파일함
+	//즐겨찾기 파일함(화면)
 	@GetMapping("star")
-	public String star() {
-
+	public String star(Model model) {
+		List<FilemanagerVo> flist = service.selectStar();
+		model.addAttribute("flist", flist);
 		return "filemanager/star-fileManager";
 	}
 	
-	//공유 파일함
+	//공유 파일함(화면)
 	@GetMapping("cloud")
 	public String cloud() {
 
 		return "filemanager/cloud-fileManager";
 	}
 	
-	//공유 파일함
+	//휴지통(화면)
 	@GetMapping("trash")
-	public String trash() {
-
+	public String trash(Model model) {
+		List<FilemanagerVo> flist = service.selectDel();
+		model.addAttribute("flist", flist);
+		
 		return "filemanager/trash-fileManager";
 	}
 		
-	//공유 파일함
+	//파일 추가(화면)
 	@GetMapping("insert")
 	public String insert() {
 
 		return "filemanager/insert-fileManager";
 	}
+	
+	//즐겨찾기 추가
+	@GetMapping("addStar/{fileCode}")
+	public String addStar(@PathVariable String fileCode,HttpSession session) {
+		
+		int result = service.addStar(fileCode);
+		
+		if (result == 1) {
+			session.setAttribute("alertMsg", "즐겨찾기 추가 되었습니다.");
+			System.out.println("1");
+		}else {
+			System.out.println("2");
+		}
+		
+		return "redirect:/filemanager/select"; 
+	}
+	
 }

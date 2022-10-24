@@ -19,4 +19,67 @@
 	FROM FILECLOUD
 	WHERE FILE_DELDATE IS NULL
 	</select>
+	
+	<select id="selectRecent" resultType="filemanagerVo">
+		SELECT 
+	    FILE_CODE
+	    , EMP_CODE
+	    , FILE_TITLE
+	    , FILE_NAME
+	    , FILE_ORIGINNAME
+	    , FILE_URL
+	    , FILE_ENROLLDATE
+	    , FILE_CNT
+	    , FILE_BOOKMARK
+	    , FILE_DELDATE
+	    , FILE_RANGE
+	FROM FILECLOUD
+    WHERE FILE_DELDATE IS NULL
+	ORDER BY FILE_CODE DESC
+	</select>
+	
+	<select id="selectStar" resultType="filemanagerVo">
+		SELECT 
+	    FILE_CODE
+	    , EMP_CODE
+	    , FILE_TITLE
+	    , FILE_NAME
+	    , FILE_ORIGINNAME
+	    , FILE_URL
+	    , FILE_ENROLLDATE
+	    , FILE_CNT
+	    , FILE_BOOKMARK
+	    , FILE_DELDATE
+	    , FILE_RANGE
+	FROM FILECLOUD
+    WHERE FILE_BOOKMARK = '1'
+	ORDER BY FILE_CODE DESC
+	</select>
+	
+	<select id="selectDel" resultType="filemanagerVo">
+		SELECT 
+	    FILE_CODE
+	    , EMP_CODE
+	    , FILE_TITLE
+	    , FILE_NAME
+	    , FILE_ORIGINNAME
+	    , FILE_URL
+	    , FILE_ENROLLDATE
+	    , FILE_CNT
+	    , FILE_BOOKMARK
+	    , FILE_DELDATE
+	    , FILE_RANGE
+	FROM FILECLOUD
+    WHERE FILE_DELDATE IS NOT NULL
+    ORDER BY FILE_DELDATE DESC
+	</select>
+	
+	<update id="addStar">
+	UPDATE 
+		FILECLOUD 
+	SET 
+		FILE_BOOKMARK = '1' 
+	WHERE FILE_CODE = #{fileCode}
+	
+	</update>
 </mapper>

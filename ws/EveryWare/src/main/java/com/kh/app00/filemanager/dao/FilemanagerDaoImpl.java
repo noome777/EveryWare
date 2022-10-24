@@ -15,4 +15,28 @@ public class FilemanagerDaoImpl implements FilemanagerDao {
 		return sst.selectList("filemanagerMapper.selectAll");
 	}
 
+	@Override
+	public List<FilemanagerVo> selectRecent(SqlSessionTemplate sst) {
+		// TODO Auto-generated method stub
+		return sst.selectList("filemanagerMapper.selectRecent");
+	}
+
+	@Override
+	public List<FilemanagerVo> selectStar(SqlSessionTemplate sst) {
+		// TODO Auto-generated method stub
+		return sst.selectList("filemanagerMapper.selectStar");
+	}
+
+	@Override
+	public List<FilemanagerVo> selectDel(SqlSessionTemplate sst) {
+		// TODO Auto-generated method stub
+		return sst.selectList("filemanagerMapper.selectDel");
+	}
+
+	@Override
+	public int addStar(SqlSessionTemplate sst, String fileCode) {
+		// TODO Auto-generated method stub
+		return sst.update("filemanagerMapper.addStar", fileCode);
+	}
+
 }

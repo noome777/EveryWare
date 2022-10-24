@@ -43,27 +43,6 @@ public class CalendarController {
 		return mv;
 	}
 	
-	@PostMapping("personal/insert")
-	public String insert(CalendarVo vo, HttpSession session) {
-
-		System.out.println(vo);
-		
-		int result = service.insertOne(vo); 
-		
-		System.out.println(result);
-		
-		if(result == 1) {
-			return "redirect:/calendar/personal/select";			
-		}else if(result == -2) {
-			session.setAttribute("alertMsg", "제목과 내용을 채워주세요");
-		}
-		
-		return "redirect:/calendar/personal/select";			
-		
-		
-	}
-	
-	
 	
 	@GetMapping("department/select")
 	public ModelAndView getDepartCalendarList(ModelAndView mv, HttpServletRequest request) {
@@ -80,6 +59,43 @@ public class CalendarController {
 	}
 	   
 	
+	@PostMapping("personal/insert")
+	public String insert(CalendarVo vo, HttpSession session) {
+
+		System.out.println(vo);
+		
+		int result = service.insertOne(vo); 
+		
+		System.out.println(result);
+		
+		if(result == 1) {
+			return "redirect:/calendar/personal/select";			
+		}else if(result == -2) {
+			session.setAttribute("alertMsg", "제목과 내용을 채워주세요");
+		}
+		return "redirect:/calendar/personal/select";			
+
+	}
+	
+	@PostMapping("department/insert")
+	public String insert(CalendarVo vo, HttpSession session, Model model) {
+
+		System.out.println(vo);
+		
+		int result = service.insertOne(vo); 
+		
+		System.out.println(result);
+		
+		if(result == 1) {
+			return "redirect:/calendar/department/select";			
+		}else if(result == -2) {
+			session.setAttribute("alertMsg", "제목과 내용을 채워주세요");
+		}
+		return "redirect:/calendar/department/select";			
+
+	}
+
+	
 	@GetMapping("delete")
 	public int deleteOne() {
 		int result = 1;
@@ -88,4 +104,8 @@ public class CalendarController {
 	}
 	
 	
+	@GetMapping("sample")
+	public String sample() {
+		return "calendar/sample";
+	}
 }

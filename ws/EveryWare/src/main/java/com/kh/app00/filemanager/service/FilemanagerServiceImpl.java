@@ -27,4 +27,28 @@ public class FilemanagerServiceImpl implements FilemanagerService {
 		return dao.selectAll(sst);
 	}
 
+	@Override
+	public List<FilemanagerVo> selectRecent() {
+		// TODO Auto-generated method stub
+		return dao.selectRecent(sst);
+	}
+
+	@Override
+	public List<FilemanagerVo> selectStar() {
+		// TODO Auto-generated method stub
+		return dao.selectStar(sst);
+	}
+
+	@Override
+	public List<FilemanagerVo> selectDel() {
+		// TODO Auto-generated method stub
+		return dao.selectDel(sst);
+	}
+
+	@Override
+	public int addStar(String fileCode) {
+		// TODO Auto-generated method stub
+		return dao.addStar(sst, fileCode);
+	}
+
 }
