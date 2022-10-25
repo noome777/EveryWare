@@ -167,16 +167,18 @@ public class DayoffController {
     
     //관리자의 결재 상태 반영
     @PostMapping("sendApproval")
-    public String sendApproval(String no, String approval, DayoffVo vo, Model model) {
+    public String sendApproval(String num, String approval, DayoffVo vo, Model model) {
         
         //결재 상태 바꾸는 게시글 setting 해주기
-        approval = approval.substring(0,1);
-        
-        vo.setOffCode(no);;
+ 
+        approval = approval.substring(approval.length()-1, approval.length());
+
+        vo.setOffCode(num);
         vo.setOffApproval(approval);
         
         System.out.println(vo);
         int result = service.updateApproval(vo);
+        
         
         if(result == 1) {
             return "redirect:/dayoff/admin/1";

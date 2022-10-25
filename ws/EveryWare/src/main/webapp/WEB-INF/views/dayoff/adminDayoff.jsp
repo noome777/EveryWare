@@ -112,19 +112,19 @@
           </thead>
           <tbody>
             <c:if test="${empty AdDateList}">
-              <input type="hidden" id="no" value="${voList[0].offCode}" name="no">
+              <input type="hidden" id="no" value=""  name="num">
                 <c:forEach items="${voList}" var="x">
                     <tr>
-                      <td>${x.offCode}</td>
-                      <td>${x.deptCode}</td>
-                      <td>${x.ECode}</td>
-                      <td>${x.offStartDate}</td>
-                      <td>${x.offEndDate}</td>
-                      <td>${x.offDays}</td>
-                      <td>${x.offReason}</td>
+                      <td class="list">${x.offCode}</td>
+                      <td class="list">${x.deptCode}</td>
+                      <td class="list">${x.ECode}</td>
+                      <td class="list">${x.offStartDate}</td>
+                      <td class="list">${x.offEndDate}</td>
+                      <td class="list">${x.offDays}</td>
+                      <td class="list">${x.offReason}</td>
                         <c:if test="${x.offApproval == 'W'}">
-                          <td>
-                            <select onchange="this.form.submit()" name="approval" id="approval">
+                          <td class="list">
+                            <select onchange="this.form.submit();"  name="approval" id="approval">
                                 <option value="W" name="W">결재대기중</option>
                                 <option value="A" name="A">승인완료</option>
                                 <option value="C" name="C">반려</option>
@@ -212,36 +212,18 @@
 
 
 <script>
-// const submit = document.querySelector('#submit');
-// submit.addEventListener('click', function(){
 
-// const no = $("#no").val();
-// const approval = $('#approval option:selected').val();
-
-// console.log(no);
-// console.log(approval);
-
-//   $.ajax({
-//     url: "${root}/dayoff/sendApproval",
-//     type: "POST",
-//     data: {"no" : no , "approval" : approval},
-//     success: function(data){
-//       console.log(data);
-
-//       if(data == 'success'){
-//         location.href='${root}/dayoff/admin/1';
-//       }else{
-//         alert('결재 실패하였습니다.');
-//       }
-//     },
-//     error: function(){
-//       alert('ajax 통신 실패');
-//     }
-
-//   });
-
-// });
-
+window.onload = function hi(){
+  $(function(){
+    $('tbody tr').children('.list').click(function(){
+        //글 번호 가져오기 (this -> tr태그)
+        let num = $(this).parent().children().eq(0).text();
+        
+        console.log(num);
+        $('input[name=num]').attr('value', num);
+    })
+  });
+}
 </script>
 </body>
 </html>
