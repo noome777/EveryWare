@@ -43,5 +43,11 @@ public interface OrganizationService {
 	//임직원 관리 - 임직원 검색
 	List<EmpVo> selectEmpListByEmpData(String empData);
 
+	//임직원 관리 - 체크된 임직원 직위 변경
+	int updateCheckedRank(Map<String, List<String>> updateTarget);
+
+	//임직원 관리 - 직위 변경된 임직원 직위 확인
+	List<EmpVo> selectRankOnly(List<String> empCodeList);
+
 
 }

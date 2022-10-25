@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.app00.emp.vo.EmpVo;
@@ -166,6 +167,62 @@ public class OrganizationController {
 			return "redirect:/";
 		}
 	}
+	
+	//임직원 관리 - 체크 후 ajax로 직위변경
+	@PostMapping("management/emp/update/checkedRank")
+	@ResponseBody
+	public String updateCheckedRank(@RequestParam("checkBoxArr") String[] checkBoxArr, @RequestParam("rankCode") String rankCode, Model model) {
+		
+		List<String> empCodeList = new ArrayList<String>();
+		
+		for (String empCode : checkBoxArr) {
+			empCodeList.add(empCode);
+		}
+		
+		List<String > rankCodeList = new ArrayList<String>();
+		rankCodeList.add(rankCode);
+		Map<String, List<String>> updateTarget = new HashMap<String,List<String>>();
+		updateTarget.put("empCodeList", empCodeList);
+		updateTarget.put("rankCodeList", rankCodeList);
+		
+		
+		int result = organizationService.updateCheckedRank(updateTarget);
+		
+		System.out.println(result);
+		if(result==0) {
+			return "실패!";
+		}else {
+			List<EmpVo> empList = organizationService.selectRankOnly(empCodeList);
+			System.out.println(empList);
+			return "성공";
+		}
+	}
+	
+	//임직원 관리 - 체크 후 ajax로 직무변경
+	@PostMapping("management/emp/update/checkedJob")
+	public String changeJob() {
+		return null;
+	}
+	
+	//임직원 관리 - 체크 후 ajax로 부서변경
+	@PostMapping("management/emp/update/checkedDept")
+	public String changeDept() {
+		return null;
+	}	
+	
+	//임직원 관리 - 체크 후 ajax로 상태변경
+	@PostMapping("management/emp/update/checkedStatus")
+	public String changeStatus() {
+		return null;
+	}
+	
+	//임직원 관리 - 체크 후 ajax로 프로필 사진 변경
+	@PostMapping("management/emp/update/checkedProfile")
+	public String changeProfile() {
+		return null;
+	}
+	
+		
 	
 	// 직위/직무설정
 	

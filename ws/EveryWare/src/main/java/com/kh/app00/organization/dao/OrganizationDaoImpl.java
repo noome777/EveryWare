@@ -1,6 +1,8 @@
 package com.kh.app00.organization.dao;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -77,6 +79,18 @@ public class OrganizationDaoImpl implements OrganizationDao {
 	@Override
 	public List<EmpVo> selectEmpListByEmpData(SqlSessionTemplate sqlSessionTemplate,String empData) {
 		return sqlSessionTemplate.selectList("organizationMapper.selectEmpListByEmpName",empData);
+	}
+
+	//임직원 관리 - 체크된 임직원 직위 변경
+	@Override
+	public int updateCheckedRank(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> updateTarget) {
+		return sqlSessionTemplate.update("organizationMapper.updateCheckedRank",updateTarget);
+	}
+
+	//변경된 직위 재확인
+	@Override
+	public List<EmpVo> selectRankOnly(SqlSessionTemplate sqlSessionTemplate, List<String> empCodeList) {
+		return sqlSessionTemplate.selectList("organizationMapper.selectRankOnly", empCodeList);
 	}
 
 	

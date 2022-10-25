@@ -169,12 +169,53 @@ padding: 10px;
 }
 
 #checkNum-area {
+  width: 5%;
+  height: 100%;
   display: flex;
   align-items: center;
   text-align: center;
   justify-content: center;
-  padding-top: 11px;
+  padding-bottom: 5px;
 }
+
+#option-button-area {
+  width: 95%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-bottom: 8px;
+  margin: 10px;
+}
+
+#option-button-area > button {
+  margin-left: 10px;
+  border-radius: 5px;
+}
+
+.change-modal-body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.change-modal-body > div {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.change-modal-body > div > select {
+  width: 80%;
+  height: 20%;
+  border-radius: 5px;
+  border : 1px solid lightgray;
+}
+
 
 
 
@@ -220,14 +261,14 @@ padding: 10px;
                     </div>
                     <div id="option-area">
                       <div id="checkNum-area" class="fade">
-                      
+
                       </div>
                       <div id="option-button-area" class="fade">
-                        <button type="button" class="btn shadow">직위 변경</button>
-                        <button type="button" class="btn shadow">직무 변경</button>
-                        <button type="button" class="btn shadow">부서 변경</button>
-                        <button type="button" class="btn shadow">상태 변경</button>
-                        <button type="button" class="btn shadow">프로필 변경</button>
+                        <button type="button" class="btn shadow" data-toggle="modal" data-target="#changeRank-modal"><small>직위 변경</small></button>
+                        <button type="button" class="btn shadow" data-toggle="modal" data-target="#changeJob-modal"><small>직무 변경</small></button>
+                        <button type="button" class="btn shadow" data-toggle="modal" data-target="#changeDept-modal"><small>부서 변경</small></button>
+                        <button type="button" class="btn shadow" data-toggle="modal" data-target="#changeStatus-modal"><small>상태 변경</small></button>
+                        <button type="button" class="btn shadow" data-toggle="modal" data-target="#changeProfile-modal"><small>프로필 변경</small></button>
                       </div>
                     </div>
                   </div>
@@ -258,7 +299,7 @@ padding: 10px;
                       <tr>
                         <td>
                           <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="${empList.empCode}" name="check" onchange="readCheckNum();">
+                            <input type="checkbox" class="custom-control-input" id="${empList.empCode}" value="${empList.empCode}" name="check" onchange="readCheckNum();">
                             <label class="custom-control-label" for="${empList.empCode}"></label>
                           </div>
                         </td>
@@ -587,6 +628,136 @@ padding: 10px;
       
     </c:forEach>
 
+    <!-- 직위 변경 모달 -->
+    <div class="modal fade" id="changeRank-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="verticalModalTitle">직위 변경</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body change-modal-body"> 
+            <div>
+              <select name="rankCode" id="rank-select-modal">
+                <c:forEach items="${rankList}" var="rankList">
+                  <option value="${rankList.rankCode}">${rankList.rankName}</option>
+                </c:forEach>
+              </select> 
+            </div>
+          </div>  
+          <div class="modal-footer">
+            <button type="button" class="btn mb-2 btn-primary" onclick="changeRank();">변경</button>
+            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 직무 변경 모달 -->
+    <div class="modal fade" id="changeJob-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="verticalModalTitle">직위 변경</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body change-modal-body"> 
+            <div>
+              <select name="jobCode" id="job-select-modal">
+                <c:forEach items="${jobList}" var="jobList">
+                  <option value="${jobList.jobCode}">${jobList.jobName}</option>
+                </c:forEach>
+              </select> 
+            </div>
+          </div>  
+          <div class="modal-footer">
+            <button type="button" class="btn mb-2 btn-primary" onclick="changeJob();">변경</button>
+            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 부서 변경 모달 -->
+    <div class="modal fade" id="changeDept-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="verticalModalTitle">직위 변경</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body change-modal-body"> 
+            <div>
+              <select name="deptCode" id="dpet-select-modal">
+                <c:forEach items="${deptList}" var="deptList">
+                  <option value="${deptList.deptCode}">${deptList.deptName}</option>
+                </c:forEach>
+              </select> 
+            </div>
+          </div>  
+          <div class="modal-footer">
+            <button type="button" class="btn mb-2 btn-primary" onclick="changedept();">변경</button>
+            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 상태 변경 모달 -->
+    <div class="modal fade" id="changeStatus-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="verticalModalTitle">직위 변경</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body change-modal-body"> 
+            <div>
+              <select name="empStatus" id="status-select-modal">
+                <option value="N">일반</option>
+                <option value="R">휴직</option>
+                <option value="Q">퇴사</option>
+              </select> 
+            </div>
+          </div>  
+          <div class="modal-footer">
+            <button type="button" class="btn mb-2 btn-primary" onclick="changeStatus();">변경</button>
+            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--프로필 변경 모달-->
+    <div class="modal fade" id="changeProfile-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="verticalModalTitle">직위 변경</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body change-modal-body"> 
+            <div>
+            </div>
+          </div>  
+          <div class="modal-footer">
+            <button type="button" class="btn mb-2 btn-primary" onclick="changeRank();">변경</button>
+            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     
     <!--체크박스 전부체크-->
   <script>
@@ -686,7 +857,7 @@ padding: 10px;
         const buttons = $("#option-button-area");
 
         checkNumArea.removeClass("fade");
-        checkNumArea.html("<p>"+"check : "+checkNum+"</p>");
+        checkNumArea.html("<small>"+"체크 : "+checkNum+"</small>");
         buttons.removeClass("fade");
 
 
@@ -698,6 +869,141 @@ padding: 10px;
         }
     }
       
+  </script>
+
+  <script>
+
+    function changeRank() {
+
+      const checkBoxArr = [];
+      const rankCode = $("#rank-select-modal").val();
+
+      $('input:checkbox[name=check]:checked').each(function(){
+        checkBoxArr.push($(this).val());
+      });
+      
+
+      $.ajax({
+        url : "${root}/organization/management/emp/update/checkedRank",
+        type : "POST",
+        traditional : true,
+        dataType : "JSON",
+        async : false,
+        cache: false,
+        data : {
+          checkBoxArr : checkBoxArr,
+          rankCode : rankCode
+        },
+        success : function() {
+
+        },
+        error : function() {
+          alert("직위 변경에 실패하였습니다. 다시 시도해보시길 바랍니다.");
+        }
+
+      });
+    }
+
+    function changeJob() {
+
+      const checkBoxArr = [];
+      $('input:checkbox[name=check]:checked').each(function(){
+        checkBoxArr.push($(this).val());
+      });
+
+      $.ajax({
+        url : "${root}/organization/management/emp/update/checkedJob",
+        type : "POST",
+        traditional : true,
+        data : {
+          checkBoxArr : checkBoxArr
+        },
+        success : function() {
+
+        },
+        error : function() {
+          alert("직무 변경에 실패하였습니다. 다시 시도해보시길 바랍니다.");
+        }
+
+      });
+
+    }
+
+    function changeDept() {
+
+      const checkBoxArr = [];
+      $('input:checkbox[name=check]:checked').each(function(){
+        checkBoxArr.push($(this).val());
+      });
+
+      $.ajax({
+        url : "${root}/organization/management/emp/update/checkedDept",
+        type : "POST",
+        traditional : true,
+        data : {
+          checkBoxArr : checkBoxArr
+        },
+        success : function() {
+
+        },
+        error : function() {
+          alert("부서 변경에 실패하였습니다. 다시 시도해보시길 바랍니다.");
+        }
+
+      });
+
+    }
+
+    function changeStatus() {
+
+      const checkBoxArr = [];
+      $('input:checkbox[name=check]:checked').each(function(){
+        checkBoxArr.push($(this).val());
+      });
+
+      $.ajax({
+        url : "${root}/organization/management/emp/update/checkedStatus",
+        type : "POST",
+        traditional : true,
+        data : {
+          checkBoxArr : checkBoxArr
+        },
+        success : function() {
+
+        },
+        error : function() {
+          alert("상태 변경에 실패하였습니다. 다시 시도해보시길 바랍니다.");
+        }
+
+      });
+
+    }
+
+    function changeProfile() {
+
+      const checkBoxArr = [];
+      $('input:checkbox[name=check]:checked').each(function(){
+        checkBoxArr.push($(this).val());
+      });
+
+      $.ajax({
+        url : "${root}/organization/management/emp/update/checkedProfile",
+        type : "POST",
+        traditional : true,
+        data : {
+          checkBoxArr : checkBoxArr
+        },
+        success : function() {
+
+        },
+        error : function() {
+          alert("프로필사진 변경에 실패하였습니다. 다시 시도해보시길 바랍니다.");
+        }
+
+      });
+
+    }
+
   </script>
 
 		
