@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,6 +41,7 @@ public class ApprovalController {
 	public ApprovalController(ApprovalService service) {
 		this.service = service;
 	}
+	
 	
 	@GetMapping("progressAllList/{pno}")
 	public String list(Model model, @PathVariable int pno) {
@@ -106,10 +110,13 @@ public class ApprovalController {
 	}
 	
 	
+	//결재문서 작성 - 첨부파일 수정 필요
 	@PostMapping("write")
 	@ResponseBody
-	public String write(ApprovalDocVo docVo, DocDataVo dataVo) {
-		
+	public String write(@RequestBody ApprovalDocVo docVo, HttpSession session) {
+		EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
+//		docVo.setEmpCode(loginMember.getEmpCode());
+		int result = service.insertApprovalDoc(docVo);
 		
 		return"작성 성공";
 	}
@@ -150,7 +157,6 @@ public class ApprovalController {
 	
 	@GetMapping("formInsert")
 	public String formInsert(Model model) {
-		
 		//양식상세 항목 보여주기
 		List<DocFormDetailTemplateVo> formDetailList = service.selectFormDetailList();
 		model.addAttribute("formDetailList", formDetailList);
@@ -160,10 +166,8 @@ public class ApprovalController {
 	
 	@PostMapping("formInsert")
 	@ResponseBody
-	public String formInsert(@RequestParam(value="formDetailCodeList[]")List<String> detaiCodelList , 
-							 @RequestParam(value="formDetailSeqList[]")List<String> detaiSeqList ,DocFormVo formVo) {
-		
-		int formInsert = service.insertForm(formVo, detaiCodelList, detaiSeqList);
+	public String formInsert(@RequestBody DocFormVo formVo) {
+		int formInsert = service.insertForm(formVo);
 		
 		return "성공";
 	}

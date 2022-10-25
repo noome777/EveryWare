@@ -46,6 +46,48 @@
 		</if>
 	</select>	
 	
+	<insert id="insertApprovalDoc">
+		INSERT INTO APPROVAL_DOC(DOC_CODE, PERIOD_CODE, DOC_FORM_CODE, EMP_CODE, DOC_TITLE, DOC_ENROLL_DATE)
+		VALUES(SEQ_APPROVAL_DOC_CODE.NEXTVAL, #{periodCode}, #{docFormCode}, #{empCode}, #{docTitle}, SYSDATE)
+		<selectKey keyProperty="docCode" order="AFTER" resultType="java.lang.String">
+			SELECT SEQ_APPROVAL_DOC_CODE.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+	
+	<insert id="insertDocData">
+		<foreach collection="list" item="item" index="index" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" ">
+			INTO DOC_DATA(DOC_CODE, FORM_DETAIL_CODE, DOC_CONTENT) 
+			VALUES (#{item.docCode}, #{item.formDetailCode}, #{item.docContent})
+		</foreach>
+	</insert>
+	
+	<insert id="insertApproverList">
+		<foreach collection="list" item="item" index="index" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" ">
+			INTO APPROVAL_LIST(DOC_CODE, APPR_TYPE_CODE, APPR_EMP_CODE, APPR_SEQ)
+			VALUES(#{item.docCode}, #{item.apprTypeCode}, #{item.apprEmpCode}, #{item.apprSeq})
+		</foreach>
+	</insert>
+	
+	<insert id="insertApprovalRef">
+		<foreach collection="list" item="item" index="index" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" ">
+			INTO APPROVAL_REF(DOC_CODE, REF_EMP_CODE)
+			VALUES(#{item.docCode}, #{item.refEmpCode})
+		</foreach>
+	</insert>
+	
+	<insert id="insertApprovalFile">
+		<foreach collection="list" item="item" index="index" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" ">
+			INTO APPROVAL_FILE(FILE_CODE, DOC_CODE, ORIGIN_NAME, UPLOAD_NAME)
+			VALUES(1, 1, 'D', 'D')
+		</foreach>
+	</insert>
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	<select id="selectCountAll" resultType="int">
@@ -66,15 +108,27 @@
 	</select>
 	
 	
-	<insert id="insertDocForm"  keyProperty="FORM_CODE">
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<insert id="insertDocForm">
 		INSERT INTO DOC_FORM (FORM_CODE, FORM_NAME, FORM_INTRO, FORM_USE_YN)
 		VALUES (SEQ_DOC_FORM_CODE.NEXTVAL, #{formName}, #{formIntro}, #{formUseYn})
+		<selectKey keyProperty="formCode" order="AFTER" resultType="java.lang.String">
+			SELECT SEQ_DOC_FORM_CODE.CURRVAL FROM DUAL
+		</selectKey>
 	</insert>
 
 	<insert id="insertDocFormMapping" parameterType="java.util.List">
 		<foreach collection="list" item="item" index="index" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" ">
 			INTO DOC_FORM_MAPPING (FORM_CODE, FORM_DETAIL_CODE, FORM_DETAIL_SEQ)
-			VALUES ((SELECT MAX(FORM_CODE) FROM DOC_FORM), #{item.formDetailCode}, #{item.formDetailSeq})
+			VALUES (#{item.formCode}, #{item.formDetailCode}, #{item.formDetailSeq})
 		</foreach>
 	</insert>
 	

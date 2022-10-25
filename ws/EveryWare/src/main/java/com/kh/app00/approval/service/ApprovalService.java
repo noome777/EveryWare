@@ -36,6 +36,9 @@ public interface ApprovalService {
 	//부서별 임직원 불러오기
 	List<EmpVo> selectDeptEmp(int deptCode);
 
+	//결재문서 작성
+	int insertApprovalDoc(ApprovalDocVo docVo);
+	
 	
 	
 	
@@ -48,7 +51,8 @@ public interface ApprovalService {
 	//문서 양식상세 항목 불러오기
 	List<DocFormDetailTemplateVo> selectFormDetailList();
 	//문서양식 insert
-	int insertForm(DocFormVo formVo, List<String> detaiCodelList, List<String> detaiSeqList);
+	int insertForm(DocFormVo formVo);
+
 
 
 

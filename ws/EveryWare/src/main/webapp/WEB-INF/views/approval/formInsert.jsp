@@ -125,7 +125,6 @@
     <div class="text-center">
       <button type="submit" class="btn mb-2 btn-secondary ">생성하기</button>
     </div>
-
 	</main>
 
   <script>
@@ -172,35 +171,29 @@
       let formName = $('[name=formName]').val();
       let formUseYn = $('[name=formUseYn]').val();
       let formIntro = $('[name=formIntro]').val();
-      let formDetailCodeList = [];
+
+      let formDetailList = [];
       $('[name=formDetailCode] option').each(function(){
-        // let object = {
-        //   formDetailCode : $(this).val()
-        // };
-        let selected = $(this).val();
-        formDetailCodeList.push(selected);
+        let object = {
+          formDetailCode : $(this).val(),
+          formDetailSeq : $(this).attr('detailSeq')
+        };
+        formDetailList.push(object)
       });
-      let formDetailSeqList = [];
-      $('[name=formDetailCode] option').each(function(){
-        // let object = {
-        //   formDetailSeq : $(this).attr('detailSeq')
-        // };
-        let selected = $(this).attr('detailSeq');
-        formDetailSeqList.push(selected);
-      });
+      console.log(formDetailList)
 
       let param = {
         formName : $('[name=formName]').val() ,
         formUseYn : $('[name=formUseYn]').val() ,
         formIntro : $('[name=formIntro]').val() , 
-        formDetailCodeList : formDetailCodeList ,
-        formDetailSeqList : formDetailSeqList
+        formDetailList : formDetailList 
       };
 
       $.ajax({
         url : "${root}/approval/formInsert" ,
         method : "POST" ,
-        data : param ,
+        contentType: "application/json; charset=utf-8",
+        data : JSON.stringify(param) , // 컨텐츠 타입 및 stringify 작업을 통해 제이쿼리 ajax와 spring 사이의 파싱이슈 대비
         success : function (data) {
           alert('formInsert 통신 성공');
         } ,

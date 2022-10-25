@@ -6,11 +6,15 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.app00.approval.doc.vo.DocDataVo;
 import com.kh.app00.approval.doc.vo.DocFormDetailTemplateVo;
 import com.kh.app00.approval.doc.vo.DocFormMapperVo;
 import com.kh.app00.approval.doc.vo.DocFormVo;
 import com.kh.app00.approval.doc.vo.DocPeriodVo;
 import com.kh.app00.approval.vo.ApprovalDocVo;
+import com.kh.app00.approval.vo.ApprovalFileVo;
+import com.kh.app00.approval.vo.ApprovalListVo;
+import com.kh.app00.approval.vo.ApprovalRefVo;
 import com.kh.app00.approval.vo.ApprovalTypeVo;
 import com.kh.app00.common.PageVo;
 import com.kh.app00.emp.vo.EmpVo;
@@ -99,6 +103,41 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	public int insertDocFormMapping(SqlSessionTemplate sst, List<DocFormMapperVo> mappingList) {
 		return sst.insert("approvalMapper.insertDocFormMapping", mappingList);
 	}
+
+	
+	
+	//결재문서 작성
+	@Override
+	public int insertApprovalDoc(SqlSessionTemplate sst, ApprovalDocVo docVo) {
+		return sst.insert("approvalMapper.insertApprovalDoc", docVo);
+	}
+	//문서실제데이터 insert
+	@Override
+	public int insertDocData(SqlSessionTemplate sst, List<DocDataVo> docDataList) {
+		return sst.insert("approvalMapper.insertDocData", docDataList);
+	}
+
+	//결재자리스트 insert
+	@Override
+	public int insertApproverList(SqlSessionTemplate sst, List<ApprovalListVo> approverList) {
+		return sst.insert("approvalMapper.insertApproverList", approverList);
+	}
+
+	//참조인 insert
+	@Override
+	public int insertApprovalRef(SqlSessionTemplate sst, List<ApprovalRefVo> approvalRefList) {
+		return sst.insert("approvalMapper.insertApprovalRef", approvalRefList);
+	}
+
+	//첨부파일 insert
+	@Override
+	public int insertApprovalFile(SqlSessionTemplate sst, List<ApprovalFileVo> approvalFileList) {
+		return sst.insert("approvalMapper.insertApprovalFile", approvalFileList);
+	}
+
+	
+	
+	
 	
 	
 

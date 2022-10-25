@@ -302,7 +302,6 @@
     </div>
 
 
-
 	</main>
 	
 	<script>
@@ -421,6 +420,7 @@
       
       let apprTableHtml;
 
+      let seq = 0;
       $.each(checkedVal, function(i){
         
         let typeName = $('#type-content[apprTypeCode='+ checkedVal[i] +']>span')[0].outerText;
@@ -434,7 +434,7 @@
         let nameHtml;
         let markHtml;
         $.each(approverVal, function (j) {
-          let approverEmp = $('.approver-select-box[id='+ checkedVal[i] +'] option[value=' + approverVal[j] + ']').attr('approverSeq', j+1)[0].innerHTML;
+          let approverEmp = $('.approver-select-box[id='+ checkedVal[i] +'] option[value=' + approverVal[j] + ']').attr('approverSeq', seq += 1)[0].innerHTML;
           let empInfo = approverEmp.split(' ');
           let empName = empInfo[0];
           let empRankName = empInfo[3].replace(')', '');
@@ -556,145 +556,98 @@
       } 
       console.log(fileList);
       console.log(formData); 
-      // 업로드 폼 데이터 준비됐으면 선 업로드 호출
       // $.ajax({
-      //   type: 'POST',
-      //   url: '/board/save',
-      //   processData: false, // 필수
-      //   contentType: false, // 필수
-      //   data: formData,
-      //   success: function(data) {
+      //   url : '${root}/approval/write',
+      //   type : 'POST',
+      //   processData : false,
+      //   contentType : false,
+      //   data : formData,
+      //   success : function(data) {
+      //     alert(data);
       //     $('#file-name').html(fileList);
-      //     x버튼 추가
+      //     //x버튼 추가
       //   },
-          
+      //   error : (error) => {
+      //     console.log(JSON.stringify(error));
+      //   }   
+      // })
+
     });
     
     //진행중
     function insert () {
-      let docContentList = [];
+      //항목 별 작성 내용, 항목 code
+      let docDataList = [];
       $('[name=docContent]').each(function() {
         let object = {
-          detailCode : $(this).attr('detailCode'),
-          value : $(this).val()  
+          formDetailCode : $(this).attr('detailCode'),
+          docContent : $(this).val()  
         }
-        docContentList.push(object);
+        docDataList.push(object);
       })
 
-      console.log(docContentList);
       
-      let approverList = [];
-      ///////////////////////////////////////////////////////////////////////////////////
       //결재타입 -> 결재타입코드, 결재자코드, 결재순서 (진행상태 - default insert)
       let checkedVal = [];
-      $('#modal-appr-type input[type=checkbox]:checked').each(function () {
+      $('#modal-appr-type input[type=checkbox]:checked').each(function (i) {
         var checked = $(this).val();
         checkedVal.push(checked); 
       })
       
-      let approverVal = [];
-      let approverSeq = [];
+      let approverList = [];
       $.each(checkedVal, function(i){
-        
+      
         $('.approver-select-box[id='+ checkedVal[i] +'] option').each(function (j) {
-          var selected = $(this).val();
-          approverVal.push(selected);
-          var apprSeq = $(this).attr('approverSeq');
-          approverSeq.push(apprSeq);
-
-          let object = {
+          
+          let approverObject = {
             apprTypeCode : checkedVal[i], 
-            apprEmpCode : '',
-            apprSeq : ''
+            apprEmpCode : $(this).val(),
+            apprSeq : $(this).attr('approverSeq')
           }
-
+          approverList.push(approverObject);
         })
-        
 
-       
-        
       })
-        
+      console.log(approverList);
+      //참조인 -> 사원코드
+      let approvalRefList = [];
+      $('.ref-select-box option').each(function (i) {
+        let object = {
+          refEmpCode : $(this).val()
+        }
+        approvalRefList.push(object);
+      })
+      console.log(approvalRefList);
 
 
-
+      //
       let param = {
         periodCode : $('#custom-select').val(),
-        formCode : $('#formSelect').val(),
+        docFormCode : $('#formSelect').val(),
         empCode : '1', 
-        doctitle : $('[name=docTitle]').val(),
-        
-       
-        chumbooFile : '서버에 업로드된 경로 리스트',
-        docContentList : docContentList 
-
+        docTitle : $('[name=docTitle]').val(),
+        docDataList : docDataList,
+        approverList : approverList,
+        approvalRefList : approvalRefList
+        // approvalFileList : '서버에 업로드된 경로 리스트'
       }
       console.log(param);
-      // $.ajax({
-      //   url : "${root}/approval/selectDept" ,
-      //   method : "POST" ,
-      //   data : param ,
-      //   dataType : 'application/json' ,
-      //   success : function(data){
-      //     // 페이지 이동 구문
-      //   } , 
-      //   error : (error) => {
-      //     console.log(JSON.stringify(error));
-      //   }
-      // })
-
-
+      $.ajax({
+        url : "${root}/approval/write" ,
+        method : "POST" ,
+        data : JSON.stringify(param),
+        contentType: "application/json; charset=utf-8",
+        success : function(data){
+          alert('작성 성공');
+          location.href='${root}/approval/progressAllList/1';
+        } , 
+        error : (error) => {
+          console.log(JSON.stringify(error));
+        }
+      })
     }
 
-    // let FIELD = {           
-    //   APPROVAL_LINE: {
-    //     approval: {
-    //       checkYn: 'N',
-    //       list:[
-    //         {
-    //           name: '고은비',
-    //           orgName: '인사팀',
-    //           orgCd: '144',
-    //           rankName: '사원',
-    //           rankCd: 'T4',
-    //           sort: 0
-    //         },
-    //         {
-    //           name: '금은비',
-    //           orgName: '재무팀',
-    //           orgCd: '150',
-    //           rankName: '대리',
-    //           rankCd: 'T6',
-    //           sort: 1
-    //         }
-    //       ]
-    //     },
-    //     regist: {
-    //       checkYn: 'N',
-    //       list:[
-    //         {
-    //           name: '고은비',
-    //           orgName: '인사팀',
-    //           orgCd: '144',
-    //           rankName: '사원',
-    //           rankCd: 'T4',
-    //           sort: 0
-    //         },
-    //         {
-    //           name: '금은비',
-    //           orgName: '재무팀',
-    //           orgCd: '150',
-    //           rankName: '대리',
-    //           rankCd: 'T6',
-    //           sort: 1
-    //         }
-    //       ]
-    //     }
-    //   }
-    // }
 	</script>
 
-	<script> 
-  </script>  
 </body>
 </html>
