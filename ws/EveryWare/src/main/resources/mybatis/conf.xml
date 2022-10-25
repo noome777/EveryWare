@@ -46,6 +46,9 @@
 		<!-- 휴가 -->
 		<typeAlias alias="DayoffVo" type="com.kh.app00.dayoff.vo.DayoffVo"/>
 		
+		<!-- 주소록 -->
+		<typeAlias alias="ContactsVo" type="com.kh.app00.contacts.vo.ContactsVo"/>
+		
 	</typeAliases>
 	
 </configuration>
