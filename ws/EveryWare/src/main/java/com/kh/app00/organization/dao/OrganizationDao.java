@@ -1,6 +1,7 @@
 package com.kh.app00.organization.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -42,6 +43,12 @@ public interface OrganizationDao {
 
 	//임직원 관리 - 임직원 검색
 	List<EmpVo> selectEmpListByEmpData(SqlSessionTemplate sqlSessionTemplate, String empData);
+
+	//임직원 관리 - 체크된 임직원 직위 변경
+	int updateCheckedRank(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> updateTarget);
+
+	//임직원 관리 - 변경된 직위 재확인
+	List<EmpVo> selectRankOnly(SqlSessionTemplate sqlSessionTemplate, List<String> empCodeList);
 
 
 

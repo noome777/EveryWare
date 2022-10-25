@@ -119,6 +119,22 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 
 
+	//임직원 관리 - 체크된 임직원 직위변경
+
+
+	@Override
+	public int updateCheckedRank(Map<String, List<String>> updateTarget) {
+		return organizationDao.updateCheckedRank(sqlSessionTemplate, updateTarget);
+	}
+
+
+	// 직위 변경된 임직원 직위확인
+	@Override
+	public List<EmpVo> selectRankOnly(List<String> empCodeList) {
+		return organizationDao.selectRankOnly(sqlSessionTemplate,empCodeList);
+	}
+
+
 
 	
 
