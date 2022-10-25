@@ -10,11 +10,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.app00.approval.dao.ApprovalDao;
+import com.kh.app00.approval.doc.vo.DocDataVo;
 import com.kh.app00.approval.doc.vo.DocFormDetailTemplateVo;
 import com.kh.app00.approval.doc.vo.DocFormMapperVo;
 import com.kh.app00.approval.doc.vo.DocFormVo;
 import com.kh.app00.approval.doc.vo.DocPeriodVo;
 import com.kh.app00.approval.vo.ApprovalDocVo;
+import com.kh.app00.approval.vo.ApprovalFileVo;
+import com.kh.app00.approval.vo.ApprovalListVo;
+import com.kh.app00.approval.vo.ApprovalRefVo;
 import com.kh.app00.approval.vo.ApprovalTypeVo;
 import com.kh.app00.common.PageVo;
 import com.kh.app00.emp.vo.EmpVo;
@@ -74,8 +78,51 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return dao.selectDeptEmp(sst, deptCode);
 	}
 
-	
-	
+	//결재문서 작성
+	@Override
+	@Transactional(rollbackFor = {Exception.class})
+	public int insertApprovalDoc(ApprovalDocVo docVo) {
+		System.out.println(docVo);
+		
+		int approvalDocResult = dao.insertApprovalDoc(sst, docVo);
+		String constructedDocCode = docVo.getDocCode();
+		
+		List<DocDataVo> docDataList = docVo.getDocDataList();
+		List<ApprovalListVo> approverList = docVo.getApproverList();
+		List<ApprovalRefVo> approvalRefList = docVo.getApprovalRefList();
+		List<ApprovalFileVo> approvalFileList = docVo.getApprovalFileList();
+		
+		if(docDataList != null) {
+			for(DocDataVo vo : docDataList) {
+				vo.setDocCode(constructedDocCode);
+			}
+			System.out.println(docDataList);
+			int docDataResult = dao.insertDocData(sst, docDataList);
+		}
+		if(approverList != null) {
+			for(ApprovalListVo vo : approverList) {
+				vo.setDocCode(constructedDocCode);
+			}
+			System.out.println(approverList);
+			int approverListResult = dao.insertApproverList(sst, approverList);
+		}
+		if(approvalRefList != null) {
+			for(ApprovalRefVo vo : approvalRefList) {
+				vo.setDocCode(constructedDocCode);
+			}
+			System.out.println(approvalRefList);
+			int approvalRefResult = dao.insertApprovalRef(sst, approvalRefList);
+		}
+		if(approvalFileList != null) {
+			for(ApprovalFileVo vo : approvalFileList) {
+				vo.setDocCode(constructedDocCode);
+			}
+			System.out.println(approvalFileList);
+			int approvalFileResult = dao.insertApprovalFile(sst, approvalFileList);
+		}
+		
+		return 0;
+	}
 	
 	//문서 갯수 조회
 	@Override
@@ -88,10 +135,6 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public List<ApprovalDocVo> selectDocList(PageVo pv) {
 		return dao.selectDocList(sst, pv);
 	}
-
-	
-	
-	
 	
 	//문서 양식상세 항목 불러오기
 	@Override
@@ -102,22 +145,24 @@ public class ApprovalServiceImpl implements ApprovalService {
 	//문서양식 insert
 	@Override
 	@Transactional(rollbackFor = {Exception.class})
-	public int insertForm(DocFormVo formVo, List<String> detaiCodelList, List<String> detaiSeqList) {
+	public int insertForm(DocFormVo formVo) {
 
 		int docFormResult = dao.insertDocForm(sst, formVo);
 		
+		// insert된 pk select key로 가져왔으니 값이 있어야함
+		String constructedFormCode = formVo.getFormCode();
 		
-		List<DocFormMapperVo> mappingList = new ArrayList<DocFormMapperVo>();
-		for(int i=0; i<detaiCodelList.size(); i++) {
-			DocFormMapperVo mappingVo = new DocFormMapperVo();
-			mappingVo.setFormDetailCode(detaiCodelList.get(i));
-			mappingVo.setFormDetailSeq(detaiSeqList.get(i));
-			mappingList.add(mappingVo);
+		List<DocFormMapperVo> mappingList = formVo.getFormDetailList();
+		for(DocFormMapperVo vo : mappingList) {
+			vo.setFormCode(constructedFormCode);
 		}
+		
 		int docFormMappingResult = dao.insertDocFormMapping(sst, mappingList);
 		
 		return docFormResult * docFormMappingResult;
 	}
+
+	
 
 	
 	

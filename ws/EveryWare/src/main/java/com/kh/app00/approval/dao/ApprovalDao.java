@@ -4,11 +4,15 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.app00.approval.doc.vo.DocDataVo;
 import com.kh.app00.approval.doc.vo.DocFormDetailTemplateVo;
 import com.kh.app00.approval.doc.vo.DocFormMapperVo;
 import com.kh.app00.approval.doc.vo.DocFormVo;
 import com.kh.app00.approval.doc.vo.DocPeriodVo;
 import com.kh.app00.approval.vo.ApprovalDocVo;
+import com.kh.app00.approval.vo.ApprovalFileVo;
+import com.kh.app00.approval.vo.ApprovalListVo;
+import com.kh.app00.approval.vo.ApprovalRefVo;
 import com.kh.app00.approval.vo.ApprovalTypeVo;
 import com.kh.app00.common.PageVo;
 import com.kh.app00.emp.vo.EmpVo;
@@ -53,6 +57,22 @@ public interface ApprovalDao {
 	int insertDocForm(SqlSessionTemplate sst, DocFormVo formVo);
 	//docFormMapping insert
 	int insertDocFormMapping(SqlSessionTemplate sst, List<DocFormMapperVo> mappingList);
+
+	
+	//결재문서 작성
+	int insertApprovalDoc(SqlSessionTemplate sst, ApprovalDocVo docVo);
+	//문서실제데이터 insert
+	int insertDocData(SqlSessionTemplate sst, List<DocDataVo> docDataList);
+	//결재자리스트 insert
+	int insertApproverList(SqlSessionTemplate sst,List<ApprovalListVo> approverList);
+	//참조인 insert
+	int insertApprovalRef(SqlSessionTemplate sst,List<ApprovalRefVo> approvalRefList);
+	//첨부파일 insert
+	int insertApprovalFile(SqlSessionTemplate sst,List<ApprovalFileVo> approvalFileList);
+
+	
+	
+
 
 
 

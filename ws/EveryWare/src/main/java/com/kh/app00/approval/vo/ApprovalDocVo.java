@@ -1,12 +1,16 @@
 package com.kh.app00.approval.vo;
 
+import java.util.List;
+
+import com.kh.app00.approval.doc.vo.DocDataVo;
+
 import lombok.Data;
 
 @Data
 public class ApprovalDocVo {
 	private String docCode;
 	private String periodCode;
-	private String doc_formCode;
+	private String docFormCode;
 	private String empCode;
 	private String docTitle;
 	private String docEnrollDate;
@@ -15,4 +19,10 @@ public class ApprovalDocVo {
 	
 	private String formName;
 	private String empName;
+	
+	private List<DocDataVo> docDataList;
+	private List<ApprovalListVo> approverList;
+	private List<ApprovalRefVo> approvalRefList;
+	private List<ApprovalFileVo> approvalFileList;
+	
 }
