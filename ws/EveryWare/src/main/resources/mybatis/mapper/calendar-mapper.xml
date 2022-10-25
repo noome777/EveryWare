@@ -6,12 +6,14 @@
 		SELECT *
 		FROM CALENDAR
 		WHERE CAL_TYPE = 'HOME'
+		AND CAL_DEL = 'N'
 	</select>
 
 	<select id="selectDepartAll" resultType="CalendarVo">
 		SELECT *
 		FROM CALENDAR
 		WHERE CAL_TYPE = 'WORK'
+		AND CAL_DEL = 'N'
 	</select>
 
 	<insert id="insertOne">
@@ -36,4 +38,12 @@
 			, #{calAllday}
 		)
 	</insert>
+	
+	<update id="deleteOne">
+		UPDATE 
+		CALENDAR 
+	SET 
+		CAL_DEL = 'Y' 
+	WHERE CAL_CODE = #{no}
+	</update>
 </mapper>

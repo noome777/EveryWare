@@ -12,4 +12,6 @@ public interface CalendarService {
 	
 	int insertOne(CalendarVo vo);
 
+	int deleteOne(String no);
+
 }
