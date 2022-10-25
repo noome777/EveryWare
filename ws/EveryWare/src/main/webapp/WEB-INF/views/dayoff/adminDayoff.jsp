@@ -167,7 +167,6 @@
             </c:if>
           </tbody>
         </table>
-        <!-- <input type="submit" id="submit"> -->
       </form>
       
         <c:if test="${y.offApproval == 'W'}">

@@ -68,4 +68,9 @@
 		JOIN EMP E ON E.EMP_CODE = O.ECODE
 		JOIN DEPT D ON E.DEPT_CODE = D.DEPT_CODE
 	</select>
+	
+	<update id="updateApproval">
+		UPDATE OVERWORK SET OVER_APPROVAL = #{overApproval} WHERE OVER_CODE = #{overCode}
+	</update>
+	
 </mapper>

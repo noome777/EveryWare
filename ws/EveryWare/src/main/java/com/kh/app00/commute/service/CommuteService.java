@@ -46,5 +46,8 @@ public interface CommuteService {
     //관리자 결재 리스트 조회
     List<OverworkVo> adminOverworkList(PageVo pv);
 
+    //관리자 결재 정보 업데이트
+    int updateApproval(OverworkVo vo);
+
 
 }

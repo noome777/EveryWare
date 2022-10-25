@@ -195,5 +195,20 @@ public class DayoffController {
     public String calendar() {
         return "dayoff/dayoffCal";
     }
+    
+//    @GetMapping("calendar")
+//    public ModelAndView calendar(ModelAndView mv, HttpServletRequest req) {
+//        
+//        String viewpage = "calendar";
+//        List<Calendar> calendar = null;
+//        try {
+//            calendar = calendarService.getCalendar();
+//            request.setAttribute("calendarList", calendar);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        mv.setViewName(viewpage);
+//        return mv;
+//    }
 
 }

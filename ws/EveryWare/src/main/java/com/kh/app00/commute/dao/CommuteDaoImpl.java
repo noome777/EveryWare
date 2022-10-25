@@ -103,6 +103,12 @@ public class CommuteDaoImpl implements CommuteDao {
         return sst.selectList("commuteMapper.selectAdminOverworkList", null, rb);
     }
 
+    //관리자 결재 정보 업데이트
+    @Override
+    public int updateApproval(SqlSessionTemplate sst, OverworkVo vo) {
+        return sst.update("commuteMapper.updateApproval", vo);
+    }
+
 
 
 }
