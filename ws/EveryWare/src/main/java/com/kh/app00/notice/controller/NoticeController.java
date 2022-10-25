@@ -37,10 +37,11 @@ public class NoticeController {
 		// Pagevo pv = Pagination.getPagevo(totalCount, pno, 5, 10);
 
 		List<NoticeVo> nList = ns.selectList();
+		
 
 		model.addAttribute("nList", nList);
+		
 
-		System.out.println(nList);
 		return "notice/noticeMain";
 
 	}
@@ -49,7 +50,6 @@ public class NoticeController {
 	@GetMapping("write")
 	public String noticeWrite() {
 		return "notice/noticeWrite";
-
 	}
 
 	@PostMapping("write")
@@ -65,7 +65,6 @@ public class NoticeController {
 			
 			System.out.println(vo);
 			
-			// 화면 선택
 			if (result == 1) {
 				session.setAttribute("alertMsg", "사내공지 작성 성공!");
 				return "redirect:/notice/noticeMain";

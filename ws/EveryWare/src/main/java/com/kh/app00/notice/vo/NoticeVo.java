@@ -1,7 +1,5 @@
 package com.kh.app00.notice.vo;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import lombok.Data;
 
 @Data
