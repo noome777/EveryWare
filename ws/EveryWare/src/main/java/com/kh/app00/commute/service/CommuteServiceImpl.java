@@ -97,6 +97,12 @@ public class CommuteServiceImpl implements CommuteService {
         return dao.selectAdminOverworkList(sst, pv);
     }
 
+    //관리자 결재 정보 업데이트
+    @Override
+    public int updateApproval(OverworkVo vo) {
+        return dao.updateApproval(sst, vo);
+    }
+
 
     
    

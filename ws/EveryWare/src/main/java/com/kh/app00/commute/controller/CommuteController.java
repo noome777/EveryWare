@@ -297,6 +297,28 @@ public class CommuteController {
         return "commute/adminOverwork";
     }
 
-    
+    //관리자의 결재 상태 반영
+    @PostMapping("sendApproval")
+    public String sendApproval(String num, String approval, OverworkVo vo, Model model) {
+        
+        //결재 상태 바꾸는 게시글 setting 해주기
+ 
+        approval = approval.substring(approval.length()-1, approval.length());
+
+        vo.setOverCode(num);
+        vo.setOverApproval(approval);
+        
+        int result = service.updateApproval(vo);
+        
+        
+        if(result == 1) {
+            return "redirect:/commute/admin/1";
+        }else {
+            model.addAttribute("alertMsg", "결재 실패");
+            return "commute/adminOverwork";
+        }
+        
+        
+    }
     
 }

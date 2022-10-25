@@ -142,7 +142,15 @@
 	              <td>${x.overTime}</td>
 	              <td>${x.overName}</td>
 	              <td>${x.overReason}</td>
-	              <td>${x.overApproval}</td>
+	              <c:if test="${x.overApproval == 'W'}">
+                  <td><span class="badge badge-pill badge-warning">결재대기중</span></td>
+                </c:if>
+                <c:if test="${x.overApproval == 'A'}">
+                  <td><span class="badge badge-pill badge-success">승인완료</span></td>
+                </c:if>
+                <c:if test="${x.overApproval == 'C'}">
+                  <td><span class="badge badge-pill badge-danger">반려</span></td>
+                </c:if>
             	</tr>
              </c:forEach>
             </c:if>
@@ -154,7 +162,15 @@
                   <td>${y.overTime}</td>
                   <td>${y.overName}</td>
                   <td>${y.overReason}</td>
-                  <td>${y.overApproval}</td>
+                  <c:if test="${y.overApproval == 'W'}">
+                  <td><span class="badge badge-pill badge-warning">결재대기중</span></td>
+                </c:if>
+                <c:if test="${y.overApproval == 'A'}">
+                  <td><span class="badge badge-pill badge-success">승인완료</span></td>
+                </c:if>
+                <c:if test="${y.overApproval == 'C'}">
+                  <td><span class="badge badge-pill badge-danger">반려</span></td>
+                </c:if>
                 </tr>
               </c:forEach>
           	</c:if>

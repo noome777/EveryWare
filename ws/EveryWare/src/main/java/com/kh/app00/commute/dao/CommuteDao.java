@@ -48,6 +48,9 @@ public interface CommuteDao   {
     //관리자 결재 리스트 조회
     List<OverworkVo> selectAdminOverworkList(SqlSessionTemplate sst, PageVo pv);
 
+    ////관리자 결재 정보 업데이트
+    int updateApproval(SqlSessionTemplate sst, OverworkVo vo);
+
 
 
 }

@@ -39,7 +39,10 @@
 	</select>
 	
 	<select id="selectDeptVo" resultType="DayoffVo">
-		SELECT DISTINCT DEPT_CODE FROM OVERWORK WHERE ECODE = #{eCode}
+		SELECT E.DEPT_CODE 
+		FROM EMP E
+		JOIN DEPT D ON D.DEPT_CODE = E.DEPT_CODE
+		WHERE EMP_CODE = #{eCode}
 	</select>
 	
 	<select id="selectAdDateCnt" resultType="int">
@@ -65,4 +68,9 @@
 		JOIN EMP E ON E.EMP_CODE = O.ECODE
 		JOIN DEPT D ON E.DEPT_CODE = D.DEPT_CODE
 	</select>
+	
+	<update id="updateApproval">
+		UPDATE OVERWORK SET OVER_APPROVAL = #{overApproval} WHERE OVER_CODE = #{overCode}
+	</update>
+	
 </mapper>

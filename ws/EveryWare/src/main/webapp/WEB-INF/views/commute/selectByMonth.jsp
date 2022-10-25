@@ -58,7 +58,7 @@
   }
 </style>
 </head>
-<body class="vertical  light  ">
+<body style="width: 100%; overflow-x: hidden;" class="vertical  light  " >
   <div class="wrapper">
   
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -86,7 +86,7 @@
     </form>
 
     <!-- chart.js -->
-    <canvas id="myChart" width="45" height="15"></canvas>
+    <canvas id="myChart" width="45" height="18"></canvas>
     <script>
       const ctx = document.getElementById('myChart').getContext('2d');
       const myChart = new Chart(ctx, {
@@ -128,7 +128,7 @@
 
 
     <!-- 근무결과 조회 -->
-    <div class="card shadow mb-5" >
+    <!-- <div class="card shadow mb-5" >
       <div style="margin-left: 20px; margin-top: 20px;">
       <h4 class="card-title">근무결과 조회</h4><br><br>
       <h6 class="card-title">조회 결과 {}건</h6>
@@ -180,7 +180,7 @@
           </tr>
         </tbody>
       </table>
-    </div>
+    </div> -->
 	</main>
 </div>
 </body>

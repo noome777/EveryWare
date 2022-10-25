@@ -89,7 +89,7 @@
         </form>
     
         <c:if test="${empty adDateCount}">
-	        <h6 class="card-title">조회 결과 ${listCount} 건</h6>
+	        <h6 class="card-title">조회 결과 ${adListCount} 건</h6>
         </c:if>  
         <c:if test="${empty adListCount}">
 	        <h6 class="card-title">조회 결과  ${adDateCount} 건</h6>
@@ -112,39 +112,37 @@
           </thead>
           <tbody>
             <c:if test="${empty AdDateList}">
-              <input type="hidden" id="no" value="${voList[0].offCode}" name="no">
+              <input type="hidden" id="no" value=""  name="num">
                 <c:forEach items="${voList}" var="x">
                     <tr>
-                        <td>
-                          ${x.offCode}
-                        </td>
-                        <td>${x.deptCode}</td>
-                        <td>${x.ECode}</td>
-                        <td>${x.offStartDate}</td>
-                        <td>${x.offEndDate}</td>
-                        <td>${x.offDays}</td>
-                        <td>${x.offReason}</td>
-                          <c:if test="${x.offApproval == 'W'}">
-                            <td>
-                              <select onchange="this.form.submit()" name="approval" id="approval">
-                                  <option value="W" name="W">결재대기중</option>
-                                  <option value="A" name="A">승인완료</option>
-                                  <option value="C" name="C">반려</option>
-                              </select>
-                            </td>
-                          </c:if>
-                          <c:if test="${x.offApproval == 'A'}">
-                          <td><span class="badge badge-pill badge-success">승인완료</span></td>
-                          </c:if>
-                          <c:if test="${x.offApproval == 'C'}">
-                          <td><span class="badge badge-pill badge-danger">반려</span></td>
-                          </c:if>
-                        
-                        <td>${x.offEnrolldate}</td>
+                      <td class="list">${x.offCode}</td>
+                      <td class="list">${x.deptCode}</td>
+                      <td class="list">${x.ECode}</td>
+                      <td class="list">${x.offStartDate}</td>
+                      <td class="list">${x.offEndDate}</td>
+                      <td class="list">${x.offDays}</td>
+                      <td class="list">${x.offReason}</td>
+                        <c:if test="${x.offApproval == 'W'}">
+                          <td class="list">
+                            <select onchange="this.form.submit();"  name="approval" id="approval">
+                                <option value="W" name="W">결재대기중</option>
+                                <option value="A" name="A">승인완료</option>
+                                <option value="C" name="C">반려</option>
+                            </select>
+                          </td>
+                        </c:if>
+                        <c:if test="${x.offApproval == 'A'}">
+                        <td><span class="badge badge-pill badge-success">승인완료</span></td>
+                        </c:if>
+                        <c:if test="${x.offApproval == 'C'}">
+                        <td><span class="badge badge-pill badge-danger">반려</span></td>
+                        </c:if>
+                      <td>${x.offEnrolldate}</td>
                     </tr>
                 </c:forEach>
             </c:if>
             <c:if test="${empty voList}">
+              <input type="hidden" id="no" value="${voList[0].offCode}" name="no">
                 <c:forEach items="${AdDateList}" var="y">
                     <tr>
                         <td>${y.offCode}</td>
@@ -154,29 +152,21 @@
                         <td>${y.offEndDate}</td>
                         <td>${y.offDays}</td>
                         <td>${y.offReason}</td>
-                        <td>
-                          <select name="" id="">
-                            <c:if test="${y.offApproval == 'W'}">
-                                <td><option class="badge badge-pill badge-warning">결재대기중</option></td>
-                            </c:if>
-                            <c:if test="${y.offApproval == 'A'}">
-                                <td><option class="badge badge-pill badge-success">승인완료</option></td>
-                            </c:if>
-                            <c:if test="${y.offApproval == 'C'}">
-                                <td><option class="badge badge-pill badge-danger">반려</option></td>
-                            </c:if>
-                              <option value="">결재대기중</option>
-                              <option value="">승인완료</option>
-                              <option value="">반려</option>
-                          </select>
-                        </td>
+                        <c:if test="${y.offApproval == 'W'}">
+                            <td><span class="badge badge-pill badge-warning">결재대기중</span></td>
+                        </c:if>
+                        <c:if test="${y.offApproval == 'A'}">
+                            <td><span class="badge badge-pill badge-success">승인완료</span></td>
+                        </c:if>
+                        <c:if test="${y.offApproval == 'C'}">
+                            <td><span class="badge badge-pill badge-danger">반려</span></td>
+                        </c:if>
                         <td>${y.offEnrolldate}</td>
                     </tr>
                 </c:forEach>
             </c:if>
           </tbody>
         </table>
-        <!-- <input type="submit" id="submit"> -->
       </form>
       
         <c:if test="${y.offApproval == 'W'}">
@@ -221,36 +211,18 @@
 
 
 <script>
-// const submit = document.querySelector('#submit');
-// submit.addEventListener('click', function(){
 
-// const no = $("#no").val();
-// const approval = $('#approval option:selected').val();
-
-// console.log(no);
-// console.log(approval);
-
-//   $.ajax({
-//     url: "${root}/dayoff/sendApproval",
-//     type: "POST",
-//     data: {"no" : no , "approval" : approval},
-//     success: function(data){
-//       console.log(data);
-
-//       if(data == 'success'){
-//         location.href='${root}/dayoff/admin/1';
-//       }else{
-//         alert('결재 실패하였습니다.');
-//       }
-//     },
-//     error: function(){
-//       alert('ajax 통신 실패');
-//     }
-
-//   });
-
-// });
-
+window.onload = function hi(){
+  $(function(){
+    $('tbody tr').children('.list').click(function(){
+        //글 번호 가져오기 (this -> tr태그)
+        let num = $(this).parent().children().eq(0).text();
+        
+        console.log(num);
+        $('input[name=num]').attr('value', num);
+    })
+  });
+}
 </script>
 </body>
 </html>
