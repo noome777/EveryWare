@@ -338,7 +338,6 @@
             },
             navLinks: true,
             eventLimit: true, // allow "more" link when too many events
-            editable: true,
             selectable: true,
             droppable: true, // this allows things to be dropped onto the calendar
             buttonIcons:

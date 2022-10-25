@@ -338,7 +338,6 @@
             },
             navLinks: true,
             eventLimit: true, // allow "more" link when too many events
-            editable: true,
             selectable: true,
             droppable: true, // this allows things to be dropped onto the calendar
             buttonIcons:
@@ -347,6 +346,32 @@
               next: 'fe-arrow-right',
               prevYear: 'left-double-arrow',
               nextYear: 'right-double-arrow'
+            },
+            /**
+             * 드래그로 이벤트 수정하기
+             */
+            eventDrop: function (info){
+                console.log(info);
+                if(confirm("일정 이름 : '"+ info.event.title +"'  일정을 수정하시겠습니까 ?")){
+                }
+                var events = new Array(); // Json 데이터를 받기 위한 배열 선언
+                var obj = new Object();
+	                obj.no = info.event._def.publicId;
+	                obj.title = info.event._def.title;
+	                obj.start = info.event._instance.range.start;
+	                obj.end = info.event._instance.range.end;
+	                events.push(obj);
+
+                console.log(events);
+                $(function deleteData() {
+                    $.ajax({
+                        url: "${root}/calendar/edit",
+                        method: "POST",
+                        dataType: "json",
+                        data: JSON.stringify(events),
+                        contentType: 'application/json',
+                    })
+                })
             },
             /**
              * 이벤트 선택해서 삭제하기
