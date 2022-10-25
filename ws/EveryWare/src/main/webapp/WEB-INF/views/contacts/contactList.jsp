@@ -116,7 +116,7 @@
                           <small class="mb-0 text-muted">meow10@gmail.com</small>
                         </td>
                         <td>
-                          <p class="mb-0 text-muted"><a href="#" class="text-muted">(02) 421-0798</a></p>
+                          <p class="mb-0 text-muted">(02) 421-0798</p>
                         </td>
                         <td>
                         
@@ -127,6 +127,42 @@
                         
                         </td>
                       </tr>
+                      
+                      
+                     <c:forEach items="${cList}" var="list">
+                      <tr>
+                        <td>
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="2474">
+                            <label class="custom-control-label" for="2474"></label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="avatar avatar-sm">
+                            <img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+                          </div>
+                        </td>
+                        <td data-toggle="modal" data-target="#verticalModal">
+                          <p class="mb-0 text-muted"><strong>${list.contactName}</strong></p>
+                          <small class="mb-0 text-muted">2474</small>
+                        </td>
+                        <td>
+                          <p class="mb-0 text-muted">${list.contactCompany}</p>
+                          <small class="mb-0 text-muted">${list.contactEmail}</small>
+                        </td>
+                        <td>
+                          <p class="mb-0 text-muted">${list.contactTel}</p>
+                        </td>
+                        <td>
+                        
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn mb-2 btn-primary btn-sm">Edit</button>
+                        <button type="button" class="btn mb-2 btn-secondary btn-sm">Delete</button>
+                        </div>
+                        
+                        </td>
+                      </tr>
+                     </c:forEach>
                       
                       
                       <!-- Dtail Modal -->
