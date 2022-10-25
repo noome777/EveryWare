@@ -1,6 +1,7 @@
 package com.kh.app00.calendar.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.app00.calendar.service.CalendarService;
@@ -95,12 +99,21 @@ public class CalendarController {
 
 	}
 
-	
-	@GetMapping("delete")
-	public int deleteOne() {
-		int result = 1;
-		System.out.println("옴");
-		return result;
+	@ResponseBody
+	@PostMapping("delete")
+	 public List<Map<String, Object>> deleteOne(@RequestBody List<Map<String, Object>> param) {
+        System.out.println(param);
+        //0번째 row에서 date컬럼 값을 String으로 가져옴
+        String no = param.get(0).get("no").toString();
+
+        //가져온 값 확인
+        System.out.println(no);
+        
+        int result = service.deleteOne(no);
+        
+        
+        
+		return param;
 	}
 	
 	

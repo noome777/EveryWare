@@ -15,4 +15,6 @@ public interface CalendarDao {
 
 	List<CalendarVo> getDepartCalendar(SqlSessionTemplate sst);
 
+	int deleteOne(SqlSessionTemplate sst, String no);
+
 }

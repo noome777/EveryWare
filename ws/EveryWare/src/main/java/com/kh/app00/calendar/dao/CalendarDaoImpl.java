@@ -28,4 +28,10 @@ public class CalendarDaoImpl implements CalendarDao{
 		return sst.insert("calendarMapper.insertOne", vo);
 	}
 
+	@Override
+	public int deleteOne(SqlSessionTemplate sst, String no) {
+		// TODO Auto-generated method stub
+		return sst.update("calendarMapper.deleteOne", no);
+	}
+
 }

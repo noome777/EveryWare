@@ -73,4 +73,10 @@ public class CalendarServiceImpl implements CalendarService {
 		return result;
 	}
 
+	@Override
+	public int deleteOne(String no) {
+		// TODO Auto-generated method stub
+		return dao.deleteOne(sst, no);
+	}
+
 }
