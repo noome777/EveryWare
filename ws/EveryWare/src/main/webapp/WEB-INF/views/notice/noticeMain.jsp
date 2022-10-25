@@ -23,6 +23,19 @@
 	border-radius: 3px;
 	background-color: white;
 }
+
+#title{
+	text-align: center;
+}
+#date {
+	text-align: center;
+}
+#ntitle{
+	text-align: center;
+}
+#ndate{
+	text-align: center;
+}
 </style>
 </head>
 <body>
@@ -30,7 +43,7 @@
 
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
 		<%@ include file="/WEB-INF/views/notice/sidemenu-content.jsp"%>
-		<div class="main-content">
+		<main role="main" class="main-content">
 
 			<h1 id="noticeall">사내 공지</h1>
 			<br>
@@ -49,39 +62,18 @@
 
 						<tr>
 							<th>번호</th>
-							<th>제목</th>
-							<th>등록일</th>
+							<th id="title">제목</th>
+							<th id="date">등록일</th>
 						</tr>
-						<tbody>
-							<tr>
-								<td>5</td>
-								<td>사내공지5</td>
-								<td>22-09-29</td>
-							</tr>
-							<tr>
-								<td>4</td>
-								<td>사내공지4</td>
-								<td>22-09-29</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>사내공지3</td>
-								<td>22-09-29</td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td>사내공지2</td>
-								<td>22-09-29</td>
-							</tr>
-							<tr>
-								<c:forEach items="${nList}" var="x">
+							<tbody>
+							<c:forEach items="${nList}" var="x">
+								<tr onclick="location.href='${root}/notice/detail'">
 								<td>${x.noticeCode}</td>
-								<td><a href="${root}/notice/detail">${x.noticeTitle}</a> </td>
-								<td>${x.noticeDate}</td>
+								<td id="ntitle">${x.noticeTitle}</td>
+								<td id="ndate">${x.noticeDate}</td>
+								</tr>
 								</c:forEach>
-							</tr>
-
-						</tbody>
+							</tbody>
 					</table>
 					<nav aria-label="Page navigation example">
 						<ul class="pagination justify-content-center mb-0">
@@ -95,7 +87,7 @@
 
 				</div>
 			</div>
-		</div>
+		</main>
 	</div>
 </body>
 </html>
