@@ -12,7 +12,7 @@ public interface NoticeDao {
 	List<NoticeVo> selectList(SqlSessionTemplate sst);
 	
 	//사내공지 작성
-	int insertNotice(SqlSessionTemplate sst, NoticeVo vo);
+	int insertNotice(SqlSessionTemplate sst,NoticeVo vo);
 	
 	//사내공지 상세 조회
 	NoticeVo selectOne(SqlSessionTemplate sst, String noticeCode);

@@ -15,4 +15,6 @@ public interface NoticeService {
 	//사내공지 상세 조회
 	NoticeVo selectOne(String noticeCode);
 
+	
+
 }

@@ -12,7 +12,7 @@
 		ORDER BY NOTICE_CODE ASC
 	</select>
 	
-	<insert id="insertNotice" parameterType="com.kh.app00.notice.vo.NoticeVo">
+	<insert id="insertNotice">
 	
 		
 		INSERT INTO NOTICE
@@ -20,12 +20,16 @@
 			NOTICE_CODE
 			,NOTICE_TITLE
 			,NOTICE_CONTENT
+			,NOTICE_DATE
+			,NOTICE_UPDATE
 		)
 		VALUES
 		(
 			SEQ_NOTICE_CODE.NEXTVAL
 			, #{noticeTitle}
 			, #{noticeContent}
+			, SYSDATE
+			, SYSDATE
 		)
 	</insert>
 	
