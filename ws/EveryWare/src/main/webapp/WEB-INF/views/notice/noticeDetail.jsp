@@ -60,14 +60,10 @@
 						<h2>${nvo.noticeContent}</h2>
 				</div>
 				
-				<div id="reply-top">
-				<textarea id="reply-content" name="content"></textarea>
-				<button id="reply-btn" class="btn btn-primary">댓글작성</button>
 			</div>
 			</div>
 	
 				
-		</div>
 
 	</main>
 </body>

@@ -9,7 +9,7 @@
 			,NOTICE_CONTENT
 			,NOTICE_DATE
 		FROM NOTICE
-		ORDER BY NOTICE_CODE ASC
+		ORDER BY NOTICE_CODE DESC
 	</select>
 	
 	<insert id="insertNotice">
