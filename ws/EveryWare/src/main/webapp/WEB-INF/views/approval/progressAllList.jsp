@@ -50,7 +50,7 @@
               </thead>
               <tbody>
               	<c:forEach items="${docList}" var="d">
-	                <tr onclick="location.href='${root}/approval/approvalDocDetail'">
+	                <tr onclick="location.href='${root}/approval/approvalDocDetail/${d.docCode}'">
 	                  <td>${d.docCode}</td>
 	                  <td>${d.formName}</td>
 	                  <td>${d.docTitle}</td>

@@ -534,7 +534,7 @@
         let refEmp = $('.ref-select-box option[value=' + refVal[i] + ']')[0].innerHTML;
         let empInfo = refEmp.split(' ');
         empName = empInfo[0];
-
+        
         refHtml += '<span id="'+ refVal[i] + '" class="ref-name"> ' + empName + '</span>';
       })
 

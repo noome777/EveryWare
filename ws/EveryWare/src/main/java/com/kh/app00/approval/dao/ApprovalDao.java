@@ -41,7 +41,16 @@ public interface ApprovalDao {
 	//부서별 임직원 불러오기
 	List<EmpVo> selectDeptEmp(SqlSessionTemplate sst, int deptCode);
 
-	
+	//결재문서 작성
+	int insertApprovalDoc(SqlSessionTemplate sst, ApprovalDocVo docVo);
+	//문서실제데이터 insert
+	int insertDocData(SqlSessionTemplate sst, List<DocDataVo> docDataList);
+	//결재자리스트 insert
+	int insertApproverList(SqlSessionTemplate sst,List<ApprovalListVo> approverList);
+	//참조인 insert
+	int insertApprovalRef(SqlSessionTemplate sst,List<ApprovalRefVo> approvalRefList);
+	//첨부파일 insert
+	int insertApprovalFile(SqlSessionTemplate sst,List<ApprovalFileVo> approvalFileList);
 	
 	//문서 갯수 조회
 	int selectCountAll(SqlSessionTemplate sst);
@@ -59,16 +68,18 @@ public interface ApprovalDao {
 	int insertDocFormMapping(SqlSessionTemplate sst, List<DocFormMapperVo> mappingList);
 
 	
-	//결재문서 작성
-	int insertApprovalDoc(SqlSessionTemplate sst, ApprovalDocVo docVo);
-	//문서실제데이터 insert
-	int insertDocData(SqlSessionTemplate sst, List<DocDataVo> docDataList);
-	//결재자리스트 insert
-	int insertApproverList(SqlSessionTemplate sst,List<ApprovalListVo> approverList);
-	//참조인 insert
-	int insertApprovalRef(SqlSessionTemplate sst,List<ApprovalRefVo> approvalRefList);
-	//첨부파일 insert
-	int insertApprovalFile(SqlSessionTemplate sst,List<ApprovalFileVo> approvalFileList);
+	
+
+	//작성된 문서 상세정보 불러오기
+	ApprovalDocVo selectDocDetail(SqlSessionTemplate sst, String docCode);
+	//작성된 문서내용 불러오기
+	List<DocDataVo> selectDocDataList(SqlSessionTemplate sst, String docCode);
+	//작성된 문서 결재자 불러오기
+	List<ApprovalListVo> selectApproverList(SqlSessionTemplate sst, String docCode);
+	//작성된 문서 참조인 불러오기
+	List<ApprovalRefVo> selectRefVoList(SqlSessionTemplate sst, String docCode);
+	//결재타입 갯수 구하기
+	List<ApprovalListVo> selectTypeCountList(SqlSessionTemplate sst, String docCode);
 
 	
 	

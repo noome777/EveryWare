@@ -7,4 +7,7 @@ public class DocDataVo {
 	private String docCode;
 	private String formDetailCode;
 	private String docContent;
+	
+	private String formDetailName;
+	private String formDetailType;
 }

@@ -121,7 +121,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 			int approvalFileResult = dao.insertApprovalFile(sst, approvalFileList);
 		}
 		
-		return 0;
+		return approvalDocResult;
 	}
 	
 	//문서 갯수 조회
@@ -160,6 +160,33 @@ public class ApprovalServiceImpl implements ApprovalService {
 		int docFormMappingResult = dao.insertDocFormMapping(sst, mappingList);
 		
 		return docFormResult * docFormMappingResult;
+	}
+
+	
+	//작성된 문서 상세정보 불러오기
+	@Override
+	public ApprovalDocVo selectDocDetail(String docCode) {
+		return dao.selectDocDetail(sst, docCode);
+	}
+	//작성된 문서내용 불러오기
+	@Override
+	public List<DocDataVo> selectDocDataList(String docCode) {
+		return dao.selectDocDataList(sst, docCode);
+	}
+	//작성된 문서 결재자 불러오기
+	@Override
+	public List<ApprovalListVo> selectApproverList(String docCode) {
+		return dao.selectApproverList(sst, docCode);
+	}
+	//작성된 문서 참조인 불러오기
+	@Override
+	public List<ApprovalRefVo> selectRefVoList(String docCode) {
+		return dao.selectRefVoList(sst, docCode);
+	}
+	//결재타입 갯수 구하기
+	@Override
+	public List<ApprovalListVo> selectTypeCountList(String docCode) {
+		return dao.selectTypeCountList(sst, docCode);
 	}
 
 	

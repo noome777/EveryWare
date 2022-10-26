@@ -8,5 +8,11 @@ public class ApprovalListVo {
 	private String apprTypeCode;
 	private String apprEmpCode;
 	private String apprSeq;
+	private String apprDate;
 	private String apprStatus;
+	
+	private String empName;
+	private String deptName;
+	private String rankName;
+	private String apprTypeName;
 }

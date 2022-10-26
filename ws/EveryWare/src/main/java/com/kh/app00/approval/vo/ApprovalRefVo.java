@@ -7,4 +7,6 @@ public class ApprovalRefVo {
 	private String docCode;
 	private String refEmpCode;
 	private String checkYn;
+	
+	private String empName;
 }

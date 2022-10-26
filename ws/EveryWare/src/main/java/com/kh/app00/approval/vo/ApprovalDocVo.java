@@ -19,6 +19,9 @@ public class ApprovalDocVo {
 	
 	private String formName;
 	private String empName;
+	private String deptName;
+	private String rankName;
+	private String period;
 	
 	private List<DocDataVo> docDataList;
 	private List<ApprovalListVo> approverList;

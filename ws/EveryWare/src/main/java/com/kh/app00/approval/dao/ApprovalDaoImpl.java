@@ -65,6 +65,34 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		return sst.selectList("approvalMapper.selectDeptEmpList", deptCode);
 	}
 
+	//결재문서 작성
+	@Override
+	public int insertApprovalDoc(SqlSessionTemplate sst, ApprovalDocVo docVo) {
+		return sst.insert("approvalMapper.insertApprovalDoc", docVo);
+	}
+	//문서실제데이터 insert
+	@Override
+	public int insertDocData(SqlSessionTemplate sst, List<DocDataVo> docDataList) {
+		return sst.insert("approvalMapper.insertDocData", docDataList);
+	}
+
+	//결재자리스트 insert
+	@Override
+	public int insertApproverList(SqlSessionTemplate sst, List<ApprovalListVo> approverList) {
+		return sst.insert("approvalMapper.insertApproverList", approverList);
+	}
+
+	//참조인 insert
+	@Override
+	public int insertApprovalRef(SqlSessionTemplate sst, List<ApprovalRefVo> approvalRefList) {
+		return sst.insert("approvalMapper.insertApprovalRef", approvalRefList);
+	}
+
+	//첨부파일 insert
+	@Override
+	public int insertApprovalFile(SqlSessionTemplate sst, List<ApprovalFileVo> approvalFileList) {
+		return sst.insert("approvalMapper.insertApprovalFile", approvalFileList);
+	}
 	
 	
 	//게시글 갯수 조회
@@ -106,33 +134,33 @@ public class ApprovalDaoImpl implements ApprovalDao {
 
 	
 	
-	//결재문서 작성
+	
+	
+	
+	//작성된 문서 상세정보 불러오기
 	@Override
-	public int insertApprovalDoc(SqlSessionTemplate sst, ApprovalDocVo docVo) {
-		return sst.insert("approvalMapper.insertApprovalDoc", docVo);
+	public ApprovalDocVo selectDocDetail(SqlSessionTemplate sst, String docCode) {
+		return sst.selectOne("approvalMapper.selectDocDetail", docCode);
 	}
-	//문서실제데이터 insert
+	//작성된 문서내용 불러오기
 	@Override
-	public int insertDocData(SqlSessionTemplate sst, List<DocDataVo> docDataList) {
-		return sst.insert("approvalMapper.insertDocData", docDataList);
+	public List<DocDataVo> selectDocDataList(SqlSessionTemplate sst, String docCode) {
+		return sst.selectList("approvalMapper.selectDocDataList", docCode);
 	}
-
-	//결재자리스트 insert
+	//작성된 문서 결재자 불러오기
 	@Override
-	public int insertApproverList(SqlSessionTemplate sst, List<ApprovalListVo> approverList) {
-		return sst.insert("approvalMapper.insertApproverList", approverList);
+	public List<ApprovalListVo> selectApproverList(SqlSessionTemplate sst, String docCode) {
+		return sst.selectList("approvalMapper.selectApproverList", docCode);
 	}
-
-	//참조인 insert
+	//작성된 문서 참조인 불러오기
 	@Override
-	public int insertApprovalRef(SqlSessionTemplate sst, List<ApprovalRefVo> approvalRefList) {
-		return sst.insert("approvalMapper.insertApprovalRef", approvalRefList);
+	public List<ApprovalRefVo> selectRefVoList(SqlSessionTemplate sst, String docCode) {
+		return sst.selectList("approvalMapper.selectRefVoList", docCode);
 	}
-
-	//첨부파일 insert
+	//결재타입 갯수 구하기
 	@Override
-	public int insertApprovalFile(SqlSessionTemplate sst, List<ApprovalFileVo> approvalFileList) {
-		return sst.insert("approvalMapper.insertApprovalFile", approvalFileList);
+	public List<ApprovalListVo> selectTypeCountList(SqlSessionTemplate sst, String docCode) {
+		return sst.selectList("approvalMapper.selectTypeCountList", docCode);
 	}
 
 	
