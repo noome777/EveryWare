@@ -51,4 +51,7 @@ public interface DayoffService {
     //관리자 결재 정보 업데이트
     int updateApproval(DayoffVo vo);
 
+    //휴가 현황 조회
+    List<DayoffVo> getCalendar(DayoffVo vo);
+
 }

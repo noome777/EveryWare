@@ -53,4 +53,7 @@ public interface DayoffDao {
     //관리자의 결재 정보 업데이트
     int updateApproval(SqlSessionTemplate sst, DayoffVo vo);
 
+    //휴가 현황 조회
+    List<DayoffVo> getCalendar(SqlSessionTemplate sst, DayoffVo vo);
+
 }

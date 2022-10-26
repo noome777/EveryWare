@@ -89,5 +89,12 @@
 	<update id="updateApproval">
 		UPDATE DAYOFF SET OFF_APPROVAL = #{offApproval} WHERE OFF_CODE = #{offCode}
 	</update>
+	
+	<select id="selectDayoffCal" resultType="DayoffVo">
+		SELECT TO_DATE(D.OFF_START_DATE) AS OFF_START_DATE , TO_DATE(D.OFF_END_DATE)+1 AS OFF_END_DATE  , E.EMP_NAME AS ECODE
+		FROM DAYOFF D
+		JOIN EMP E ON E.EMP_CODE = D.ECODE
+		WHERE OFF_APPROVAL = 'A' AND D.DEPT_CODE  = #{deptCode}
+	</select>
 
 </mapper>

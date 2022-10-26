@@ -108,4 +108,11 @@ public class DayoffServiceImpl implements DayoffService {
         return dao.updateApproval(sst, vo);
     }
 
+    //휴가 현황 조회
+    @Override
+    public List<DayoffVo> getCalendar(DayoffVo vo) {
+        return dao.getCalendar(sst, vo);
+    }
+
+   
 }
