@@ -22,12 +22,13 @@ import com.kh.app00.organization.service.OrganizationService;
 import com.kh.app00.organization.vo.DeptVo;
 import com.kh.app00.organization.vo.JobVo;
 import com.kh.app00.organization.vo.RankVo;
+import com.google.gson.Gson;
 import com.kh.app00.common.PageVo;
 import com.kh.app00.common.Pagination;
 import com.kh.app00.common.SpaceRemover;
 
 @Controller
-@RequestMapping("organization")
+@RequestMapping("organization" )
 public class OrganizationController {
 	
 	private final OrganizationService organizationService;
@@ -188,36 +189,135 @@ public class OrganizationController {
 		
 		int result = organizationService.updateCheckedRank(updateTarget);
 		
-		System.out.println(result);
 		if(result==0) {
-			return "실패!";
+			return "0";
 		}else {
-			List<EmpVo> empList = organizationService.selectRankOnly(empCodeList);
-			System.out.println(empList);
-			return "성공";
+			String updatedEmpCode = empCodeList.get(0);
+			EmpVo updatedRank = organizationService.selectUpdatedRank(updatedEmpCode);
+			
+			List<String> resultList = new ArrayList<String>();
+			resultList.add(updatedRank.getRankName());
+			resultList.add(updatedRank.getEmpPromotionDate());
+			
+			
+			Gson gson = new Gson();
+			String jsonStr = gson.toJson(resultList);
+			
+			System.out.println(jsonStr);
+			
+			return jsonStr;
 		}
 	}
 	
 	//임직원 관리 - 체크 후 ajax로 직무변경
 	@PostMapping("management/emp/update/checkedJob")
-	public String changeJob() {
-		return null;
+	@ResponseBody
+	public String changeJob(@RequestParam("checkBoxArr") String[] checkBoxArr, @RequestParam("jobCode") String jobCode, Model model) {
+		
+		List<String> empCodeList = new ArrayList<String>();
+		
+		for (String empCode : checkBoxArr) {
+			empCodeList.add(empCode);
+		}
+		
+		List<String > jobCodeList = new ArrayList<String>();
+		jobCodeList.add(jobCode);
+		Map<String, List<String>> updateTarget = new HashMap<String,List<String>>();
+		updateTarget.put("empCodeList", empCodeList);
+		updateTarget.put("jobCodeList", jobCodeList);
+		
+		int result = organizationService.updateCheckedJob(updateTarget);
+		
+		System.out.println(result);
+		if(result==0) {
+			return "0";
+		}else {
+			String updatedEmpCode = empCodeList.get(0);
+			String updatedJob = organizationService.selectUpdatedJob(updatedEmpCode);
+			
+			Gson gson = new Gson();
+			String jsonStr = gson.toJson(updatedJob);
+			
+			System.out.println(jsonStr);
+			
+			return jsonStr;
+		}
 	}
 	
 	//임직원 관리 - 체크 후 ajax로 부서변경
 	@PostMapping("management/emp/update/checkedDept")
-	public String changeDept() {
-		return null;
+	@ResponseBody
+	public String changeDept(@RequestParam("checkBoxArr") String[] checkBoxArr, @RequestParam("deptCode") String deptCode, Model model) {
+		List<String> empCodeList = new ArrayList<String>();
+		
+		for (String empCode : checkBoxArr) {
+			empCodeList.add(empCode);
+		}
+		
+		List<String > deptCodeList = new ArrayList<String>();
+	    deptCodeList.add(deptCode);
+	    
+	    System.out.println("deptCode" +deptCode);
+	    
+		Map<String, List<String>> updateTarget = new HashMap<String,List<String>>();
+		updateTarget.put("empCodeList", empCodeList);
+		updateTarget.put("deptCodeList", deptCodeList);
+		
+		int result = organizationService.updateCheckedDept(updateTarget);
+		
+		System.out.println(result);
+		if(result==0) {
+			return "0";
+		}else {
+			String updatedEmpCode = empCodeList.get(0);
+			String updatedDept = organizationService.selectUpdatedDept(updatedEmpCode);
+			
+			Gson gson = new Gson();
+			String jsonStr = gson.toJson(updatedDept);
+			
+			return jsonStr;
+		}
 	}	
 	
 	//임직원 관리 - 체크 후 ajax로 상태변경
 	@PostMapping("management/emp/update/checkedStatus")
-	public String changeStatus() {
-		return null;
+	@ResponseBody
+	public String changeStatus(@RequestParam("checkBoxArr") String[] checkBoxArr, @RequestParam("status") String status, Model model) {
+		List<String> empCodeList = new ArrayList<String>();
+		
+		for (String empCode : checkBoxArr) {
+			empCodeList.add(empCode);
+		}
+		
+		List<String > statusList = new ArrayList<String>();
+	    statusList.add(status);
+	    
+		Map<String, List<String>> updateTarget = new HashMap<String,List<String>>();
+		updateTarget.put("empCodeList", empCodeList);
+		updateTarget.put("statusList", statusList);
+		
+		
+		int result = organizationService.updateCheckedStatus(updateTarget);
+		
+		System.out.println(result);
+		if(result==0) {
+			return "0";
+		}else {
+			String updatedEmpCode = empCodeList.get(0);
+			String updatedStatus = organizationService.selectUpdatedStatus(updatedEmpCode);
+			
+			Gson gson = new Gson();
+			String jsonStr = gson.toJson(updatedStatus);
+			
+			System.out.println(jsonStr);
+			
+			return jsonStr;
+		}
 	}
 	
 	//임직원 관리 - 체크 후 ajax로 프로필 사진 변경
 	@PostMapping("management/emp/update/checkedProfile")
+	@ResponseBody
 	public String changeProfile() {
 		return null;
 	}

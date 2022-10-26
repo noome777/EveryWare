@@ -87,10 +87,46 @@ public class OrganizationDaoImpl implements OrganizationDao {
 		return sqlSessionTemplate.update("organizationMapper.updateCheckedRank",updateTarget);
 	}
 
-	//변경된 직위 재확인
+	//변경된 직위 확인
 	@Override
-	public List<EmpVo> selectRankOnly(SqlSessionTemplate sqlSessionTemplate, List<String> empCodeList) {
-		return sqlSessionTemplate.selectList("organizationMapper.selectRankOnly", empCodeList);
+	public EmpVo selectUpdatedRank(SqlSessionTemplate sqlSessionTemplate, String updatedEmpCode) {
+		return sqlSessionTemplate.selectOne("organizationMapper.selectUpdatedRank",updatedEmpCode);
+	}
+
+	//임직원 관리 - 체크된 임직원 직무 변경
+	@Override
+	public int updateCheckedJob(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> updateTarget) {
+		return sqlSessionTemplate.update("organizationMapper.updateCheckedJob",updateTarget);
+	}
+
+	//변경된 직무 확인
+	@Override
+	public String selectUpdatedJob(SqlSessionTemplate sqlSessionTemplate, String updatedEmpCode) {
+		return sqlSessionTemplate.selectOne("organizationMapper.selectUpdatedJob",updatedEmpCode);
+	}
+
+	//임직원 관리 - 체크된 임직원 부서 변경
+	@Override
+	public int updateCheckedDept(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> updateTarget) {
+		return sqlSessionTemplate.update("organizationMapper.updateCheckedDept",updateTarget);
+	}
+
+	//변경된 직무 확인
+	@Override
+	public String selectUpdatedDept(SqlSessionTemplate sqlSessionTemplate, String updatedEmpCode) {
+		return sqlSessionTemplate.selectOne("organizationMapper.selectUpdatedDept",updatedEmpCode);
+	}
+
+	//임직원 관리 - 체크된 임직원 부서 변경
+	@Override
+	public int updateCheckedStatus(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> updateTarget) {
+		return sqlSessionTemplate.update("organizationMapper.updateCheckedStatus",updateTarget);
+	}
+
+	//변경된 상태 확인
+	@Override
+	public String selectUpdatedStatus(SqlSessionTemplate sqlSessionTemplate, String updatedEmpCode) {
+		return sqlSessionTemplate.selectOne("organizationMapper.selectUpdatedStatus",updatedEmpCode);
 	}
 
 	

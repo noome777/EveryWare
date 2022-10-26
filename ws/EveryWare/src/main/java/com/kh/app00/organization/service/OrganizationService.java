@@ -46,8 +46,26 @@ public interface OrganizationService {
 	//임직원 관리 - 체크된 임직원 직위 변경
 	int updateCheckedRank(Map<String, List<String>> updateTarget);
 
-	//임직원 관리 - 직위 변경된 임직원 직위 확인
-	List<EmpVo> selectRankOnly(List<String> empCodeList);
+	// 변경된 직위확인
+	EmpVo selectUpdatedRank(String updatedEmpCode);
+
+	//임직원 관리 - 체크된 임직원 직무 변경
+	int updateCheckedJob(Map<String, List<String>> updateTarget);
+
+	//변경된 직무확인
+	String selectUpdatedJob(String updatedEmpCode);
+
+	//임직원 관리 - 체크된 임직원 부서 변경
+	int updateCheckedDept(Map<String, List<String>> updateTarget);
+
+	//변경된 부서확인
+	String selectUpdatedDept(String updatedEmpCode);
+
+	//임직원 관리 - 체크된 임직원 상태 변경
+	int updateCheckedStatus(Map<String, List<String>> updateTarget);
+
+	//변경된 상태확인
+	String selectUpdatedStatus(String updatedEmpCode);
 
 
 }

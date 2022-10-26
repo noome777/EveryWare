@@ -47,8 +47,26 @@ public interface OrganizationDao {
 	//임직원 관리 - 체크된 임직원 직위 변경
 	int updateCheckedRank(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> updateTarget);
 
-	//임직원 관리 - 변경된 직위 재확인
-	List<EmpVo> selectRankOnly(SqlSessionTemplate sqlSessionTemplate, List<String> empCodeList);
+	//변경된 직위확인
+	EmpVo selectUpdatedRank(SqlSessionTemplate sqlSessionTemplate, String updatedEmpCode);
+
+	//임직원 관리 - 체크된 임직원 직무 변경
+	int updateCheckedJob(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> updateTarget);
+
+	//변경된 직무확인
+	String selectUpdatedJob(SqlSessionTemplate sqlSessionTemplate, String updatedEmpCode);
+
+	//임직원 관리 - 체크된 임직원 부서 변경
+	int updateCheckedDept(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> updateTarget);
+
+	//변경된 부서 확인
+	String selectUpdatedDept(SqlSessionTemplate sqlSessionTemplate, String updatedEmpCode);
+
+	//임직원 관리 - 체크된 임직원 상태 변경
+	int updateCheckedStatus(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> updateTarget);
+
+	//변경된 상태 확인
+	String selectUpdatedStatus(SqlSessionTemplate sqlSessionTemplate, String updatedEmpCode);
 
 
 

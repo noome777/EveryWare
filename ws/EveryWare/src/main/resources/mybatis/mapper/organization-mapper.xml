@@ -99,7 +99,7 @@
 			, TO_CHAR(E.EMP_JOIN_DATE,'YYYY-MM-DD') AS EMP_JOIN_DATE
 			, E.EMP_PROFILE_NAME
 			, E.EMP_BIRTHDAY
-			, E.EMP_PROMOTION_DATE
+			, TO_CHAR(E.EMP_PROMOTION_DATE,'YYYY-MM-DD')AS EMP_PROMOTION_DATE
 			, E.EMP_ADDRESS1
 			, E.EMP_ADDRESS2
 			, E.EMP_ETC
@@ -221,10 +221,73 @@
 			UPDATE EMP
 			SET
 				RANK_CODE = #{rankCodeList[0]}
+				, EMP_PROMOTION_DATE = SYSDATE
 				WHERE EMP_CODE = #{item}
 		 </foreach> 
 	</update>
 	
+	<select id="selectUpdatedRank" resultType="EmpVo">
+		SELECT 
+			R.RANK_NAME AS RANK_NAME
+			, TO_CHAR(E.EMP_PROMOTION_DATE,'YYYY-MM-DD') AS EMP_PROMOTION_DATE
+		FROM EMP E
+		JOIN RANK R 
+		ON E.RANK_CODE = R.RANK_CODE
+		WHERE E.EMP_CODE = #{updatedEmpCode}
+	</select>
+	
+	<update id="updateCheckedJob"  parameterType="java.util.Map">
+		<foreach collection="empCodeList" item="item" index="index" open="DECLARE BEGIN" close="; END;" separator=";"> 
+			UPDATE EMP
+			SET
+				EMP_JOB_CODE = #{jobCodeList[0]}
+				WHERE EMP_CODE = #{item}
+		 </foreach> 
+	</update>
+	
+	<select id="selectUpdatedJob" resultType="String">
+		SELECT 
+			J.JOB_NAME AS JOB_NAME
+		FROM EMP E
+		JOIN JOB J 
+		ON E.EMP_JOB_CODE = J.JOB_CODE
+		WHERE E.EMP_CODE = #{updatedEmpCode}
+	</select>
+	
+
+	<update id="updateCheckedDept"  parameterType="java.util.Map">
+		<foreach collection="empCodeList" item="item" index="index" open="DECLARE BEGIN" close="; END;" separator=";"> 
+			UPDATE EMP
+			SET
+				DEPT_CODE = #{deptCodeList[0]}
+				WHERE EMP_CODE = #{item}
+		 </foreach> 
+	</update>
+	
+	<select id="selectUpdatedDept" resultType="String">
+		SELECT 
+			D.DEPT_NAME AS DEPT_NAME
+		FROM EMP E
+		JOIN DEPT D
+		ON E.DEPT_CODE = D.DEPT_CODE
+		WHERE E.EMP_CODE = #{updatedEmpCode}
+	</select>
+	
+	<update id="updateCheckedStatus"  parameterType="java.util.Map">
+		<foreach collection="empCodeList" item="item" index="index" open="DECLARE BEGIN" close="; END;" separator=";"> 
+			UPDATE EMP
+			SET
+				EMP_STATUS = #{statusList[0]}
+				WHERE EMP_CODE = #{item}
+		 </foreach> 
+	</update>
+	
+	<select id="selectUpdatedStatus" resultType="String">
+		SELECT 
+			EMP_STATUS
+		FROM EMP 
+		WHERE EMP_CODE = #{updatedEmpCode}
+	</select>
 	
 	
 </mapper>
