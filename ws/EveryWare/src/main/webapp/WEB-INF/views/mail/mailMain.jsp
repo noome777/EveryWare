@@ -52,7 +52,7 @@
 			<br>
 			<div class="buttonSet">
 				<button type="button" id="sendBtn" class="btn btn-primary">삭제</button>
-				<button type="button" id="cancelBtn" class="btn btn-primary">답장</button>
+				<button type="button" id="cancelBtn" class="btn btn-primary" onclick="location.href='${root}/mail/reply'">답장</button>
 			</div>
 			<!-- <div class="input-group w-50" >
 		<span class="input-group-text" id="basic-addon1">

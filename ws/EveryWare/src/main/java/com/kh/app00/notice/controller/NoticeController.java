@@ -61,7 +61,17 @@ public class NoticeController {
 			
 			evo.setDeptCode(no);
 			
+			/*
+			 * NoticeVo ntitle = (NoticeVo) model.addAttribute("noticeTitle", title); String
+			 * title = ntitle.getNoticeTitle();
+			 * 
+			 * NoticeVo ncontent = (NoticeVo) model.addAttribute("noticeContent", content);
+			 * String content = ncontent.getNoticeContent();
+			 */
+	
+			
 			int result = ns.write(vo);
+			
 			
 			System.out.println(vo);
 			

@@ -19,6 +19,12 @@ public class MailController {
 		return "mail/mailWrite";
 	}
 	
+	@GetMapping("reply")
+	public String mailReply() {
+		return "mail/mailReply";
+	}
+	
+	
 	@GetMapping("receive")
 	public String mailReceive() {
 		return "mail/mailReceive";

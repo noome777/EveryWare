@@ -17,13 +17,15 @@
 <style>
 #noticetitle {
 	width: 1000px;
-	margin-left: 50px;
+	margin-right: 500px;
 }
 
 .mb-3 {
 	padding-top: 20px;
-	margin-left: 50px;
+	margin-right: 50px;
 }
+
+
 </style>
 </head>
 <body>

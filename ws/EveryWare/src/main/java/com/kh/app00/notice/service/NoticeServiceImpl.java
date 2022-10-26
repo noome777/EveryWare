@@ -28,7 +28,7 @@ public class NoticeServiceImpl implements NoticeService {
 	//사내공지 작성
 	@Override
 	public int write(NoticeVo vo) {
-		return dao.insertNotice(sst,vo);
+		return dao.insertNotice(sst, vo);
 	}
 
 	@Override
