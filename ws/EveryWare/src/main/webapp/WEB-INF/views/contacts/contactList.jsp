@@ -143,15 +143,15 @@
                           </div>
                         </td>
                         <td data-toggle="modal" data-target="#verticalModal">
-                          <p class="mb-0 text-muted"><strong>${list.contactName}</strong></p>
+                          <p class="mb-0 text-muted"><strong>${list.conName}</strong></p>
                           <small class="mb-0 text-muted">2474</small>
                         </td>
                         <td>
-                          <p class="mb-0 text-muted">${list.contactCompany}</p>
-                          <small class="mb-0 text-muted">${list.contactEmail}</small>
+                          <p class="mb-0 text-muted">${list.conCompany}</p>
+                          <small class="mb-0 text-muted">${list.conEmail}</small>
                         </td>
                         <td>
-                          <p class="mb-0 text-muted">${list.contactTel}</p>
+                          <p class="mb-0 text-muted">${list.conTel}</p>
                         </td>
                         <td>
                         

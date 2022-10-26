@@ -32,7 +32,7 @@ public class ContactController {
 		
 		model.addAttribute("cList" , cList);
 		
-		//System.out.println(cList);
+		System.out.println(cList);
 		
 		return "contacts/contactList";
 	}
