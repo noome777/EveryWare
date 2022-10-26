@@ -80,71 +80,79 @@
 		<div class="card shadow mb-4">
       <div class="card-body">
       <div>
-        <h3 class="center">품의서</h3>
+        <h3 class="center">${apprDocVo.formName}</h3>
         <table class="table table-bordered mb-0 shadow" id="approval-setting-table">
           <tr>
             <td class="appr-table-color">문서 종류</td>
-            <td>품의서</td>
+            <td>${apprDocVo.formName}</td>
             <td class="appr-table-color">문서 번호</td>
-            <td>품의_1234_1234</td>
+            <td>${apprDocVo.docCode}</td>
           </tr>
           <tr>
             <td class="appr-table-color">작성부서</td>
-            <td>인사팀</td>
+            <td>${apprDocVo.deptName}</td>
             <td class="appr-table-color">작성자</td>
-            <td>고은비</td>
+            <td>${apprDocVo.empName}</td>
           </tr>
           <tr>
             <td class="appr-table-color">문서상태</td>
             <td>정상</td>
             <td class="appr-table-color">보존연한</td>
-            <td>영구</td>
+            <td>${apprDocVo.period}</td>
           </tr>
           <tr>
             <td class="appr-table-color">작성일시</td>
-            <td>2022.10.03</td>
+            <td>${apprDocVo.docEnrollDate}</td>
             <td class="appr-table-color">완료일시</td>
-            <td>2022.10.03</td>
+            <td></td>
           </tr>
         </table>
         
         <!-- 결재라인 -->
         <table id="approval-table" class="table table-bordered mb-0 shadow">
+          <c:forEach items="${apprTypeCountList}" var="c">
           <tr class="appr-table-color">
-            <td rowspan="3" style="width: 100px;">신청</td>
-            <td>사원</td>
-            <td>대리</td>
-            <td>팀장</td>
-            <td></td>
-            <td rowspan="3" style="width: 100px;">처리</td>
-            <td>주임</td>
-            <td>과장</td>
-            <td>팀장</td>
-            <td></td>
+            <td rowspan="3" style="width: 100px;">${c.apprTypeName}</td>
+            <c:forEach items="${approverVoList}" var="a">
+            	<c:if test="${c.apprTypeCode eq a.apprTypeCode}">
+	            	<td>${a.rankName}</td>
+            	</c:if>
+            </c:forEach>
           </tr>
           <tr style="height: 100px;">
-            <td class="appr-mark-td"><img class="appr-mark" src="${root}/resources/img/appr-mark.png" alt="승인"> <br> 22.10.03</td>
+          	<td></td>
+          	<td></td>
+          	<td></td>
+          	<td></td>
+          	<td></td>
+          	<td></td>
+          	<td></td>
+          	<td></td>
+            <%-- <td class="appr-mark-td"><img class="appr-mark" src="${root}/resources/img/appr-mark.png" alt="승인"> <br> 22.10.03</td>
             <td class="appr-mark-td"><img class="appr-mark" src="${root}/resources/img/appr-mark.png" alt="승인"> <br> 22.10.03</td>
             <td class="appr-mark-td"><img class="appr-mark" src="${root}/resources/img/appr-mark.png" alt="승인"> <br> 22.10.03</td>
             <td class="appr-mark-td"></td>
             <td class="appr-mark-td"><img class="appr-mark" src="${root}/resources/img/appr-mark.png" alt="승인"> <br> 22.10.03</td>
             <td class="appr-mark-td"><img class="appr-mark" src="${root}/resources/img/appr-mark.png" alt="승인"> <br> 22.10.03</td>
             <td class="appr-mark-td"><img class="appr-mark" src="${root}/resources/img/appr-mark.png" alt="승인"> <br> 22.10.03</td>
-            <td class="appr-mark-td"></td>
+            <td class="appr-mark-td"></td> --%>
           </tr>
           <tr>
-            <td>김사원</td>
-            <td>김대리</td>
-            <td>김팀장</td>
-            <td></td>
-            <td>김주임</td>
-            <td>김과장</td>
-            <td>나팀장</td>
-            <td></td>
+          	<c:forEach items="${approverVoList}" var="a">
+	          	<c:if test="${c.apprTypeCode eq a.apprTypeCode}">
+    	        	<td>${a.empName}</td>
+            	</c:if>
+            </c:forEach>
           </tr>
+          </c:forEach>
+          
           <tr>
             <td class="appr-table-color">참조인</td>
-            <td colspan="9"></td>
+            <td colspan="9" class="text-left">
+            	<c:forEach items="${approvalRefVoList}" var="a">
+	            	<span>${a.empName}</span> 
+            	</c:forEach>
+            </td>
           </tr>
         </table>
       </div>
@@ -156,40 +164,31 @@
 		 <div class="card shadow mb-4">
       <div class="card-body">
         <div id="appr-content">
-          <h4>신규 입사자 노트북 구매의 건</h4>
+          <h4>${apprDocVo.docTitle}</h4>
           <hr>
-            <div class="font-size-1" style="white-space:pre-wrap">
-  2022년도 11월 입사 예정인 신입사원 3인의 노트북 구매를 하고자 아래와 같이 품의하오니 결재하여 주시기 바랍니다.
-
-
-  구매 목적 : 개발팀 신규 입사자 3인 노트북 구매
-
-  구매 내역
-
-  - 품명 : LG gram
-  - 단가 : 1,600,000
-  - 수량 : 3EA
-  - 합계 : 4,800,000
-          </div>
-    
-          <table class="table table-bordered mb-0 shadow font-size-1">
-            <tr class="appr-table-color">
-              <td>거래처</td>
-              <td>은행명</td>
-              <td>계좌번호</td>
-              <td>예금주</td>
-              <td>송금액</td>
-              <td>송금 요청일</td>
-            </tr>
+          
+          <c:forEach items="${docDataVoList}" var="d">
+              <c:if test="${d.formDetailCode == 1}">
+                <div class="font-size-1" style="white-space:pre-wrap">
+      ${d.docContent}	
+                </div>
+              </c:if>
+          </c:forEach>
+          
+         <div style="width: 800px;">
+           <table class="table table-bordered mb-0 shadow font-size-1">
+             <c:forEach items="${docDataVoList}" var="d">
+                <tr>
+                <c:if test="${d.formDetailCode != 1}">
+                 <td class="appr-table-color w-25">${d.formDetailName}</td>
+                 <td>${d.docContent}</td>
+                </c:if>
+              </tr>
+              </c:forEach>
             <tr>
-              <td>lg 베스트샵</td>
-              <td>기업</td>
-              <td>111-1111-1111</td>
-              <td>lg</td>
-              <td>4,800,000</td>
-              <td>22-10-06</td>
-            </tr>
           </table>		
+         </div>
+    
           <hr>
           <div>
             구매 견적서.xlsx

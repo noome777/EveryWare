@@ -25,6 +25,9 @@ import com.kh.app00.approval.doc.vo.DocFormVo;
 import com.kh.app00.approval.doc.vo.DocPeriodVo;
 import com.kh.app00.approval.service.ApprovalService;
 import com.kh.app00.approval.vo.ApprovalDocVo;
+import com.kh.app00.approval.vo.ApprovalFileVo;
+import com.kh.app00.approval.vo.ApprovalListVo;
+import com.kh.app00.approval.vo.ApprovalRefVo;
 import com.kh.app00.approval.vo.ApprovalTypeVo;
 import com.kh.app00.common.PageVo;
 import com.kh.app00.common.Pagination;
@@ -118,7 +121,11 @@ public class ApprovalController {
 //		docVo.setEmpCode(loginMember.getEmpCode());
 		int result = service.insertApprovalDoc(docVo);
 		
-		return"작성 성공";
+		if(result == 1) {
+			return "작성 성공";
+		} else {
+			return "작성 실패";
+		}
 	}
 	
 	
@@ -128,8 +135,23 @@ public class ApprovalController {
 		return "approval/approvalAdmin";
 	}
 	
-	@GetMapping("approvalDocDetail")
-	public String docDetail() {
+	//문서 상세 불러오기
+	@GetMapping("approvalDocDetail/{docCode}")
+	public String docDetail(@PathVariable String docCode, Model model) {
+		
+		ApprovalDocVo apprDocVo = service.selectDocDetail(docCode);
+		List<DocDataVo> docDataVoList = service.selectDocDataList(docCode);
+		List<ApprovalListVo> approverVoList = service.selectApproverList(docCode);
+		List<ApprovalRefVo> approvalRefVoList = service.selectRefVoList(docCode);
+//		List<ApprovalFileVo> approvalFileList = service.selectFileVoList(docCode);
+		List<ApprovalListVo> apprTypeCountList = service.selectTypeCountList(docCode);
+		
+		model.addAttribute("apprDocVo", apprDocVo);
+		model.addAttribute("docDataVoList", docDataVoList);
+		model.addAttribute("approverVoList", approverVoList);
+		model.addAttribute("approvalRefVoList", approvalRefVoList);
+		model.addAttribute("apprTypeCountList", apprTypeCountList);
+		
 		return "approval/approvalDocDetail";
 	}
 	
@@ -169,7 +191,12 @@ public class ApprovalController {
 	public String formInsert(@RequestBody DocFormVo formVo) {
 		int formInsert = service.insertForm(formVo);
 		
-		return "성공";
+		if(formInsert == 1) {
+			return "성공";
+		} else {
+			return "실패";
+		}
+		
 	}
 	
 }
