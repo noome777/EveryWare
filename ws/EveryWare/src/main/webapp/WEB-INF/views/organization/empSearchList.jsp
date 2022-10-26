@@ -5,6 +5,31 @@
 <head>
 <meta charset="UTF-8">
 <title>임직원 검색</title>
+<style>
+	.modal-profile-wrap {
+		margin: 25px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+	  
+	.modal-profile-texts-wrap {
+	  	margin-top: 20px;
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+		width: 85%;
+	}
+	  
+	.flex-items {
+		height: 38px;
+		display: grid;
+		grid-template-columns: 1fr 2fr;
+		align-items: center;
+		justify-items: center;
+	}
+</style>
 </head>
 <body class="vertical  light">
 
@@ -60,7 +85,7 @@
 								<c:forEach items="${empList}" var="el">
 									<div class="profile shadow">
 										<div class="profile-image avatar avatar-lg">
-											<a href="">
+											<a href="#emp-profile-${el.empCode}" data-toggle="modal">
 												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
 											</a>
 										</div>
@@ -87,6 +112,95 @@
 		</div>
 	</main>
 </div>
+	<c:forEach items="${empList}" var="empList">
+	
+      <div class="modal fade" id="emp-profile-${empList.empCode}" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body modal-profile-wrap"> 
+                <div class="profile-img-wrap">
+                  <div class="avatar avatar-xl">
+                    <img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle preview-img" id="preview-img">
+				  </div>
+                </div>
+                <div class="modal-profile-texts-wrap">
+                  <div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted"><strong>이름</strong></p>
+                    </div>
+                    <div>
+                      <p class="mb-0">${empList.empName}</p>
+                    </div>
+                  </div>
+                  <div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted"><strong>직위</strong></p>
+                    </div>
+                    <div>
+                      <p class="mb-0" class="modal-rank-area">${empList.rankName}</p>
+                    </div>
+                  </div>
+                  <div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted"><strong>소속</strong></p>
+                    </div>
+                    <div>
+                      <p class="mb-0" class="modal-dept-area">${empList.deptName}</p>
+                    </div>
+                  </div>
+				  <div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted"><strong>직무</strong></p>
+                    </div>
+                    <div>
+                      <p class="mb-0" class="modal-job-area">${empList.jobName}</p>
+                    </div>
+                  </div>
+                  <!--<div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted"><strong>생년월일</strong></p>
+                    </div>
+                    <div>
+                      <p class="mb-0" class="modal-birthday-area">${empList.empBirthday}</p>
+                    </div>
+                  </div>-->
+                  <div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted" ><strong>사내전화</strong></p>
+                    </div>
+                    <div>
+                      <p class="mb-0" class="modal-tel-area">${empList.empTel}</p>
+                    </div>
+                  </div>
+                  <!--<div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted"><strong>휴대전화</strong></p>
+                    </div>
+                    <div>
+                      <p class="mb-0"  class="modal-phone-area">${empList.empPhone}</p>
+                    </div>
+                  </div>-->
+                  <div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted" ><strong>e-mail</strong></p>
+                    </div>
+                    <div>
+                      <p class="mb-0" class="modal-email-area">${empList.empEMail}</p>
+                    </div>
+                  </div>
+      
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+    </c:forEach>
 
 	<c:if test="${empty empList}">
 		<script>

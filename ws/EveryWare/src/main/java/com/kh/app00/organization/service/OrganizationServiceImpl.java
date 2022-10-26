@@ -128,11 +128,55 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 
 
-	// 직위 변경된 임직원 직위확인
+	//변경된 직위확인
 	@Override
-	public List<EmpVo> selectRankOnly(List<String> empCodeList) {
-		return organizationDao.selectRankOnly(sqlSessionTemplate,empCodeList);
+	public EmpVo selectUpdatedRank(String updatedEmpCode) {
+		return organizationDao.selectUpdatedRank(sqlSessionTemplate,updatedEmpCode);
 	}
+
+
+	//임직원 관리 - 체크된 임직원 직무변경
+	@Override
+	public int updateCheckedJob(Map<String, List<String>> updateTarget) {
+		return organizationDao.updateCheckedJob(sqlSessionTemplate, updateTarget);
+	}
+
+
+	//변경된 직무확인
+	@Override
+	public String selectUpdatedJob(String updatedEmpCode) {
+		return organizationDao.selectUpdatedJob(sqlSessionTemplate, updatedEmpCode);
+	}
+
+
+	//임직원 관리 - 체크된 임직원 부서 변경
+	@Override
+	public int updateCheckedDept(Map<String, List<String>> updateTarget) {
+		return organizationDao.updateCheckedDept(sqlSessionTemplate, updateTarget);
+	}
+
+
+	//변경된 부서 확인
+	@Override
+	public String selectUpdatedDept(String updatedEmpCode) {
+		return organizationDao.selectUpdatedDept(sqlSessionTemplate, updatedEmpCode);
+	}
+
+
+	//임직원 관리 - 체크된 임직원 상태 변경
+	@Override
+	public int updateCheckedStatus(Map<String, List<String>> updateTarget) {
+		return organizationDao.updateCheckedStatus(sqlSessionTemplate, updateTarget);
+	}
+
+
+	//변경된 상태 확인
+	@Override
+	public String selectUpdatedStatus(String updatedEmpCode) {
+		return organizationDao.selectUpdatedStatus(sqlSessionTemplate, updatedEmpCode);
+	}
+
+
 
 
 

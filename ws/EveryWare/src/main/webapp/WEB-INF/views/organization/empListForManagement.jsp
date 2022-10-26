@@ -227,8 +227,10 @@ padding: 10px;
                       <tr id="tr">
                         <th>
                           <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="all">
-                            <label class="custom-control-label" for="all"></label>
+                            <c:if test="${not empty empList}">
+                            	<input type="checkbox" class="custom-control-input" id="all">
+                          		<label class="custom-control-label" for="all"></label>
+                            </c:if>
                           </div>
                         </th>
                         <th>프로필</th>
@@ -450,7 +452,7 @@ padding: 10px;
     function checkBlank() {
 
       if(searchBar.val() === "") {
-    	  console.log("검색창에 글자를 입력하여 주시길 바랍니다.");
+    	  alert("검색창에 글자를 입력하여 주시길 바랍니다.");
         return false;
       } else {
         return true;
