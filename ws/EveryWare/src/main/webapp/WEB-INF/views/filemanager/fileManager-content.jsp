@@ -118,7 +118,7 @@
 									<!-- .card -->
 								</div>
 							</c:forEach>
-
+							
 
 						</div>
 						<!-- .row -->
