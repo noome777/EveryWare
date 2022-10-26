@@ -14,10 +14,15 @@
 		<typeAlias alias="DocPeriodVo" type="com.kh.app00.approval.doc.vo.DocPeriodVo"/>
 		<typeAlias alias="DocFormMapperVo" type="com.kh.app00.approval.doc.vo.DocFormMapperVo"/>
 		<typeAlias alias="DocDataVo" type="com.kh.app00.approval.doc.vo.DocDataVo"/>
+		<typeAlias alias="DocFormDetailTemplateVo" type="com.kh.app00.approval.doc.vo.DocFormDetailTemplateVo"/>
+
+		
 		<typeAlias alias="ApprovalDocVo" type="com.kh.app00.approval.vo.ApprovalDocVo"/>
 		<typeAlias alias="ApprovalTypeVo" type="com.kh.app00.approval.vo.ApprovalTypeVo"/>
+		<typeAlias alias="ApprovalListVo" type="com.kh.app00.approval.vo.ApprovalListVo"/>
+		<typeAlias alias="ApprovalRefVo" type="com.kh.app00.approval.vo.ApprovalRefVo"/>
+
 		
-		<typeAlias alias="DocFormDetailTemplateVo" type="com.kh.app00.approval.doc.vo.DocFormDetailTemplateVo"/>
 		
 		
 		<!-- 인사 관련 -->
