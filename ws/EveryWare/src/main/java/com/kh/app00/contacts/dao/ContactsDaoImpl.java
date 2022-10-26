@@ -13,6 +13,7 @@ public class ContactsDaoImpl implements ContactsDao{
 	//주소록 목록
 	@Override
 	public List<ContactsVo> selectList(SqlSessionTemplate sst) {
+		
 		return sst.selectList("contactsMapper.selectList");
 	}
 

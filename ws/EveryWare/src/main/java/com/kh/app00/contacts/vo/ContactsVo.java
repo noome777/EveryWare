@@ -7,12 +7,13 @@ import lombok.Data;
 @Data
 public class ContactsVo {
 
-	private String contactNo;
-    private String empCode;
-    private String contactName;
-    private String contactEmail;
-    private String contactTel;
-    private String contactCompany;
-    private String contactMemo;
+	//private String empCode;
+	private String conNo;
+    private String conName;
+    private String conEmail;
+    private String conTel;
+    private String conCompany;
+    private String conMemo;
+
 	
 }
