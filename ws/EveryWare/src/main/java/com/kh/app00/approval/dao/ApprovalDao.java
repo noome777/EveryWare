@@ -82,6 +82,17 @@ public interface ApprovalDao {
 	List<ApprovalListVo> selectTypeCountList(SqlSessionTemplate sst, String docCode);
 
 	
+	//결재 예정 리스트 개수 구하기
+	int selectExpectCount(SqlSessionTemplate sst);
+	//결재 예정 문서 목록 조회
+	List<ApprovalDocVo> selectExpectDocList(SqlSessionTemplate sst, PageVo pv);
+
+	
+	//결재 진행중인 참조된 문서
+	List<ApprovalDocVo> selectRefDocList(SqlSessionTemplate sst);
+
+
+	
 	
 
 

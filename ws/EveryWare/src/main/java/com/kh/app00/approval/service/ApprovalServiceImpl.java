@@ -1,8 +1,6 @@
 package com.kh.app00.approval.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,34 +90,32 @@ public class ApprovalServiceImpl implements ApprovalService {
 		List<ApprovalRefVo> approvalRefList = docVo.getApprovalRefList();
 		List<ApprovalFileVo> approvalFileList = docVo.getApprovalFileList();
 		
-		if(docDataList != null) {
+		if(docDataList.size() != 0) {
 			for(DocDataVo vo : docDataList) {
 				vo.setDocCode(constructedDocCode);
 			}
-			System.out.println(docDataList);
 			int docDataResult = dao.insertDocData(sst, docDataList);
 		}
-		if(approverList != null) {
+		if(approverList.size() != 0) {
 			for(ApprovalListVo vo : approverList) {
 				vo.setDocCode(constructedDocCode);
 			}
-			System.out.println(approverList);
 			int approverListResult = dao.insertApproverList(sst, approverList);
 		}
-		if(approvalRefList != null) {
+		if(approvalRefList.size() != 0) {
 			for(ApprovalRefVo vo : approvalRefList) {
 				vo.setDocCode(constructedDocCode);
 			}
-			System.out.println(approvalRefList);
 			int approvalRefResult = dao.insertApprovalRef(sst, approvalRefList);
 		}
-		if(approvalFileList != null) {
-			for(ApprovalFileVo vo : approvalFileList) {
-				vo.setDocCode(constructedDocCode);
-			}
-			System.out.println(approvalFileList);
-			int approvalFileResult = dao.insertApprovalFile(sst, approvalFileList);
-		}
+//		if(approvalFileList.size() != 0 && approvalFileList != null) {
+//			
+//			for(ApprovalFileVo vo : approvalFileList) {
+//				vo.setDocCode(constructedDocCode);
+//			}
+//			System.out.println(approvalFileList);
+//			int approvalFileResult = dao.insertApprovalFile(sst, approvalFileList);
+//		}
 		
 		return approvalDocResult;
 	}
@@ -188,6 +184,27 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public List<ApprovalListVo> selectTypeCountList(String docCode) {
 		return dao.selectTypeCountList(sst, docCode);
 	}
+
+	
+	//결재 예정 리스트 개수 구하기
+	@Override
+	public int selectExpectCount() {
+		return dao.selectExpectCount(sst);
+	}
+	//결재 예정 문서 목록 조회
+	@Override
+	public List<ApprovalDocVo> selectExpectDocList(PageVo pv) {
+		return dao.selectExpectDocList(sst, pv);
+	}
+
+	
+	//결재 진행중인 참조된 문서 조회
+	@Override
+	public List<ApprovalDocVo> selectRefDocList() {
+		return dao.selectRefDocList(sst);
+	}
+
+	
 
 	
 
