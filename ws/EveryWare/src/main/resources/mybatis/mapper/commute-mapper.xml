@@ -40,7 +40,7 @@
 	<select id="selectCommuteList" resultType="CommuteVo">
 		SELECT TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE
 		, START_TIME_FORMAT, END_TIME_FORMAT, ROUND((TO_DATE(END_TIME, 'HH24:MI:SS') - TO_DATE(START_TIME, 'HH24:MI:SS')) * 24, 2) AS WORKING_TIME, COM_STATUS 
-		FROM COMMUTE
+		FROM COMMUTE ORDER BY ENROLL_DATE DESC
 	</select>
 	
 	<select id="selectCommuteDateCnt" resultType="int">
@@ -55,7 +55,7 @@
 		, START_TIME_FORMAT, END_TIME_FORMAT, ROUND((TO_DATE(END_TIME, 'HH24:MI:SS') - TO_DATE(START_TIME, 'HH24:MI:SS')) * 24, 2) AS WORKING_TIME, COM_STATUS
 		FROM COMMUTE
 		WHERE TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') BETWEEN  SUBSTR(#{enrollDate}, 1,10) AND SUBSTR(#{enrollDate}, 12)
-		AND COM_STATUS = #{comStatus}
+		AND COM_STATUS = #{comStatus} ORDER BY ENROLL_DATE DESC
 	</select>
 	
 	<select id="selectTotalCnt" resultType="int">

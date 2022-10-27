@@ -65,9 +65,10 @@ margin-top: 5%;
 #page-area>a{
   margin: 5px;
 }
-td{
-  margin-left: 10px;
+table>tbody>tr>td *{
+  margin-left: 7%;
 }
+
 
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
@@ -79,7 +80,7 @@ td{
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <%@ include file="/WEB-INF/views/commute/commute-side.jsp" %>
    	<main role="main" class="main-content">
-    <button onclick="location.href='${root}/emp/login'">로그아웃</button>
+    <%-- <button onclick="location.href='${root}/emp/login'">로그아웃</button> --%>
       <!-- 근무체크 -->
       <form action="" method="post">
         <div class="card shadow mb-4">

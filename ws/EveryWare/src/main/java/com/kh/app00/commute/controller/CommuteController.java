@@ -39,6 +39,11 @@ public class CommuteController {
     public String commuteMain(Model model, HttpSession session, CommuteVo vo, 
             @PathVariable int pno, String enrollDate, String comStatus) {
         
+        // 로그인 여부 체크
+        if (session.getAttribute("loginMember") == null) {
+            session.setAttribute("alertMsg", "로그인 후 접근 가능합니다 !");
+            return "redirect:/emp/login";
+        }
 
         // 사원의 코드를 vo에 추가하기
         EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
@@ -94,8 +99,6 @@ public class CommuteController {
             model.addAttribute("commuteCnt", commuteCnt);
         }
 
-
-
         return "commute/commuteMain";
     }
 
@@ -131,7 +134,8 @@ public class CommuteController {
         Date endFormat = format.parse(endTime);
         Date onTimeIn = new SimpleDateFormat("HH:mm:ss").parse("09:00:00");
         Date onTimeOut = new SimpleDateFormat("HH:mm:ss").parse("18:00:00");
-
+        
+        //수정!!
         if (onTimeIn.after(startFormat) || onTimeIn.equals(startFormat)) {
             if (onTimeOut.after(endFormat)) {
                 // 조기퇴근
@@ -141,12 +145,17 @@ public class CommuteController {
                 vo.setComStatus(normal);
             }
         } else if (onTimeIn.before(startFormat)) {
-            // 지각
-            vo.setComStatus(late);
-            if (onTimeOut.after(endFormat) || endFormat == null) {
-                // 결근
+            if (onTimeOut.before(endFormat)) {
+                //결근
                 vo.setComStatus(absent);
+            }else {
+                // 지각
+                vo.setComStatus(late);
             }
+//            if (onTimeOut.after(endFormat) || endFormat == null) {
+//                // 결근
+//                
+//            }
         }
 
         System.out.println(vo);
