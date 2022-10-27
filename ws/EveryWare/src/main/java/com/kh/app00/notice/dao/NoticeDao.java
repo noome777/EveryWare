@@ -26,6 +26,9 @@ public interface NoticeDao {
 	
 	//게시글 삭제
 	int delete(SqlSessionTemplate sst, String noticeCode);
+	
+	//게시글 수정
+	int updateOne(SqlSessionTemplate sst, NoticeVo nvo);
 
 
 }

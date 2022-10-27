@@ -87,16 +87,16 @@
 					<nav aria-label="Page navigation example">
 						<ul class="pagination justify-content-center mb-0">
 							<c:if test="${pv.startPage ne 1}">
-								<li class="page-item"><a class="page-link" href="${root}/notice/noticeMain/${pv.startPage - 1}">Previous</a></li>
+								<li class="page-item"><a class="page-link" href="/app00/notice/noticeMain/${pv.startPage - 1}">Previous</a></li>
 							</c:if>
 
 							<c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
 								<li class="page-item"><a class="page-link"
-									href="${root}/notice/noticeMain/${i}">${i}</a></li>
+									href="/app00/notice/noticeMain/${i}">${i}</a></li>
 							</c:forEach>
 
 							<c:if test="${pv.endPage ne pv.maxPage}">
-								<li class="page-item"><a class="page-link" href="${root}/notice/noticeMain/${pv.endPage + 1}">Next</a></li>
+								<li class="page-item"><a class="page-link" href="/app00/notice/noticeMain/${pv.endPage + 1}">Next</a></li>
 							</c:if>
 						</ul>
 					</nav>

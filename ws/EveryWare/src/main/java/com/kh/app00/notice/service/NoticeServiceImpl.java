@@ -52,4 +52,9 @@ public class NoticeServiceImpl implements NoticeService {
 	public int delete(String noticeCode) {
 		return dao.delete(sst, noticeCode);
 	}
+
+	@Override
+	public int edit(NoticeVo nvo) {
+		return dao.updateOne(sst , nvo);
+	}
 }

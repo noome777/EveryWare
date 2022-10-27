@@ -115,7 +115,37 @@ public class NoticeController {
 		return "notice/noticeDetail";
 
 	}
-
+	
+	
+	//수정하기
+	@GetMapping("noticeEdit/{noticeCode}")
+	public String edit(@PathVariable String noticeCode , Model model) {
+		NoticeVo nvo = ns.selectOne(noticeCode);
+		model.addAttribute("nvo" , nvo);
+		return "notice/noticeEdit";
+	}
+	
+	//게시글 수정
+	@PostMapping("noticeEdit/{noticeCode}")
+	public String edit(@PathVariable String noticeCode , NoticeVo nvo, HttpSession session) {
+		
+		nvo.setNoticeCode(noticeCode);
+		
+		//디비 다녀오기
+		int result = ns.edit(nvo);
+		
+		if(result == 1) {
+			//성공 화면 
+			session.setAttribute("alertMsg", "게시글 수정 성공!!!");
+			return "redirect:/notice/noticeDetail/" + noticeCode;
+		}else {
+			//실패
+			session.setAttribute("alertMsg", "게시글 수정 실패...");
+			return "redirect:/";
+		}
+		
+	}
+	
 	// 삭제하기
 	@GetMapping("noticeDelete/{noticeCode}")
 	public String delete(@PathVariable String noticeCode, HttpSession session, Model model) {

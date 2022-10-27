@@ -51,14 +51,23 @@
 		SET NOTICE_VIEWS = NOTICE_VIEWS + 1
 		WHERE NOTICE_CODE = #{noticeCode}
 	</update>
-
+	
+	<update id="updateOne">
+		UPDATE NOTICE
+			SET 
+				NOTICE_TITLE = #{noticeTitle}
+				, NOTICE_CONTENT = #{noticeContent}
+				, NOTICE_UPDATE = SYSDATE
+			WHERE NOTICE_CODE = #{noticeCode}
+	</update>
+	
 	<select id="selectCountAll" resultType="int">
 		SELECT COUNT (*)
 		FROM
 		NOTICE
 		WHERE NOTICE_CODE = #{noticeCode}
 	</select>
-
+	
 	<update id="deleteNotice">
 		UPDATE NOTICE
 		SET

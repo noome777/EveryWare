@@ -21,6 +21,9 @@ public interface NoticeService {
 	
 	//게시글 삭제
 	int delete(String noticeCode);
+	
+	//게시글 수정하기
+	int edit(NoticeVo nvo);
 
 	
 

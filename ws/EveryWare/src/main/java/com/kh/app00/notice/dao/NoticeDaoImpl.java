@@ -46,5 +46,10 @@ public class NoticeDaoImpl implements NoticeDao {
 		return sst.update("noticeMapper.deleteNotice", noticeCode);
 	}
 
+	@Override
+	public int updateOne(SqlSessionTemplate sst, NoticeVo nvo) {
+		return sst.update("noticeMapper.updateOne" , nvo);
+	}
+
 	
 }
