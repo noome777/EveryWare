@@ -9,4 +9,10 @@ public interface ContactsService {
 	//주소록 목록
 	List<ContactsVo> selectList();
 
+	//주소록 삭제
+	int delete(String no);
+
+	//주소록 작성
+	int write(ContactsVo vo);
+
 }

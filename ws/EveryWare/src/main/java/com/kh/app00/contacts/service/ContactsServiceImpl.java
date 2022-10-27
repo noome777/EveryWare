@@ -28,4 +28,16 @@ public class ContactsServiceImpl implements ContactsService{
 		return dao.selectList(sst);
 	}
 
+	//주소록 삭제
+	@Override
+	public int delete(String no) {
+		return dao.delete(sst, no);
+	}
+
+	//주소록 작성
+	@Override
+	public int write(ContactsVo vo) {
+		return dao.insertContacts(sst , vo);
+	}
+
 }

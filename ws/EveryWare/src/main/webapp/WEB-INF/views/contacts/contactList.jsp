@@ -33,6 +33,7 @@
                   <button type="button" class="btn btn-secondary"><span class="fe fe-trash fe-12 mr-2"></span>Delete</button>
                   
                   <!-- Modal -->
+                 <form action="${root}/contacts/write" method="post">
                   <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
@@ -42,32 +43,33 @@
                              <span aria-hidden="true">&times;</span>
                            </button>
                         </div>
+                        
                        <div class="modal-body">
-                       
                        <label for="simpleinput">Name</label>
-                        <input type="text" id="simpleinput" class="form-control" placeholder="Name">
+                        <input type="text" id="simpleinput" class="form-control" placeholder="Name" name="conName">
                        <label for="example-email">Email</label>
-                         <input type="email" id="example-email" name="example-email" class="form-control" placeholder="Email">
+                         <input type="email" id="example-email" class="form-control" placeholder="Email" name="conEmail">
                        <label for="simpleinput">Phone</label>
-                        <input type="text" id="simpleinput" class="form-control" placeholder="Phone">
+                        <input type="text" id="simpleinput" class="form-control" placeholder="Phone" name="conTel">
                        <label for="simpleinput">Company</label>
-                        <input type="text" id="simpleinput" class="form-control" placeholder="Company">
+                        <input type="text" id="simpleinput" class="form-control" placeholder="Company" name="conCompany">
                        <label for="example-textarea">Memo</label>
-                        <textarea class="form-control" id="example-textarea" rows="4"></textarea>
+                        <textarea class="form-control" id="example-textarea" rows="4" name="conMemo"></textarea>
                        <label for="customFile">Image file</label>
                        <div class="custom-file">
                         <input type="file" class="custom-file-input" id="customFile">
                         <label class="custom-file-label" for="customFile">Choose file</label>
                        </div>
-                       
                        </div>
+                       
                          <div class="modal-footer">
                            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">닫기</button>
-                           <button type="button" class="btn mb-2 btn-primary">저장</button>
+                           <button type="submit" class="btn mb-2 btn-primary">저장</button>
                          </div>
                        </div>
                      </div>
                    </div>
+                  </form>
                       
                 </div>
               </div>
@@ -80,12 +82,7 @@
                   
                     <thead>
                       <tr>
-                        <th>
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="all2">
-                            <label class="custom-control-label" for="all2"></label>
-                          </div>
-                        </th>
+                        <th>...</th>
                         <th>Image</th>
                         <th>User</th>
                         <th>Company/Email</th>
@@ -95,12 +92,10 @@
                     </thead>
                     
                     <tbody>
+                    
                       <tr>
                         <td>
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="2474">
-                            <label class="custom-control-label" for="2474"></label>
-                          </div>
+			              <i class="fe fe-24 fe-check-circle small text-muted"></i>
                         </td>
                         <td>
                           <div class="avatar avatar-sm">
@@ -109,33 +104,27 @@
                         </td>
                         <td data-toggle="modal" data-target="#verticalModal">
                           <p class="mb-0 text-muted"><strong>김춘배</strong></p>
-                          <small class="mb-0 text-muted">2474</small>
                         </td>
                         <td>
                           <p class="mb-0 text-muted">Accumsan Consulting</p>
                           <small class="mb-0 text-muted">meow10@gmail.com</small>
                         </td>
                         <td>
-                          <p class="mb-0 text-muted">(02) 421-0798</p>
+                          <p class="mb-0 text-muted">(02)421-0798</p>
                         </td>
                         <td>
-                        
-                        <div class="btn-group" role="group" aria-label="Basic example">
+                        <div class="btn-group" role="group" aria-label="Basic example"> 
                         <button type="button" class="btn mb-2 btn-primary btn-sm">Edit</button>
                         <button type="button" class="btn mb-2 btn-secondary btn-sm">Delete</button>
                         </div>
-                        
                         </td>
                       </tr>
                       
                       
                      <c:forEach items="${cList}" var="list">
                       <tr>
-                        <td>
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="2474">
-                            <label class="custom-control-label" for="2474"></label>
-                          </div>
+                       <td>
+                         <i class="fe fe-24 fe-circle small text-muted"></i>
                         </td>
                         <td>
                           <div class="avatar avatar-sm">
@@ -144,7 +133,6 @@
                         </td>
                         <td data-toggle="modal" data-target="#verticalModal">
                           <p class="mb-0 text-muted"><strong>${list.conName}</strong></p>
-                          <small class="mb-0 text-muted">2474</small>
                         </td>
                         <td>
                           <p class="mb-0 text-muted">${list.conCompany}</p>
@@ -153,14 +141,52 @@
                         <td>
                           <p class="mb-0 text-muted">${list.conTel}</p>
                         </td>
-                        <td>
                         
+                        <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn mb-2 btn-primary btn-sm">Edit</button>
-                        <button type="button" class="btn mb-2 btn-secondary btn-sm">Delete</button>
+                        <button type="button" class="btn mb-2 btn-primary btn-sm" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo"> Edit </button>
+                        <button type="button" class="btn mb-2 btn-secondary btn-sm" onclick="location.href='${root}/contacts/contactList/${list.conNo}';"> Delete </button>
                         </div>
                         
-                        </td>
+                      <!-- Edit Modal -->
+                       <div class="modal fade" id="varyModal" tabindex="-1" role="dialog" aria-labelledby="varyModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="varyModalLabel">수정하기</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            
+                            <div class="modal-body">
+                              <form action="">
+                               <label for="simpleinput">Name</label>
+		                        <input type="text" id="simpleinput" class="form-control" placeholder="Name" name="conName">
+		                       <label for="example-email">Email</label>
+		                         <input type="email" id="example-email" class="form-control" placeholder="Email" name="conEmail">
+		                       <label for="simpleinput">Phone</label>
+		                        <input type="text" id="simpleinput" class="form-control" placeholder="Phone" name="conTel">
+		                       <label for="simpleinput">Company</label>
+		                        <input type="text" id="simpleinput" class="form-control" placeholder="Company" name="conCompany">
+		                       <label for="example-textarea">Memo</label>
+		                        <textarea class="form-control" id="example-textarea" rows="4" name="conMemo"></textarea>
+		                       <label for="customFile">Image file</label>
+		                       <div class="custom-file">
+		                        <input type="file" class="custom-file-input" id="customFile">
+		                        <label class="custom-file-label" for="customFile">Choose file</label>
+		                       </div>
+                              </form>
+                            </div>
+                            
+                            <div class="modal-footer">
+                              <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">닫기</button>
+                              <button type="submit" class="btn mb-2 btn-primary">수정하기</button>
+                            </div>
+                           </div>
+                          </div>
+                         </div>
+                       </td>
                       </tr>
                      </c:forEach>
                       
@@ -177,7 +203,25 @@
                             </div>
                             <div class="modal-body">
                             
-                            <span>내용어쩌구</span>
+                            <div>
+                              <form action="">
+                               <label for="simpleinput">Name</label>
+		                        <input type="text" class="form-control" id="example-disable" disabled="" value="이름" name="conName">
+		                       <label for="example-email">Email</label>
+		                         <input type="text" class="form-control" id="example-disable" disabled="" value="이메일" name="conEmail">
+		                       <label for="simpleinput">Phone</label>
+		                        <input type="text" class="form-control" id="example-disable" disabled="" value="연락처" name="conTel">
+		                       <label for="simpleinput">Company</label>
+		                        <input type="text" class="form-control" id="example-disable" disabled="" value="회사명" name="conCompany">
+		                       <label for="example-textarea">Memo</label>
+		                        <textarea class="form-control" id="example-textarea" rows="4" disabled="" value="메모" name="conMemo"></textarea>
+		                       <label for="customFile">Image file</label>
+		                       <div class="custom-file">
+		                        <input type="file" class="custom-file-input" id="customFile" disabled="" value="파일">
+		                        <label class="custom-file-label" for="customFile">file</label>
+		                       </div>
+                              </form>
+                            </div>
                             
                             </div>
                             <div class="modal-footer">
@@ -187,7 +231,6 @@
                           </div>
                         </div>
                       </div>
-                      
     
                     </tbody>
                   </table>
@@ -211,6 +254,23 @@
       </main> <!-- main -->
       
     </div> <!-- .wrapper -->
+    
+    
+    
+    <script>
+
+        var i = 0;
+        $('i').on('click',function(){
+            if(i == 0){
+                $(this).attr('class','fe fe-24 fe-check-circle small text-muted');
+                i++;
+            }else if(i == 1){
+                $(this).attr('class','fe fe-24 fe-check-circle small text-muted');
+                i--;
+            }
+        });
+
+    </script>
     
 </body>
 </html>
