@@ -3,49 +3,66 @@
 <mapper namespace="noticeMapper">
 
 	<select id="selectList" resultType="NoticeVo">
-		SELECT 
-		   	NOTICE_CODE
-			,NOTICE_TITLE
-			,NOTICE_CONTENT
-			,NOTICE_DATE
+		SELECT
+		NOTICE_CODE
+		,NOTICE_TITLE
+		,NOTICE_CONTENT
+		,NOTICE_DATE
+		,NOTICE_VIEWS
+		,NOTICE_DELETE
 		FROM NOTICE
-		ORDER BY NOTICE_CODE ASC
+		ORDER BY NOTICE_CODE DESC
 	</select>
-	
+
 	<insert id="insertNotice">
-	
-		
+
+
 		INSERT INTO NOTICE
 		(
-			NOTICE_CODE
-			,NOTICE_TITLE
-			,NOTICE_CONTENT
-			,NOTICE_DATE
-			,NOTICE_UPDATE
+		NOTICE_CODE
+		,NOTICE_TITLE
+		,NOTICE_CONTENT
+		,NOTICE_DATE
+		,NOTICE_UPDATE
 		)
 		VALUES
 		(
-			SEQ_NOTICE_CODE.NEXTVAL
-			, #{noticeTitle}
-			, #{noticeContent}
-			, SYSDATE
-			, SYSDATE
+		SEQ_NOTICE_CODE.NEXTVAL
+		, #{noticeTitle}
+		, #{noticeContent}
+		, SYSDATE
+		, SYSDATE
 		)
 	</insert>
-	
+
 	<select id="selectOne" resultType="NoticeVo">
-		SELECT 
-		   	NOTICE_CODE
-			,NOTICE_TITLE
-			,NOTICE_CONTENT
-			,NOTICE_DATE
+		SELECT
+		NOTICE_CODE
+		,NOTICE_TITLE
+		,NOTICE_CONTENT
+		,NOTICE_DATE
+		,NOTICE_VIEWS
 		FROM NOTICE
-		
+		WHERE NOTICE_CODE = #{noticeCode}
 	</select>
-	
-	<update id="increaseHit">
+
+	<update id="increaseViews">
 		UPDATE NOTICE
-			SET NOTICE_VIEWS = NOTICE_VIEWS + 1
-		WHERE NOTICE_CODE = #{NOTICE_CODE}
+		SET NOTICE_VIEWS = NOTICE_VIEWS + 1
+		WHERE NOTICE_CODE = #{noticeCode}
+	</update>
+
+	<select id="selectCountAll" resultType="int">
+		SELECT COUNT (*)
+		FROM
+		NOTICE
+		WHERE NOTICE_CODE = #{noticeCode}
+	</select>
+
+	<update id="deleteNotice">
+		UPDATE NOTICE
+		SET
+		NOTICE_DELETE = SYSDATE
+		WHERE NOTICE_CODE = #{noticeCode}
 	</update>
 </mapper>

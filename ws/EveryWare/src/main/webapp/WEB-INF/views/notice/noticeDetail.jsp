@@ -31,14 +31,17 @@
 	</div>
 
 	<main role="main" class="main-content">
+	  <c:if test="${ loginMember.empId eq 'ADMIN' }">
 		<div class="buttonSet">
-				<button type="button" id="sendBtn" class="btn btn-primary">삭제</button>
+				<button type="button" id="sendBtn" class="btn btn-primary"  onclick="location.href='${root}/notice/noticeDelete/${nvo.noticeCode}'">삭제</button>
 		</div>
+		</c:if>
 		<div class="card shadow">
 			<div class="card-body">
 				<div class="title" name="noticeTitle">
-					<h2>${nvo.noticeTitle}</h2>
+					${nvo.noticeTitle}
 				</div>
+				<br>
 				<div class="date_cover">
 					<p class="send_date">
 						<span class="blind">관리자</span>
@@ -46,28 +49,25 @@
 				</div>
 				<div class="send_cover">
 					<p class="send_date">
-						<span class="blind">조회수</span>
+						<span class="views">조회수</span> ${nvo.noticeViews}
 					</p>
+					
 				</div>
 				<div class="date_cover">
-						<h2>${nvo.noticeDate}</h2>
+						<p>${nvo.noticeDate}</p>
 				</div>
 			</div>
 			<hr>
 			<div class="content">
 				<div
 					style="padding: 2em 2em; margin: 2em 0; color: black; background: #FFF; border: solid 0px #black; border-radius: 10px;">
-						<h2>${nvo.noticeContent}</h2>
+						${nvo.noticeContent}
 				</div>
 				
-				<div id="reply-top">
-				<textarea id="reply-content" name="content"></textarea>
-				<button id="reply-btn" class="btn btn-primary">댓글작성</button>
 			</div>
 			</div>
-	
+		
 				
-		</div>
 
 	</main>
 </body>

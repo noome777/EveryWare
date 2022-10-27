@@ -33,10 +33,9 @@
 	<main role="main" class="main-content">
 		<h2 id="noticewrite">공지사항 작성</h2>
 		<br>
-		<form action="" method="post">
+		<form action="/app00/notice/write" method="post" enctype="multipart/form-data">
 			<div class="buttonSet">
-				<button type="submit" id="sendBtn" class="btn btn-primary"
-					onclick="summit()">완료</button>
+				<button type="submit" class="btn btn-primary">완료</button>
 			</div>
 
 			<hr>
@@ -58,7 +57,7 @@
 					<td colspan="2">
 						<div class="mb-3">
 							<label for="formFileMultiple" class="form-label"></label> <input
-								class="form-control" type="file" id="formFileMultiple" multiple>
+								class="form-control" type="file" id="formFileMultiple" name= "f" multiple>
 						</div>
 					</td>
 					<tr class="content">
@@ -70,51 +69,20 @@
 			</table>
 			
 			<script>
-      $('#summernote').summernote({
-        placeholder: 'Hello stand alone ui',
-        tabsize: 2,
-        height: 250,
-        toolbar: [
-          ['style', ['style']],
-          ['font', ['bold', 'underline', 'clear']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['table', ['table']],
-          ['insert', ['link', 'picture', 'video']],
-          ['view', ['fullscreen', 'codeview', 'help']]
-        ]
-      });
-      
-      //function summit() {
-
-//          const button = event.srcElement;
-  //        button.disabled = true;
-
-//          const title = document.getElementById('noticeTitle').value;
-  //        const content = $('#summernote').summernote('code');
-
-//          const formData = new FormData;
- //         formData.append("noticeTitle", noticeTitle);
-  //        formData.append("content", content);
-   //       console.log(content);
-
-//          const httpRequest = new XMLHttpRequest();
- //         httpRequest.onreadystatechange = () => {
-//              if (httpRequest.readyState === XMLHttpRequest.DONE) {
- //                 if (httpRequest.status === 200) {
-  //                    console.log(httpRequest.response);
-  //                    location.href = "/noticeMain.jsp";
-  //                } else {
- //                     alert("게시물 등록중 오류가 발생했습니다.");
- //                     button.disabled = false;
-  //                }
-   //           }
-    //      }
-    //      httpRequest.open('post', '/', true);
-   //       httpRequest.send(formData);
-
-//      }
-    </script>
+		      $('#summernote').summernote({
+		        placeholder: 'Hello stand alone ui',
+		        tabsize: 2,
+		        height: 250,
+		        toolbar: [
+		          ['style', ['style']],
+		          ['font', ['bold', 'underline', 'clear']],
+		          ['color', ['color']],
+		          ['para', ['ul', 'ol', 'paragraph']],
+		          ['table', ['table']],
+		          ['view', ['fullscreen', 'codeview', 'help']]
+		        ]
+		      });
+		    </script>
 			
 		</form>
 	</main>
