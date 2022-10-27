@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  	
-<c:set var="root" value="${pageContext.request.contextPath}" />  
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="root" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,16 +26,19 @@
 	background-color: white;
 }
 
-#title{
+#title {
 	text-align: center;
 }
+
 #date {
 	text-align: center;
 }
-#ntitle{
+
+#ntitle {
 	text-align: center;
 }
-#ndate{
+
+#ndate {
 	text-align: center;
 }
 </style>
@@ -67,23 +70,34 @@
 							<th id="title">제목</th>
 							<th id="date">등록일</th>
 						</tr>
-							<tbody>
+						<tbody>
+							  
 							<c:forEach items="${nList}" var="x">
-								<tr onclick="location.href='${root}/notice/detail'">
-								<td>${x.noticeCode}</td>
-								<td id="ntitle">${x.noticeTitle}</td>
-								<td id="ndate">${x.noticeDate}</td>
+								<c:if test="${x.noticeDelete eq null}">
+								<tr
+									onclick="location.href='${root}/notice/noticeDetail/${x.noticeCode}'">
+									<td>${x.noticeCode}</td>
+									<td id="ntitle">${x.noticeTitle}</td>
+									<td id="ndate">${x.noticeDate}</td>
 								</tr>
-								</c:forEach>
-							</tbody>
+								</c:if>
+							</c:forEach>
+						</tbody>
 					</table>
 					<nav aria-label="Page navigation example">
 						<ul class="pagination justify-content-center mb-0">
-							<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-							<li class="page-item"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item"><a class="page-link" href="#">Next</a></li>
+							<c:if test="${pv.startPage ne 1}">
+								<li class="page-item"><a class="page-link" href="${root}/notice/noticeMain/${pv.startPage - 1}">Previous</a></li>
+							</c:if>
+
+							<c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
+								<li class="page-item"><a class="page-link"
+									href="${root}/notice/noticeMain/${i}">${i}</a></li>
+							</c:forEach>
+
+							<c:if test="${pv.endPage ne pv.maxPage}">
+								<li class="page-item"><a class="page-link" href="${root}/notice/noticeMain/${pv.endPage + 1}">Next</a></li>
+							</c:if>
 						</ul>
 					</nav>
 
