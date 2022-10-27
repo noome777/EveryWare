@@ -67,6 +67,17 @@ public interface ApprovalService {
 	//결재타입 갯수 구하기
 	List<ApprovalListVo> selectTypeCountList(String docCode);
 
+	
+	//결재 예정 리스트 개수 구하기
+	int selectExpectCount();
+	//결재 예정 문서 목록 조회
+	List<ApprovalDocVo> selectExpectDocList(PageVo pv);
+
+	
+	//결재 진행중인 참조된 문서 목록 조회
+	List<ApprovalDocVo> selectRefDocList();
+
+
 
 
 

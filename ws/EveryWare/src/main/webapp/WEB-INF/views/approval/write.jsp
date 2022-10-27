@@ -359,6 +359,10 @@
       })
     })
 
+    
+    
+
+
     //체크박스 체크 시 해당 결재타입 보이기
     $('#modal-appr-type input[type=checkbox]').on('click', function(){
       let clickedBox = $('.appr-custom-box[apprTypeCode = '+ this.value + ']');
@@ -368,6 +372,8 @@
       } else {
         clickedBox.addClass('d-none');
       }
+      
+      
 
     });
 
@@ -559,9 +565,10 @@
       // $.ajax({
       //   url : '${root}/approval/write',
       //   type : 'POST',
-      //   processData : false,
-      //   contentType : false,
       //   data : formData,
+      //   processData : false,
+      //   // enctype: 'multipart/form-data',
+      //   contentType : "multipart/form-data",
       //   success : function(data) {
       //     alert(data);
       //     $('#file-name').html(fileList);

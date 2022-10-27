@@ -50,13 +50,14 @@ public class ApprovalController {
 	public String list(Model model, @PathVariable int pno) {
 		
 		int totalCount = service.selectTotalCnt();
-		PageVo pv = Pagination.getPageVo(totalCount, pno, 3, 10);
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 3, 15);
 		
 		//list 조회
 		List<ApprovalDocVo> docList = service.selectDocList(pv);
 		
 		//문서종류 불러오기
 		List<DocFormVo> formList = service.selectFormList();
+		
 		
 		model.addAttribute("formList", formList);
 		model.addAttribute("docList", docList);
@@ -119,6 +120,9 @@ public class ApprovalController {
 	public String write(@RequestBody ApprovalDocVo docVo, HttpSession session) {
 		EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
 //		docVo.setEmpCode(loginMember.getEmpCode());
+		
+		
+		
 		int result = service.insertApprovalDoc(docVo);
 		
 		if(result == 1) {
@@ -129,11 +133,6 @@ public class ApprovalController {
 	}
 	
 	
-	
-	@GetMapping("approvalAdmin")
-	public String admin() {
-		return "approval/approvalAdmin";
-	}
 	
 	//문서 상세 불러오기
 	@GetMapping("approvalDocDetail/{docCode}")
@@ -155,10 +154,54 @@ public class ApprovalController {
 		return "approval/approvalDocDetail";
 	}
 	
+	
+	//진행 - 예정목록 
+	@GetMapping("progressExpectedList/{pno}")
+	public String progressExpectedList(Model model, HttpSession session, @PathVariable int pno) {
+		EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
+		
+		//문서종류 불러오기
+		List<DocFormVo> formList = service.selectFormList();
+		
+		int totalCount = service.selectExpectCount();
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 3, 15);
+		List<ApprovalDocVo> docList = service.selectExpectDocList(pv);
+		
+		model.addAttribute("formList", formList);
+		model.addAttribute("docList", docList);
+		model.addAttribute("pv", pv);
+		
+		return "approval/progressExpectedList";
+	}
+	
+	//진행 - 확인 목록
+	@GetMapping("progressRefList")
+	public String progressRefList(Model model) {
+		
+		//문서종류 불러오기
+		List<DocFormVo> formList = service.selectFormList();
+		
+		List<ApprovalDocVo> docList = service.selectRefDocList();
+		
+		model.addAttribute("formList", formList);
+		model.addAttribute("docList", docList);
+		
+		return "approval/progressRefList";
+	}
+	
+	
 	@GetMapping("storage")
 	public String storage() {
 		return "approval/storage";
 	}
+	
+	
+	
+	@GetMapping("approvalAdmin")
+	public String admin() {
+		return "approval/approvalAdmin";
+	}
+	
 	
 	@GetMapping("formManager")
 	public String formManager() {

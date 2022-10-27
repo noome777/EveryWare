@@ -165,6 +165,31 @@ public class ApprovalDaoImpl implements ApprovalDao {
 
 	
 	
+	//결재 예정 리스트 개수 구하기
+	@Override
+	public int selectExpectCount(SqlSessionTemplate sst) {
+		return sst.selectOne("approvalMapper.selectExpectCount");
+	}
+	//결재 예정 문서 목록 조회
+	@Override
+	public List<ApprovalDocVo> selectExpectDocList(SqlSessionTemplate sst, PageVo pv) {
+		
+		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
+		
+		return sst.selectList("approvalMapper.selectExpectDocList", null, rb);
+	}
+
+	
+	//결재 진행중인 참조된 문서 목록 조회
+	@Override
+	public List<ApprovalDocVo> selectRefDocList(SqlSessionTemplate sst) {
+		return sst.selectList("approvalMapper.selectRefDocList");
+	}
+
+	
+
+	
 	
 	
 	
