@@ -177,6 +177,27 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 
 
+	//임직원 관리 - 체크된 임직원 파일 변경
+	@Override
+	public int updateCheckedFileName(Map<String, List<String>> updateTarget) {
+		return organizationDao.updateCheckedFileName(sqlSessionTemplate,updateTarget);
+	}
+
+
+	//변경된 파일명 확인
+	@Override
+	public String selectUpdatedFileName(String updatedEmpCode) {
+		return organizationDao.selectUpdatedFileName(sqlSessionTemplate,updatedEmpCode);
+	}
+
+
+	//관리자 리스트 불러오기
+	@Override
+	public List<EmpVo> selectAdminList() {
+		return organizationDao.selectAdminList(sqlSessionTemplate);
+	}
+
+
 
 
 

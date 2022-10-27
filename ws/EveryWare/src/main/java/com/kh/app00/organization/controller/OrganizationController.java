@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.fileupload.FileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.app00.emp.vo.EmpVo;
 import com.kh.app00.organization.service.OrganizationService;
@@ -23,6 +26,7 @@ import com.kh.app00.organization.vo.DeptVo;
 import com.kh.app00.organization.vo.JobVo;
 import com.kh.app00.organization.vo.RankVo;
 import com.google.gson.Gson;
+import com.kh.app00.common.FileUploader;
 import com.kh.app00.common.PageVo;
 import com.kh.app00.common.Pagination;
 import com.kh.app00.common.SpaceRemover;
@@ -318,8 +322,41 @@ public class OrganizationController {
 	//임직원 관리 - 체크 후 ajax로 프로필 사진 변경
 	@PostMapping("management/emp/update/checkedProfile")
 	@ResponseBody
-	public String changeProfile() {
-		return null;
+	public String changeProfile(@RequestParam("checkBoxArr") String[] checkBoxArr,@RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest req, Model model) {
+	
+		String savePath = req.getServletContext().getRealPath("/resources/upload/profile/");
+		String changeName = FileUploader.fileUpload(uploadFile, savePath);
+		
+		List<String> empCodeList = new ArrayList<String>();
+		
+		for (String empCode : checkBoxArr) {
+			empCodeList.add(empCode);
+		}
+		
+		List<String > fileList = new ArrayList<String>();
+	    fileList.add(changeName);
+	    
+	    Map<String, List<String>> updateTarget = new HashMap<String,List<String>>();
+	    updateTarget.put("fileList", fileList);
+	    updateTarget.put("empCodeList", empCodeList);
+		
+		int result = organizationService.updateCheckedFileName(updateTarget);
+		
+		System.out.println("result :" + result);
+		if(result==0) {
+			return "0";
+		}else {
+			String updatedEmpCode = empCodeList.get(0);
+			String updatedStatus = organizationService.selectUpdatedFileName(updatedEmpCode);
+			
+			Gson gson = new Gson();
+			String jsonStr = gson.toJson(updatedStatus);
+			
+			System.out.println("json :" + jsonStr);
+			
+			return jsonStr;
+		}
+		
 	}
 	
 		
@@ -332,10 +369,19 @@ public class OrganizationController {
 	}
 	
 	//권한 관리 페이지
-	@GetMapping("management/right/{pno}")
-		public String manageRight(Model model, @PathVariable int pno){
+	@GetMapping("management/right")
+		public String manageRight(Model model,HttpSession session){
 		
-		return "organization/rightManager";
+		List<EmpVo> adminList = organizationService.selectAdminList();
+		
+		if(adminList != null) {
+			model.addAttribute("adminList",adminList);
+			return "organization/rightManager";
+		} else {
+			session.setAttribute("errorMsg","권한 관리를 위한 임직원 목록을 조회하는데 실패하였습니다.");
+			return "redirect:/";
+		}
+		
 	}
 	
 	//조직도

@@ -68,7 +68,6 @@ height: 100%;
 width: 85%;
 height: 55%;
 border-radius: 5px;
-/* border : 1px solid lightgray;*/
 display: flex;
 }
 
@@ -217,7 +216,19 @@ padding: 10px;
 	cursor: pointer;
 }
 
+.hide-input{
+	border:none;
+	border-right:0px;
+	border-top:0px;
+	boder-left:0px; 
+	boder-bottom:0px;
+	text-align: center;
+  color : gray;
+}
 
+.hide-select {
+	border-style: none;
+}
 
 
 
@@ -242,7 +253,10 @@ padding: 10px;
                   <h2 class="h3 mb-0 page-title">임직원 관리</h2>
                 </div>
                 <div class="col-auto">
-                  <button type="button" class="btn shadow mb-2" data-toggle="modal" data-target=".modal-right"><span class="fe fe-user-plus fe-12 mr-2" ></span>사용자 추가</button>
+                  <button type="button" class="btn shadow mb-2" data-toggle="modal" data-target=".modal-right">
+	                  <span class="fe fe-user-plus fe-12 mr-2" >
+	                  </span>사용자 추가
+                  </button>
                 </div>
                 
               </div>
@@ -266,11 +280,11 @@ padding: 10px;
 
                       </div>
                       <div id="option-button-area" class="fade">
-                        <button type="button" class="btn shadow active-buttons" data-toggle="modal" data-target="#changeRank-modal"><small>직위 변경</small></button>
-                        <button type="button" class="btn shadow active-buttons" data-toggle="modal" data-target="#changeJob-modal"><small>직무 변경</small></button>
-                        <button type="button" class="btn shadow active-buttons" data-toggle="modal" data-target="#changeDept-modal"><small>부서 변경</small></button>
-                        <button type="button" class="btn shadow active-buttons" data-toggle="modal" data-target="#changeStatus-modal"><small>상태 변경</small></button>
-                        <button type="button" class="btn shadow active-buttons" data-toggle="modal" data-target="#changeProfile-modal"><small>프로필 변경</small></button>
+                        <button type="button" class="btn shadow " data-toggle="modal" data-target="#changeRank-modal"><small>직위 변경</small></button>
+                        <button type="button" class="btn shadow " data-toggle="modal" data-target="#changeJob-modal"><small>직무 변경</small></button>
+                        <button type="button" class="btn shadow " data-toggle="modal" data-target="#changeDept-modal"><small>부서 변경</small></button>
+                        <button type="button" class="btn shadow " data-toggle="modal" data-target="#changeStatus-modal"><small>상태 변경</small></button>
+                        <button type="button" class="btn shadow " data-toggle="modal" data-target="#changeProfile-modal"><small>프로필 변경</small></button>
                       </div>
                     </div>
                   </div>
@@ -279,8 +293,10 @@ padding: 10px;
                       <tr>
                         <th>
                           <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="all" onchange="readCheckNum();">
-                            <label class="custom-control-label" for="all"></label>
+                            <c:if test="${not empty empList}">
+                            	<input type="checkbox" class="custom-control-input" id="all"  onchange="readCheckNum();">
+                          		<label class="custom-control-label" for="all"></label>
+                            </c:if>
                           </div>
                         </th>
                         <th>프로필</th>
@@ -308,8 +324,15 @@ padding: 10px;
                         <td>
                           <div class="avatar avatar-sm">
                             <a data-toggle="modal" href="#emp-profile-${empList.empCode}">
-                           	 <img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle ${empList.empCode}-profile" >
-                            </a>
+                              <c:choose>
+                              	<c:when test="${empty empList.empProfileName}">
+                           	 		<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle ${empList.empCode}-profile" >
+                           	  	</c:when>
+                           	  	<c:otherwise>
+                           	   		<img src="${root}/resources/upload/profile/${empList.empProfileName}" alt="..." class="avatar-img rounded-circle ${empList.empCode}-profile" >
+                           	  	</c:otherwise>
+                           	  </c:choose>
+                           </a>
                           </div>
                         </td>
                         <td>
@@ -450,15 +473,14 @@ padding: 10px;
               </div>
               <div class="grid-col">
 
-                <input type="submit"class="btn mb-2 btn-primary" value="저장" onclick="checkData();">
+                <input type="submit"class="btn mb-2 btn-primary" value="저장"  onclick=" return checkData();">
                 <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
               </div>
 
             </div>
           </div>
-        </div>
       </form>  
-    </div>
+        </div>
 
     <c:forEach items="${empList}" var="empList">
 	
@@ -466,15 +488,24 @@ padding: 10px;
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="verticalModalTitle">임직원 상세정보</h5>
+                <h5 class="modal-title" >임직원 상세정보</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
+              <form action="${root}/organization/management/emp/update/selectOne" method="post">
+              
               <div class="modal-body profile-wrap"> 
                 <div class="profile-img-wrap">
                   <div class="avatar avatar-xl">
-                      <img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle preview-img ${empList.empCode}-profile">
+                      <c:choose>
+                              	<c:when test="${empty empList.empProfileName}">
+                           	 		<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle ${empList.empCode}-profile" >
+                           	  	</c:when>
+                           	  	<c:otherwise>
+                           	   		<img src="${root}/resources/upload/profile/${empList.empProfileName}" alt="..." class="avatar-img rounded-circle ${empList.empCode}-profile" >
+                           	  	</c:otherwise>
+                           	  </c:choose>
                    </div>
                 </div>
                 <div class="profile-texts-wrap">
@@ -507,7 +538,7 @@ padding: 10px;
                       <p class="mb-0 text-muted"><strong>비밀번호</strong></p>
                     </div>
                     <div>
-                      <p class="mb-0 modal-pwd-area ${empList.empCode}-pwd">******</p>
+                      <input type="password" name="empPwd" class="mb-0 modal-birthday-area ${empList.empCode}-pwd hide-input" placeholder="*****">
                     </div>
                   </div>
                   <div class="flex-items">
@@ -539,7 +570,7 @@ padding: 10px;
                       <p class="mb-0 text-muted"><strong>생년월일</strong></p>
                     </div>
                     <div>
-                      <p class="mb-0 modal-birthday-area ${empList.empCode}-birth">${empList.empBirthday}</p>
+                      <input type="date" name="empBirthday" class="mb-0 modal-birthday-area ${empList.empCode}-birth hide-input" value="${empList.empBirthday}">
                     </div>
                   </div>
                   <div class="flex-items">
@@ -547,7 +578,7 @@ padding: 10px;
                       <p class="mb-0 text-muted" ><strong>사내전화</strong></p>
                     </div>
                     <div>
-                      <p class="mb-0 modal-tel-area ${empList.empCode}-Tel">${empList.empTel}</p>
+                      <input type="tel" name="empTel" class="mb-0 modal-phone-area ${empList.empCode}-tel hide-input" value="${empList.empTel}">
                     </div>
                   </div>
                   <div class="flex-items">
@@ -555,7 +586,7 @@ padding: 10px;
                       <p class="mb-0 text-muted"><strong>휴대전화</strong></p>
                     </div>
                     <div>
-                      <p class="mb-0 modal-phone-area ${empList.empCode}-phone">${empList.empPhone}</p>
+                      <input type="tel" name="empPhone" class="mb-0 modal-phone-area ${empList.empCode}-phone hide-input" value="${empList.empPhone}">
                     </div>
                   </div>
                   <div class="flex-items">
@@ -563,7 +594,7 @@ padding: 10px;
                       <p class="mb-0 text-muted" ><strong>e-mail</strong></p>
                     </div>
                     <div>
-                      <p class="mb-0 modal-email-area ${empList.empCode}-email">${empList.empEMail}</p>
+                      <input type="email" name="empEMail" class="mb-0 modal-phone-area ${empList.empCode}-email hide-input" value="${empList.empEMail}">
                     </div>
                   </div>
                   <div class="flex-items">
@@ -571,7 +602,8 @@ padding: 10px;
                       <p class="mb-0 text-muted"><strong>자택주소1</strong></p>
                     </div>
                     <div>
-                      <p class="mb-0 modal-addr1-area ${empList.empCode}-addr1">${empList.empAddress1}</p>
+                      <input type="text" name="empAddress1"  class="hide-input ${empList.empCode}-addr1" value="${empList.empAddress1}" placeholder="${empList.empAddress1}">
+
                     </div>
                   </div>
                   <div class="flex-items">
@@ -579,7 +611,7 @@ padding: 10px;
                       <p class="mb-0 text-muted" ><strong>자택주소2</strong></p>
                     </div>
                     <div>
-                      <p class="mb-0 modal-addr2-area ${empList.empCode}-addr2">${empList.empAddress2}</p>
+                      	<input type="text" name="empAddress2"  class="hide-input ${empList.empCode}-addr2" value="${empList.empAddress2}" placeholder="${empList.empAddress2}">
                     </div>
                   </div>
                   <div class="flex-items">
@@ -587,7 +619,7 @@ padding: 10px;
                       <p class="mb-0 text-muted" ><strong>입사일</strong></p>
                     </div>
                     <div>
-                      <p class="mb-0 modal-joinDate-area ${empList.empCode}-jDate">${empList.empJoinDate}</p>
+                      <input type="date" name="empJoinDate" class="mb-0 modal-birthday-area ${empList.empCode}-jDate hide-input" value="${empList.empJoinDate}">
                     </div>
                   </div>
                   <div class="flex-items">
@@ -596,14 +628,6 @@ padding: 10px;
                     </div>
                     <div>
                       <p class="mb-0 ${empList.empCode}-pDate">${empList.empPromotionDate}</p>
-                    </div>
-                  </div>
-                  <div class="flex-items">
-                    <div>
-                      <p class="mb-0 text-muted" ><strong>기타정보</strong></p>
-                    </div>
-                    <div>
-                      <p class="mb-0 modal-etc-area ${empList.empCode}-etc">${empList.empEtc}</p>
                     </div>
                   </div>
                   <div class="flex-items">
@@ -629,13 +653,13 @@ padding: 10px;
                       </p>
                     </div>
                   </div>
-      
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn mb-2 btn-primary">저장</button>
+                <input type="submit" class="btn mb-2 btn-primary" value="저장"></input>
                 <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
               </div>
+      			</form>
             </div>
           </div>
         </div>
@@ -763,10 +787,10 @@ padding: 10px;
           <div class="modal-body change-modal-body"> 
             <div>
             	<div class="avatar avatar-xl">
-                  <label for="file-input">
+                  <label for="profile">
                     <img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle preview-img" id="preview-img">
                   </label>
-                <input id="file-input" class="input-img" type="file" style="display:none;" onchange="readURL(this);">
+                <input id="profile" class="input-img"  name="profile" type="file" style="display:none;" >
                 </div>
             </div>
           </div>  
@@ -879,7 +903,6 @@ padding: 10px;
         const checkNum = $("input:checkbox[name='check']:checked").length;
         const checkNumArea = $("#checkNum-area");
         const buttons = $("#option-button-area");
-        const target = $(".active-buttons");
 		
         checkNumArea.removeClass("fade");
         buttons.removeClass("fade");
@@ -949,7 +972,7 @@ padding: 10px;
       });
     }
 
-    <!-- 체크박스 체크 후 직무변경 -->
+    //직무변경
     function changeJob() {
 
       const checkBoxArr = [];
@@ -1031,7 +1054,7 @@ padding: 10px;
   		            console.log(targetEmp + targetDeptArea);
   		          }
       		  }
-         	  },
+          },
           error : function() {
             alert("부서 변경에 실패하였습니다. 다시 시도해보시길 바랍니다.");
           }
@@ -1046,7 +1069,6 @@ padding: 10px;
 		
 		const checkBoxArr = [];
         const status = $("#status-select-modal").val();
-        
         
         $('input:checkbox[name=check]:checked').each(function(){
           checkBoxArr.push($(this).val());
@@ -1103,7 +1125,7 @@ padding: 10px;
     var sel_file;
  
     $(document).ready(function() {
-        $("#file-input").on("change", handleImgFileSelect);
+        $("#profile").on("change", handleImgFileSelect);
     });
  
     function handleImgFileSelect(e) {
@@ -1130,28 +1152,55 @@ padding: 10px;
 	</script>
 	
 	<script>
-//파일 업로드
-function fn_submit(){
+		//파일 업로드
+		function changeProfile(){
         
-        var form = new FormData();
-        form.append( "file1", $("#file1")[0].files[0] );
+		const checkBoxArr = [];
+	      $('input:checkbox[name=check]:checked').each(function(){
+	       checkBoxArr.push($(this).val());
+	      });
+	      
+	     console.log(checkBoxArr); 
+	     var formData = new FormData();
+	     var profile = $("input[name='profile']");
+	     var file = profile[0].files[0];
+	     
+		console.log(file);
+		 
+		 formData.append("uploadFile", file);
+		 formData.append("checkBoxArr", checkBoxArr);
+		 
+		 console.log(formData.get("uploadFile"));
         
-         jQuery.ajax({
-             url : "/myapp/result"
+         $.ajax({
+             url : "${root}/organization/management/emp/update/checkedProfile"
            , type : "POST"
+        	, enctype: 'multipart/form-data'
+           , dataType : "json"
            , processData : false
            , contentType : false
-           , data : form
-           , success:function(response) {
-               alert("성공하였습니다.");
-               console.log(response);
-           }
-           ,error: function (jqXHR) 
+           , data : formData
+           , cache : false
+           , success:function(updatedFileName) {
+               if(updatedFileName=="") {
+             		alert("상태 변경에 실패하였습니다. 다시 시도해보시길 바랍니다.");
+             } else {
+      		        const cnt = checkBoxArr.length;
+      		  		
+    		          for(let i = 0; i < cnt; ++i) {
+    		            var targetEmp = checkBoxArr.pop();
+    		            var targetProfile = targetEmp+"-profile";
+    		            $('.'+targetProfile).attr("src", "${root}/resources/upload/profile/" +updatedFileName );
+    		            
+    		          }
+        		  }
+            }
+           , error: function (jqXHR) 
            { 
                alert(jqXHR.responseText); 
            }
        });
-}
+	}
 </script>
 		  
 </body>

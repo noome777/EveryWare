@@ -68,6 +68,15 @@ public interface OrganizationDao {
 	//변경된 상태 확인
 	String selectUpdatedStatus(SqlSessionTemplate sqlSessionTemplate, String updatedEmpCode);
 
+	//임직원 관리 - 체크된 임직원 프로필 이름 변경
+	int updateCheckedFileName(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> updateTarget);
+
+	//변경된 프로필 네임 확인
+	String selectUpdatedFileName(SqlSessionTemplate sqlSessionTemplate, String updatedEmpCode);
+
+	//권한 관리 - 관리자 불러오기
+	List<EmpVo> selectAdminList(SqlSessionTemplate sqlSessionTemplate);
+
 
 
 }
