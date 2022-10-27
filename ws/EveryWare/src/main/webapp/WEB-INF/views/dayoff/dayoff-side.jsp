@@ -7,8 +7,8 @@
         <nav class="vertnav navbar navbar-light">
           <!-- nav bar -->
           <div class="w-100 mb-4 d-flex">
-            <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="./index.html">
-              <img src="${root}/resources/img/EveryWareLogo.png" alt="" class="logo">
+            <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="${root}">
+              <img src="${root}/resources/img/EveryWareLogo.png" alt="" class="logo" href="${root}">
                 <g>
                   <polygon class="st0" points="78,105 15,105 24,87 87,87 	" />
                   <polygon class="st0" points="96,69 33,69 42,51 105,51 	" />
@@ -18,7 +18,7 @@
             </a>
           </div>
           <div class="btn-box w-100 mt-4 mb-1">
-            <button type="button" class="btn mb-2 btn-primary btn-lg btn-block" onclick="location='${root}/dayoff/main'">
+            <button type="button" class="btn mb-2 btn-primary btn-lg btn-block" onclick="location='${root}/dayoff/main/1'">
               <span class="small">+ 휴가 신청하기</span>
             </button>
           </div>
