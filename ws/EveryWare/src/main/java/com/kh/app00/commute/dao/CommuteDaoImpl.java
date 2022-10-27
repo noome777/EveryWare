@@ -109,6 +109,62 @@ public class CommuteDaoImpl implements CommuteDao {
         return sst.update("commuteMapper.updateApproval", vo);
     }
 
+    //정상출근 카운트
+    @Override
+    public int selectNormalCnt(SqlSessionTemplate sst, CommuteVo vo) {
+        return sst.selectOne("commuteMapper.selectNormalCnt", vo);
+    }
+
+    //조기퇴근 카운트
+    @Override
+    public int selectEarlyCnt(SqlSessionTemplate sst, CommuteVo vo) {
+        return sst.selectOne("commuteMapper.selectEarlyCnt", vo);
+    }
+
+    //지각 카운트
+    @Override
+    public int selectLateCnt(SqlSessionTemplate sst, CommuteVo vo) {
+        return sst.selectOne("commuteMapper.selectLateCnt", vo);
+    }
+
+    //결근 카운트
+    @Override
+    public int selectAbsentCnt(SqlSessionTemplate sst, CommuteVo vo) {
+        return sst.selectOne("commuteMapper.selectAbsentCnt", vo);
+    }
+
+    //사원의 근태 목록 수 카운트
+    @Override
+    public int selectCommuteTotalCnt(SqlSessionTemplate sst, CommuteVo vo) {
+        return sst.selectOne("commuteMapper.selectCommuteTotalCnt", vo);
+    }
+
+    //사원의 근태 리스트 조회
+    @Override
+    public List<CommuteVo> selectCommuteList(SqlSessionTemplate sst, CommuteVo vo, PageVo pv) {
+        
+        int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+        RowBounds rb = new RowBounds(offset , pv.getBoardLimit());
+        
+        return sst.selectList("commuteMapper.selectCommuteList", vo, rb);
+    }
+
+    //사원의 기간 선택시 근태 목록 수 카운트
+    @Override
+    public int selectCommuteDateCnt(SqlSessionTemplate sst, CommuteVo vo) {
+        return sst.selectOne("commuteMapper.selectCommuteDateCnt", vo);
+    }
+
+    //사원의 기간 선택시 근태 목록 수 카운트
+    @Override
+    public List<CommuteVo> selectCommuteDateList(SqlSessionTemplate sst, CommuteVo vo, PageVo pv2) {
+        
+        int offset = (pv2.getCurrentPage()-1) * pv2.getBoardLimit();
+        RowBounds rb = new RowBounds(offset , pv2.getBoardLimit());
+        
+        return sst.selectList("commuteMapper.selectCommuteDateList", vo, rb);
+    }
+
 
 
 }

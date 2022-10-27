@@ -34,15 +34,75 @@ public class CommuteController {
         this.service = service;
     }
 
-    // 근태 메인화면
-    @GetMapping("main")
-    public String commuteMain() {
+    // 근태 메인화면 (근태 현황조회, 근무시간 조회, 근태 리스트 조회)
+    @GetMapping("main/{pno}")
+    public String commuteMain(Model model, HttpSession session, CommuteVo vo, 
+            @PathVariable int pno, String enrollDate, String comStatus) {
+        
+
+        // 사원의 코드를 vo에 추가하기
+        EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
+        vo.setECode(loginMember.getEmpCode());
+
+        // 사원 근태 현황 조회
+        int normalCnt = service.selectNormalCnt(vo);
+        int earlyCnt = service.selectEarlyCnt(vo);
+        int lateCnt = service.selectLateCnt(vo);
+        int absentCnt = service.selectAbsentCnt(vo);
+
+        model.addAttribute("normalCnt", normalCnt);
+        model.addAttribute("earlyCnt", earlyCnt);
+        model.addAttribute("lateCnt", lateCnt);
+        model.addAttribute("absentCnt", absentCnt);
+        
+        //사원의 근무 시간 조회
+        
+        
+        
+        // 사원 근태 리스트 조회
+        if(enrollDate != null && comStatus != null) {
+            // 기간 선택 했을 시
+            vo.setEnrollDate(enrollDate);
+            vo.setComStatus(comStatus);
+            
+            String enrollDate1 = vo.getEnrollDate().substring(0,10);
+            String enrollDate2 = vo.getEnrollDate().substring(11);
+            
+            //사원의 근태 목록 조회(+페이징)
+            int commuteDateCnt = service.selectCommuteDateCnt(vo);
+            PageVo pv2 = Pagination.getPageVo(commuteDateCnt, pno, 5, 5);
+            
+            List<CommuteVo> comDateList = service.selectCommuteDateList(pv2, vo);
+            
+            model.addAttribute("comDateList", comDateList);
+            model.addAttribute("pv", pv2);
+            model.addAttribute("enrollDate1", enrollDate1);
+            model.addAttribute("enrollDate2", enrollDate2);
+            model.addAttribute("comStatus", vo.getComStatus());
+            model.addAttribute("commuteDateCnt", commuteDateCnt);
+
+        }else {
+            // 기간 선택 안 했을경우
+            // 사원의 근태 전체 목록 조회 (+ 페이징)
+            int commuteCnt = service.selectCommuteTotalCnt(vo);
+            PageVo pv = Pagination.getPageVo(commuteCnt, pno, 5, 5);
+            
+            List<CommuteVo> comList = service.selectCommuteList(pv, vo);
+            
+            model.addAttribute("comList", comList);
+            model.addAttribute("pv", pv);
+            model.addAttribute("commuteCnt", commuteCnt);
+        }
+
+
+
         return "commute/commuteMain";
     }
 
     // 근태 메인화면에서 출퇴근 버튼 입력 후 submit시
-    @PostMapping("main")
-    public String commuteMain(CommuteVo vo, HttpSession session) throws ParseException {
+    @PostMapping("main/{pno}")
+    public String commuteMain(CommuteVo vo, HttpSession session,
+            @PathVariable int pno) throws ParseException {
 
         // 로그인 여부 체크
         if (session.getAttribute("loginMember") == null) {
@@ -60,18 +120,19 @@ public class CommuteController {
         String late = "지각";
         String early = "조기퇴근";
 
-        String starTime = vo.getStartTime().substring(0, 7);
-        String endTime = vo.getEndTime().substring(0, 7);
+        String starTime = vo.getStartTime();
+        String endTime = vo.getEndTime();
+        String startTimeFormat = vo.getStartTimeFormat();
+        String endTimeFormat = vo.getEndTimeFormat();
 
         SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
 
         Date startFormat = format.parse(starTime);
         Date endFormat = format.parse(endTime);
-        Date onTimeIn = new SimpleDateFormat("HH:mm:ss").parse("6:19:30");
-        Date onTimeOut = new SimpleDateFormat("HH:mm:ss").parse("6:19:40");
+        Date onTimeIn = new SimpleDateFormat("HH:mm:ss").parse("09:00:00");
+        Date onTimeOut = new SimpleDateFormat("HH:mm:ss").parse("18:00:00");
 
         if (onTimeIn.after(startFormat) || onTimeIn.equals(startFormat)) {
-
             if (onTimeOut.after(endFormat)) {
                 // 조기퇴근
                 vo.setComStatus(early);
@@ -79,77 +140,35 @@ public class CommuteController {
                 // 정상출근
                 vo.setComStatus(normal);
             }
-//            시간 AM,PM 바꾸기 
-
         } else if (onTimeIn.before(startFormat)) {
             // 지각
             vo.setComStatus(late);
-
             if (onTimeOut.after(endFormat) || endFormat == null) {
                 // 결근
                 vo.setComStatus(absent);
             }
-
         }
 
-//        } else if (onTimeIn.after(startFormat) && onTimeOut.after(endFormat)){
-//            //조기퇴근
-//            vo.setComStatus(early);
-//        }
-//        } else if(startFormat == null && endFormat == null){
-//            //결근
-//            vo.setComStatus(absent);
-//        }
         System.out.println(vo);
 
         // DB 에 사원의 근태 insert
         int result = service.insertCommute(vo);
-
-        // 사원의 근태 목록 조회 (+ 페이징)
-//      PageVo pv = Pagination.getPageVo(result, result, result, result);
-//      List<CommuteVo> voList = service.commuteList();
-
         if (result == 1) {
             // 근태 테이블에 insert 성공
-            return "commute/commuteMain";
+            return "redirect:/commute/main/1";
         } else {
             // 실패
             return "error/404";
         }
-
     }
-    
 
-//      
-//      if(9 to 6이면 정상출근 ) {
-//      
-//      }else if(9 이후에 출근 && 6시 이후 퇴근하면 지각){
-//      
-//      }else if(출퇴근 없으면 결근) {
-//      
-//      }else if(연/반차 안 쓰고 6시 이전에 퇴근하면 조기퇴근) {
-//      
-//      }
-    
-    //근태 현황 조회
-    @GetMapping("main/commute/status")
-    public String commuteStatus(){
-        
-        int normalCnt = 0;
-        int earlyCnt = 0;
-        int lateCnt = 0;
-        int absentCnt = 0;
-        
-        return "commute/commuteMain";
-    }
-    
-    //근무 시간 조회
+    // 근무 시간 조회
     @GetMapping("main/commute/hours")
     public String commuteHours() {
         return "commute/commuteMain";
     }
 
-    //월 근무 내역 조회
+    // 월 근무 내역 조회
     @GetMapping("selectByMonth")
     public String selectByMonth() {
         return "commute/selectByMonth";

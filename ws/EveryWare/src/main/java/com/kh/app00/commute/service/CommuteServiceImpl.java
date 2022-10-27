@@ -103,6 +103,54 @@ public class CommuteServiceImpl implements CommuteService {
         return dao.updateApproval(sst, vo);
     }
 
+    //정상출근 카운트
+    @Override
+    public int selectNormalCnt(CommuteVo vo) {
+        return dao.selectNormalCnt(sst, vo);
+    }
+
+    //조기퇴근 카운트
+    @Override
+    public int selectEarlyCnt(CommuteVo vo) {
+        return dao.selectEarlyCnt(sst, vo);
+    }
+
+    //지각 카운트
+    @Override
+    public int selectLateCnt(CommuteVo vo) {
+        return dao.selectLateCnt(sst, vo);
+    }
+
+    //결근카운트
+    @Override
+    public int selectAbsentCnt(CommuteVo vo) {
+        return dao.selectAbsentCnt(sst, vo);
+    }
+
+    //사원의 근태 목록 수 카운트
+    @Override
+    public int selectCommuteTotalCnt(CommuteVo vo) {
+        return dao.selectCommuteTotalCnt(sst, vo);
+    }
+
+    //사원의 근태 리스트 조회
+    @Override
+    public List<CommuteVo> selectCommuteList(PageVo pv, CommuteVo vo) {
+        return dao.selectCommuteList(sst, vo, pv);
+    }
+
+    //사원의 기간 선택시 근태 목록 수 카운트
+    @Override
+    public int selectCommuteDateCnt(CommuteVo vo) {
+        return dao.selectCommuteDateCnt(sst, vo);
+    }
+
+    //사원의 기간 선택시 근태 목록 수 카운트
+    @Override
+    public List<CommuteVo> selectCommuteDateList(PageVo pv2, CommuteVo vo) {
+        return dao.selectCommuteDateList(sst, vo, pv2);
+    }
+
 
     
    

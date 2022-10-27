@@ -48,8 +48,32 @@ public interface CommuteDao   {
     //관리자 결재 리스트 조회
     List<OverworkVo> selectAdminOverworkList(SqlSessionTemplate sst, PageVo pv);
 
-    ////관리자 결재 정보 업데이트
+    //관리자 결재 정보 업데이트
     int updateApproval(SqlSessionTemplate sst, OverworkVo vo);
+
+    //정상출근 카운트
+    int selectNormalCnt(SqlSessionTemplate sst, CommuteVo vo);
+
+    //조기퇴근 카운트
+    int selectEarlyCnt(SqlSessionTemplate sst, CommuteVo vo);
+
+    //지각 카운트
+    int selectLateCnt(SqlSessionTemplate sst, CommuteVo vo);
+
+    //결근 카운트
+    int selectAbsentCnt(SqlSessionTemplate sst, CommuteVo vo);
+
+    //사원의 근태 목록 수 카운트
+    int selectCommuteTotalCnt(SqlSessionTemplate sst, CommuteVo vo);
+
+    //사원의 근태 리스트 조회
+    List<CommuteVo> selectCommuteList(SqlSessionTemplate sst, CommuteVo vo, PageVo pv);
+
+    //사원의 기간 선택시 근태 목록 수 카운트
+    int selectCommuteDateCnt(SqlSessionTemplate sst, CommuteVo vo);
+
+    //사원의 기간 선택시 근태 목록 수 카운트
+    List<CommuteVo> selectCommuteDateList(SqlSessionTemplate sst, CommuteVo vo, PageVo pv2);
 
 
 

@@ -31,7 +31,7 @@
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/commute/main"><span class="ml-1 item-text">출퇴근 관리</span>
+                  <a class="nav-link pl-3" href="${root}/commute/main/1"><span class="ml-1 item-text">출퇴근 관리</span>
                   </a>
                 </li>
                 <li class="nav-item">

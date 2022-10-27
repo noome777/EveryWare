@@ -49,5 +49,29 @@ public interface CommuteService {
     //관리자 결재 정보 업데이트
     int updateApproval(OverworkVo vo);
 
+    //정상출근 카운트
+    int selectNormalCnt(CommuteVo vo);
+
+    //조기퇴근 카운트
+    int selectEarlyCnt(CommuteVo vo);
+
+    //지각 카운트
+    int selectLateCnt(CommuteVo vo);
+
+    //결근 카운트
+    int selectAbsentCnt(CommuteVo vo);
+
+    //사원의 근태 목록 수 카운트
+    int selectCommuteTotalCnt(CommuteVo vo);
+
+    //사원의 근태 리스트 조회
+    List<CommuteVo> selectCommuteList(PageVo pv, CommuteVo vo);
+
+    //사원의 기간 선택시 근태 목록 수 카운트
+    int selectCommuteDateCnt(CommuteVo vo);
+
+    //사원의 기간 선택시 근태 목록 조회
+    List<CommuteVo> selectCommuteDateList(PageVo pv2, CommuteVo vo);
+
 
 }
