@@ -109,7 +109,7 @@
 															</div>
 														</div>
 														<input type="text" class="form-control time-input"
-															name="startTime" id="start-time" placeholder="00:00 AM">
+															name="startTime" id="start-time" value="00:00 AM">
 													</div>
 												</div>
 											</div>
@@ -135,7 +135,7 @@
 															</div>
 														</div>
 														<input type="text" class="form-control time-input"
-															name="EndTime" id="end-time" placeholder="00:00 AM">
+															name="EndTime" id="end-time" value="00:30 AM">
 													</div>
 												</div>
 											</div>
@@ -616,29 +616,6 @@
           });
         }, false);
       })();
-    </script>
-	<script>
-      var uptarg = document.getElementById('drag-drop-area');
-      if (uptarg)
-      {
-        var uppy = Uppy.Core().use(Uppy.Dashboard,
-        {
-          inline: true,
-          target: uptarg,
-          proudlyDisplayPoweredByUppy: false,
-          theme: 'dark',
-          width: 770,
-          height: 210,
-          plugins: ['Webcam']
-        }).use(Uppy.Tus,
-        {
-          endpoint: 'https://master.tus.io/files/'
-        });
-        uppy.on('complete', (result) =>
-        {
-          console.log('Upload complete! We’ve uploaded these files:', result.successful)
-        });
-      }
     </script>
 
 </body>

@@ -33,18 +33,18 @@
 													<span class="text-muted sr-only">Action</span>
 												</button>
 												<div class="dropdown-menu m-2">
-													<a class="dropdown-item" href="#"><i
-														class="fe fe-star fe-12 mr-4"></i>즐겨찾기</a> <a
-														class="dropdown-item" href="#"><i
-														class="fe fe-copy fe-12 mr-4"></i>복사</a><a
-														class="dropdown-item" href="#"><i
-														class="fe fe-edit-3 fe-12 mr-4"></i>수정</a> <a
-														class="dropdown-item" href="#"><i
-														class="fe fe-delete fe-12 mr-4"></i>삭제</a> <a
-														class="dropdown-item" href="#"><i
-														class="fe fe-share fe-12 mr-4"></i>공유</a> <a
-														class="dropdown-item" href="#"><i
-														class="fe fe-download fe-12 mr-4"></i>다운로드</a>
+													<a class="dropdown-item submit" href="${root}/filemanager/addStar/${f.fileCode}">
+													<i class="fe fe-star fe-12 mr-4"></i>즐겨찾기</a> 
+													<a class="dropdown-item" href="${root}/filemanager/addCopy/${f.fileCode}">
+													<i class="fe fe-copy fe-12 mr-4"></i>복사</a>
+													<a class="dropdown-item" href="${root}/filemanager/addEdit/${f.fileCode}">
+													<i class="fe fe-edit-3 fe-12 mr-4"></i>수정</a> 
+													<a class="dropdown-item" href="${root}/filemanager/addDel/${f.fileCode}">
+													<i class="fe fe-delete fe-12 mr-4"></i>삭제</a> 
+													<a class="dropdown-item" href="${root}/filemanager/addCloud/${f.fileCode}">
+													<i class="fe fe-share fe-12 mr-4"></i>공유</a> 
+													<a class="dropdown-item" href="${root}/filemanager/download/${f.fileCode}">
+													<i class="fe fe-download fe-12 mr-4"></i>다운로드</a>
 												</div>
 											</div>
 											<div class="circle circle-lg bg-light my-4">
@@ -65,50 +65,6 @@
 								</div>
 							</c:forEach>
 							
-							
-							<!-- .col -->
-							<div class="col-md-3">
-								<div class="card shadow text-center mb-4">
-									<div class="card-body file">
-										<div class="file-action">
-											<button type="button"
-												class="btn btn-link dropdown-toggle more-vertical p-0 text-muted mx-auto"
-												data-toggle="dropdown" aria-haspopup="true"
-												aria-expanded="false">
-												<span class="text-muted sr-only">Action</span>
-											</button>
-											<div class="dropdown-menu m-2">
-												<a class="dropdown-item" href="#"><i
-													class="fe fe-star fe-12 mr-4"></i>즐겨찾기</a> <a
-													class="dropdown-item" href="#"><i
-													class="fe fe-copy fe-12 mr-4"></i>복사</a><a
-													class="dropdown-item" href="#"><i
-													class="fe fe-edit-3 fe-12 mr-4"></i>수정</a> <a
-													class="dropdown-item" href="#"><i
-													class="fe fe-delete fe-12 mr-4"></i>삭제</a> <a
-													class="dropdown-item" href="#"><i
-													class="fe fe-share fe-12 mr-4"></i>공유</a> <a
-													class="dropdown-item" href="#"><i
-													class="fe fe-download fe-12 mr-4"></i>다운로드</a>
-											</div>
-										</div>
-										<div class="circle circle-lg bg-light my-4">
-											<span class="fe fe-image fe-24 text-success"></span>
-										</div>
-										<div class="file-info">
-											<span class="badge badge-light text-muted mr-2">288K</span> <span
-												class="badge badge-pill badge-light text-muted">PNG</span>
-										</div>
-									</div>
-									<!-- .card-body -->
-									<div class="card-footer bg-transparent border-0 fname">
-										<strong>공유한파일이름이에요</strong>
-									</div>
-									<!-- .card-footer -->
-								</div>
-								<!-- .card -->
-							</div>
-							<!-- .col -->
 						</div>
 						<!-- .row -->
 
