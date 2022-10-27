@@ -11,13 +11,116 @@
 
 .card-wrap {
     
-  margin-top: 45px;
-  margin-left: 10px;
+    margin-top: 45px;
+    margin-left: 10px;
 }
 
-	
+.grid-col {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.grid-col > * {
+  margin-right: 15px;
+}
+
+.profile-wrap {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-texts-wrap {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 85%;
+}
+
+.flex-items {
+  height: 38px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+  justify-items: center;
+}
+
+.flex-items:hover {
+  background-color: rgb(248, 249, 250);
+}
+
+
+#option-area {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#checkNum-area {
+  width: 5%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  padding-bottom: 5px;
+}
+
+#option-button-area {
+  width: 95%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-bottom: 8px;
+  margin: 10px;
+}
+
+#option-button-area > button {
+  margin-left: 10px;
+  border-radius: 5px;
+}
+
+.hide-input{
+	border:none;
+	border-right:0px;
+	border-top:0px;
+	boder-left:0px; 
+	boder-bottom:0px;
+	text-align: center;
+  color : gray;
+  height: 34px;
+}
+
+.hide-select {
+	border-style: none;
+}
+
+#search-body {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: auto;
+}
+
+#search-icon {
+  width: 34px;
+  height: 34px;
+}
+
+
 
 </style>
+
+	
 </head>
 <body class="vertical  light">
 
@@ -29,82 +132,83 @@
         <div class="container-fluid">
           <div class="row justify-content-center">
             <div class="col-12">
-              <div class="row align-items-center my-3">
+              <div class="row align-items-center my-3 margin">
                 <div class="col">
                   <h2 class="h3 mb-0 page-title">권한 관리</h2>
                 </div>
-                <div class="col-auto">
-                  <button type="button" class="btn btn-secondary"><span class="fe fe-trash fe-12 mr-2"></span>삭제하기</button>
-                  <button type="button" class="btn btn-primary"><span class="fe fe-filter fe-12 mr-2"></span>추가하기</button>
-                </div>
               </div>
+              
               <!-- table -->
               <div class="card shadow card-wrap">
                 <div class="card-body">
+                  <div id="search-wrap">
+                    <div id="search-container">
+                        <div id="search-bar-wrap">
+                          <button type="button" class="btn shadow " data-toggle="modal" data-target="#addAdmin">
+                            <small>관리자 추가</small>
+                          </button>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
                   <table class="table table-borderless table-hover">
                     <thead>
                       <tr>
-                        <th>
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="all2">
-                            <label class="custom-control-label" for="all2"></label>
-                          </div>
-                        </th>
+                      	<th></th>
+                      	<th></th>
                         <th>프로필</th>
-                        <th>이름</th>
+                        <th>이름(사번)</th>
                         <th>ID</th>
+                        <th>직위</th>
                         <th>소속</th>
-                        <th>사내전화</th>
-                        <th>휴대전화</th>
-                        <th>이메일</th>
-                        <th>입사일</th>
-                        <th>상태</th>
+                        <th>권한</th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${empList}" var="empList">
+                    <c:forEach items="${adminList}" var="adminList">
                       <tr>
-                        <td>
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="2474">
-                            <label class="custom-control-label" for="2474"></label>
-                          </div>
-                        </td>
+                      	<td></td>
+                        <td></td>
                         <td>
                           <div class="avatar avatar-sm">
-                            <img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+                            <c:choose>
+                              <c:when test="${empty adminList.empProfileName}">
+                           	 		<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle ${adminList.empCode}-profile" >
+                           	  </c:when>
+                           	  <c:otherwise>
+                           	   	<img src="${root}/resources/upload/profile/${adminList.empProfileName}" alt="..." class="avatar-img rounded-circle ${adminList.empCode}-profile" >
+                           	  </c:otherwise>
+                           	</c:choose>
                           </div>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted"><strong>${empList.empName}</strong></p>
-                          <small class="mb-0 text-muted">${empList.empCode}</small>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted"><a href="#" class="text-muted">test01</a></p>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted">${empList.deptCode}</p>
-                          <small class="mb-0 text-muted">${empList.empJobCode}</small>
-                        </td>
-                        <td class="text-muted"><p class="mb-0 text-muted"><a href="#" class="text-muted">${empList.empTel}</a></p></td>
-                        <td><p class="mb-0 text-muted"><a href="#" class="text-muted">${empList.empPhone}</a></p>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted"><a href="#" class="text-muted">${empList.empEMail}</a></p>
-                        </td> 
-                        <td>
-                          <p class="mb-0 text-muted"><a href="#" class="text-muted">${empList.empJoinDate}</a></p>
                         </td>
                         <td>
                           <p class="mb-0 text-muted">
-                          <c:if test="${empList.empStatus eq 'N'}">
-                          <a href="#" class="text-muted">일반</a>
-                          </c:if>
-                          <c:if test="${empList.empStatus eq 'R'}">
-                          <a href="#" class="text-muted">휴직</a>
-                          </c:if>
+                          	<strong>${adminList.empName}</strong>
+                          </p>
+                          <small class="mb-0 text-muted">${adminList.empCode}</small>
+                        </td>
+                        
+                        <td>
+                          <p class="mb-0 text-muted">
+                         	 <a href="#" class="text-muted">${adminList.empId}</a>
                           </p>
                         </td>
+                        <td >
+                          <p class="mb-0 text-muted ${adminList.empCode}-rank">${adminList.rankName}</p>
+                        </td>
+                        <td>
+                          <p class="mb-0 text-muted ${adminList.empCode}-dept">${adminList.deptName}</p>
+                        </td>
+                        <td>
+                        	<p class="mb-0 text-muted ${adminList.empCode}-right">${adminList.rightName}</p>
+                        </td>
+                        <td>
+                          <c:if test="${adminList.rightName ne '관리자'}">
+                            <button class="btn shadow delete-btn" value="${adminList.empCode}">삭제</button>
+                          </c:if>
+                        </td>
+                       
                       </tr>
                       </c:forEach>
                       
@@ -114,98 +218,50 @@
                   </table>
                 </div>
               </div>
-              <nav aria-label="Table Paging" class="my-3">
-                <ul class="pagination justify-content-end mb-0">
-                <c:if test = "${pv.startPage ne 1}">
-                	<li class="page-item">
-                    <a class="page-link" href="${root}/organization/management/right/${pv.startPage-1}" class="btn btn-primary btn-sm">이전</a>
-                  </li>
-                </c:if>
-              <c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
-                <c:choose>
-                  <c:when test="${i eq pv.currentPage}">
-                    <li class="page-item active">
-                      <a class="page-link" href="${root}/organization/management/right/${i}">${i}</a>
-                    </li>
-                  </c:when>
-                  <c:otherwise>
-                    <li class="page-item">
-                      <a class="page-link" href="${root}/organization/management/right/${i}">${i}</a>
-                    </li>
-                  </c:otherwise>
-                </c:choose>
-              </c:forEach>
-				<c:if test = "${pv.startPage ne pv.maxPage}">
-                	<li class="page-item">
-						<a class="page-link" href="${root}/organization/management/right/${pv.startPage+1}" class="btn btn-primary btn-sm">다음</a>
-					</li>
-				</c:if>
-                 </ul>
-              </nav>
-            </div> <!-- .col-12 -->
-          </div> <!-- .row -->
-        </div> <!-- .container-fluid -->
-        
-        
-        
-        <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body px-5">
-                <div class="row align-items-center">
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-success justify-content-center">
-                      <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Control area</p>
-                  </div>
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-primary justify-content-center">
-                      <i class="fe fe-activity fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Activity</p>
-                  </div>
-                </div>
-                <div class="row align-items-center">
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-primary justify-content-center">
-                      <i class="fe fe-droplet fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Droplet</p>
-                  </div>
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-primary justify-content-center">
-                      <i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Upload</p>
-                  </div>
-                </div>
-                <div class="row align-items-center">
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-primary justify-content-center">
-                      <i class="fe fe-users fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Users</p>
-                  </div>
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-primary justify-content-center">
-                      <i class="fe fe-settings fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Settings</p>
-                  </div>
-                </div>
-              </div>
+              
+              
+                  
             </div>
           </div>
         </div>
       </main> <!-- main -->
 		</div>
+
+    <!-- 관리자 추가 모달 -->
+    <div class="modal fade" id="addAdmin" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" >관리자 추가</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body"> 
+            <div id="search-body">
+                <input type="text" id="search-bar" class="hide-input shadow" placeholder="임직원 검색" name="empData"> 
+                <input type="image" name="submit" id="search-icon" src="${root}/resources/img/search.png" onclick="return checkBlank();">
+
+            </div>
+          </div>  
+          <div class="modal-footer">
+            <button type="button" class="btn mb-2 btn-primary" onclick="changeJob();">변경</button>
+            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- 삭제버튼 클릭 시 해당 관리자 사번 가져옴 -->
+    <script>
+      $(document).ready(function() {
+          $('.delete-btn').click(function() {
+            var value= $(this).val();
+            console.log(value);
+          })
+      });
+    </script>
 
 		
 

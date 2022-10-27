@@ -111,13 +111,13 @@ padding: 10px;
 	flex-direction:row;
 }
 
-#return{
-	width : 34px;
-	height : 34px;
+#return-icon{
+	width : 27px;
+	height : 27px;
   margin-left: 8px;
 }
 
-#return:hover {
+#return-icon:hover {
   cursor: pointer;
 }
 
@@ -176,9 +176,81 @@ padding: 10px;
   background-color: rgb(248, 249, 250);
 }
 
-.preview-img:hover {
-  cursor: pointer;
+#option-area {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
+
+#checkNum-area {
+  width: 8%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  padding-bottom: 5px;
+}
+
+#option-button-area {
+  width: 92%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-bottom: 8px;
+  margin: 10px;
+}
+
+#option-button-area > button {
+  margin-left: 10px;
+  border-radius: 5px;
+}
+
+.change-modal-body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.change-modal-body > div {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.change-modal-body > div > select {
+  width: 80%;
+  height: 20%;
+  border-radius: 5px;
+  border : 1px solid lightgray;
+}
+
+.preview-img:hover {
+	cursor: pointer;
+}
+
+.hide-input{
+	border:none;
+	border-right:0px;
+	border-top:0px;
+	boder-left:0px; 
+	boder-bottom:0px;
+	text-align: center;
+  color : gray;
+}
+
+.hide-select {
+	border-style: none;
+}
+
+
 
 
 
@@ -201,14 +273,17 @@ padding: 10px;
                   <h2 class="h3 mb-0 page-title">임직원 관리</h2>
                 </div>
                 <div class="col-auto">
-                  <button type="button" class="btn shadow mb-2" data-toggle="modal" data-target=".modal-right"><span class="fe fe-user-plus fe-12 mr-2" ></span>사용자 추가</button>
+                  <button type="button" class="btn shadow mb-2" data-toggle="modal" data-target=".modal-right">
+	                  <span class="fe fe-user-plus fe-12 mr-2" ></span>
+	                  사용자 추가
+                  </button>
                 </div>
                 
               </div>
               
               <!-- table -->
-              <div class="card shadow card-wrap ">
-                <div class="card-body or-scroll-wrap">
+              <div class="card shadow card-wrap">
+                <div class="card-body">
                   <div id="search-wrap">
                     <div id="search-container">
                       <form action="${root}/organization/management/emp/1" method="post">
@@ -217,18 +292,30 @@ padding: 10px;
                         </div>
                         <div id="search-icon-wrap">
                           <input type="image" name="submit" id="search-icon" src="${root}/resources/img/search.png" onclick="return checkBlank();">
-                        	<img src="${root}/resources/img/return.png" alt="되돌리기 버튼" id="return" onclick="location.href='${root}/organization/management/emp/1';">
+                          <img src="${root}/resources/img/return.png" alt="되돌리기 버튼" id="return-icon" onclick="location.href='${root}/organization/management/emp/1';">
                         </div>
                       </form>
+                    </div>
+                    <div id="option-area">
+                      <div id="checkNum-area" class="fade">
+
+                      </div>
+                      <div id="option-button-area" class="fade">
+                        <button type="button" class="btn shadow" data-toggle="modal" data-target="#changeRank-modal"><small>직위 변경</small></button>
+                        <button type="button" class="btn shadow" data-toggle="modal" data-target="#changeJob-modal"><small>직무 변경</small></button>
+                        <button type="button" class="btn shadow" data-toggle="modal" data-target="#changeDept-modal"><small>부서 변경</small></button>
+                        <button type="button" class="btn shadow" data-toggle="modal" data-target="#changeStatus-modal"><small>상태 변경</small></button>
+                        <button type="button" class="btn shadow" data-toggle="modal" data-target="#changeProfile-modal"><small>프로필 변경</small></button>
+                      </div>
                     </div>
                   </div>
                   <table class="table table-borderless table-hover">
                     <thead>
-                      <tr id="tr">
+                      <tr>
                         <th>
                           <div class="custom-control custom-checkbox">
                             <c:if test="${not empty empList}">
-                            	<input type="checkbox" class="custom-control-input" id="all">
+                            	<input type="checkbox" class="custom-control-input" id="all" onchange="readCheckNum();">
                           		<label class="custom-control-label" for="all"></label>
                             </c:if>
                           </div>
@@ -251,64 +338,73 @@ padding: 10px;
                       <tr>
                         <td>
                           <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="${empList.empCode}" name="check">
+                            <input type="checkbox" class="custom-control-input" id="${empList.empCode}" value="${empList.empCode}" name="check" onchange="readCheckNum();">
                             <label class="custom-control-label" for="${empList.empCode}"></label>
                           </div>
                         </td>
                         <td>
                           <div class="avatar avatar-sm">
-                            <a data-toggle="modal" href="#emp-profile-${empList.empCode}"><img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle" ></a>
+                            <a data-toggle="modal" href="#emp-profile-${empList.empCode}">
+                              <c:choose>
+                              	<c:when test="${empty empList.empProfileName}">
+                           	 		<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle ${empList.empCode}-profile" >
+                           	  	</c:when>
+                           	  	<c:otherwise>
+                           	   		<img src="${root}/resources/upload/profile/${empList.empProfileName}" alt="..." class="avatar-img rounded-circle ${empList.empCode}-profile" >
+                           	  	</c:otherwise>
+                           	  </c:choose>
+                           </a>
                           </div>
                         </td>
                         <td>
-                          <p class="mb-0 text-muted"><strong>${empList.empName}</strong></p>
+                          <p class="mb-0 text-muted">
+                          	<strong>${empList.empName}</strong>
+                          </p>
                           <small class="mb-0 text-muted">${empList.empCode}</small>
                         </td>
                         <td>
-                          <p class="mb-0 text-muted"><a class="text-muted"  href="#">${empList.empId}</a></p>
+                          <p class="mb-0 text-muted">
+                         	 <a href="#" class="text-muted">${empList.empId}</a>
+                          </p>
+                        </td>
+                        <td >
+                          <p class="mb-0 text-muted ${empList.empCode}-rank">${empList.rankName}</p>
                         </td>
                         <td>
-                          <p class="mb-0 text-muted">${empList.rankName}</p>
+                          <p class="mb-0 text-muted ${empList.empCode}-dept">${empList.deptName}</p>
                         </td>
                         <td>
-                          <p class="mb-0 text-muted">${empList.deptName}</p>
+                        	<p class="mb-0 text-muted ${empList.empCode}-job">${empList.jobName}</p>
                         </td>
-                    
-                        <td>
-                        	<p class="mb-0 text-muted">${empList.jobName}</p>
-                        </td>
-                        <td class="text-muted"><p class="mb-0 text-muted"><a href="#" class="text-muted">${empList.empTel}</a></p></td>
-                        <td><p class="mb-0 text-muted"><a href="#" class="text-muted">${empList.empPhone}</a></p>
+                        <td class="text-muted">
+	                        <p class="mb-0 text-muted ${empList.empCode}-tel">${empList.empTel}</p>
                         </td>
                         <td>
-                          <p class="mb-0 text-muted"><a href="#" class="text-muted">${empList.empEMail}</a></p>
+	                        <p class="mb-0 text-muted ${empList.empCode}-phone">${empList.empPhone}</p>
+                        </td>
+                        <td>
+                          <p class="mb-0 text-muted ${empList.empCode}-email">${empList.empEMail}</p>
                         </td> 
                         <td>
-                          <p class="mb-0 text-muted"><a href="#" class="text-muted">${empList.empJoinDate}</a></p>
+                          <p class="mb-0 text-muted ${empList.empCode}-jDate">${empList.empJoinDate}</p>
                         </td>
                         <td>
-                          <p class="mb-0 text-muted">
-                          <c:if test="${empList.empStatus eq 'N'}">
-                          <a href="#" class="text-muted">일반</a>
-                          </c:if>
-                          <c:if test="${empList.empStatus eq 'R'}">
-                          <a href="#" class="text-muted">휴직</a>
-                          </c:if>
+                          <p class="mb-0 text-muted ${empList.empCode}-status">
+	                          <c:if test="${empList.empStatus eq 'N'}">
+	                          	일반
+	                          </c:if>
+	                          <c:if test="${empList.empStatus eq 'R'}">
+	                          	휴직
+	                          </c:if>
                           </p>
                         </td>
                       </tr>
                       </c:forEach>
                       
-                      
-                      
-                    </tbody>
-                  </table>
-
-                </div>
-              </div>
-              
-        
-        
+                     </tbody>
+                    </table>
+                  </div>
+                 </div>
       </main> <!-- main -->
 		</div>
 
@@ -360,20 +456,364 @@ padding: 10px;
               </div>
               <div class="grid-col">
 
-                <input type="submit"class="btn mb-2 btn-primary" value="저장" onclick="checkData();">
+                <input type="submit"class="btn mb-2 btn-primary" value="저장"  onclick=" return checkData();">
                 <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
               </div>
 
             </div>
           </div>
-        </div>
       </form>  
+        </div>
+        
+        <c:forEach items="${empList}" var="empList">
+	
+          <div class="modal fade" id="emp-profile-${empList.empCode}" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" >임직원 상세정보</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <form action="${root}/organization/management/emp/update/selectOne" method="post">
+                  
+                  <div class="modal-body profile-wrap"> 
+                    <div class="profile-img-wrap">
+                      <div class="avatar avatar-xl">
+                          <c:choose>
+                                    <c:when test="${empty empList.empProfileName}">
+                                      <img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle ${empList.empCode}-profile" >
+                                     </c:when>
+                                     <c:otherwise>
+                                        <img src="${root}/resources/upload/profile/${empList.empProfileName}" alt="..." class="avatar-img rounded-circle ${empList.empCode}-profile" >
+                                     </c:otherwise>
+                                   </c:choose>
+                       </div>
+                    </div>
+                    <div class="profile-texts-wrap">
+                      <div class="flex-items">
+                        <div>
+                          <p class="mb-0 text-muted ${empList.empCode}-name"><strong>이름</strong></p>
+                        </div>
+                        <div>
+                          <p class="mb-0">${empList.empName}</p>
+                        </div>
+                      </div>
+                      <div class="flex-items">
+                        <div>
+                          <p class="mb-0 text-muted"><strong>사번</strong></p>
+                        </div>
+                        <div>
+                          <p class="mb-0">${empList.empCode}</p>
+                        </div>
+                      </div>
+                      <div class="flex-items">
+                        <div>
+                          <p class="mb-0 text-muted "><strong>아이디</strong></p>
+                        </div>
+                        <div>
+                          <p class="mb-0">${empList.empId}</p>
+                        </div>
+                      </div>
+                      <div class="flex-items">
+                        <div>
+                          <p class="mb-0 text-muted"><strong>비밀번호</strong></p>
+                        </div>
+                        <div>
+                          <input type="password" name="empPwd" class="mb-0 modal-birthday-area ${empList.empCode}-pwd hide-input" placeholder="*****">
+                        </div>
+                      </div>
+                      <div class="flex-items">
+                        <div>
+                          <p class="mb-0 text-muted"><strong>직위</strong></p>
+                        </div>
+                        <div>
+                          <p class="mb-0 modal-rank-area ${empList.empCode}-rank">${empList.rankName}</p>
+                        </div>
+                      </div>
+                      <div class="flex-items">
+                        <div>
+                          <p class="mb-0 text-muted"><strong>직무</strong></p>
+                        </div>
+                        <div>
+                          <p class="mb-0 modal-job-area ${empList.empCode}-job">${empList.jobName}</p>
+                        </div>
+                      </div>
+                      <div class="flex-items">
+                        <div>
+                          <p class="mb-0 text-muted"><strong>소속</strong></p>
+                        </div>
+                        <div>
+                          <p class="mb-0 modal-dept-area ${empList.empCode}-dept">${empList.deptName}</p>
+                        </div>
+                      </div>
+                      <div class="flex-items">
+                        <div>
+                          <p class="mb-0 text-muted"><strong>생년월일</strong></p>
+                        </div>
+                        <div>
+                          <input type="date" name="empBirthday" class="mb-0 modal-birthday-area ${empList.empCode}-birth hide-input" value="${empList.empBirthday}">
+                        </div>
+                      </div>
+                      <div class="flex-items">
+                        <div>
+                          <p class="mb-0 text-muted" ><strong>사내전화</strong></p>
+                        </div>
+                        <div>
+                          <input type="tel" name="empTel" class="mb-0 modal-phone-area ${empList.empCode}-tel hide-input" value="${empList.empTel}">
+                        </div>
+                      </div>
+                      <div class="flex-items">
+                        <div>
+                          <p class="mb-0 text-muted"><strong>휴대전화</strong></p>
+                        </div>
+                        <div>
+                          <input type="tel" name="empPhone" class="mb-0 modal-phone-area ${empList.empCode}-phone hide-input" value="${empList.empPhone}">
+                        </div>
+                      </div>
+                      <div class="flex-items">
+                        <div>
+                          <p class="mb-0 text-muted" ><strong>e-mail</strong></p>
+                        </div>
+                        <div>
+                          <input type="email" name="empEMail" class="mb-0 modal-phone-area ${empList.empCode}-email hide-input" value="${empList.empEMail}">
+                        </div>
+                      </div>
+                      <div class="flex-items">
+                        <div>
+                          <p class="mb-0 text-muted"><strong>자택주소1</strong></p>
+                        </div>
+                        <div>
+                          <input type="text" name="empAddress1"  class="hide-input ${empList.empCode}-addr1" value="${empList.empAddress1}" placeholder="${empList.empAddress1}">
+    
+                        </div>
+                      </div>
+                      <div class="flex-items">
+                        <div>
+                          <p class="mb-0 text-muted" ><strong>자택주소2</strong></p>
+                        </div>
+                        <div>
+                            <input type="text" name="empAddress2"  class="hide-input ${empList.empCode}-addr2" value="${empList.empAddress2}" placeholder="${empList.empAddress2}">
+                        </div>
+                      </div>
+                      <div class="flex-items">
+                        <div>
+                          <p class="mb-0 text-muted" ><strong>입사일</strong></p>
+                        </div>
+                        <div>
+                          <input type="date" name="empJoinDate" class="mb-0 modal-birthday-area ${empList.empCode}-jDate hide-input" value="${empList.empJoinDate}">
+                        </div>
+                      </div>
+                      <div class="flex-items">
+                        <div>
+                          <p class="mb-0 text-muted"><strong>진급일</strong></p>
+                        </div>
+                        <div>
+                          <p class="mb-0 ${empList.empCode}-pDate">${empList.empPromotionDate}</p>
+                        </div>
+                      </div>
+                      <div class="flex-items">
+                        <div>
+                          <p class="mb-0 text-muted"><strong>권한</strong></p>
+                        </div>
+                        <div>
+                          <p class="mb-0 ${empList.empCode}-right">${empList.rightName}</p>
+                        </div>
+                      </div>
+                      <div class="flex-items">
+                        <div>
+                          <p class="mb-0 text-muted" ><strong>재직상태</strong></p>
+                        </div>
+                        <div>
+                          <p class="mb-0 modal-right-area ${empList.empCode}-status">
+                              <c:if test="${empList.empStatus eq 'N'}">
+                                  일반
+                                </c:if>
+                                <c:if test="${empList.empStatus eq 'R'}">
+                                  휴직
+                                </c:if>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <input type="submit" class="btn mb-2 btn-primary" value="저장"></input>
+                    <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
+                  </div>
+                </form>
+                </div>
+              </div>
+            </div>
+          
+        </c:forEach>
+    
+    <!-- 직위 변경 모달 -->
+    <div class="modal fade" id="changeRank-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" >직위 변경</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body change-modal-body"> 
+            <div>
+              <select name="rankCode" id="rank-select-modal">
+                <c:forEach items="${rankList}" var="rankList">
+                  <option value="${rankList.rankCode}">${rankList.rankName}</option>
+                </c:forEach>
+              </select> 
+            </div>
+          </div>  
+          <div class="modal-footer">
+            <button type="button" class="btn mb-2 btn-primary" onclick="changeRank();">변경</button>
+            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
+          </div>
+        </div>
+      </div>
     </div>
 
+    <!-- 직무 변경 모달 -->
+    <div class="modal fade" id="changeJob-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" >직무 변경</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body change-modal-body"> 
+            <div>
+              <select name="jobCode" id="job-select-modal">
+                <c:forEach items="${jobList}" var="jobList">
+                  <option value="${jobList.jobCode}">${jobList.jobName}</option>
+                </c:forEach>
+              </select> 
+            </div>
+          </div>  
+          <div class="modal-footer">
+            <button type="button" class="btn mb-2 btn-primary" onclick="changeJob();">변경</button>
+            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 부서 변경 모달 -->
+    <div class="modal fade" id="changeDept-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" >부서 변경</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body change-modal-body"> 
+            <div>
+              <select name="deptCode" id="dept-select-modal">
+                <c:forEach items="${deptList}" var="deptList">
+                  <option value="${deptList.deptCode}">${deptList.deptName}</option>
+                </c:forEach>
+              </select> 
+            </div>
+          </div>  
+          <div class="modal-footer">
+            <button type="button" class="btn mb-2 btn-primary" onclick="changeDept();">변경</button>
+            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 상태 변경 모달 -->
+    <div class="modal fade" id="changeStatus-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" >상태 변경</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body change-modal-body"> 
+            <div>
+              <select name="empStatus" id="status-select-modal">
+                <option value="N">일반</option>
+                <option value="R">휴직</option>
+                <option value="Q">퇴사</option>
+              </select> 
+            </div>
+          </div>  
+          <div class="modal-footer">
+            <button type="button" class="btn mb-2 btn-primary" onclick="changeStatus();">변경</button>
+            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--프로필 변경 모달-->
+    <div class="modal fade" id="changeProfile-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="verticalModalTitle">프로필 변경</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body change-modal-body"> 
+            <div>
+            	<div class="avatar avatar-xl">
+                  <label for="profile">
+                    <img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle preview-img" id="preview-img">
+                  </label>
+                <input id="profile" class="input-img"  name="profile" type="file" style="display:none;" >
+                </div>
+            </div>
+          </div>  
+          <div class="modal-footer">
+            <button type="button" class="btn mb-2 btn-primary" onclick="changeProfile();">변경</button>
+            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+	<!-- 체크박스 체크 시 버튼 활성화 -->
+  <script>
+    
+    function readCheckNum() {
+        const checkNum = $("input:checkbox[name='check']:checked").length;
+        const checkNumArea = $("#checkNum-area");
+        const buttons = $("#option-button-area");
+        const target = $(".active-buttons");
+		
+        checkNumArea.removeClass("fade");
+        buttons.removeClass("fade");
+        checkNumArea.html("<small>"+"체크 : "+checkNum+"</small>");
+       
+
+        var total = $("input[name=check]").length;
+        var checked = $("input[name=check]:checked").length;
+        if(checked==0) {
+          buttons.addClass("fade");
+          checkNumArea.addClass("fade");
+        }
+    }
+      
+  </script>
     
     <!--체크박스 전부체크-->
   <script>
     $(document).ready(function() {
+    	
+    
       $("#all").click(function() {
         if($("#all").is(":checked")) $("input[name=check]").prop("checked", true);
         else $("input[name=check]").prop("checked", false);
@@ -469,200 +909,289 @@ padding: 10px;
     </script>
   </c:if>
 
-	<c:forEach items="${empList}" var="empList">
-	
-		<div class="modal fade" id="emp-profile-${empList.empCode}" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
-		    <div class="modal-dialog modal-dialog-centered" role="document">
-		      <div class="modal-content">
-		        <div class="modal-header">
-		          <h5 class="modal-title" id="verticalModalTitle">임직원 상세정보</h5>
-		          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		            <span aria-hidden="true">&times;</span>
-		          </button>
-		        </div>
-		        <div class="modal-body profile-wrap"> 
-		          <div class="profile-img-wrap">
-		            <div class="avatar avatar-xl">
-                  <label for="file-input">
-		                <img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle preview-img" id="preview-img">
-                  </label>
-                  <input id="file-input" class="input-img" type="file" style="display:none;" onchange="readURL(this);">
-                  </div>
-		          </div>
-		          <div class="profile-texts-wrap">
-		            <div class="flex-items">
-		              <div>
-		                <p class="mb-0 text-muted"><strong>이름</strong></p>
-		              </div>
-		              <div>
-		                <p class="mb-0">${empList.empName}</p>
-		              </div>
-		            </div>
-		            <div class="flex-items">
-		              <div>
-		                <p class="mb-0 text-muted"><strong>사번</strong></p>
-		              </div>
-		              <div>
-		                <p class="mb-0">${empList.empCode}</p>
-		              </div>
-		            </div>
-		            <div class="flex-items">
-		              <div>
-		                <p class="mb-0 text-muted"><strong>아이디</strong></p>
-		              </div>
-		              <div>
-		                <p class="mb-0">${empList.empId}</p>
-		              </div>
-		            </div>
-		            <div class="flex-items">
-		              <div>
-		                <p class="mb-0 text-muted"><strong>비밀번호</strong></p>
-		              </div>
-		              <div>
-		                <p class="mb-0" class="modal-pwd-area">******</p>
-		              </div>
-		            </div>
-		            <div class="flex-items">
-		              <div>
-		                <p class="mb-0 text-muted"><strong>직위</strong></p>
-		              </div>
-		              <div>
-		                <p class="mb-0" class="modal-rank-area">${empList.rankName}</p>
-		              </div>
-		            </div>
-		            <div class="flex-items">
-		              <div>
-		                <p class="mb-0 text-muted"><strong>직무</strong></p>
-		              </div>
-		              <div>
-		                <p class="mb-0" class="modal-job-area">${empList.jobName}</p>
-		              </div>
-		            </div>
-		            <div class="flex-items">
-		              <div>
-		                <p class="mb-0 text-muted"><strong>소속</strong></p>
-		              </div>
-		              <div>
-		                <p class="mb-0" class="modal-dept-area">${empList.deptName}</p>
-		              </div>
-		            </div>
-		            <div class="flex-items">
-		              <div>
-		                <p class="mb-0 text-muted"><strong>생년월일</strong></p>
-		              </div>
-		              <div>
-		                <p class="mb-0" class="modal-birthday-area">${empList.empBirthday}</p>
-		              </div>
-		            </div>
-		            <div class="flex-items">
-		              <div>
-		                <p class="mb-0 text-muted" ><strong>사내전화</strong></p>
-		              </div>
-		              <div>
-		                <p class="mb-0" class="modal-tel-area">${empList.empTel}</p>
-		              </div>
-		            </div>
-		            <div class="flex-items">
-		              <div>
-		                <p class="mb-0 text-muted"><strong>휴대전화</strong></p>
-		              </div>
-		              <div>
-		                <p class="mb-0"  class="modal-phone-area">${empList.empPhone}</p>
-		              </div>
-		            </div>
-		            <div class="flex-items">
-		              <div>
-		                <p class="mb-0 text-muted" ><strong>e-mail</strong></p>
-		              </div>
-		              <div>
-		                <p class="mb-0" class="modal-email-area">${empList.empEMail}</p>
-		              </div>
-		            </div>
-		            <div class="flex-items">
-		              <div>
-		                <p class="mb-0 text-muted"><strong>자택주소1</strong></p>
-		              </div>
-		              <div>
-		                <p class="mb-0"  class="modal-addr1-area">${empList.empAddress1}</p>
-		              </div>
-		            </div>
-		            <div class="flex-items">
-		              <div>
-		                <p class="mb-0 text-muted" ><strong>자택주소2</strong></p>
-		              </div>
-		              <div>
-		                <p class="mb-0" class="modal-addr2-area">${empList.empAddress2}</p>
-		              </div>
-		            </div>
-		            <div class="flex-items">
-		              <div>
-		                <p class="mb-0 text-muted" ><strong>입사일</strong></p>
-		              </div>
-		              <div>
-		                <p class="mb-0" class="modal-joinDate-area">${empList.empJoinDate}</p>
-		              </div>
-		            </div>
-		            <div class="flex-items">
-		              <div>
-		                <p class="mb-0 text-muted"><strong>진급일</strong></p>
-		              </div>
-		              <div>
-		                <p class="mb-0">${empList.empPromotionDate}</p>
-		              </div>
-		            </div>
-		            <div class="flex-items">
-		              <div>
-		                <p class="mb-0 text-muted" ><strong>기타정보</strong></p>
-		              </div>
-		              <div>
-		                <p class="mb-0" class="modal-etc-area">${empList.empEtc}</p>
-		              </div>
-		            </div>
-		            <div class="flex-items">
-		              <div>
-		                <p class="mb-0 text-muted"><strong>권한</strong></p>
-		              </div>
-		              <div>
-		                <p class="mb-0">${empList.rightName}</p>
-		              </div>
-		            </div>
-		            <div class="flex-items">
-		              <div>
-		                <p class="mb-0 text-muted" ><strong>재직상태</strong></p>
-		              </div>
-		              <div>
-		                <p class="mb-0" class="modal-right-area">${empList.empStatus}</p>
-		              </div>
-		            </div>
-		
-		          </div>
-		        </div>
-		        <div class="modal-footer">
-		          <button type="button" class="btn mb-2 btn-primary">저장</button>
-		          <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
-		        </div>
-		      </div>
-		    </div>
-		  </div>
-		
-	</c:forEach>
+	<!-- 체크박스 체크 후 직위변경 -->
+  <script>
 
-    <script>
-      function readURL(input) {
-        if (input.files && input.files[0]) {
+    function changeRank() {
 
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            document.getElementById('preview-img').src = e.target.result;
-          };
-          reader.readAsDataURL(input.files[0]);
-        } else {
-          document.getElementById('preview-img').src = "";
+      const checkBoxArr = [];
+      const rankCode = $("#rank-select-modal").val();
+
+      $('input:checkbox[name=check]:checked').each(function(){
+        checkBoxArr.push($(this).val());
+      });
+      
+
+      $.ajax({
+        url : "${root}/organization/management/emp/update/checkedRank",
+        type : "POST",
+        traditional : true,
+        dataType : "JSON",
+        async : false,
+        cache: false,
+        data : {
+          checkBoxArr : checkBoxArr,
+          rankCode : rankCode
+        },
+        success : function(jsonStr) {
+			if(jsonStr==null) {
+				alert("직위 변경에 실패하였습니다. 다시 시도해보시길 바랍니다.");
+			}
+			else {
+		        const updatedRank = jsonStr[0];
+		        const updatedDate = jsonStr[1];
+		        const cnt = checkBoxArr.length;
+		        
+		        console.log(updatedDate);
+		
+		          for(let i = 0; i < cnt; ++i) {
+		            var targetEmp = checkBoxArr.pop();
+		            var targetRankArea = targetEmp+"-rank";
+		            $('.'+targetRankArea).text(updatedRank);
+		            var targetDateArea = targetEmp+"-pDate"
+		            $('.'+targetDateArea).text(updatedDate);
+		            
+		          }
+    		  }
+        },
+        error : function() {
+          alert("직위 변경에 실패하였습니다. 다시 시도해보시길 바랍니다.");
+       
         }
-      }
 
-    </script>
+      });
+    }
 
+    //직무변경
+    function changeJob() {
+
+      const checkBoxArr = [];
+      const jobCode = $("#job-select-modal").val();
+      
+      $('input:checkbox[name=check]:checked').each(function(){
+        checkBoxArr.push($(this).val());
+      });
+      
+      $.ajax({
+        url : "${root}/organization/management/emp/update/checkedJob",
+        type : "POST",
+        traditional : true,
+        dataType : "JSON",
+        async : false,
+        cache: false,
+        data : {
+          checkBoxArr : checkBoxArr,
+          jobCode : jobCode
+        },
+        success : function(updatedJob) {
+		
+        	if(updatedJob=="") {
+        		alert("직위 변경에 실패하였습니다. 다시 시도해보시길 바랍니다.");
+        	}else {
+		        const cnt = checkBoxArr.length;
+		
+		          for(let i = 0; i < cnt; ++i) {
+		            var targetEmp = checkBoxArr.pop();
+		            var targetJobArea = targetEmp+"-job";
+		            $('.'+targetJobArea).text(updatedJob);
+		            
+		            console.log(targetEmp + targetJobArea);
+		          }
+    		  }
+       	  },
+        error : function() {
+          alert("직무 변경에 실패하였습니다. 다시 시도해보시길 바랍니다.");
+        }
+      });
+    }
+  </script>
+  
+  <!-- 체크박스 체크 후 부서변경 -->
+  <script>
+  	function changeDept() {
+  		
+  		const checkBoxArr = [];
+        const deptCode = $("#dept-select-modal").val();
+        
+        
+        $('input:checkbox[name=check]:checked').each(function(){
+          checkBoxArr.push($(this).val());
+        });
+        
+        $.ajax({
+          url : "${root}/organization/management/emp/update/checkedDept",
+          type : "POST",
+          traditional : true,
+          dataType : "JSON",
+          async : false,
+          cache: false,
+          data : {
+            checkBoxArr : checkBoxArr,
+            deptCode : deptCode
+          },
+          success : function(updatedDept) {
+  		
+          	if(updatedDept=="") {
+          		alert("부서 변경에 실패하였습니다. 다시 시도해보시길 바랍니다.");
+          	}else {
+  		        const cnt = checkBoxArr.length;
+  		
+  		          for(let i = 0; i < cnt; ++i) {
+  		            var targetEmp = checkBoxArr.pop();
+  		            var targetDeptArea = targetEmp+"-dept";
+  		            $('.'+targetDeptArea).text(updatedDept);
+  		            
+  		            console.log(targetEmp + targetDeptArea);
+  		          }
+      		  }
+          },
+          error : function() {
+            alert("부서 변경에 실패하였습니다. 다시 시도해보시길 바랍니다.");
+          }
+        });
+  	}
+  </script>
+  
+  <!-- 체크박스 체크 후 상태변경 -->
+  <script>
+  	
+		function changeStatus() {
+		
+		const checkBoxArr = [];
+        const status = $("#status-select-modal").val();
+        
+        $('input:checkbox[name=check]:checked').each(function(){
+          checkBoxArr.push($(this).val());
+        });
+        
+        $.ajax({
+          url : "${root}/organization/management/emp/update/checkedStatus",
+          type : "POST",
+          traditional : true,
+          dataType : "JSON",
+          async : false,
+          cache: false,
+          data : {
+            checkBoxArr : checkBoxArr,
+            status : status
+          },
+          success : function(updatedStatus) {
+  		
+          	if(updatedStatus=="") {
+          		alert("상태 변경에 실패하였습니다. 다시 시도해보시길 바랍니다.");
+          	}else {
+  		        
+  		        if(updatedStatus=="N") {
+  		        	updatedStatus = "일반";
+  		        }else if (updatedStatus=="R") {
+  		        	updatedStatus= "휴직";
+  		        }else {
+  		        	updatedStatus= "퇴사";
+  		        }
+  		        const cnt = checkBoxArr.length;
+  		
+  		          for(let i = 0; i < cnt; ++i) {
+  		            var targetEmp = checkBoxArr.pop();
+  		            var targetStatusArea = targetEmp+"-status";
+  		            $('.'+targetStatusArea).text(updatedStatus);
+  		            
+  		            console.log(targetEmp + targetStatusArea);
+  		          }
+      		  }
+         },
+          error : function() {
+            alert("상태 변경에 실패하였습니다. 다시 시도해보시길 바랍니다.");
+          }
+        });
+	}
+	</script>
+	
+	<!-- 이미지 미리보기 -->
+	
+	<script>
+    
+	
+    //이미지 미리보기
+    var sel_file;
+ 
+    $(document).ready(function() {
+        $("#profile").on("change", handleImgFileSelect);
+    });
+ 
+    function handleImgFileSelect(e) {
+        var files = e.target.files;
+        var filesArr = Array.prototype.slice.call(files);
+ 
+        var reg = /(.*?)\/(jpg|jpeg|png|bmp)$/;
+ 
+        filesArr.forEach(function(f) {
+            if (!f.type.match(reg)) {
+                alert("확장자는 이미지 확장자만 가능합니다.");
+                return;
+            }
+ 
+            sel_file = f;
+ 
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $("#preview-img").attr("src", e.target.result);
+            }
+            reader.readAsDataURL(f);
+        });
+    }
+	</script>
+	
+	<script>
+		//파일 업로드
+		function changeProfile(){
+        
+		const checkBoxArr = [];
+	      $('input:checkbox[name=check]:checked').each(function(){
+	       checkBoxArr.push($(this).val());
+	      });
+	      
+	     console.log(checkBoxArr); 
+	     var formData = new FormData();
+	     var profile = $("input[name='profile']");
+	     var file = profile[0].files[0];
+	     
+		console.log(file);
+		 
+		 formData.append("uploadFile", file);
+		 formData.append("checkBoxArr", checkBoxArr);
+		 
+		 console.log(formData.get("uploadFile"));
+        
+         $.ajax({
+             url : "${root}/organization/management/emp/update/checkedProfile"
+           , type : "POST"
+        	, enctype: 'multipart/form-data'
+           , dataType : "json"
+           , processData : false
+           , contentType : false
+           , data : formData
+           , cache : false
+           , success:function(updatedFileName) {
+               if(updatedFileName=="") {
+             		alert("상태 변경에 실패하였습니다. 다시 시도해보시길 바랍니다.");
+             } else {
+      		        const cnt = checkBoxArr.length;
+      		  		
+    		          for(let i = 0; i < cnt; ++i) {
+    		            var targetEmp = checkBoxArr.pop();
+    		            var targetProfile = targetEmp+"-profile";
+    		            $('.'+targetProfile).attr("src", "${root}/resources/upload/profile/" +updatedFileName );
+    		            
+    		          }
+        		  }
+            }
+           , error: function (jqXHR) 
+           { 
+               alert(jqXHR.responseText); 
+           }
+       });
+	}
+</script>
 
   
 

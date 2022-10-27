@@ -60,16 +60,26 @@
 				class="nav-link dropdown-toggle text-muted pr-0" href="#"
 				id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
 				aria-haspopup="true" aria-expanded="false"> <span
-					class="avatar avatar-sm mt-2"> <img
-						src="${root}/resources/assets/avatars/face-1.jpg" alt="..."
+					class="avatar avatar-sm mt-2"> 
+
+          <!-- c:if 추가 예정
+          <c:choose>
+          	<c:when test="${not empty loginMember.empProfileName}">
+          		 	<img src="${root}/resources/upload/profile/${loginMember.empProfileName}" alt="프로필 이미지"
+					class="avatar-img rounded-circle">  -->
+		<!-- </c:when>
+          	<c:otherwise> -->
+					<img src="${root}/resources/img/guest.png" alt="프로필 이미지 미등록"
 						class="avatar-img rounded-circle">
+		<!--  	</c:otherwise>
+		 </c:choose> -->
+
 				</span>
 			</a>
 				<div class="dropdown-menu dropdown-menu-right"
 					aria-labelledby="navbarDropdownMenuLink">
-					<a class="dropdown-item" href="#">Profile</a> <a
-						class="dropdown-item" href="#">Settings</a> <a
-						class="dropdown-item" href="#">Activities</a>
+					<a class="dropdown-item" href="${root}/emp/myPage">프로필</a> 
+                    <a class="dropdown-item" href="${root}/emp/logout">로그아웃</a>
 				</div></li>
 		</ul>
 	</nav>

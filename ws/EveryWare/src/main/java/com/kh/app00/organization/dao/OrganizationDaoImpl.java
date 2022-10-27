@@ -129,6 +129,24 @@ public class OrganizationDaoImpl implements OrganizationDao {
 		return sqlSessionTemplate.selectOne("organizationMapper.selectUpdatedStatus",updatedEmpCode);
 	}
 
+	//임직원 관리 - 체크된 임직원 파일명 변경
+	@Override
+	public int updateCheckedFileName(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> updateTarget) {
+		return sqlSessionTemplate.update("organizationMapper.updateCheckedFileName",updateTarget);
+	}
+
+	//임직원 관리 - 변경된 파일명 확인
+	@Override
+	public String selectUpdatedFileName(SqlSessionTemplate sqlSessionTemplate, String updatedEmpCode) {
+		return sqlSessionTemplate.selectOne("organizationMapper.selectUpdatedFileName",updatedEmpCode);
+	}
+
+	//권한 관리 - 관리자 불러오기
+	@Override
+	public List<EmpVo> selectAdminList(SqlSessionTemplate sqlSessionTemplate) {
+		return sqlSessionTemplate.selectList("organizationMapper.selectAdminList");
+	}
+
 	
 	
 

@@ -1,6 +1,7 @@
 package com.kh.app00.emp.vo;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
@@ -25,11 +26,12 @@ public class EmpVo {
     private String empAddress1;
     private String empAddress2;
     private String empStatus;
-    private String empEtc;
     private String empAccountNo;
     private String empProfileName;
     private String empLastLoginDate;
     private String empFileName;
+    
+    private MultipartFile profile;
     
     
     private String deptName;

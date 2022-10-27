@@ -234,16 +234,23 @@ public class EmpController {
             //이후 메일을 update 한 비밀번호를 담은 내용으로 전송하기
             req.setAttribute("contentAll", contentAll);
             
-            
             return "smtp/sendProcess";
         }else {
             session.setAttribute("alertMsg", "이름 또는 이메일을 확인해주세요.");
             return "redirect:/emp/mailMain";
         }
-        
-        
        
     }
+    
+     @GetMapping("myPage")
+     public String openMyPage() {
+    	 return "/emp/myPage";
+     }
+     
+     @PostMapping("myPage")
+     public String saveMyPage() {
+    	return ""; 
+     }
     
     
 }

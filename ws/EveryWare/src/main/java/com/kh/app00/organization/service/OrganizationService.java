@@ -67,5 +67,14 @@ public interface OrganizationService {
 	//변경된 상태확인
 	String selectUpdatedStatus(String updatedEmpCode);
 
+	//임직원 관리 - 체크된 임직원 파일명 변경
+	int updateCheckedFileName(Map<String, List<String>> updateTarget);
+
+	//변경된 파일명 확인
+	String selectUpdatedFileName(String updatedEmpCode);
+
+	//권환 관리 - 관리자 불러오기
+	List<EmpVo> selectAdminList();
+
 
 }
