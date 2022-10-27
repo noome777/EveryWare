@@ -13,7 +13,7 @@
 			<div class="col-md-12">
 				<div class="row align-items-center my-3">
 					<div class="col">
-						<h2 class="page-title"></h2>
+						<h2 class="page-title">내 항목</h2>
 					</div>
 				</div>
 

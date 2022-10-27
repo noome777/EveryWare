@@ -51,4 +51,22 @@ public class FilemanagerServiceImpl implements FilemanagerService {
 		return dao.addStar(sst, fileCode);
 	}
 
+	@Override
+	public int restore(String fileCode) {
+		// TODO Auto-generated method stub
+		return dao.restore(sst, fileCode);
+	}
+
+	@Override
+	public int addDel(String fileCode) {
+		// TODO Auto-generated method stub
+		return dao.addDel(sst, fileCode);
+	}
+
+	@Override
+	public int addFile(FilemanagerVo vo) {
+		// TODO Auto-generated method stub
+		return dao.addFile(sst, vo);
+	}
+
 }

@@ -53,6 +53,7 @@
 	    , FILE_RANGE
 	FROM FILECLOUD
     WHERE FILE_BOOKMARK = '1'
+    AND FILE_DELDATE IS NULL
 	ORDER BY FILE_CODE DESC
 	</select>
 	
@@ -82,4 +83,29 @@
 	WHERE FILE_CODE = #{fileCode}
 	
 	</update>
+	
+	<update id="restore">
+	UPDATE 
+		FILECLOUD 
+	SET 
+		FILE_DELDATE = NULL 
+	WHERE FILE_CODE = #{fileCode}
+	
+	</update>
+	
+	<update id="addDel">
+	UPDATE 
+		FILECLOUD 
+	SET 
+		FILE_DELDATE = SYSDATE 
+	WHERE FILE_CODE = #{fileCode}
+	
+	</update>
+	
+	<insert id="addFile">
+		INSERT INTO 
+		FILECLOUD ( FILE_CODE , EMP_CODE , FILE_TITLE , FILE_CONTENT,  FILE_NAME , FILE_ORIGINNAME , FILE_URL, FILE_BOOKMARK ) 
+		VALUES ( SEQ_FILE_CODE.NEXTVAL ,1 , #{fileTitle} , #{fileContent}  , #{fileName} , #{fileOriginname} , #{fileUrl} , 0 )
+	
+	</insert>
 </mapper>

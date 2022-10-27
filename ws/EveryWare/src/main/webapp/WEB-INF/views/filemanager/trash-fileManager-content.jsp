@@ -17,8 +17,8 @@
 					<div class="file-panel mt-4">
 						<h6 class="mb-3">최근 삭제된 파일</h6>
 						<div class="row my-4">
-						
-						<c:forEach items="${flist}" var="f">
+
+							<c:forEach items="${flist}" var="f">
 
 								<div class="col-md-3">
 									<div class="card shadow text-center mb-4">
@@ -31,8 +31,10 @@
 													<span class="text-muted sr-only">Action</span>
 												</button>
 												<div class="dropdown-menu m-2">
-													<a class="dropdown-item" href="#"><i
-														class="fe fe-refresh-cw fe-12 mr-4"></i>복원</a> 
+													<a class="dropdown-item"
+														href="${root}/filemanager/restore/${f.fileCode}"> <i
+														class="fe fe-refresh-cw fe-12 mr-4"></i>복원
+													</a>
 												</div>
 											</div>
 											<div class="circle circle-lg bg-light my-4">
@@ -52,11 +54,11 @@
 									<!-- .card -->
 								</div>
 							</c:forEach>
-						
+
 						</div>
 						<!-- .row -->
 
-						
+
 					</div>
 					<!-- .file-panel -->
 					<div class="info-panel">

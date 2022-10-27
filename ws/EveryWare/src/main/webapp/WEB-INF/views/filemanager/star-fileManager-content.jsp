@@ -30,18 +30,18 @@
 													<span class="text-muted sr-only">Action</span>
 												</button>
 												<div class="dropdown-menu m-2">
-													<a class="dropdown-item" href="#"><i
-														class="fe fe-star fe-12 mr-4"></i>즐겨찾기</a> <a
-														class="dropdown-item" href="#"><i
-														class="fe fe-copy fe-12 mr-4"></i>복사</a><a
-														class="dropdown-item" href="#"><i
-														class="fe fe-edit-3 fe-12 mr-4"></i>수정</a> <a
-														class="dropdown-item" href="#"><i
-														class="fe fe-delete fe-12 mr-4"></i>삭제</a> <a
-														class="dropdown-item" href="#"><i
-														class="fe fe-share fe-12 mr-4"></i>공유</a> <a
-														class="dropdown-item" href="#"><i
-														class="fe fe-download fe-12 mr-4"></i>다운로드</a>
+													<a class="dropdown-item submit" href="${root}/filemanager/addStar/${f.fileCode}">
+													<i class="fe fe-star fe-12 mr-4"></i>즐겨찾기</a> 
+													<a class="dropdown-item" href="${root}/filemanager/addCopy/${f.fileCode}">
+													<i class="fe fe-copy fe-12 mr-4"></i>복사</a>
+													<a class="dropdown-item" href="${root}/filemanager/addEdit/${f.fileCode}">
+													<i class="fe fe-edit-3 fe-12 mr-4"></i>수정</a> 
+													<a class="dropdown-item" href="${root}/filemanager/addDel/${f.fileCode}">
+													<i class="fe fe-delete fe-12 mr-4"></i>삭제</a> 
+													<a class="dropdown-item" href="${root}/filemanager/addCloud/${f.fileCode}">
+													<i class="fe fe-share fe-12 mr-4"></i>공유</a> 
+													<a class="dropdown-item" href="${root}/filemanager/download/${f.fileCode}">
+													<i class="fe fe-download fe-12 mr-4"></i>다운로드</a>
 												</div>
 											</div>
 											<div class="circle circle-lg bg-light my-4">

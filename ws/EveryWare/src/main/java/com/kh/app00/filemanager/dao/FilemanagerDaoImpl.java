@@ -39,4 +39,22 @@ public class FilemanagerDaoImpl implements FilemanagerDao {
 		return sst.update("filemanagerMapper.addStar", fileCode);
 	}
 
+	@Override
+	public int restore(SqlSessionTemplate sst, String fileCode) {
+		// TODO Auto-generated method stub
+		return sst.update("filemanagerMapper.restore", fileCode);
+	}
+
+	@Override
+	public int addDel(SqlSessionTemplate sst, String fileCode) {
+		// TODO Auto-generated method stub
+		return sst.update("filemanagerMapper.addDel", fileCode);
+	}
+
+	@Override
+	public int addFile(SqlSessionTemplate sst, FilemanagerVo vo) {
+		// TODO Auto-generated method stub
+		return sst.insert("filemanagerMapper.addFile", vo);
+	}
+
 }

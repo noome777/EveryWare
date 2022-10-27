@@ -20,5 +20,14 @@ public interface FilemanagerDao {
 	
 	//즐겨찾기 추가
 	int addStar(SqlSessionTemplate sst, String fileCode);
+	
+	//복원하기 추가
+	int restore(SqlSessionTemplate sst, String fileCode);
+	
+	//삭제하기 추가
+	int addDel(SqlSessionTemplate sst, String fileCode);
+	
+	//작성하기 추가
+	int addFile(SqlSessionTemplate sst, FilemanagerVo vo);
 
 }

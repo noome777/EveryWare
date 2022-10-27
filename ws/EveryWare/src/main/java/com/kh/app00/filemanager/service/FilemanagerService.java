@@ -19,4 +19,13 @@ public interface FilemanagerService {
 	//즐겨찾기 추가
 	int addStar(String fileCode);
 
+	//복원하기 추가
+	int restore(String fileCode);
+	
+	//삭제하기 추가
+	int addDel(String fileCode);
+	
+	//작성하기 추가
+	int addFile(FilemanagerVo vo);
+
 }
