@@ -56,7 +56,7 @@
 #search{
   float: right;
   margin-top: -30px;
-  margin-right: 650px;
+  margin-right: 750px;
 }
 #page-area{
 margin-left: 35%;
@@ -65,6 +65,10 @@ margin-top: 5%;
 #page-area>a{
   margin: 5px;
 }
+table>tbody>tr>td *{
+  margin-left: 7%;
+}
+
 
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
@@ -76,7 +80,7 @@ margin-top: 5%;
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <%@ include file="/WEB-INF/views/commute/commute-side.jsp" %>
    	<main role="main" class="main-content">
-    <button onclick="location.href='${root}/emp/login'">로그아웃</button>
+    <%-- <button onclick="location.href='${root}/emp/login'">로그아웃</button> --%>
       <!-- 근무체크 -->
       <form action="" method="post">
         <div class="card shadow mb-4">
@@ -85,7 +89,7 @@ margin-top: 5%;
               <div class="flex-fill pt-2">
                 <div class="commute-check">
                   <h4 class="mb-0">근무체크</h4><br>
-                  <h1 id="timeNow">document.write(timeNow)</h1>
+                  <h1 id="clock">document.write(timeNow)</h1>
                 </div>
                 <img id="profile-img" alt="" src="${root}/resources/img/guest.png">
               </div>
@@ -97,13 +101,15 @@ margin-top: 5%;
                 <h6 class="mb-0">
                   <input type="button" value="출근하기" id="enter" class="btn mb-2 btn-primary commute" onclick="Alert(); entertime();">
                   <button class="btn mb-2 btn-light commute" >QR생성</button>
-                  <input type="text" class="mb-0" name="startTime" id="enter-time" value="" style="font-size: 20px; background-color:transparent;  border:0px transparent solid;"></input>
+                  <input type="text" class="mb-0" name="startTimeFormat" id="enter-time" value="" style="font-size: 20px; background-color:transparent;  border:0px transparent solid;"></input>
+                  <input type="hidden" class="mb-0" name="startTime" id="enter-time-format" value="" style="font-size: 20px; background-color:transparent;  border:0px transparent solid;"></input>
                 </h6>
               </div>
               <div class="col-md-6 pt-4">
                 <h6 class="mb-0">
                   <input type="button" value="퇴근하기" id="exit" class="btn mb-2 btn-primary commute" onclick="Alert(); exittime();">
-                  <input type="text" class="mb-0" name="endTime" id="exit-time" value="" style="font-size: 20px; background-color:transparent;  border:0px transparent solid;"></input>
+                  <input type="text" class="mb-0" name="endTimeFormat" id="exit-time" value="" style="font-size: 20px; background-color:transparent;  border:0px transparent solid;"></input>
+                  <input type="hidden" class="mb-0" name="endTime" id="exit-time-format" value="" style="font-size: 20px; background-color:transparent;  border:0px transparent solid;"></input>
                   <input type="submit" value="submit" class="btn mb-2 btn-outline-primary"  style="margin-left: 80px;">
                 </h6>
               </div>
@@ -123,19 +129,19 @@ margin-top: 5%;
               <div class="row commute-status">
                 <div class="col-6 text-center border-right border-bottom mb-3">
                   <h4 class="mb-1">정상출근</h4><br>
-                  <p class="text-uppercase text-muted mb-1">정상출근</p>
+                  <h4 class="mb-1">${normalCnt} 회</h4>
                 </div>
                 <div class="col-6 text-center mb-3 border-bottom">
                   <h4 class="mb-1">조기퇴근</h4><br>
-                  <p class="text-uppercase text-muted mb-1">조기퇴근</p>
+                  <h4 class="mb-1">${earlyCnt} 회</h4>
                 </div>
                 <div class="col-6 text-center border-right border-bottom mb-3">
                   <h4 class="mb-1">결근</h4><br>
-                  <p class="text-uppercase text-muted mb-1">결근</p><br>
+                  <h4 class="mb-1">${lateCnt} 회</h4><br>
                 </div>
                 <div class="col-6 text-center  border-bottom mb-3">
                   <h4 class="mb-1">지각</h4><br>
-                  <p class="text-uppercase text-muted mb-1">지각</p><br>
+                  <h4 class="mb-1">${absentCnt} 회</h4><br>
                 </div>
               </div>
             </div>
@@ -177,28 +183,27 @@ margin-top: 5%;
         
         <div id="select-condition" style="margin-left: 20px; margin-top: 20px;">
           <h4 class="card-title">근무결과 조회</h4><br><br>
-          <form action="" method="get">
+          <form action="${root}/commute/main/1" method="get">
             <h4 class="card-title">기간 선택</h4>
             <div class="form-row mb-3">
               <div class="col-md-4 mb-3">
                 <div class="input-group">
-                  <input class="form-control" id="example-date" type="date" name="startDate" required>
+                  <input class="form-control" id="example-date" type="date" name="enrollDate" required>
                 </div>
               </div>
               ~ 
               <div class="col-md-4 mb-3">
                 <div class="input-group">
-                  <input class="form-control" id="example-date" type="date" name="endDate" required>
+                  <input class="form-control" id="example-date" type="date" name="enrollDate" required>
                 </div>
               </div>
             </div>
-            <h6>출퇴근 여부</h6>
+            <h5 class="card-title">출퇴근 여부</h5>
             <div class="commute-yn">
-              <input type="radio" name="commute-yn" id="normal" value="정상출근">정상출근
-              <input type="radio" name="commute-yn" id="absent" value="결근">결근
-              <input type="radio" name="commute-yn" id="late" value="지각">지각
-              <input type="radio" name="commute-yn" id="early" value="조기퇴근">조기퇴근
-              <input type="radio" name="commute-yn" id="uncheck" value="퇴근미체크">퇴근미체크
+              <input type="radio" name="comStatus" id="normal" value="정상출근">정상출근
+              <input type="radio" name="comStatus" id="absent" value="결근">결근
+              <input type="radio" name="comStatus" id="late" value="지각">지각
+              <input type="radio" name="comStatus" id="early" value="조기퇴근">조기퇴근
             </div>
             <input type="submit" class="btn mb-2 btn-outline-primary" value="search" id="search"><br><br>
           </form>
@@ -206,7 +211,18 @@ margin-top: 5%;
 
         <img id="company-img" src="${root}/resources/img/EveryWareLogoSmall.png" alt="">
         
-        <h6 class="card-title" style="margin-left: 20px;">조회 결과 {}건</h6>
+        <c:if test="${empty commuteDateCnt}">
+          <h6 class="card-title" style="margin-left: 20px;">
+            조회 결과 ${commuteCnt} 건
+          </h6>
+        </c:if>
+    
+        <c:if test="${empty commuteCnt}">
+	        <h6 class="card-title" style="margin-left: 20px;">
+            조회 결과 ${commuteDateCnt} 건
+          </h6>
+        </c:if>
+
         <table class="table table-hover">
           <thead>
             <tr>
@@ -218,34 +234,90 @@ margin-top: 5%;
             </tr>
           </thead>
           <tbody>
-            <%-- <c:forEach items="${voList}" var="x">
-            	<tr>
-	              <td>${x.overCode}</td>
-	              <td>${x.offStartDate}</td>
-	              <td>${x.offEndDate}</td>
-	              <td>${x.offDays}</td>
-	              <td>${x.offReason}</td>
-	              <td>${x.offApproval}</td>
-            	</tr>
-             </c:forEach> --%>
+            <c:if test="${empty comDateList}">
+              <c:forEach items="${comList}" var="x">
+                <tr>
+                  <td>${x.enrollDate}</td>
+                  <td>${x.startTimeFormat}</td>
+                  <td>${x.endTimeFormat}</td>
+                  <td>${x.workingTime}</td>
+                  <c:if test="${x.comStatus == '조기퇴근'}">
+                    <td><span class="badge badge-pill badge-warning">조기퇴근</span></td>
+                  </c:if>
+                  <c:if test="${x.comStatus == '정상출근'}">
+                    <td><span class="badge badge-pill badge-success">정상출근</span></td>
+                  </c:if>
+                  <c:if test="${x.comStatus == '결근'}">
+                    <td><span class="badge badge-pill badge-danger">결근</span></td>
+                  </c:if>
+                  <c:if test="${x.comStatus == '지각'}">
+                    <td><span class="badge badge-pill badge-warning">지각</span></td>
+                  </c:if>
+                </tr>
+              </c:forEach> 
+            </c:if>
+            <c:if test="${empty comList}">
+          		<c:forEach items="${comDateList}" var="y">
+                <tr>
+                  <td>${y.enrollDate}</td>
+                  <td>${y.startTimeFormat}</td>
+                  <td>${y.endTimeFormat}</td>
+                  <td>${y.workingTime}</td>
+                  <c:if test="${y.comStatus == '조기퇴근'}">
+                    <td><span class="badge badge-pill badge-warning">조기퇴근</span></td>
+                  </c:if>
+                  <c:if test="${y.comStatus == '정상출근'}">
+                    <td><span class="badge badge-pill badge-success">정상출근</span></td>
+                  </c:if>
+                  <c:if test="${y.comStatus == '결근'}">
+                    <td><span class="badge badge-pill badge-danger">결근</span></td>
+                  </c:if>
+                  <c:if test="${y.comStatus == '지각'}">
+                    <td><span class="badge badge-pill badge-warning">지각</span></td>
+                  </c:if>
+                </tr>
+              </c:forEach>
+          	</c:if>
           </tbody>
         </table>
+
+        <c:if test="${empty comDateList && empty enrollDate1 && empty enrollDate2}">
+          <div id="page-area">
+            <c:if test="${pv.startPage ne 1}">
+              <a href="${root}/commute/main/${pv.startPage - 1}" class="btn mb-2 btn-primary"><</a>
+            </c:if>
+            <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" var="i">
+                <a href="${root}/commute/main/${i}" class="btn mb-2 btn-primary">${i}</a>
+            </c:forEach>
+            <c:if test="${pv.endPage ne pv.maxPage }">
+              <a href="${root}/commute/main/${pv.endPage + 1}" class="btn mb-2 btn-primary">></a>
+            </c:if>	
+          </div>
+        </c:if>
+        <c:if test="${empty comList && not empty enrollDate1 && not empty enrollDate2}">
+          <div id="page-area">
+	          <c:if test="${pv.startPage ne 1}">
+	            <a href="${root}/commute/main/${pv.startPage - 1}?enrollDate=${enrollDate1}&enrollDate=${enrollDate2}&comStatus=${comStatus}" class="btn mb-2 btn-primary"><</a>
+	          </c:if>
+	          <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" var="i">
+	              <a href="${root}/commute/main/${i}?enrollDate=${enrollDate1}&enrollDate=${enrollDate2}&comStatus=${comStatus}" class="btn mb-2 btn-primary">${i}</a>
+	          </c:forEach>
+	          <c:if test="${pv.endPage ne pv.maxPage }">
+	            <a href="${root}/commute/main/${pv.endPage + 1}?enrollDate=${enrollDate1}&enrollDate=${enrollDate2}&comStatus=${comStatus}" class="btn mb-2 btn-primary">></a>
+	          </c:if>	
+	        </div>
+        </c:if>
+
       </div>
 	</main>
 </div>
-<!-- <span class="badge badge-pill badge-warning">퇴근미체크</span>
-<span class="badge badge-pill badge-success">정상출근 </span>
-<span class="badge badge-pill badge-warning">조기퇴근</span>
-<span class="badge badge-pill badge-danger">결근</span>
-<span class="badge badge-pill badge-danger">지각</span> -->
-
 
 <script>
   /*시간 출력하는 함수 호출*/
 
   function clock(){
   //h1 태그 가져오기
-  const timeNow = document.getElementById('timeNow');
+  const clock = document.getElementById('clock');
 
   //날짜와 시간
   const date = new Date();
@@ -256,12 +328,14 @@ margin-top: 5%;
   const milliseconds = date.getMilliseconds();
 
   //html에 출력
-  timeNow.innerHTML = date.toLocaleTimeString('en-kr');
+  clock.innerHTML = date.toLocaleTimeString('en-kr');
+  // clock.innerText  = hours + ':'+ minutes + ':' + seconds ;
   }
 
   /* 1초마다 clock함수 실행 */
   clock();
   setInterval(clock,1000);
+
 </script>
 
 
@@ -271,19 +345,33 @@ margin-top: 5%;
   function entertime(){
     entertime = new Date();
 
+    const hours = entertime.getHours();
+    const minutes = entertime.getMinutes();
+    const seconds = entertime.getSeconds();
+
     const val = document.getElementById('enter-time').innerHTML = entertime.toLocaleTimeString('en-kr');
+    const valFormat = document.getElementById('enter-time-format').innerHTML = hours + ':'+ minutes + ':' + seconds;
     
     const startTime = val;
-    $('input[name=startTime]').attr('value', startTime);
+    const startTimeFormat = valFormat;
+    $('input[name=startTime]').attr('value', startTimeFormat);
+    $('input[name=startTimeFormat]').attr('value', startTime);
   }
 
   function exittime(){
     exittime = new Date();
 
+    const hours = exittime.getHours();
+    const minutes = exittime.getMinutes();
+    const seconds = exittime.getSeconds();
+
     const val = document.getElementById('exit-time').innerHTML = exittime.toLocaleTimeString('en-kr');
+    const valFormat = document.getElementById('exit-time-format').innerHTML = hours + ':'+ minutes + ':' + seconds;
 
     const endTime = val;
-    $('input[name=endTime]').attr('value', endTime);
+    const endTimeFormat = valFormat;
+    $('input[name=endTime]').attr('value', endTimeFormat);
+    $('input[name=endTimeFormat]').attr('value', endTime);
   }
 
 

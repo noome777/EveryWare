@@ -3,11 +3,27 @@
 <mapper namespace="commuteMapper">
 
 	<insert id="insertCommute">
-		INSERT INTO COMMUTE (COM_CODE, ECODE, START_TIME, END_TIME, COM_STATUS)
-		VALUES(SEQ_COM_CODE_NO.NEXTVAL, #{eCode}, #{startTime}, #{endTime}, #{comStatus})
+		INSERT INTO COMMUTE (COM_CODE, ECODE, START_TIME, START_TIME_FORMAT, END_TIME, END_TIME_FORMAT, COM_STATUS)
+		VALUES(SEQ_COM_CODE_NO.NEXTVAL, #{eCode}, #{startTime}, #{startTimeFormat}, #{endTime}, #{endTimeFormat}, #{comStatus})
 	</insert>
 	
-	<insert id="insertOverwork">
+	<select id="selectNormalCnt" resultType="int">
+		SELECT COUNT(*) FROM COMMUTE WHERE COM_STATUS  = '정상출근' AND ECODE = #{eCode}
+	</select>
+	
+	<select id="selectEarlyCnt" resultType="int">
+		SELECT COUNT(*) FROM COMMUTE WHERE COM_STATUS = '조기퇴근' AND ECODE = #{eCode}
+	</select>
+	
+	<select id="selectLateCnt" resultType="int">
+		SELECT COUNT(*) FROM COMMUTE WHERE COM_STATUS  = '지각' AND ECODE = #{eCode}
+	</select>
+	
+	<select id="selectAbsentCnt" resultType="int">
+		SELECT COUNT(*) FROM COMMUTE WHERE COM_STATUS  = '결근' AND ECODE = #{eCode}
+	</select>
+	
+	<insert id="insertOverwork" >
 		INSERT INTO OVERWORK(OVER_CODE, ECODE, DEPT_CODE, OVER_DATE, OVER_TIME, OVER_NAME, OVER_REASON)
 		VALUES(SEQ_OVER_CODE_NO.NEXTVAL, #{eCode}, #{deptCode}, #{overDate}, #{overTime}, #{overName}, #{overReason})
 	</insert>
@@ -15,6 +31,31 @@
 	<select id="selectOverworkList" resultType="OverworkVo">
 		SELECT OVER_CODE, OVER_DATE, OVER_TIME, OVER_NAME, OVER_REASON, OVER_APPROVAL FROM OVERWORK
 		WHERE ECODE = #{eCode} ORDER BY OVER_CODE DESC
+	</select>
+	
+	<select id="selectCommuteTotalCnt" resultType="int">
+		SELECT COUNT(*) FROM COMMUTE WHERE ECODE = #{eCode}
+	</select>
+	
+	<select id="selectCommuteList" resultType="CommuteVo">
+		SELECT TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE
+		, START_TIME_FORMAT, END_TIME_FORMAT, ROUND((TO_DATE(END_TIME, 'HH24:MI:SS') - TO_DATE(START_TIME, 'HH24:MI:SS')) * 24, 2) AS WORKING_TIME, COM_STATUS 
+		FROM COMMUTE ORDER BY ENROLL_DATE DESC
+	</select>
+	
+	<select id="selectCommuteDateCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM COMMUTE
+		WHERE TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') BETWEEN SUBSTR(#{enrollDate}, 1,10) AND SUBSTR(#{enrollDate}, 12)
+		AND COM_STATUS = #{comStatus}
+	</select>
+	
+	<select id="selectCommuteDateList" resultType="CommuteVo">
+		SELECT TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE
+		, START_TIME_FORMAT, END_TIME_FORMAT, ROUND((TO_DATE(END_TIME, 'HH24:MI:SS') - TO_DATE(START_TIME, 'HH24:MI:SS')) * 24, 2) AS WORKING_TIME, COM_STATUS
+		FROM COMMUTE
+		WHERE TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') BETWEEN  SUBSTR(#{enrollDate}, 1,10) AND SUBSTR(#{enrollDate}, 12)
+		AND COM_STATUS = #{comStatus} ORDER BY ENROLL_DATE DESC
 	</select>
 	
 	<select id="selectTotalCnt" resultType="int">

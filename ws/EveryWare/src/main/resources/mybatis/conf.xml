@@ -53,7 +53,7 @@
 		
 		<!-- 주소록 -->
 		<typeAlias alias="ContactsVo" type="com.kh.app00.contacts.vo.ContactsVo"/>
-		
+		<typeAlias alias="CommuteVo" type="com.kh.app00.commute.vo.CommuteVo"/>
 	</typeAliases>
 	
 </configuration>
