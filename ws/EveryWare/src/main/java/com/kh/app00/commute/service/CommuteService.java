@@ -73,5 +73,17 @@ public interface CommuteService {
     //사원의 기간 선택시 근태 목록 조회
     List<CommuteVo> selectCommuteDateList(PageVo pv2, CommuteVo vo);
 
+    //해당 월 근무 일수
+    int selectWorkDays(CommuteVo vo);
+
+    //해당 월 총 근무시간
+    int seletWorkTimeAll(CommuteVo vo);
+
+    //해당 월 평균 근무시간
+    double selectWorkTimeAvg(CommuteVo vo);
+
+    //금일 근무시간
+    int selectWorkToday(CommuteVo vo);
+
 
 }

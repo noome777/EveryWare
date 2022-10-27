@@ -137,11 +137,11 @@ table>tbody>tr>td *{
                 </div>
                 <div class="col-6 text-center border-right border-bottom mb-3">
                   <h4 class="mb-1">결근</h4><br>
-                  <h4 class="mb-1">${lateCnt} 회</h4><br>
+                  <h4 class="mb-1">${absentCnt} 회</h4><br>
                 </div>
                 <div class="col-6 text-center  border-bottom mb-3">
                   <h4 class="mb-1">지각</h4><br>
-                  <h4 class="mb-1">${absentCnt} 회</h4><br>
+                  <h4 class="mb-1">${lateCnt} 회</h4><br>
                 </div>
               </div>
             </div>
@@ -158,19 +158,19 @@ table>tbody>tr>td *{
               <div class="row commute-status">
                 <div class="col-6 text-center border-right border-bottom mb-3">
                   <h4 class="mb-1">근무일수</h4><br>
-                  <p class="text-uppercase text-muted mb-1">근무일수</p>
+                  <h4 class="mb-1">${workDays} 일</p>
                 </div>
                 <div class="col-6 text-center mb-3 border-bottom">
                   <h4 class="mb-1">총근무시간</h4><br>
-                  <p class="text-uppercase text-muted mb-1">총근무시간</p>
+                  <h4 class="mb-1">${workTimeAll} 시간</h4>
                 </div>
                 <div class="col-6 text-center border-right border-bottom mb-3">
                   <h4 class="mb-1">평균근무시간</h4><br>
-                  <p class="text-uppercase text-muted mb-1">평균근무시간</p><br>
+                  <h4 class="mb-1">${workTimeAvg} 시간</h4><br>
                 </div>
                 <div class="col-6 text-center  border-bottom mb-3">
                   <h4 class="mb-1">금일근무시간</h4><br>
-                  <p class="text-uppercase text-muted mb-1">금일근무시간</p><br>
+                  <h4 class="mb-1">${workToday} 시간</h4><br>
                 </div>
               </div>
             </div>

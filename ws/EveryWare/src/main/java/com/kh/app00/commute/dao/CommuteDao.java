@@ -75,6 +75,18 @@ public interface CommuteDao   {
     //사원의 기간 선택시 근태 목록 수 카운트
     List<CommuteVo> selectCommuteDateList(SqlSessionTemplate sst, CommuteVo vo, PageVo pv2);
 
+    //해당 월 근무 일수
+    int selectWorkDays(SqlSessionTemplate sst, CommuteVo vo);
+
+    //해당 월 총 근무시간
+    int seletWorkTimeAll(SqlSessionTemplate sst, CommuteVo vo);
+
+    //해당 월 평균 근무시간
+    double selectWorkTimeAvg(SqlSessionTemplate sst, CommuteVo vo);
+
+    //금일 근무시간
+    int selectWorkToday(SqlSessionTemplate sst, CommuteVo vo);
+
 
 
 }
