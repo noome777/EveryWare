@@ -34,13 +34,13 @@
               </ul>
             </li>
             <li class="nav-item w-100">
-              <a class="nav-link" href="${root}/commute/main">
+              <a class="nav-link" href="${root}/commute/main/1">
                 <i class="fe fe-layers fe-16"></i>
                 <span class="ml-3 item-text">근태</span>
               </a>
             </li>
             <li class="nav-item dropdown">
-              <a href="${root}/approval/list" aria-expanded="false" class="nav-link">
+              <a href="${root}/approval/progressAllList/1" aria-expanded="false" class="nav-link">
                 <i class="fe fe-check-square fe-16"></i>
                 <span class="ml-3 item-text">전자결재</span>
               </a>
