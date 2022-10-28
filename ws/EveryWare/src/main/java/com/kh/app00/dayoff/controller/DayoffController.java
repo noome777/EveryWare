@@ -39,6 +39,12 @@ public class DayoffController {
     public String main(DayoffVo vo, Model model, HttpSession session,
             @PathVariable int pno, String offStartDate, String offEndDate) {
 
+        // 로그인 여부 체크
+        if (session.getAttribute("loginMember") == null) {
+            session.setAttribute("alertMsg", "로그인 후 접근 가능합니다 !");
+            return "redirect:/emp/login";
+        }
+        
         // 로그인 유저의 정보 vo에 저장
         EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
         vo.setECode(loginMember.getEmpCode());

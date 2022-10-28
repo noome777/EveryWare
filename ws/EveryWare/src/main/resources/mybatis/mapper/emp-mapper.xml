@@ -13,7 +13,6 @@
 		  , EMP_ADDRESS1
 		FROM EMP
 		WHERE EMP_ID = #{empId}
-		AND EMP_PWD = #{empPwd}
 		AND EMP_STATUS = 'N'
 	</select>
 	

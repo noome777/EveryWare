@@ -165,6 +165,30 @@ public class CommuteDaoImpl implements CommuteDao {
         return sst.selectList("commuteMapper.selectCommuteDateList", vo, rb);
     }
 
+    //해당 월 근무 일수
+    @Override
+    public int selectWorkDays(SqlSessionTemplate sst, CommuteVo vo) {
+        return sst.selectOne("commuteMapper.selectWorkDays", vo);
+    }
+
+    //해당 월 총 근무시간
+    @Override
+    public int seletWorkTimeAll(SqlSessionTemplate sst, CommuteVo vo) {
+        return sst.selectOne("commuteMapper.seletWorkTimeAll", vo);
+    }
+
+    //해당 월 평균 근무시간
+    @Override
+    public double selectWorkTimeAvg(SqlSessionTemplate sst, CommuteVo vo) {
+        return sst.selectOne("commuteMapper.selectWorkTimeAvg", vo);
+    }
+
+    //금일 근무시간
+    @Override
+    public int selectWorkToday(SqlSessionTemplate sst, CommuteVo vo) {
+        return sst.selectOne("commuteMapper.selectWorkToday", vo);
+    }
+
 
 
 }

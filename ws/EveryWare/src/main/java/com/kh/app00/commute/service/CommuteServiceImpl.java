@@ -151,6 +151,30 @@ public class CommuteServiceImpl implements CommuteService {
         return dao.selectCommuteDateList(sst, vo, pv2);
     }
 
+    //해당 월 근무 일수
+    @Override
+    public int selectWorkDays(CommuteVo vo) {
+        return dao.selectWorkDays(sst, vo);
+    }
+
+    //해당 월 총 근무시간
+    @Override
+    public int seletWorkTimeAll(CommuteVo vo) {
+        return dao.seletWorkTimeAll(sst, vo);
+    }
+
+    //해당 월 평균 근무시간
+    @Override
+    public double selectWorkTimeAvg(CommuteVo vo) {
+        return dao.selectWorkTimeAvg(sst, vo);
+    }
+
+    //금일 근무시간
+    @Override
+    public int selectWorkToday(CommuteVo vo) {
+        return dao.selectWorkToday(sst, vo);
+    }
+
 
     
    

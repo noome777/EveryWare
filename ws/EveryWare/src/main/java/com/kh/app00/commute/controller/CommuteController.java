@@ -49,7 +49,7 @@ public class CommuteController {
         EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
         vo.setECode(loginMember.getEmpCode());
 
-        // 사원 근태 현황 조회
+        // 사원 해당 월 근태 현황 조회
         int normalCnt = service.selectNormalCnt(vo);
         int earlyCnt = service.selectEarlyCnt(vo);
         int lateCnt = service.selectLateCnt(vo);
@@ -60,8 +60,16 @@ public class CommuteController {
         model.addAttribute("lateCnt", lateCnt);
         model.addAttribute("absentCnt", absentCnt);
         
-        //사원의 근무 시간 조회
+        //사원의 해당 월 근무 시간 조회
+        int workDays = service.selectWorkDays(vo);
+        int workTimeAll = service.seletWorkTimeAll(vo);
+        double workTimeAvg = (double)service.selectWorkTimeAvg(vo);
+        int workToday = service.selectWorkToday(vo);
         
+        model.addAttribute("workDays", workDays);
+        model.addAttribute("workTimeAll", workTimeAll);
+        model.addAttribute("workTimeAvg", workTimeAvg);
+        model.addAttribute("workToday", workToday);
         
         
         // 사원 근태 리스트 조회
@@ -135,7 +143,7 @@ public class CommuteController {
         Date onTimeIn = new SimpleDateFormat("HH:mm:ss").parse("09:00:00");
         Date onTimeOut = new SimpleDateFormat("HH:mm:ss").parse("18:00:00");
         
-        //수정!!
+        //수정!!----------------------------------
         if (onTimeIn.after(startFormat) || onTimeIn.equals(startFormat)) {
             if (onTimeOut.after(endFormat)) {
                 // 조기퇴근
@@ -169,12 +177,6 @@ public class CommuteController {
             // 실패
             return "error/404";
         }
-    }
-
-    // 근무 시간 조회
-    @GetMapping("main/commute/hours")
-    public String commuteHours() {
-        return "commute/commuteMain";
     }
 
     // 월 근무 내역 조회
