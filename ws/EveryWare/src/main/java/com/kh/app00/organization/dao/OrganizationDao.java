@@ -77,6 +77,15 @@ public interface OrganizationDao {
 	//권한 관리 - 관리자 불러오기
 	List<EmpVo> selectAdminList(SqlSessionTemplate sqlSessionTemplate);
 
+	//권한 관리 - 관리자 삭제
+	int updateAdmin(SqlSessionTemplate sqlSessionTemplate, String adminCode);
+
+	//권한 관리 - 임직원 검색
+	List<EmpVo> selectEmpListForAdmin(SqlSessionTemplate sqlSessionTemplate, String word);
+
+	//권한 관리 - 관리자 추가
+	int updateEmpToAdmin(SqlSessionTemplate sqlSessionTemplate, List<String> empCodeList);
+
 
 
 }

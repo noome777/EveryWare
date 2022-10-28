@@ -73,8 +73,17 @@ public interface OrganizationService {
 	//변경된 파일명 확인
 	String selectUpdatedFileName(String updatedEmpCode);
 
-	//권환 관리 - 관리자 불러오기
+	//권한 관리 - 관리자 불러오기
 	List<EmpVo> selectAdminList();
+
+	//권한 관리 - 관리자 삭제
+	int updateAdmin(String adminCode);
+
+	//권한 관리 - 임직원 검색
+	List<EmpVo> selectEmpListForAdmin(String word);
+
+	//권한 관리 - 관리자 추가
+	int updateEmpToAdmin(List<String> empCodeList);
 
 
 }

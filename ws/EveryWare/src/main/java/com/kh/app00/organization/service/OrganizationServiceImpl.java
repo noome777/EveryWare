@@ -24,6 +24,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	private final OrganizationDao organizationDao;
 	private final SqlSessionTemplate sqlSessionTemplate;
 	private final PasswordEncoder  pwdEnc;
+	private SpaceRemover spaceRemover;
 	
 	@Autowired
 	public OrganizationServiceImpl(OrganizationDao organizationDao, SqlSessionTemplate sqlSessionTemplate, PasswordEncoder  pwdEnc) {
@@ -44,6 +45,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 	//검색으로 임직원 정보 불러오기
 	@Override
 	public List<EmpVo> selectEmpListByWord(String word) {
+		
+		word = spaceRemover.removeSpace(word);
+		
 		return organizationDao.selectEmpListByWord(sqlSessionTemplate, word);
 	}
 
@@ -84,7 +88,6 @@ public class OrganizationServiceImpl implements OrganizationService {
 	//임직원 관리 - 임직원 추가
 	@Override
 	public int insertEmp(EmpVo empVo) {
-		SpaceRemover spaceRemover;
 		
 		if(empVo.getEmpName() == null || empVo.getEmpId() == null || empVo.getEmpPwd() == null) {
 			return 0;
@@ -115,6 +118,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 	//임직원 관리 - 임직원 검색
 	@Override
 	public List<EmpVo> selectEmpListByEmpData(String empData) {
+		
+		empData = SpaceRemover.removeSpace(empData);
+		
 		return organizationDao.selectEmpListByEmpData(sqlSessionTemplate,empData);
 	}
 
@@ -195,6 +201,30 @@ public class OrganizationServiceImpl implements OrganizationService {
 	@Override
 	public List<EmpVo> selectAdminList() {
 		return organizationDao.selectAdminList(sqlSessionTemplate);
+	}
+
+
+	//권한관리 -> 관리자 삭제
+	@Override
+	public int updateAdmin(String adminCode) {
+		return organizationDao.updateAdmin(sqlSessionTemplate, adminCode);
+	}
+
+
+	//권한 관리 -> 임직원 검색
+	@Override
+	public List<EmpVo> selectEmpListForAdmin(String word) {
+		
+		word = spaceRemover.removeSpace(word);
+		
+		return organizationDao.selectEmpListForAdmin(sqlSessionTemplate,word);
+	}
+
+
+	//권한 관리 - 관리자 추가
+	@Override
+	public int updateEmpToAdmin(List<String> empCodeList) {
+		return organizationDao.updateEmpToAdmin(sqlSessionTemplate,empCodeList);
 	}
 
 

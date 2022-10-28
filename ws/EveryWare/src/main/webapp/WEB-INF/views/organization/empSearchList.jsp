@@ -215,7 +215,7 @@
 
 		function checkBlank() {
 
-			if(searchBar.val() === "") {
+			if(searchBar.val().trim() === "") {
 				window.location.href="${root}/organization/info";
 				return false;
 			} else {

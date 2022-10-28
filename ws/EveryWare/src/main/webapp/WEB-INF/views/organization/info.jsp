@@ -140,20 +140,20 @@
 							<div class="tab-pane container active flex-wrap" id="all" >
 								<div id="profile-title"><h4>전체보기</h4></div>
 								<div id="profile-area" class="or-scroll-bar">
-								<c:forEach items="${empList}" var="el">
-									<div class="profile shadow">
-										<div class="profile-image avatar avatar-lg">
-											<a href="#emp-profile-${el.empCode}" data-toggle="modal">
-												<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
-											</a>
+									<c:forEach items="${empList}" var="el">
+										<div class="profile shadow">
+											<div class="profile-image avatar avatar-lg">
+												<a href="#emp-profile-${el.empCode}" data-toggle="modal">
+													<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+												</a>
+											</div>
+											<div class="profile-text card-text">
+												<strong class=" card-title my-0">${el.empName}</strong>
+												<p class=" small my-0">${el.deptName}</p>
+												<p class="small my-0">${el.rankName}</p>
+												<p class="small my-0">${el.empTel}</p>
+											</div>
 										</div>
-										<div class="profile-text card-text">
-											<strong class=" card-title my-0">${el.empName}</strong>
-											<p class=" small my-0">${el.deptName}</p>
-											<p class="small my-0">${el.rankName}</p>
-											<p class="small my-0">${el.empTel}</p>
-										</div>
-									</div>
 									</c:forEach>
 								</div>
 							</div>
@@ -166,7 +166,7 @@
 										<c:if test="${dl.deptName eq el.deptName }">
 											<div class="profile shadow">
 												<div class="profile-image avatar avatar-lg">
-													<a href="">
+													<a href="#emp-profile-${el.empCode}" data-toggle="modal">
 														<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
 													</a>
 												</div>
@@ -296,7 +296,7 @@
 				const searchEng = searchBar.val().search(/[a-z]/ig);
 				const searchSpe = searchBar.val().search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 
-				if(searchBar.val() === "") {
+				if(searchBar.val().trim() === "") {
 					alert("검색창에 글자를 입력하여 주시길 바랍니다.");
 					return false;
 				} else if(searchNum != -1) {

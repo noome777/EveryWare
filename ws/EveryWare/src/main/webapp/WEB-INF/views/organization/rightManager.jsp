@@ -102,20 +102,28 @@
 	border-style: none;
 }
 
+
 #search-body {
-  width: 200px;
-  height: 200px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin: auto;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
 }
 
-#search-icon {
-  width: 34px;
-  height: 34px;
+#plus-icon {
+  width: 27px;
+  height: 27px;
+  margin-top : 5px;
+  margin-left : 7px;
 }
 
+#search-result-area {
+	width : auto;
+	height : auto;
+	display: flex;
+	flex-directrion : row;
+	justify-content: center;
+	align-items: center;
+}
 
 
 </style>
@@ -141,16 +149,11 @@
               <!-- table -->
               <div class="card shadow card-wrap">
                 <div class="card-body">
-                  <div id="search-wrap">
-                    <div id="search-container">
-                        <div id="search-bar-wrap">
-                          <button type="button" class="btn shadow " data-toggle="modal" data-target="#addAdmin">
-                            <small>관리자 추가</small>
-                          </button>
-                          </div>
-                        </div>
+                    <div id="search-body">
+                        <input type="text" id="search-bar" class="hide-input shadow" placeholder="관리자 추가" name="empData"> 
+                        <input type="image" name="submit" id="plus-icon" src="${root}/resources/img/plus.png" data-toggle="modal" data-target="#resultModal" onclick="insertAdmin();">
                     </div>
-                  </div>
+                 </div>
                   <table class="table table-borderless table-hover">
                     <thead>
                       <tr>
@@ -208,19 +211,12 @@
                             <button class="btn shadow delete-btn" value="${adminList.empCode}">삭제</button>
                           </c:if>
                         </td>
-                       
                       </tr>
                       </c:forEach>
-                      
-                      
-                      
                     </tbody>
                   </table>
                 </div>
               </div>
-              
-              
-                  
             </div>
           </div>
         </div>
@@ -228,7 +224,7 @@
 		</div>
 
     <!-- 관리자 추가 모달 -->
-    <div class="modal fade" id="addAdmin" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+    <div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -237,15 +233,31 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body"> 
-            <div id="search-body">
-                <input type="text" id="search-bar" class="hide-input shadow" placeholder="임직원 검색" name="empData"> 
-                <input type="image" name="submit" id="search-icon" src="${root}/resources/img/search.png" onclick="return checkBlank();">
-
-            </div>
-          </div>  
+          <div id="search-result-area" class="modal-body">
+          	<table class="table table-borderless table-hover">
+              <thead>
+                <tr>
+                  <th>체크</th>
+                  <th>사번</th>
+                  <th>이름</th>
+                  <th>직위</th>
+                  <th>소속</th>
+                </tr>
+              </thead>
+              <tbody id="target">
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
           <div class="modal-footer">
-            <button type="button" class="btn mb-2 btn-primary" onclick="changeJob();">변경</button>
+            <button type="button" class="btn mb-2 btn-primary" onclick="addAdmin();">추가</button>
             <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
           </div>
         </div>
@@ -259,8 +271,133 @@
           $('.delete-btn').click(function() {
             var value= $(this).val();
             console.log(value);
-          })
+
+            var result = window.confirm("정말로 삭제하시겠습니까?");
+
+            if(result==false) {
+              return false;
+            }
+
+            console.log(result)
+
+            $.ajax({
+              url : "${root}/organization/management/right/delete",
+              type : "POST",
+              traditional : true,
+              dataType : "JSON",
+              data : {
+                value : value
+              },
+              success : function(result) {
+                alert(result);
+                window.location.href = "${root}/organization/management/right";
+              },
+              error : function(fail) {
+                alert(fail)
+              }
+            });
+
+          });
       });
+    </script>
+    
+    <script>
+    	function insertAdmin() {
+    		
+    		let word = $('#search-bar').val();
+
+        const searchNum = word.search(/[0-9]/g);
+				const searchEng = word.search(/[a-z]/ig);
+				const searchSpe = word.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+
+				if(word.trim() === "") {
+					alert("검색창에 글자를 입력하여 주시길 바랍니다.");
+					return false;
+				} else if(searchNum != -1) {
+					alert("검색창에는 한글만 적어주시길 바랍니다.");
+					return false;
+				} else if(searchEng != -1) {
+					alert("검색창에는 한글만 적어주시길 바랍니다.");
+					return false;
+				} else if(searchSpe != -1) {
+					alert("검색창에는 한글만 적어주시길 바랍니다.");
+					return false;
+				}
+
+        word = word.trim();
+
+        $.ajax({
+          
+          url : "${root}/organization/management/right/select",
+          type : "POST",
+          traditional : true,
+          dataType : "JSON",
+          data : {
+             word : word
+          },
+          success : function(jsonStr) {
+            console.log(jsonStr);
+
+            const resultLength = jsonStr.length;
+
+            for (let i=0; i<resultLength; ++i) {
+              var result = jsonStr.pop();
+
+              $(target).prepend(
+                '<tr>' + '<td><input type="checkbox" value="' + result['empCode']  +'"></td>' + 
+                '<td>' + result['empCode'] + '</td>' +
+                '<td>' + result['empName'] + '</td>' +
+                '<td>' + result['rankName'] + '</td>' +
+                '<td>' + result['deptName'] + '</td>' +
+                '</tr>'
+              );
+            }
+            
+          },
+          error : function(fail) {
+            alert(fail)
+          }
+        });
+    		
+    	}
+    </script>
+
+    <script>
+      function addAdmin() {
+
+        const checkBoxArr = [];
+	      $('input:checkbox:checked').each(function(){
+	       checkBoxArr.push($(this).val());
+	      });
+	      
+        var confirm = window.confirm("정말로 관리자에 추가하시겠습니까?");
+
+        if(confirm==false) {
+          alert("관리자 추가가 취소되었습니다.");
+          return false;
+        }
+
+        $.ajax({
+          url : "${root}/organization/management/right/add",
+          type : "POST",
+          traditional : true,
+          dataType : "JSON",
+          async : false,
+          cache: false,
+          data : {
+            checkBoxArr : checkBoxArr
+          },
+          success : function(jsonStr) {
+            alert(jsonStr);
+          	window.location.href = "${root}/organization/management/right";
+         },
+          error : function(e) {
+            alert(e);
+          }
+        });
+    }
+
+
     </script>
 
 		
