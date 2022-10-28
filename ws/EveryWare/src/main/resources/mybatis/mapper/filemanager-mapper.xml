@@ -104,8 +104,14 @@
 	
 	<insert id="addFile">
 		INSERT INTO 
-		FILECLOUD ( FILE_CODE , EMP_CODE , FILE_TITLE , FILE_CONTENT,  FILE_NAME , FILE_ORIGINNAME , FILE_URL, FILE_BOOKMARK ) 
-		VALUES ( SEQ_FILE_CODE.NEXTVAL ,1 , #{fileTitle} , #{fileContent}  , #{fileName} , #{fileOriginname} , #{fileUrl} , 0 )
+		FILECLOUD ( FILE_CODE , EMP_CODE , FILE_TITLE , FILE_CONTENT,  FILE_NAME , FILE_URL, FILE_BOOKMARK ) 
+		VALUES ( SEQ_FILE_CODE.NEXTVAL ,1 , #{fileTitle} , #{fileContent}  , #{fileName} , #{fileUrl} , 0 )
 	
 	</insert>
+	
+	<select id="selectOneByCode" resultType="filemanagerVo">
+		SELECT *
+		FROM FILECLOUD
+		WHERE FILE_CODE = #{fileCode}
+	</select>
 </mapper>

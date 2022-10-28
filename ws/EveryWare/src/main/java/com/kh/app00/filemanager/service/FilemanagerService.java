@@ -27,5 +27,8 @@ public interface FilemanagerService {
 	
 	//작성하기 추가
 	int addFile(FilemanagerVo vo);
+	
+	//선택조회
+	FilemanagerVo selectOne(String fileCode);
 
 }

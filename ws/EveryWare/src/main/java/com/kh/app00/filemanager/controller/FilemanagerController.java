@@ -1,12 +1,19 @@
 package com.kh.app00.filemanager.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -88,6 +95,7 @@ public class FilemanagerController {
 	@PostMapping("addfile")
 	public String addFile(FilemanagerVo vo,HttpSession session, HttpServletRequest req) {
 		
+		System.out.println("vo ::: " + vo);
 		
 		if (vo.getFileOriginname() != null && !vo.getFileOriginname().isEmpty()) {
 			//파일있음
@@ -107,8 +115,7 @@ public class FilemanagerController {
 		
 		
 		
-		int result = 1; 
-				//service.addFile(vo);
+		int result = service.addFile(vo);
 		
 		
 		
@@ -171,6 +178,32 @@ public class FilemanagerController {
 		}
 		
 		return "redirect:/filemanager/select"; 
+	}
+	
+	//스프링에서 권장하는 다운로드 방식()
+	//ResponseEntity : 응답정보들이 모여있는 객체
+	@GetMapping("download/{fileCode}")
+	public ResponseEntity download(@PathVariable String fileCode, HttpServletRequest req) throws IOException {
+		
+		FilemanagerVo vo = service.selectOne(fileCode);
+		
+		//파일 객체 준비
+		String rootPath = req.getServletContext().getRealPath("/resources/upload/filemanager/");
+		
+		File target = new File(rootPath + vo.getFileName());
+		System.out.println(target);
+		
+		//파일 -> 바이트 -> ???
+		byte[] data = FileUtils.readFileToByteArray(target);
+		ByteArrayResource res = new ByteArrayResource(data);
+		
+		return ResponseEntity
+			.ok()
+			.contentType(MediaType.APPLICATION_OCTET_STREAM)
+			.header(HttpHeaders.CONTENT_DISPOSITION, "attachement; filename="+ vo.getFileName() )
+			.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
+			.header(HttpHeaders.CONTENT_LENGTH, target.length() + "")
+			.body(res);
 	}
 	
 }
