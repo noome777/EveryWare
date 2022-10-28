@@ -30,7 +30,6 @@
                   
                   <!-- Button trigger modal -->
                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#defaultModal"><span class="fe fe-filter fe-12 mr-2"></span> Create </button>
-                  <button type="button" class="btn btn-secondary"><span class="fe fe-trash fe-12 mr-2"></span>Delete</button>
                   
                   <!-- Modal -->
                  <form action="${root}/contacts/write" method="post">
@@ -242,8 +241,6 @@
                 <ul class="pagination justify-content-end mb-0">
                   <li class="page-item"><a class="page-link" href="#">Previous</a></li>
                   <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
                   <li class="page-item"><a class="page-link" href="#">Next</a></li>
                 </ul>
               </nav>

@@ -162,8 +162,6 @@ background-color:transparent;
                 <ul class="pagination justify-content-end mb-0">
                   <li class="page-item"><a class="page-link" href="#">Previous</a></li>
                   <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
                   <li class="page-item"><a class="page-link" href="#">Next</a></li>
                 </ul>
               </nav>
@@ -177,9 +175,7 @@ background-color:transparent;
     </div> <!-- .wrapper -->
     
     <script>
-		function btn(){
-		    alert('반납 처리 되었습니다.');
-		}
+		function btn(){ alert('반납 처리 되었습니다.'); }
 	</script>
 
 </body>
