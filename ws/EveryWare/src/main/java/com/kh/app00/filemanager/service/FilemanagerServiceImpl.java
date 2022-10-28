@@ -69,4 +69,10 @@ public class FilemanagerServiceImpl implements FilemanagerService {
 		return dao.addFile(sst, vo);
 	}
 
+	@Override
+	public FilemanagerVo selectOne(String fileCode) {
+		// TODO Auto-generated method stub
+		return dao.selectOne(sst, fileCode);
+	}
+
 }

@@ -29,5 +29,8 @@ public interface FilemanagerDao {
 	
 	//작성하기 추가
 	int addFile(SqlSessionTemplate sst, FilemanagerVo vo);
+	
+	//선택조회
+	FilemanagerVo selectOne(SqlSessionTemplate sst, String fileCode);
 
 }

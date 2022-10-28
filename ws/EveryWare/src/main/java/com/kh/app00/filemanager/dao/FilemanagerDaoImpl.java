@@ -57,4 +57,10 @@ public class FilemanagerDaoImpl implements FilemanagerDao {
 		return sst.insert("filemanagerMapper.addFile", vo);
 	}
 
+	@Override
+	public FilemanagerVo selectOne(SqlSessionTemplate sst, String fileCode) {
+		// TODO Auto-generated method stub
+		return sst.selectOne("filemanagerMapper.selectOneByCode", fileCode);
+	}
+
 }
