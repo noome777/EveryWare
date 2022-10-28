@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.app00.common.PageVo;
+import com.kh.app00.notice.vo.NoticeFileVo;
 import com.kh.app00.notice.vo.NoticeVo;
 
 @Repository
@@ -22,12 +23,12 @@ public class NoticeDaoImpl implements NoticeDao {
 	}
 
 	@Override
-	public int insertNotice(SqlSessionTemplate sst, NoticeVo vo) {
+	public int insertNotice(SqlSessionTemplate sst, NoticeVo vo, NoticeFileVo fvo) {
 		return sst.insert("noticeMapper.insertNotice", vo);
 	}
 
 	@Override
-	public NoticeVo selectOne(SqlSessionTemplate sst, String noticeCode) {
+	public NoticeVo selectOne(SqlSessionTemplate sst, String noticeCode, NoticeFileVo fvo) {
 		return sst.selectOne("noticeMapper.selectOne", noticeCode);
 	}
 

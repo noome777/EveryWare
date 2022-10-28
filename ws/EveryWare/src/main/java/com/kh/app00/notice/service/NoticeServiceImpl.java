@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.app00.common.PageVo;
 import com.kh.app00.notice.dao.NoticeDao;
+import com.kh.app00.notice.vo.NoticeFileVo;
 import com.kh.app00.notice.vo.NoticeVo;
 
 @Service
@@ -29,14 +30,14 @@ public class NoticeServiceImpl implements NoticeService {
 	//사내공지 작성
 	@Override
 	public int write(NoticeVo vo) {
-		return dao.insertNotice(sst, vo);
+		return dao.insertNotice(sst, vo, null);
 	}
 
 	@Override
 	public NoticeVo selectOne(String noticeCode) {
 		int result = dao.increaseViews(sst, noticeCode);
 		if(result == 1) {
-			return dao.selectOne(sst , noticeCode);
+			return dao.selectOne(sst , noticeCode, null);
 		}else {
 			return null;
 		}

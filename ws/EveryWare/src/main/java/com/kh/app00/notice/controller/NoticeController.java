@@ -19,6 +19,7 @@ import com.kh.app00.common.PageVo;
 import com.kh.app00.common.Pagination;
 import com.kh.app00.emp.vo.EmpVo;
 import com.kh.app00.notice.service.NoticeService;
+import com.kh.app00.notice.vo.NoticeFileVo;
 import com.kh.app00.notice.vo.NoticeVo;
 
 @Controller
@@ -57,7 +58,7 @@ public class NoticeController {
 	}
 
 	@PostMapping("write")
-	public String write(NoticeVo vo, Model model, HttpSession session, EmpVo evo, HttpServletRequest req) {
+	public String write(NoticeVo vo, Model model, HttpSession session, EmpVo evo, HttpServletRequest req, NoticeFileVo fvo) {
 
 		EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
 		String no = loginMember.getEmpCode();
@@ -66,7 +67,7 @@ public class NoticeController {
 
 		int result = ns.write(vo);
 
-		MultipartFile[] fArr = vo.getF();
+		MultipartFile[] fArr = fvo.getF();
 
 		if (!fArr[0].isEmpty()) { // 클라이언트 로부터 전달받은 파일 있음
 

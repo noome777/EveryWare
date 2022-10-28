@@ -84,6 +84,7 @@
 							</c:forEach>
 						</tbody>
 					</table>
+					
 					<nav aria-label="Page navigation example">
 						<ul class="pagination justify-content-center mb-0">
 							<c:if test="${pv.startPage ne 1}">

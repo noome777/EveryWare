@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("notice")
 public class NoticeDownController {
 	
-	@GetMapping("download")
+	@GetMapping("download/{noticeCode}/{fno}")
 	public ResponseEntity<ByteArrayResource> download(HttpServletRequest req) throws IOException {
+		
+		
 		
 		//파일 객체 준비
 		String rootPath = req.getServletContext().getRealPath("/resources/upload/");
