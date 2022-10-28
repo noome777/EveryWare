@@ -1,6 +1,6 @@
 package com.kh.app00.notice.vo;
 
-import org.springframework.web.multipart.MultipartFile;
+import java.util.List;
 
 import lombok.Data;
 
@@ -14,6 +14,6 @@ public class NoticeVo {
 	private String noticeDate;
 	private String noticeUpdate;
 	private String noticeDelete;
-	private MultipartFile[] f; 
 	
+	private List<NoticeFileVo> fileList;
 }

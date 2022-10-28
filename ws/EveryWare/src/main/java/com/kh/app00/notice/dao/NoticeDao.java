@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.app00.common.PageVo;
+import com.kh.app00.notice.vo.NoticeFileVo;
 import com.kh.app00.notice.vo.NoticeVo;
 
 public interface NoticeDao {
@@ -13,10 +14,10 @@ public interface NoticeDao {
 	List<NoticeVo> selectList(SqlSessionTemplate sst,PageVo pv);
 	
 	//사내공지 작성
-	int insertNotice(SqlSessionTemplate sst,NoticeVo vo);
+	int insertNotice(SqlSessionTemplate sst, NoticeVo vo, NoticeFileVo fvo);
 	
 	//사내공지 상세 조회
-	NoticeVo selectOne(SqlSessionTemplate sst, String noticeCode);
+	NoticeVo selectOne(SqlSessionTemplate sst, String noticeCode, NoticeFileVo fvo);
 	
 	//조회수 증가
 	int increaseViews(SqlSessionTemplate sst, String noticeCode);
@@ -26,6 +27,10 @@ public interface NoticeDao {
 	
 	//게시글 삭제
 	int delete(SqlSessionTemplate sst, String noticeCode);
-
+	
+	//게시글 수정
+	int updateOne(SqlSessionTemplate sst, NoticeVo nvo);
+	
+	
 
 }

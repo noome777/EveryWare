@@ -33,6 +33,7 @@
 	<main role="main" class="main-content">
 	  <c:if test="${ loginMember.empId eq 'ADMIN' }">
 		<div class="buttonSet">
+				<button type="button" id="sendBtn" class="btn btn-primary"  onclick="location.href='${root}/notice/noticeEdit/${nvo.noticeCode}'">수정</button>
 				<button type="button" id="sendBtn" class="btn btn-primary"  onclick="location.href='${root}/notice/noticeDelete/${nvo.noticeCode}'">삭제</button>
 		</div>
 		</c:if>
@@ -55,6 +56,9 @@
 				</div>
 				<div class="date_cover">
 						<p>${nvo.noticeDate}</p>
+				</div>
+				<div class="file_cover">
+						<a href="${root}/notice/download">파일 다운로드</a>
 				</div>
 			</div>
 			<hr>

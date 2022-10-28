@@ -3,6 +3,7 @@ package com.kh.app00.notice.service;
 import java.util.List;
 
 import com.kh.app00.common.PageVo;
+import com.kh.app00.notice.vo.NoticeFileVo;
 import com.kh.app00.notice.vo.NoticeVo;
 
 public interface NoticeService {
@@ -21,7 +22,11 @@ public interface NoticeService {
 	
 	//게시글 삭제
 	int delete(String noticeCode);
+	
+	//게시글 수정하기
+	int edit(NoticeVo nvo);
 
+	
 	
 
 }
