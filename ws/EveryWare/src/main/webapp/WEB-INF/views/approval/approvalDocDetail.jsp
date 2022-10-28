@@ -120,22 +120,18 @@
             </c:forEach>
           </tr>
           <tr style="height: 100px;">
-          	<td></td>
-          	<td></td>
-          	<td></td>
-          	<td></td>
-          	<td></td>
-          	<td></td>
-          	<td></td>
-          	<td></td>
-            <%-- <td class="appr-mark-td"><img class="appr-mark" src="${root}/resources/img/appr-mark.png" alt="승인"> <br> 22.10.03</td>
-            <td class="appr-mark-td"><img class="appr-mark" src="${root}/resources/img/appr-mark.png" alt="승인"> <br> 22.10.03</td>
-            <td class="appr-mark-td"><img class="appr-mark" src="${root}/resources/img/appr-mark.png" alt="승인"> <br> 22.10.03</td>
-            <td class="appr-mark-td"></td>
-            <td class="appr-mark-td"><img class="appr-mark" src="${root}/resources/img/appr-mark.png" alt="승인"> <br> 22.10.03</td>
-            <td class="appr-mark-td"><img class="appr-mark" src="${root}/resources/img/appr-mark.png" alt="승인"> <br> 22.10.03</td>
-            <td class="appr-mark-td"><img class="appr-mark" src="${root}/resources/img/appr-mark.png" alt="승인"> <br> 22.10.03</td>
-            <td class="appr-mark-td"></td> --%>
+          	<c:forEach items="${approverVoList}" var="a">
+          		<c:if test="${c.apprTypeCode eq a.apprTypeCode}">
+	          		<c:choose>
+	          			<c:when test="${a.apprStatus eq 'A'}">
+			          		<td class="appr-mark-td" style="width: 100px;"><img class="appr-mark" src="${root}/resources/img/appr-mark.png" alt="승인"> <br> 22.10.03</td>
+	          			</c:when>
+	          			<c:otherwise>
+	          				<td></td>
+	          			</c:otherwise>
+	          		</c:choose>
+          		</c:if>
+            </c:forEach>
           </tr>
           <tr>
           	<c:forEach items="${approverVoList}" var="a">

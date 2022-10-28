@@ -94,7 +94,7 @@
           </tr>
           <tr>
             <td class="appr-table-color">작성자</td>
-            <td>고은비</td>
+            <td id="writer-name">${loginMember.empName}</td>
             <td class="appr-table-color">작성일자</td>
             <td id="current-date">
               
@@ -426,7 +426,7 @@
       
       let apprTableHtml;
 
-      let seq = 0;
+      let seq = 1;
       $.each(checkedVal, function(i){
         
         let typeName = $('#type-content[apprTypeCode='+ checkedVal[i] +']>span')[0].outerText;
@@ -444,12 +444,18 @@
           let empInfo = approverEmp.split(' ');
           let empName = empInfo[0];
           let empRankName = empInfo[3].replace(')', '');
-          
-          
+          let writer = $('#writer-name')[0].innerHTML;
+          if(i == 0 && j == 0){
+            rankHtml += '<td style="width : 80px"></td>';
+            markHtml += '<td></td>';
+            nameHtml += '<td>' + writer + '</td>';
+          }
 
           rankHtml += '<td style="width : 80px">' + empRankName + '</td>';
           markHtml += '<td></td>';
           nameHtml += '<td>' + empName + '</td>';
+          
+
 
         })
         let blankTd;
@@ -463,6 +469,7 @@
           apprTableHtml += '<tr class="appr-table-color"> <td rowspan="3" style="width: 100px;">' + typeName + 
             '</td>' + rankHtml + blankTd + '</tr> <tr style="height: 100px;">' + markHtml + blankTd + '</tr> <tr class="approver-emp">' + nameHtml + blankTd + '</tr>';
         }
+        
         
       })
         $('#approval-table').append(apprTableHtml);
