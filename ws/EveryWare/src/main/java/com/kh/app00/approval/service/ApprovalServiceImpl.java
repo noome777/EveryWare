@@ -193,15 +193,25 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 	//결재 예정 문서 목록 조회
 	@Override
-	public List<ApprovalDocVo> selectExpectDocList(PageVo pv) {
-		return dao.selectExpectDocList(sst, pv);
+	public List<ApprovalDocVo> selectExpectDocList(String empCode, PageVo pv) {
+		return dao.selectExpectDocList(sst, empCode, pv);
 	}
 
 	
 	//결재 진행중인 참조된 문서 조회
 	@Override
-	public List<ApprovalDocVo> selectRefDocList() {
-		return dao.selectRefDocList(sst);
+	public List<ApprovalDocVo> selectRefDocList(String empCode, PageVo pv) {
+		return dao.selectRefDocList(sst, empCode, pv);
+	}
+	//결재 대기 목록 조회
+	@Override
+	public List<ApprovalDocVo> selectWaitList(String empCode, PageVo pv) {
+		return dao.selectWaitList(sst, empCode, pv);
+	}
+	//결재 진행 목록 조회
+	@Override
+	public List<ApprovalDocVo> selectProgressList(String empCode, PageVo pv) {
+		return dao.selectProgressList(sst, empCode, pv);
 	}
 
 	

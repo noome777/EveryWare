@@ -71,11 +71,15 @@ public interface ApprovalService {
 	//결재 예정 리스트 개수 구하기
 	int selectExpectCount();
 	//결재 예정 문서 목록 조회
-	List<ApprovalDocVo> selectExpectDocList(PageVo pv);
+	List<ApprovalDocVo> selectExpectDocList(String empCode, PageVo pv);
 
 	
-	//결재 진행중인 참조된 문서 목록 조회
-	List<ApprovalDocVo> selectRefDocList();
+	//결재 확인 문서 목록 조회
+	List<ApprovalDocVo> selectRefDocList(String empCode, PageVo pv);
+	//결재 대기 문서 목록 조회
+	List<ApprovalDocVo> selectWaitList(String empCode, PageVo pv);
+	//결재 진행 문서 목록 조회
+	List<ApprovalDocVo> selectProgressList(String empCode, PageVo pv);
 
 
 

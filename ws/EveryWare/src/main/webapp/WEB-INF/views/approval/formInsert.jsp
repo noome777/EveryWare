@@ -195,7 +195,8 @@
         contentType: "application/json; charset=utf-8",
         data : JSON.stringify(param) , // 컨텐츠 타입 및 stringify 작업을 통해 제이쿼리 ajax와 spring 사이의 파싱이슈 대비
         success : function (data) {
-          alert('formInsert 통신 성공');
+          alert('양식 생성 성공');
+          location.href='${root}/approval/formManager'
         } ,
         error : (error) => {
           console.log(JSON.stringify(error));
