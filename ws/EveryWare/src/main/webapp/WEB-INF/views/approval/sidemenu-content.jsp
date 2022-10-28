@@ -47,13 +47,13 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/approval/progressList"><span class="ml-1 item-text">진행</span></a>
+                  <a class="nav-link pl-3" href="${root}/approval/progressList/1"><span class="ml-1 item-text">진행</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/approval/list/1"><span class="ml-1 item-text">대기</span></a>
+                  <a class="nav-link pl-3" href="${root}/approval/progressWaitList/1"><span class="ml-1 item-text">대기</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/approval/progressRefList"><span class="ml-1 item-text">확인</span></a>
+                  <a class="nav-link pl-3" href="${root}/approval/progressRefList/1"><span class="ml-1 item-text">확인</span></a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link pl-3" href="${root}/approval/progressExpectedList/1"><span class="ml-1 item-text">예정</span></a>
