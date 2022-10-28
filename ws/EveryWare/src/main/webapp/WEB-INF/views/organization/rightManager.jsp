@@ -151,7 +151,7 @@
                 <div class="card-body">
                     <div id="search-body">
                         <input type="text" id="search-bar" class="hide-input shadow" placeholder="관리자 추가" name="empData"> 
-                        <input type="image" name="submit" id="plus-icon" src="${root}/resources/img/plus.png" data-toggle="modal" data-target="#resultModal" onclick="insertAdmin();">
+                        <input type="image" id="plus-icon" src="${root}/resources/img/plus.png" onclick="insertAdmin();">
                     </div>
                  </div>
                   <table class="table table-borderless table-hover">
@@ -258,7 +258,7 @@
           
           <div class="modal-footer">
             <button type="button" class="btn mb-2 btn-primary" onclick="addAdmin();">추가</button>
-            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
+            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal" onclick="cleanModal();">취소</button>
           </div>
         </div>
       </div>
@@ -293,16 +293,32 @@
                 window.location.href = "${root}/organization/management/right";
               },
               error : function(fail) {
-                alert(fail)
+                alert(fail);
               }
             });
 
           });
       });
     </script>
+
+    <script>
+
+      function cleanModal() {
+
+        var tbodyLength = $('#target tr').length;
+
+        console.log(tbodyLength);
+
+        for(let i=0; i<tbodyLength; ++i) {
+          $('#target > tr').eq(i).empty();
+        }
+      }
+
+    </script>
     
     <script>
     	function insertAdmin() {
+
     		
     		let word = $('#search-bar').val();
 
@@ -352,7 +368,7 @@
                 '</tr>'
               );
             }
-            
+            $('#resultModal').modal();
           },
           error : function(fail) {
             alert(fail)
@@ -376,7 +392,7 @@
           alert("관리자 추가가 취소되었습니다.");
           return false;
         }
-
+        
         $.ajax({
           url : "${root}/organization/management/right/add",
           type : "POST",
