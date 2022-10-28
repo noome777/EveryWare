@@ -85,11 +85,15 @@ public interface ApprovalDao {
 	//결재 예정 리스트 개수 구하기
 	int selectExpectCount(SqlSessionTemplate sst);
 	//결재 예정 문서 목록 조회
-	List<ApprovalDocVo> selectExpectDocList(SqlSessionTemplate sst, PageVo pv);
+	List<ApprovalDocVo> selectExpectDocList(SqlSessionTemplate sst, String empCode, PageVo pv);
 
 	
 	//결재 진행중인 참조된 문서
-	List<ApprovalDocVo> selectRefDocList(SqlSessionTemplate sst);
+	List<ApprovalDocVo> selectRefDocList(SqlSessionTemplate sst, String empCode, PageVo pv);
+	//결재 대기 문서 조회
+	List<ApprovalDocVo> selectWaitList(SqlSessionTemplate sst, String empCode, PageVo pv);
+	//결재 진행 문서 조회
+	List<ApprovalDocVo> selectProgressList(SqlSessionTemplate sst, String empCode, PageVo pv);
 
 
 	

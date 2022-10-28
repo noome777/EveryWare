@@ -67,7 +67,9 @@ public class ApprovalController {
 	
 	//문서작성 화면
 	@GetMapping("write/{formCode}")
-	public String write(Model model, @PathVariable int formCode) {
+	public String write(Model model, @PathVariable int formCode, HttpSession session) {
+		
+		EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
 		
 		//문서
 		//문서종류 불러오기
@@ -98,6 +100,7 @@ public class ApprovalController {
 		model.addAttribute("approvalTypeList", approvalTypeList);
 		model.addAttribute("deptList", deptList);
 		model.addAttribute("empList", empList);
+		model.addAttribute("loginMember", loginMember);
 		
 		return "approval/write";
 	}
@@ -118,10 +121,9 @@ public class ApprovalController {
 	@PostMapping("write")
 	@ResponseBody
 	public String write(@RequestBody ApprovalDocVo docVo, HttpSession session) {
+		
 		EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
-//		docVo.setEmpCode(loginMember.getEmpCode());
-		
-		
+		docVo.setEmpCode(loginMember.getEmpCode());
 		
 		int result = service.insertApprovalDoc(docVo);
 		
@@ -158,14 +160,16 @@ public class ApprovalController {
 	//진행 - 예정목록 
 	@GetMapping("progressExpectedList/{pno}")
 	public String progressExpectedList(Model model, HttpSession session, @PathVariable int pno) {
+		
 		EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
+		String empCode = loginMember.getEmpCode();
 		
 		//문서종류 불러오기
 		List<DocFormVo> formList = service.selectFormList();
 		
 		int totalCount = service.selectExpectCount();
 		PageVo pv = Pagination.getPageVo(totalCount, pno, 3, 15);
-		List<ApprovalDocVo> docList = service.selectExpectDocList(pv);
+		List<ApprovalDocVo> docList = service.selectExpectDocList(empCode, pv);
 		
 		model.addAttribute("formList", formList);
 		model.addAttribute("docList", docList);
@@ -175,19 +179,67 @@ public class ApprovalController {
 	}
 	
 	//진행 - 확인 목록
-	@GetMapping("progressRefList")
-	public String progressRefList(Model model) {
+	@GetMapping("progressRefList/{pno}")
+	public String progressRefList(Model model, HttpSession session, @PathVariable int pno) {
+		
+		EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
+		String empCode = loginMember.getEmpCode();
 		
 		//문서종류 불러오기
 		List<DocFormVo> formList = service.selectFormList();
+		//토탈 카운트 수정해야댐
+		int totalCount = service.selectExpectCount();
+		PageVo pv = Pagination.getPageVo(100, pno, 3, 15);
 		
-		List<ApprovalDocVo> docList = service.selectRefDocList();
+		List<ApprovalDocVo> docList = service.selectRefDocList(empCode, pv);
 		
 		model.addAttribute("formList", formList);
 		model.addAttribute("docList", docList);
 		
 		return "approval/progressRefList";
 	}
+	
+	//진행 - 대기 목록
+	@GetMapping("progressWaitList/{pno}")
+	public String progressWaitList(Model model, HttpSession session, @PathVariable int pno) {
+		
+		EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
+		String empCode = loginMember.getEmpCode();
+		//토탈카운트 수정해야댐
+		int totalCount = service.selectTotalCnt();
+		PageVo pv = Pagination.getPageVo(100, pno, 3, 15);
+		
+		//문서종류 불러오기
+		List<DocFormVo> formList = service.selectFormList();
+		List<ApprovalDocVo> docList = service.selectWaitList(empCode, pv);
+		
+		model.addAttribute("formList", formList);
+		model.addAttribute("docList", docList);
+		
+		return"approval/progressWaitList";
+	}
+	
+	//진행 - 진행 목록
+	@GetMapping("progressList/{pno}")
+	public String progressList(Model model, HttpSession session, @PathVariable int pno) {
+		
+		EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
+		String empCode = loginMember.getEmpCode();
+		//토탈카운트 수정해야댐
+		int totalCount = service.selectTotalCnt();
+		PageVo pv = Pagination.getPageVo(100, pno, 3, 15);
+		
+		//문서종류 불러오기
+		List<DocFormVo> formList = service.selectFormList();
+		List<ApprovalDocVo> docList = service.selectProgressList(empCode, pv);
+		
+		model.addAttribute("formList", formList);
+		model.addAttribute("docList", docList);
+		
+		return "approval/progressList";
+		
+	}
+	
 	
 	
 	@GetMapping("storage")
@@ -233,13 +285,11 @@ public class ApprovalController {
 	@ResponseBody
 	public String formInsert(@RequestBody DocFormVo formVo) {
 		int formInsert = service.insertForm(formVo);
-		
 		if(formInsert == 1) {
 			return "성공";
 		} else {
 			return "실패";
 		}
-		
 	}
 	
 }
