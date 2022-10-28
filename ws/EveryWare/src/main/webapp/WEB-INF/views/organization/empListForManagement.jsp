@@ -891,7 +891,7 @@ padding: 10px;
     
     function checkBlank() {
 
-      if(searchBar.val() === "") {
+      if(searchBar.val().trim() === "") {
     	  alert("검색창에 글자를 입력하여 주시길 바랍니다.");
         return false;
       } else {

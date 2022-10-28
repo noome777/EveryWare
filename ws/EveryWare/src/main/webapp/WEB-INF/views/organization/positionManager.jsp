@@ -87,7 +87,8 @@
 							<div id="list-wrap">
 							
 								<div id="setting-bar" class="shadow">
-									<p>직위관리 + 등급 추가</p>
+									<div></div>
+									<div></div>
 								</div>
 								
 

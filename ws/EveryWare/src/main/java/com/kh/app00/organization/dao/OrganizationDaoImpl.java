@@ -147,6 +147,24 @@ public class OrganizationDaoImpl implements OrganizationDao {
 		return sqlSessionTemplate.selectList("organizationMapper.selectAdminList");
 	}
 
+	//권한 관리 - 관리자 삭제
+	@Override
+	public int updateAdmin(SqlSessionTemplate sqlSessionTemplate, String adminCode) {
+		return sqlSessionTemplate.update("organizationMapper.updateAdmin",adminCode);
+	}
+
+	//권한 관리 - 임직원 검색
+	@Override
+	public List<EmpVo> selectEmpListForAdmin(SqlSessionTemplate sqlSessionTemplate, String word) {
+		return sqlSessionTemplate.selectList("organizationMapper.selectEmpListForAdmin",word);
+	}
+
+	//권한 관리 - 관리자 추가
+	@Override
+	public int updateEmpToAdmin(SqlSessionTemplate sqlSessionTemplate, List<String> empCodeList) {
+		return sqlSessionTemplate.update("organizationMapper.updateEmpToAdmin",empCodeList);
+	}
+
 	
 	
 

@@ -29,6 +29,7 @@
   		ON E.RIGHT_CODE = T.RIGHT_CODE
 		WHERE EMP_STATUS = 'N'
 		OR EMP_STATUS ='R'
+		ORDER BY R.RANK_CODE ASC, D.DEPT_DEPTH ASC
 	</select>
 	
 	<select id="selectEmpListByWord" resultType="EmpVo">
@@ -102,7 +103,6 @@
 			, TO_CHAR(E.EMP_PROMOTION_DATE,'YYYY-MM-DD')AS EMP_PROMOTION_DATE
 			, E.EMP_ADDRESS1
 			, E.EMP_ADDRESS2
-			, E.EMP_ETC
 			, E.EMP_STATUS
 			, C.COM_NAME AS COM_NAME
 			, D.DEPT_NAME AS DEPT_NAME
@@ -188,7 +188,6 @@
 			, E.EMP_PROMOTION_DATE
 			, E.EMP_ADDRESS1
 			, E.EMP_ADDRESS2
-			, E.EMP_ETC
 			, E.EMP_STATUS
 			, C.COM_NAME AS COM_NAME
 			, D.DEPT_NAME AS DEPT_NAME
@@ -327,6 +326,40 @@
 		WHERE E.RIGHT_CODE = 1
 		OR E.RIGHT_CODE = 2
 	</select>
+	
+	<update id="updateAdmin">
+		UPDATE EMP
+		SET
+			RIGHT_CODE = '4'
+			WHERE EMP_CODE = ${adminCode}
+	</update>
+	
+	<select id="selectEmpListForAdmin" resultType="EmpVo">
+		SELECT
+			E.EMP_CODE
+			, E.EMP_NAME
+			, D.DEPT_NAME
+			, R.RANK_NAME
+		FROM EMP E
+		JOIN DEPT D
+		ON E.DEPT_CODE = D.DEPT_CODE
+		JOIN RANK R
+		ON E.RANK_CODE = R.RANK_CODE
+		JOIN RIGHT T
+		ON E.RIGHT_CODE = T.RIGHT_CODE
+		WHERE E.RIGHT_CODE = '4'
+		AND E.EMP_NAME LIKE '%' ||  #{word} || '%'
+		ORDER BY R.RANK_CODE ASC, D.DEPT_DEPTH ASC
+	</select>
+	
+	<update id="updateEmpToAdmin">
+		<foreach collection="list" item="item" index="index" open="DECLARE BEGIN" close="; END;" separator=";">
+			UPDATE EMP
+			SET
+				RIGHT_CODE = '2'
+				WHERE EMP_CODE = #{item}
+		 </foreach> 
+	</update>
 	
 	
 </mapper>

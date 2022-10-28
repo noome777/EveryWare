@@ -791,7 +791,7 @@ padding: 10px;
                     <img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle preview-img" id="preview-img">
                   </label>
                 <input id="profile" class="input-img"  name="profile" type="file" style="display:none;" >
-                </div>
+              </div>
             </div>
           </div>  
           <div class="modal-footer">
@@ -886,7 +886,7 @@ padding: 10px;
     
     function checkBlank() {
 
-      if(searchBar.val() === "") {
+      if(searchBar.val().trim() === "") {
         alert("검색창에 글자를 입력하여 주시길 바랍니다.");
         return false;
       } else {

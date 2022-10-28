@@ -384,6 +384,97 @@ public class OrganizationController {
 		
 	}
 	
+	//관리자 삭제
+	@PostMapping("management/right/delete")
+	@ResponseBody
+	public String deleteAdmin(@RequestParam("value") String adminCode) {
+		
+		System.out.println(adminCode);
+		int result = organizationService.updateAdmin(adminCode);
+		
+		System.out.println(result);
+		if(result != 1) {
+			String fail = "관리자 삭제에 실패하였습니다. 다시 한 번 시도해보시길 바랍니다.";
+			
+			Gson gson = new Gson();
+			String jsonStr = gson.toJson(fail);
+			
+			System.out.println("json :" + jsonStr);
+			
+			return jsonStr;
+		} else {
+			
+			String success = "관리자 삭제에 성공하였습니다.";
+			
+			Gson gson = new Gson();
+			String jsonStr = gson.toJson(success);
+			
+			System.out.println("json :" + jsonStr);
+			
+			return jsonStr;
+		}
+	}
+	
+	//관리자 추가 > 임직원 검색
+	@PostMapping("management/right/select")
+	@ResponseBody
+	public String insertAdmin(@RequestParam("word") String word) {
+		
+		List<EmpVo> empList = organizationService.selectEmpListForAdmin(word);
+		
+		if(empList.size() == 0) {
+			String fail = "null";
+			Gson gson = new Gson();
+			String jsonStr = gson.toJson(fail);
+			System.out.println("json :" + jsonStr);
+			
+			return jsonStr;
+		} else {
+			System.out.println("권한관리 > 임직원 검색 성공");
+			System.out.println("empList : " + empList);
+			
+			System.out.println(empList.size());
+			
+			Gson gson = new Gson();
+			String jsonStr = gson.toJson(empList);
+			
+			System.out.println(jsonStr);
+			
+			return jsonStr;
+		}
+	}
+	
+	@PostMapping("management/right/add")
+	@ResponseBody
+	public String addAdmin(@RequestParam("checkBoxArr") String[] checkBoxArr ) {
+		
+		
+		List<String> empCodeList = new ArrayList<String>();
+		
+		for (String empCode : checkBoxArr) {
+			empCodeList.add(empCode);
+		}
+		
+		int result = organizationService.updateEmpToAdmin(empCodeList);
+		
+		Gson gson = new Gson();
+		
+		if (result != -1) {
+			String fail = "ERROR : 관리자 추가에 실패하였습니다.";
+			String jsonStr = gson.toJson(fail);
+			System.out.println(jsonStr);
+			return jsonStr;
+		}
+		String success = "관리자 추가에 성공하였습니다.";
+		
+		String jsonStr = gson.toJson(success);
+		
+		System.out.println(jsonStr);
+		
+		return jsonStr;
+	}
+	
+	
 	//조직도
 	@GetMapping("management/chart")
 	public String manageChart() {

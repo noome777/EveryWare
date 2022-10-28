@@ -30,7 +30,7 @@
 		display: grid;
 		grid-template-columns: 40% 60%;
 		grid-row: 100%;
-		border-radius: 5px;
+		border-radius: 10px;
 	}
 
 	#profile-img-wrap {
@@ -152,86 +152,86 @@
 										<strong>이름</strong>
 									</div>
 									<div class="rowValue">
-										.empName (변경불가)
+										${loginMember.empName}
 									</div>
 									<div class="rowName">
 										<strong>사번</strong>
 									</div>
 									<div class="rowValue">
-										.empCode (변경불가)
+										${loginMember.empCode}
 									</div>
 									<div class="rowName">
 										<strong>아이디</strong>
 									</div>
 									<div class="rowValue">
-										.empId (변경불가)
+										${loginMember.empId}
 									</div>
 									<div class="rowName">
 										<strong>비밀번호</strong>
 									</div>
 									<div class="rowValue">
-										<input type="password" class="no-style-input" name="empPwd" placeholder=".empPwd" >
+										<input type="password" class="no-style-input" name="empPwd" placeholder="${loginMember.empEMail.legth()}" >
 									</div>
 									<div class="rowName">
 										<strong>직위</strong>
 									</div>
 									<div class="rowValue">
-										.rankCode(변경불가)
+										${loginMember.rankCode}
 									</div>
 									<div class="rowName">
 										<strong>직무</strong>
 									</div>
 									<div class="rowValue">
-										.empJobCode(변경불가)
+										${loginMember.jobName}
 									</div>
 									<div class="rowName">
 										<strong>소속</strong>
 									</div>
 									<div class="rowValue">
-										.deptCode(변경불가)
+										${loginMember.deptName}
 									</div>
 									<div class="rowName">
 										<strong>생년월일</strong>
 									</div>
 									<div class="rowValue">
-										.deptBirthDay(변경불가)
+										${loginMember.empBirthday}
 									</div>
 									<div class="rowName">
 										<strong>사내전화</strong>
 									</div>
 									<div class="rowValue">
-										<input type="tel" class="no-style-input" name="empTel" value=".empTel" placeholder=".empTel" >
+										<input type="tel" class="no-style-input" name="empTel" value="${loginMember.empTel}" placeholder="${loginMember.empTel}" >
 									</div>
 									<div class="rowName">
 										<strong>휴대전화</strong>
 									</div>
 									<div class="rowValue">
-										<input type="tel" class="no-style-input" name="empPhone" value=".empPhone" placeholder=".empPhone" >
+										<input type="tel" class="no-style-input" name="empPhone" value="${loginMember.empPhone}" placeholder="${loginMember.empPhone}" >
 									</div>
 									<div class="rowName">
 										<strong>e-mail</strong>
 									</div>
 									<div class="rowValue">
-										<input type="email" class="no-style-input" name="empEMail" value=".empEMail" placeholder=".empEMail" >
+										<input type="email" class="no-style-input" name="empEMail" value="${loginMember.empEMail}" placeholder="${loginMember.empEMail}" >
 									</div>
 									<div class="rowName">
 										<strong>자택주소1</strong>
 									</div>
 									<div class="rowValue">
-										<input type="text" class="no-style-input" name="empAddress1" value=".empAddress1" placeholder=".empAdress1" >
+										<input type="text" class="no-style-input" name="empAddress1" value="${loginMember.empAddress1}" placeholder="${loginMember.empAddress1}" >
 									</div>
 									<div class="rowName">
 										<strong>자택주소2</strong>
 									</div>
 									<div class="rowValue">
-										<input type="text" class="no-style-input" name="empAddress2" value=".empAddress2" placeholder=".empAdress2" >
+										<input type="text" class="no-style-input" name="empAddress2" value="${loginMember.empAddress2}" placeholder="${loginMember.empAddress2}" >
 
 									</div>
 									<div class="rowName">
 										<strong>입사일</strong>
 									</div>
 									<div class="rowValue">
-										.empJoinDate (변경불가)
+										${loginMember.empJoinDate}
 									</div>
 								
 								</div>
