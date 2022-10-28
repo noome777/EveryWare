@@ -91,7 +91,9 @@ table>tbody>tr>td *{
                   <h4 class="mb-0">근무체크</h4><br>
                   <h1 id="clock">document.write(timeNow)</h1>
                 </div>
+                <!-- 수정 예정 -->
                 <img id="profile-img" alt="" src="${root}/resources/img/guest.png">
+                <!--  -->
               </div>
               <div class="flex-fill chart-box mt-n2" style="position: relative;">
                 <div class="resize-triggers"><div class="expand-trigger"><div style="width: 193px; height: 181px;"></div></div><div class="contract-trigger"></div></div></div>

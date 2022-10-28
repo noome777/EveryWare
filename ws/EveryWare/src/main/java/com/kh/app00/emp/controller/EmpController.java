@@ -39,35 +39,10 @@ public class EmpController {
         return "emp/login";
     }
     
-    //로그인 실행
-//    @PostMapping("login")
-//    public String login(EmpVo vo, Model model, String saveEmail, HttpSession session, HttpServletResponse resp) {
-//        
-//        //아이디 저장 (쿠키)
-//        if(saveEmail != null) {
-//            Cookie cookie = new Cookie("saveEmail", vo.getEmpEMail());
-//            resp.addCookie(cookie);
-//        }
-//        
-//        //서비스 호출
-//        EmpVo loginMember = service.login(vo);
-//        
-//        if(loginMember != null) {
-//            //로그인 성공
-//            session.setAttribute("loginMember", loginMember);
-//            return "redirect:/";
-//        }else {
-//            //로그인 실패
-//            model.addAttribute("msg","로그인 실패");
-//            return "emp/login";
-//        }
-//    }
-    
     //로그인 실행 (ajax)
     @PostMapping("login")
     @ResponseBody
     public String login(EmpVo vo, Model model, String saveId, HttpSession session, HttpServletResponse resp) {
-//        System.out.println(saveId);
         
         //아이디 저장 (쿠키)
         if(saveId.equals("true")) {
@@ -84,7 +59,7 @@ public class EmpController {
             // 응답 헤더에 추가한다
             resp.addCookie(cookie);
         }
-        
+
         //서비스 호출
         EmpVo loginMember = service.login(vo);
         
@@ -134,63 +109,11 @@ public class EmpController {
         return "redirect:/";
     }
     
-    //아이디 찾기 실행
-//    @PostMapping("searchId")
-//    public String searchId(EmpVo vo, Model model) {
-//        
-//        EmpVo idVo = service.selectIdInfo(vo);
-//        
-//        System.out.println(idVo);
-//        
-//        if(idVo != null) {
-//            model.addAttribute("idVo", idVo);
-//            return "emp/searchId";
-//        }else {
-//            return "error/404";
-//        }
-//    }
-    
-//    @RequestMapping("searchId")
-//    public String searchId2(EmpVo vo, Model model) {
-//        EmpVo idVo = service.selectIdInfo(vo);
-//        
-//        if(idVo != null) {
-//            model.addAttribute("idVo", idVo);
-//            return "emp/searchId";
-//        }else {
-//            return "error/404";
-//        }
-//    }
-    
     //비밀번호 찾기 화면
     @GetMapping("searchPwd")
     public String searchPwd() {
         return "emp/searchPwd";
     }
-    
-    //비밀번호 찾기
-//    @PostMapping("searchPwd")
-//    public String searchPwd(String empName, String empEMail, EmpVo vo, String subject, String content, String format, HttpServletRequest req) {
-//        //이름, 이메일이 사원의 정보와 일치한지 확인
-//        EmpVo pwdVo = service.selectPwdInfo(vo);
-//        
-//      //이메일이 ~인 회원의 비밀번호 랜덤 난수 설정하여 업데이트 하기(서비스에 하고 디비에서 업데이트 하기),
-////    String contentPwd = content.substring(19, 21);
-//      String contentPwd = "ILOVEU";
-//      String contentAll = content.substring(0, 20) + contentPwd + content.substring(20);
-//      
-//      
-//      //이후 메일을 update 한 비밀번호를 담은 내용으로 전송하기
-//      req.setAttribute("contentAll", contentAll);
-//        
-////        if(pwdVo != null) {
-//            return "stmp/sendProcess";
-////        }else {
-////            return "fail";
-////        }
-//    }
-    
-   
     
     //이메일
     @GetMapping("mailMain")
@@ -221,11 +144,6 @@ public class EmpController {
             vo.setEmpPwd(tempPw);
             System.out.println(vo);
             
-            //비밀번호 암호화 진행해주기
-//            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//            String bcPwd = encoder.encode(vo.getEmpPwd());
-//            vo.setEmpPwd(bcPwd);
-//            System.out.println("암호화 된 비밀번호 ::: " + encoder);
             
             //랜덤난수 + 암호화 된 비밀번호 db에서 업데이트 해주기
             int result = service.updateTempPwd(vo);

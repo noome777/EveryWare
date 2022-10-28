@@ -18,15 +18,15 @@
 	
 	<select id="selectDateCnt" resultType="int">
 		SELECT COUNT(*) FROM DAYOFF WHERE ECODE = #{eCode} 
-		AND OFF_END_DATE BETWEEN TO_CHAR(#{offStartDate}) AND TO_CHAR(#{offEndDate})
-		OR OFF_START_DATE BETWEEN TO_CHAR(#{offStartDate}) AND TO_CHAR(#{offEndDate})
+		AND (OFF_END_DATE BETWEEN TO_CHAR(#{offStartDate}) AND TO_CHAR(#{offEndDate})
+		OR OFF_START_DATE BETWEEN TO_CHAR(#{offStartDate}) AND TO_CHAR(#{offEndDate}))
 	</select>
 	
 	<select id="selectDateList" resultType="DayoffVo">
 		SELECT OFF_CODE, OFF_START_DATE, OFF_END_DATE, OFF_DAYS, OFF_REASON, OFF_APPROVAL FROM DAYOFF
 		WHERE ECODE = #{eCode}
-		AND OFF_END_DATE BETWEEN TO_CHAR(#{offStartDate}) AND TO_CHAR(#{offEndDate})
-		OR OFF_START_DATE BETWEEN TO_CHAR(#{offStartDate}) AND TO_CHAR(#{offEndDate})
+		AND (OFF_END_DATE BETWEEN TO_CHAR(#{offStartDate}) AND TO_CHAR(#{offEndDate})
+		OR OFF_START_DATE BETWEEN TO_CHAR(#{offStartDate}) AND TO_CHAR(#{offEndDate}))
 		ORDER BY OFF_START_DATE ASC
 	</select>
 	
