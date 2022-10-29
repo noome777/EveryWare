@@ -175,6 +175,14 @@ public class CommuteServiceImpl implements CommuteService {
         return dao.selectWorkToday(sst, vo);
     }
 
+    //사원의 프로필 사진 업데이트 반영
+    @Override
+    public EmpVo selectEmpProfile(EmpVo empVo) {
+        return dao.selectEmpProfile(sst, empVo);
+    }
+
+   
+
 
     
    

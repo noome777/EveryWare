@@ -87,6 +87,9 @@ public interface CommuteDao   {
     //금일 근무시간
     int selectWorkToday(SqlSessionTemplate sst, CommuteVo vo);
 
+    //사원의 프로필 사진 업데이트 반영
+    EmpVo selectEmpProfile(SqlSessionTemplate sst, EmpVo empVo);
+
 
 
 }

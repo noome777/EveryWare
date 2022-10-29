@@ -36,9 +36,9 @@ public class CommuteController {
 
     // 근태 메인화면 (근태 현황조회, 근무시간 조회, 근태 리스트 조회)
     @GetMapping("main/{pno}")
-    public String commuteMain(Model model, HttpSession session, CommuteVo vo, 
+    public String commuteMain(Model model, HttpSession session, CommuteVo vo, EmpVo empVo,
             @PathVariable int pno, String enrollDate, String comStatus) {
-        
+
         // 로그인 여부 체크
         if (session.getAttribute("loginMember") == null) {
             session.setAttribute("alertMsg", "로그인 후 접근 가능합니다 !");
@@ -47,7 +47,21 @@ public class CommuteController {
 
         // 사원의 코드를 vo에 추가하기
         EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
+        String rightCode = loginMember.getRightCode();
         vo.setECode(loginMember.getEmpCode());
+
+        if (!rightCode.equals("4")) {
+            return "redirect:/commute/admin/1";
+        }
+
+        // 사원의 프로필 사진 업데이트 반영
+        empVo.setEmpCode(loginMember.getEmpCode());
+        EmpVo profileVo = service.selectEmpProfile(empVo);
+
+        // emp프로필이 null일떄 체크
+        if (profileVo != null) {
+            model.addAttribute("profileVo", profileVo.getEmpProfileName());
+        }
 
         // 사원 해당 월 근태 현황 조회
         int normalCnt = service.selectNormalCnt(vo);
@@ -59,34 +73,33 @@ public class CommuteController {
         model.addAttribute("earlyCnt", earlyCnt);
         model.addAttribute("lateCnt", lateCnt);
         model.addAttribute("absentCnt", absentCnt);
-        
-        //사원의 해당 월 근무 시간 조회
+
+        // 사원의 해당 월 근무 시간 조회
         int workDays = service.selectWorkDays(vo);
         int workTimeAll = service.seletWorkTimeAll(vo);
-        double workTimeAvg = (double)service.selectWorkTimeAvg(vo);
+        double workTimeAvg = (double) service.selectWorkTimeAvg(vo);
         int workToday = service.selectWorkToday(vo);
-        
+
         model.addAttribute("workDays", workDays);
         model.addAttribute("workTimeAll", workTimeAll);
         model.addAttribute("workTimeAvg", workTimeAvg);
         model.addAttribute("workToday", workToday);
-        
-        
+
         // 사원 근태 리스트 조회
-        if(enrollDate != null && comStatus != null) {
+        if (enrollDate != null && comStatus != null) {
             // 기간 선택 했을 시
             vo.setEnrollDate(enrollDate);
             vo.setComStatus(comStatus);
-            
-            String enrollDate1 = vo.getEnrollDate().substring(0,10);
+
+            String enrollDate1 = vo.getEnrollDate().substring(0, 10);
             String enrollDate2 = vo.getEnrollDate().substring(11);
-            
-            //사원의 근태 목록 조회(+페이징)
+
+            // 사원의 근태 목록 조회(+페이징)
             int commuteDateCnt = service.selectCommuteDateCnt(vo);
             PageVo pv2 = Pagination.getPageVo(commuteDateCnt, pno, 5, 5);
-            
+
             List<CommuteVo> comDateList = service.selectCommuteDateList(pv2, vo);
-            
+
             model.addAttribute("comDateList", comDateList);
             model.addAttribute("pv", pv2);
             model.addAttribute("enrollDate1", enrollDate1);
@@ -94,20 +107,26 @@ public class CommuteController {
             model.addAttribute("comStatus", vo.getComStatus());
             model.addAttribute("commuteDateCnt", commuteDateCnt);
 
-        }else {
+        } else {
             // 기간 선택 안 했을경우
             // 사원의 근태 전체 목록 조회 (+ 페이징)
             int commuteCnt = service.selectCommuteTotalCnt(vo);
             PageVo pv = Pagination.getPageVo(commuteCnt, pno, 5, 5);
-            
+
             List<CommuteVo> comList = service.selectCommuteList(pv, vo);
-            
+
             model.addAttribute("comList", comList);
             model.addAttribute("pv", pv);
             model.addAttribute("commuteCnt", commuteCnt);
         }
 
         return "commute/commuteMain";
+    }
+
+    // 관리자 출퇴근 기록 조회
+    @GetMapping("main/admin")
+    public String commteMainAdmin() {
+        return "commute/commuteAdminMain";
     }
 
     // 근태 메인화면에서 출퇴근 버튼 입력 후 submit시
@@ -142,8 +161,8 @@ public class CommuteController {
         Date endFormat = format.parse(endTime);
         Date onTimeIn = new SimpleDateFormat("HH:mm:ss").parse("09:00:00");
         Date onTimeOut = new SimpleDateFormat("HH:mm:ss").parse("18:00:00");
-        
-        //수정!!----------------------------------
+
+        // 수정!!----------------------------------
         if (onTimeIn.after(startFormat) || onTimeIn.equals(startFormat)) {
             if (onTimeOut.after(endFormat)) {
                 // 조기퇴근
@@ -154,18 +173,13 @@ public class CommuteController {
             }
         } else if (onTimeIn.before(startFormat)) {
             if (onTimeOut.before(endFormat)) {
-                //결근
+                // 결근
                 vo.setComStatus(absent);
-            }else {
+            } else {
                 // 지각
                 vo.setComStatus(late);
             }
-//            if (onTimeOut.after(endFormat) || endFormat == null) {
-//                // 결근
-//                
-//            }
         }
-
         System.out.println(vo);
 
         // DB 에 사원의 근태 insert
@@ -204,6 +218,11 @@ public class CommuteController {
         if (!rvo.getRightCode().equals("4")) {
             return "redirect:/commute/admin/1";
         }
+
+        // 변경 예정
+//        if (rvo.getRightCode().equals("1") || rvo.getRightCode().equals("2")) {
+//            return "redirect:/commute/admin/1";
+//        }
 
         // 기간 선택 조회 여부(시간 외 근무 메인의 전체리스트 || 기간 선택 후 리스트)
         if (overDate != null) {
@@ -268,7 +287,7 @@ public class CommuteController {
 
     }
 
-    // 시간 외 근무의 관리자 페이지
+    // 시간 외 근무의 관리자 페이지 (시간 외 근무 결재)
     @GetMapping("admin/{pno}")
     public String overworkAdmin(@PathVariable int pno, Model model, OverworkVo vo,
             String overDate) {

@@ -85,5 +85,8 @@ public interface CommuteService {
     //금일 근무시간
     int selectWorkToday(CommuteVo vo);
 
+    //사원의 프로필 사진 업데이트 반영
+    EmpVo selectEmpProfile(EmpVo empVo);
+
 
 }

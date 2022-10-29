@@ -189,6 +189,12 @@ public class CommuteDaoImpl implements CommuteDao {
         return sst.selectOne("commuteMapper.selectWorkToday", vo);
     }
 
+    //사원의 프로필 사진 업데이트 반영
+    @Override
+    public EmpVo selectEmpProfile(SqlSessionTemplate sst, EmpVo empVo) {
+        return sst.selectOne("commuteMapper.selectEmpProfileName", empVo);
+    }
+
 
 
 }
