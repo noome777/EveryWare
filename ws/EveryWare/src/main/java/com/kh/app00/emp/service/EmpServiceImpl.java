@@ -26,14 +26,14 @@ public class EmpServiceImpl implements EmpService {
     @Override
     public EmpVo login(EmpVo vo) {
         //DB의 암호화 된 비밀번호와 일치 여부 확인
-//        EmpVo dbMember = dao.login(sst, vo);
-//        
-//        if(pwdEnc.matches(vo.getEmpPwd(), dbMember.getEmpPwd())) {
-//            return dbMember;
-//        }else {
-//            return null;
-//        }
-        return dao.login(sst, vo);
+        EmpVo dbMember = dao.login(sst, vo);
+        
+        if(pwdEnc.matches(vo.getEmpPwd(), dbMember.getEmpPwd())) {
+            return dbMember;
+        }else {
+            return null;
+        }
+//        return dao.login(sst, vo);
     }
 
     //아이디 찾기
@@ -51,7 +51,31 @@ public class EmpServiceImpl implements EmpService {
     //비밀번호 랜덤값으로 업데이트
     @Override
     public int updateTempPwd(EmpVo vo) {
+        
+        vo.encodePwd(pwdEnc);
         return dao.updateTempPwd(sst, vo);
+    }
+
+    //임시비밀번호와 db의 비밀번호의 일치 여부 체크(조회)
+    @Override
+    public EmpVo selectSearchTempPwd(EmpVo vo) {
+        
+        //DB의 암호화 된 비밀번호와 일치 여부 확인
+        EmpVo dbMember = dao.selectSearchTempPwd(sst, vo);
+        
+        if(pwdEnc.matches(vo.getEmpPwd(), dbMember.getEmpPwd())) {
+            return dbMember;
+        }else {
+            return null;
+        }
+    }
+
+    //임시비밀번호를 새로운 비밀번호로 변경
+    @Override
+    public int updateNewPwd(EmpVo vo) {
+        
+        vo.encodePwd(pwdEnc);
+        return dao.updateNewPwd(sst, vo);
     }
 
    

@@ -83,7 +83,7 @@
                       <label for="inputEmail" class="sr-only">Email address</label>
                       <input type="email" id="empEMail" name="empEMail" class="form-control form-control-lg" placeholder="Email address" required="">
                     </div>
-                    <button class="btn btn-lg btn-outline-primary btn-block" id="resetBtn" type="submit"> Reset Password</button><br><br><br><br><br><br>
+                    <button class="btn btn-lg btn-outline-primary btn-block" id="resetBtn" type="submit">Send Temp Password</button><br><br><br><br><br><br>
                     <div>Don't you remember your ID? 
                     <a href="${root}/emp/searchId"> Find ID</a>
                     </div>

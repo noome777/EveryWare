@@ -38,6 +38,15 @@
 		UPDATE EMP SET EMP_PWD = #{empPwd}
 		WHERE EMP_E_MAIL = #{empEMail}
 	</update>
+	
+	<select id="selectSearchTempPwd" resultType="EmpVo">
+		SELECT EMP_PWD FROM EMP WHERE EMP_ID = #{empId}
+	</select>
+	
+	<update id="updateNewPwd">
+		UPDATE EMP SET EMP_PWD = #{empPwd}
+		WHERE EMP_ID = #{empId}
+	</update>
 
 
 </mapper>

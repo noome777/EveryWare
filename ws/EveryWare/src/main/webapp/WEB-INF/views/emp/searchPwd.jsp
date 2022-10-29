@@ -3,6 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
+<c:set var="alertMsg" value="${sessionScope.alertMsg}"/>
+<c:if test="${not empty alertMsg}">
+    <script>
+      alert('${alertMsg}');
+    </script>
+</c:if>
 <!DOCTYPE html>
 <html>
 <head>
@@ -71,7 +77,7 @@
               <label for="inputEmail" class="sr-only">Email address</label>
               <input type="email" id="empEMail" name="empEMail" class="form-control form-control-lg" placeholder="Email address" required="">
             </div>
-            <button class="btn btn-lg btn-outline-primary btn-block" id="resetBtn" type="submit"> Reset Password</button><br><br><br><br><br><br>
+            <button class="btn btn-lg btn-outline-primary btn-block" id="resetBtn" type="submit"> Send Temp Password</button><br><br><br><br><br><br>
             <div>Don't you remember your ID? 
             <a href="${root}/emp/mailMain"> Find ID</a>
             </div>
