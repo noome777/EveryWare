@@ -29,7 +29,7 @@
   margin-top: 35px;
 }
 #profile-img{
-  margin-left: 1000px;
+  margin-left: 970px;
   width: 100px;
   height: 100px;
   margin-top: -105px;
@@ -92,7 +92,12 @@ table>tbody>tr>td *{
                   <h1 id="clock">document.write(timeNow)</h1>
                 </div>
                 <!-- 수정 예정 -->
-                <img id="profile-img" alt="" src="${root}/resources/img/guest.png">
+                <c:if test="${not empty profileVo}">
+                  <img id="profile-img" alt="" src="${root}/resources/upload/profile/${profileVo}">
+                </c:if>
+                <c:if test="${empty profileVo}">
+                  <img id="profile-img" alt="" src="${root}/resources/img/guest.png">
+                </c:if>
                 <!--  -->
               </div>
               <div class="flex-fill chart-box mt-n2" style="position: relative;">

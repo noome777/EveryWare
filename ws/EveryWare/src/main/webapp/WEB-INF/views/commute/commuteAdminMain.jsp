@@ -45,6 +45,15 @@
 #page-area>a{
   margin: 5px;
 }
+#no{
+  border: none;
+  border-right: 0px;
+  border-top: 0px;
+  border-left: 0px;
+  border-bottom: 0px;
+  width: 40px;
+  height: 30px;
+}
    
 </style>
 </head>
@@ -54,42 +63,48 @@
         <%@ include file="/WEB-INF/views/common/header.jsp" %>
         <%@ include file="/WEB-INF/views/commute/admin-side.jsp" %>
      
-    <!-- 시간외 근무 조회 -->
+    <!-- 출퇴근 기록 조회 -->
 
     <div class="card shadow mb-5" style="margin-top: 25px;">
 
       <div style="margin-left: 20px; margin-top: 20px;">
-        <h4 class="card-title">시간 외 근무 결재</h4><br><br>
+        <h4 class="card-title">출퇴근 기록 조회</h4><br><br>
 
         <form action="" method="get">
             <h6 class="card-title">기간 선택</h6>
             <div class="form-row mb-3">
                 <div class="col-md-4 mb-3">
                 <div class="input-group">
-                    <input class="form-control" id="example-date" type="date" name="overDate" required>
+                    <input class="form-control" id="example-date" type="date" name="offStartDate" required>
+                </div>
+                </div>
+                ~ 
+                <div class="col-md-4 mb-3">
+                <div class="input-group">
+                    <input class="form-control" id="example-date" type="date" name="offEndDate" required>
                 </div>
                 </div>
             </div>
             <button class="btn btn-outline-primary" type="submit" id="search-btn">search</button>
         </form>
     
-        <c:if test="${empty adDateCount}">
+        <%-- <c:if test="${empty adDateCount}">
 	        <h6 class="card-title">조회 결과 ${adListCount} 건</h6>
         </c:if>  
         <c:if test="${empty adListCount}">
 	        <h6 class="card-title">조회 결과  ${adDateCount} 건</h6>
-        </c:if>
+        </c:if> --%>
 
-      <form action="${root}/commute/sendApproval" method="post">
+      <%-- <form action="${root}/dayoff/sendApproval" method="post">
         <table class="table table-hover">
           <thead>
             <tr>
               <th>신청번호</th>
               <th>부서명</th>
               <th>이름</th>
-              <th>일자</th>
-              <th>시간</th>
-              <th>업무명</th>
+              <th>시작일자</th>
+              <th>종료일자</th>
+              <th>일수</th>
               <th>사유</th>
               <th>상태</th>
               <th>등록일자</th>
@@ -100,59 +115,61 @@
               <input type="hidden" id="no" value=""  name="num">
                 <c:forEach items="${voList}" var="x">
                     <tr>
-                        <td class="list">${x.overCode}</td>
-                        <td class="list">${x.deptCode}</td>
-                        <td class="list">${x.ECode}</td>
-                        <td class="list">${x.overDate}</td>
-                        <td class="list">${x.overTime}</td>
-                        <td class="list">${x.overName}</td>
-                        <td class="list">${x.overReason}</td>
-                          <c:if test="${x.overApproval == 'W'}">
-                            <td class="list">
-                              <select onchange="this.form.submit();"  name="approval" id="approval">
-                                  <option value="W" name="W">결재대기중</option>
-                                  <option value="A" name="A">승인완료</option>
-                                  <option value="C" name="C">반려</option>
-                              </select>
-                            </td>
-                          </c:if>
-                          <c:if test="${x.overApproval == 'A'}">
-                          <td><span class="badge badge-pill badge-success">승인완료</span></td>
-                          </c:if>
-                          <c:if test="${x.overApproval == 'C'}">
-                          <td><span class="badge badge-pill badge-danger">반려</span></td>
-                          </c:if>
-                        <td>${x.overEnrolldate}</td>
+                      <td class="list">${x.offCode}</td>
+                      <td class="list">${x.deptCode}</td>
+                      <td class="list">${x.ECode}</td>
+                      <td class="list">${x.offStartDate}</td>
+                      <td class="list">${x.offEndDate}</td>
+                      <td class="list">${x.offDays}</td>
+                      <td class="list">${x.offReason}</td>
+                        <c:if test="${x.offApproval == 'W'}">
+                          <td class="list">
+                            <select onchange="this.form.submit();"  name="approval" id="approval">
+                                <option value="W" name="W">결재대기중</option>
+                                <option value="A" name="A">승인완료</option>
+                                <option value="C" name="C">반려</option>
+                            </select>
+                          </td>
+                        </c:if>
+                        <c:if test="${x.offApproval == 'A'}">
+                        <td><span class="badge badge-pill badge-success">승인완료</span></td>
+                        </c:if>
+                        <c:if test="${x.offApproval == 'C'}">
+                        <td><span class="badge badge-pill badge-danger">반려</span></td>
+                        </c:if>
+                      <td>${x.offEnrolldate}</td>
                     </tr>
                 </c:forEach>
             </c:if>
             <c:if test="${empty voList}">
+              <input type="hidden" id="no" value="${voList[0].offCode}" name="no">
                 <c:forEach items="${AdDateList}" var="y">
                     <tr>
-                        <td>${y.overCode}</td>
-                        <td>${y.deptCode}</td>
+                        <td>${y.offCode}</td>
                         <td>${y.ECode}</td>
-                        <td>${y.overDate}</td>
-                        <td>${y.overTime}</td>
-                        <td>${y.overName}</td>
-                        <td>${y.overReason}</td>
-                        <c:if test="${y.overApproval == 'W'}">
+                        <td>${y.deptCode}</td>
+                        <td>${y.offStartDate}</td>
+                        <td>${y.offEndDate}</td>
+                        <td>${y.offDays}</td>
+                        <td>${y.offReason}</td>
+                        <c:if test="${y.offApproval == 'W'}">
                             <td><span class="badge badge-pill badge-warning">결재대기중</span></td>
                         </c:if>
-                        <c:if test="${y.overApproval == 'A'}">
+                        <c:if test="${y.offApproval == 'A'}">
                             <td><span class="badge badge-pill badge-success">승인완료</span></td>
                         </c:if>
-                        <c:if test="${y.overApproval == 'C'}">
+                        <c:if test="${y.offApproval == 'C'}">
                             <td><span class="badge badge-pill badge-danger">반려</span></td>
                         </c:if>
-                        <td>${y.overEnrolldate}</td>
+                        <td>${y.offEnrolldate}</td>
                     </tr>
                 </c:forEach>
             </c:if>
           </tbody>
         </table>
       </form>
-        <!-- <c:if test="${y.offApproval == 'W'}">
+      
+        <c:if test="${y.offApproval == 'W'}">
             <td><span class="badge badge-pill badge-warning">결재대기중</span></td>
         </c:if>
         <c:if test="${y.offApproval == 'A'}">
@@ -160,53 +177,53 @@
         </c:if>
         <c:if test="${y.offApproval == 'C'}">
             <td><span class="badge badge-pill badge-danger">반려</span></td>
-        </c:if> -->
+        </c:if>
 
        
         <c:if test="${empty AdDateList && empty vo}">
           <div id="page-area">
             <c:if test="${pv.startPage ne 1}">
-              <a href="${root}/commute/admin/${pv.startPage - 1}" class="btn mb-2 btn-primary"><</a>
+              <a href="${root}/dayoff/admin/${pv.startPage - 1}" class="btn mb-2 btn-primary"><</a>
             </c:if>
             <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" var="i">
-                <a href="${root}/commute/admin/${i}" class="btn mb-2 btn-primary">${i}</a>
+                <a href="${root}/dayoff/admin/${i}" class="btn mb-2 btn-primary">${i}</a>
             </c:forEach>
             <c:if test="${pv.endPage ne pv.maxPage }">
-              <a href="${root}/commute/admin/${pv.endPage + 1}" class="btn mb-2 btn-primary">></a>
+              <a href="${root}/dayoff/admin/${pv.endPage + 1}" class="btn mb-2 btn-primary">></a>
             </c:if>	
           </div>
         </c:if>
         <c:if test="${empty voList && not empty vo}">
         	<div id="page-area">
 	          <c:if test="${pv.startPage ne 1}">
-	            <a href="${root}/commute/admin/${pv.startPage - 1}?overDate=${vo.overDate}" class="btn mb-2 btn-primary"><</a>
+	            <a href="${root}/dayoff/admin/${pv.startPage - 1}?offStartDate=${vo.offStartDate}&offEndDate=${vo.offEndDate}" class="btn mb-2 btn-primary"><</a>
 	          </c:if>
 	          <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" var="i">
-	              <a href="${root}/commute/admin/${i}?overDate=${vo.overDate}" class="btn mb-2 btn-primary">${i}</a>
+	              <a href="${root}/dayoff/admin/${i}?offStartDate=${vo.offStartDate}&offEndDate=${vo.offEndDate}" class="btn mb-2 btn-primary">${i}</a>
 	          </c:forEach>
 	          <c:if test="${pv.endPage ne pv.maxPage }">
-	            <a href="${root}/commute/admin/${pv.endPage + 1}?overDate=${vo.overDate}" class="btn mb-2 btn-primary">></a>
+	            <a href="${root}/dayoff/admin/${pv.endPage + 1}?offStartDate=${vo.offStartDate}&offEndDate=${vo.offEndDate}" class="btn mb-2 btn-primary">></a>
 	          </c:if>	
 	        </div>
         </c:if>
-
       </div>
-    </div>
+    </div> --%>
+
 
 <script>
 
-  window.onload = function hi(){
-    $(function(){
-      $('tbody tr').children('.list').click(function(){
-          //글 번호 가져오기 (this -> tr태그)
-          let num = $(this).parent().children().eq(0).text();
-          
-          console.log(num);
-          $('input[name=num]').attr('value', num);
-      })
-    });
-  }
-  </script>
+/* window.onload = function hi(){
+  $(function(){
+    $('tbody tr').children('.list').click(function(){
+        //글 번호 가져오기 (this -> tr태그)
+        let num = $(this).parent().children().eq(0).text();
+        
+        console.log(num);
+        $('input[name=num]').attr('value', num);
+    })
+  });
+} */
+</script>
 </body>
 </html>
 

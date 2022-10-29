@@ -4,13 +4,7 @@
 
 	<select id="selectOneById" resultType="EmpVo">
 		SELECT 
-			EMP_CODE
-		  , EMP_NAME
-		  , EMP_ID
-		  , EMP_PWD
-		  , EMP_E_MAIL
-		  , EMP_PHONE
-		  , EMP_ADDRESS1
+		*
 		FROM EMP
 		WHERE EMP_ID = #{empId}
 		AND EMP_STATUS = 'N'

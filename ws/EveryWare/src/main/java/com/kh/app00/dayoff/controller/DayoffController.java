@@ -131,7 +131,7 @@ public class DayoffController {
 
     }
 
-    // 휴가의 관리자 페이지
+    // 휴가의 관리자 페이지 (휴가 결재)
     @GetMapping("admin/{pno}")
     public String dayoffAdmin(@PathVariable int pno, Model model, DayoffVo vo,
             String offStartDate, String offEndDate) {
@@ -193,11 +193,7 @@ public class DayoffController {
 
     }
 
-//    @GetMapping("calendar")
-//    public String calendar() {
-//        return "dayoff/dayoffCal";
-//    }
-
+    //휴가 현황 조회 (full calendar)
     @GetMapping("calendar")
     public ModelAndView getCalendar(ModelAndView mv, HttpServletRequest req, DayoffVo vo, HttpSession session) {
 
@@ -219,6 +215,12 @@ public class DayoffController {
         }
         mv.setViewName(viewpage);
         return mv;
+    }
+    
+    //관리자의 휴가 현황 조회(모든 부서의 모든 사원)
+    @GetMapping("calendar/admin")
+    public String calendar() {
+        return "dayoff/dayoffCalAdmin";
     }
 
 }
