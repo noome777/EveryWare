@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="root" value="${pageContext.request.contextPath}" />	
 <!DOCTYPE html>
 <html>
 <head>
@@ -73,55 +75,16 @@
 							<th>작성일</th>
 						</tr>
 						<tbody>
+							<c:forEach items="${mList}" var="m">
+								<c:if test="${m.mailDelete eq null}"> 
 							<tr>
 								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>EVERYWARE</td>
-								<td>안녕하세요</td>
-								<td>12:12</td>
+								<td>${m.mailCode}</td>
+								<td id="mtitle">${m.mailTitle}</td>
+								<td id="mSenddate">${m.mailSenddate}</td>
 							</tr>
-							<tr>
-								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>EVERYWARE</td>
-								<td>안녕하세요2</td>
-								<td>12:12</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>EVERYWARE</td>
-								<td>안녕하세요3</td>
-								<td>12:12</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>EVERYWARE</td>
-								<td>안녕하세요4</td>
-								<td>12:12</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>EVERYWARE</td>
-								<td>안녕하세요5</td>
-								<td>12:12</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>EVERYWARE</td>
-								<td>안녕하세요6</td>
-								<td>12:12</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>EVERYWARE</td>
-								<td>안녕하세요7</td>
-								<td>12:12</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>EVERYWARE</td>
-								<td>안녕하세요8</td>
-								<td>12:12</td>
-							</tr>
-
+								</c:if> 
+							</c:forEach>
 						</tbody>
 					</table>
 					<nav aria-label="Page navigation example">

@@ -1,16 +1,36 @@
 package com.kh.app00.mail.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.kh.app00.mail.service.MailService;
+import com.kh.app00.mail.vo.MailVo;
 
 @Controller
 @RequestMapping("mail")
 public class MailController {
 	
+	private final MailService ms;
 	
-	@GetMapping("main")
-	public String mail() {
+	@Autowired
+	public MailController(MailService ms) {
+		this.ms = ms;
+	}
+
+	@GetMapping("mailMain")
+	public String mailMain(Model model) {
+		
+		List<MailVo> mList = ms.selectList();
+		
+		model.addAttribute("mList", mList);
+		
+		System.out.println("mList : " + mList);
+		
 		return "mail/mailMain";
 	}
 	

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mailMapper">
+	
+	<select id="selectList" resultType="MailVo">
+		SELECT
+		MAIL.MAIL_CODE
+		,MAIL.EMP_CODE
+		,MAIL.MAIL_SENDER 
+		,MAIL.MAIL_TITLE
+		,MAIL.MAIL_CONTENT
+		,MAIL.MAIL_SENDDATE
+		,MAIL.MAIL_RECEIVER
+		,MAIL.MAIL_DELETE 
+		FROM MAIL
+		JOIN EMP
+		ON MAIL.EMP_CODE = EMP.EMP_CODE
+		WHERE MAIL_DELETE IS NULL
+		ORDER BY MAIL_CODE DESC
+	</select>		
+</mapper>
