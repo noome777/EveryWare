@@ -51,7 +51,7 @@ public class CommuteController {
         vo.setECode(loginMember.getEmpCode());
 
         if (!rightCode.equals("4")) {
-            return "redirect:/commute/admin/1";
+            return "redirect:/commute/main/admin";
         }
 
         // 사원의 프로필 사진 업데이트 반영
@@ -132,7 +132,7 @@ public class CommuteController {
     // 근태 메인화면에서 출퇴근 버튼 입력 후 submit시
     @PostMapping("main/{pno}")
     public String commuteMain(CommuteVo vo, HttpSession session,
-            @PathVariable int pno) throws ParseException {
+            @PathVariable int pno, Model model) throws ParseException {
 
         // 로그인 여부 체크
         if (session.getAttribute("loginMember") == null) {
@@ -186,6 +186,9 @@ public class CommuteController {
         int result = service.insertCommute(vo);
         if (result == 1) {
             // 근태 테이블에 insert 성공
+            session.setAttribute("startTimeFormat", startTimeFormat);
+            session.setAttribute("endTimeFormat", endTimeFormat);
+            
             return "redirect:/commute/main/1";
         } else {
             // 실패

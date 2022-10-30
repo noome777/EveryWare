@@ -29,14 +29,14 @@
   margin-top: 35px;
 }
 #profile-img{
-  margin-left: 970px;
+  margin-left: 960px;
   width: 100px;
   height: 100px;
   margin-top: -105px;
   float: right;
 }
 #company-img{
-  margin-left: 1030px;
+  margin-left: 1010px;
   width: 100px;
   height: 100px;
   margin-top: -200px;

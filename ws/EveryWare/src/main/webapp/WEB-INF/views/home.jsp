@@ -4,15 +4,14 @@
 
 <!doctype html>
 <html lang="en">
- <head>
+<head>
 </head>
   <body class="vertical  light  ">
     <div class="wrapper">
     
       <%@ include file="/WEB-INF/views/common/header.jsp" %>
       <%@ include file="/WEB-INF/views/common/sidemenu-content.jsp" %>
+      <%@ include file="/WEB-INF/views/commute/commuteWidget.jsp" %>
      
-     
-     </div>
   </body>
 </html>
