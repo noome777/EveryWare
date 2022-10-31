@@ -70,20 +70,20 @@
             </table>
             
             <nav aria-label="Table Paging" class="my-3">
-              <%-- <ul class="pagination justify-content-center mb-0">
+              <ul class="pagination justify-content-center mb-0">
               	<c:if test="${pv.startPage ne 1}">
             	    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
                 </c:if>
                 
                 <c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
-                	<li class="page-item"><a class="page-link" href="${root}/approval/progressAllList/${i}">${i}</a></li>
+                	<li class="page-item"><a class="page-link" href="${root}/approval/progressRefList/${i}">${i}</a></li>
                 </c:forEach>
 <!--                 <li class="page-item active"><a class="page-link" href="#">1</a></li> -->
                 
                 <c:if test="${pv.endPage ne pv.maxPage}">
            	     <li class="page-item"><a class="page-link" href="#">Next</a></li>
                 </c:if>
-              </ul> --%>
+              </ul> 
             </nav>
 
           </div>

@@ -90,5 +90,16 @@
         </div>
 	</main>
    
+  <script>
+    
+    $('#custom-select').on('change', function () {
+
+      let docFormCode = $('#custom-select option:selected').val();
+
+      location.href='${root}/approval/progressExpectedList/1/' + docFormCode;
+
+    })
+  </script>
+
 </body>
 </html>

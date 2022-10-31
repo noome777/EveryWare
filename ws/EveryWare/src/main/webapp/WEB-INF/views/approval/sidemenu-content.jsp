@@ -56,7 +56,7 @@
                   <a class="nav-link pl-3" href="${root}/approval/progressRefList/1"><span class="ml-1 item-text">확인</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/approval/progressExpectedList/1"><span class="ml-1 item-text">예정</span></a>
+                  <a class="nav-link pl-3" href="${root}/approval/progressExpectedList/1/0"><span class="ml-1 item-text">예정</span></a>
                 </li>
               </ul>
             </li>
@@ -70,22 +70,19 @@
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="forms">
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/approval/list/1"><span class="ml-1 item-text">전체</span></a>
+                  <a class="nav-link pl-3" href="${root}/approval/completAllList/1"><span class="ml-1 item-text">전체</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/approval/list/1"><span class="ml-1 item-text">기안</span></a>
+                  <a class="nav-link pl-3" href="${root}/approval/completWriteList/1"><span class="ml-1 item-text">기안</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/approval/list/1"><span class="ml-1 item-text">결재</span></a>
+                  <a class="nav-link pl-3" href="${root}/approval/completApprList/1"><span class="ml-1 item-text">결재</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/approval/list/1"><span class="ml-1 item-text">수신</span></a>
+                  <a class="nav-link pl-3" href="${root}/approval/completRefList/1"><span class="ml-1 item-text">참조</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/approval/list/1"><span class="ml-1 item-text">회람/참조</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/approval/list/1"><span class="ml-1 item-text">반려</span></a>
+                  <a class="nav-link pl-3" href="${root}/approval/unApprList/1"><span class="ml-1 item-text">반려</span></a>
                 </li>
               </ul>
             </li>
@@ -113,7 +110,6 @@
                   <a class="nav-link pl-3" href="${root}/approval/formManager"><span class="ml-1">양식 관리</span></a>
                   <a class="nav-link pl-3" href="${root}/approval/list/1"><span class="ml-1">전체 문서 목록</span></a>
                   <a class="nav-link pl-3" href="${root}/approval/list/1"><span class="ml-1">삭제 문서 목록</span></a>
-                  <a class="nav-link pl-3" href="${root}/approval/approvalAdmin"><span class="ml-1">전자결재 관리자</span></a>
                 </ul>
               </li>
             </ul>

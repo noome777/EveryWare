@@ -26,12 +26,6 @@
 	#approval-setting-table tr{
 		height: 10px;
 	}
-  .appr-wid{
-    width: 30%;
-  }
-  .right-btn{
-    text-align: right; 
-  }
   #appr-line-setting{
   	margin-top: 40px;
   	margin-bottom: 20px;
@@ -94,7 +88,7 @@
           </tr>
           <tr>
             <td class="appr-table-color">작성자</td>
-            <td id="writer-name">${loginMember.empName}</td>
+            <td class="writer-name" id="${loginMember.empCode}">${loginMember.empName}</td>
             <td class="appr-table-color">작성일자</td>
             <td id="current-date">
               
@@ -156,7 +150,7 @@
           <div class="card-body">
             <div class="form-group mb-3">
               <div class="custom-file">
-                <input type="file" class="custom-file-input" multiple id="customFile" name="file[]">
+                <input type="file" class="custom-file-input" multiple id="customFile" name="file">
                 <label class="custom-file-label" for="customFile">Choose file</label>
                 <div id="file-name" class="m-1"></div>
               </div>
@@ -340,7 +334,7 @@
       $.ajax({
         url : "${root}/approval/selectDept" ,
         method : "POST" ,
-        data : {deptCode : deptCode } ,
+        data : {deptCode : deptCode} ,
         dataType : 'json' ,
         success : function(deptEmpList){
 
@@ -444,11 +438,13 @@
           let empInfo = approverEmp.split(' ');
           let empName = empInfo[0];
           let empRankName = empInfo[3].replace(')', '');
-          let writer = $('#writer-name')[0].innerHTML;
+          let writer = $('.writer-name')[0].innerHTML;
+          let writerCode = $('.writer-name').attr('id');
           if(i == 0 && j == 0){
+           
             rankHtml += '<td style="width : 80px"></td>';
             markHtml += '<td></td>';
-            nameHtml += '<td>' + writer + '</td>';
+            nameHtml += '<td>' + writer + writerCode + '</td>';
           }
 
           rankHtml += '<td style="width : 80px">' + empRankName + '</td>';
@@ -459,7 +455,12 @@
 
         })
         let blankTd;
-        if(approverVal.length < 9) {
+        if(approverVal.length < 9 && i == 0) {
+          let blankCount = (7-approverVal.length);
+          for(let i=0; i<blankCount; i++){
+            blankTd += '<td></td>';
+          }
+        } else {
           let blankCount = (8-approverVal.length);
           for(let i=0; i<blankCount; i++){
             blankTd += '<td></td>';
@@ -558,38 +559,42 @@
 
 
 
-    $("input[type='file']").on('change',function(){ 
-      var fileList = "";
-      let target = $('#customFile');
+    // $("input[type='file']").on('change',function(){ 
+    //   var fileList = "";
+    //   let target = $('#customFile');
 
-      var formData = new FormData();
-      for(var i=0; i<$('#customFile')[0].files.length; i++){  
-        formData.append("file", $('#customFile')[0].files[i]);
-        fileList += event.target.files[i].name + '<br>';
-      } 
-      console.log(fileList);
-      console.log(formData); 
-      // $.ajax({
-      //   url : '${root}/approval/write',
-      //   type : 'POST',
-      //   data : formData,
-      //   processData : false,
-      //   // enctype: 'multipart/form-data',
-      //   contentType : "multipart/form-data",
-      //   success : function(data) {
-      //     alert(data);
-      //     $('#file-name').html(fileList);
-      //     //x버튼 추가
-      //   },
-      //   error : (error) => {
-      //     console.log(JSON.stringify(error));
-      //   }   
-      // })
+    //   var formData = new FormData();
+    //   for(var i=0; i<$('#customFile')[0].files.length; i++){  
+    //     formData.append("files", $('#customFile')[0].files[i]);
+    //     fileList += event.target.files[i].name + '<br>';
+    //   } 
+    //   console.log(fileList);
+    //   console.log(formData); 
+    //   $.ajax({
+    //     url : '${root}/approval/write',
+    //     type : 'POST',
+    //     data : formData,
+    //     processData : false,
+    //     // enctype: 'multipart/form-data',
+    //     contentType : false,
+    //     success : function(data) {
+    //       alert(data);
+    //       $('#file-name').html(fileList);
+    //       //x버튼 추가
+    //     },
+    //     error : (error) => {
+    //       console.log(JSON.stringify(error));
+    //     }   
+    //   })
 
-    });
+    // });
     
     //진행중
     function insert () {
+      let writer = $('.writer-name')[0].innerHTML;
+      let writerCode = $('.writer-name').attr('id');
+      
+
       //항목 별 작성 내용, 항목 code
       let docDataList = [];
       $('[name=docContent]').each(function() {
@@ -607,18 +612,28 @@
         var checked = $(this).val();
         checkedVal.push(checked); 
       })
-      
+
       let approverList = [];
       $.each(checkedVal, function(i){
       
         $('.approver-select-box[id='+ checkedVal[i] +'] option').each(function (j) {
-          
           let approverObject = {
             apprTypeCode : checkedVal[i], 
             apprEmpCode : $(this).val(),
-            apprSeq : $(this).attr('approverSeq')
+            apprSeq : $(this).attr('approverSeq'),
+            apprStatus : "W"
           }
           approverList.push(approverObject);
+
+          if(i==0 && j==0 ){
+            approverObject = {
+            apprTypeCode : checkedVal[0], 
+            apprEmpCode : writerCode,
+            apprSeq : "1",
+            apprStatus : "A"
+          }
+          approverList.push(approverObject);
+          }
         })
 
       })
@@ -638,7 +653,6 @@
       let param = {
         periodCode : $('#custom-select').val(),
         docFormCode : $('#formSelect').val(),
-        empCode : '1', 
         docTitle : $('[name=docTitle]').val(),
         docDataList : docDataList,
         approverList : approverList,

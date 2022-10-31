@@ -63,8 +63,8 @@
 	
 	<insert id="insertApproverList">
 		<foreach collection="list" item="item" index="index" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" ">
-			INTO APPROVAL_LIST(DOC_CODE, APPR_TYPE_CODE, APPR_EMP_CODE, APPR_SEQ)
-			VALUES(#{item.docCode}, #{item.apprTypeCode}, #{item.apprEmpCode}, #{item.apprSeq})
+			INTO APPROVAL_LIST(DOC_CODE, APPR_TYPE_CODE, APPR_EMP_CODE, APPR_SEQ, APPR_STATUS)
+			VALUES(#{item.docCode}, #{item.apprTypeCode}, #{item.apprEmpCode}, #{item.apprSeq}, #{item.apprStatus})
 		</foreach>
 	</insert>
 	
@@ -87,45 +87,14 @@
 	
 	
 	
-	<select id="selectCountAll" resultType="int">
-		SELECT COUNT(*) FROM APPROVAL_DOC WHERE DOC_STATUS = 'N'
-	</select>
-	
-	<select id="selectDocList" resultType="ApprovalDocVo">
-		SELECT D.DOC_CODE, D.PERIOD_CODE, D.DOC_FORM_CODE, D.EMP_CODE, D.DOC_TITLE, TO_CHAR(D.DOC_ENROLL_DATE, 'YYYY.MM.DD') AS DOC_ENROLL_DATE, TO_CHAR(D.DOC_UPDATED, 'YYYY.MM.DD') AS DOC_UPDATED, D.DOC_STATUS, F.FORM_NAME, E.EMP_NAME
-		FROM APPROVAL_DOC D
-		INNER JOIN DOC_FORM F ON D.DOC_FORM_CODE = F.FORM_CODE
-		INNER JOIN EMP E ON E.EMP_CODE = D.EMP_CODE
-		WHERE D.DOC_STATUS = 'N'
-		ORDER BY D.DOC_CODE DESC
-	</select>
 		
 	<select id="selectFormDetailList" resultType="DocFormDetailTemplateVo">
 		SELECT FORM_DETAIL_CODE, FORM_DETAIL_NAME, FORM_DETAIL_TYPE FROM DOC_FORM_DETAIL_TEMPLATE
 	</select>
 	
 	
-	
-	
-	<insert id="insertDocForm">
-		INSERT INTO DOC_FORM (FORM_CODE, FORM_NAME, FORM_INTRO, FORM_USE_YN)
-		VALUES (SEQ_DOC_FORM_CODE.NEXTVAL, #{formName}, #{formIntro}, #{formUseYn})
-		<selectKey keyProperty="formCode" order="AFTER" resultType="java.lang.String">
-			SELECT SEQ_DOC_FORM_CODE.CURRVAL FROM DUAL
-		</selectKey>
-	</insert>
-
-	<insert id="insertDocFormMapping" parameterType="java.util.List">
-		<foreach collection="list" item="item" index="index" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" ">
-			INTO DOC_FORM_MAPPING (FORM_CODE, FORM_DETAIL_CODE, FORM_DETAIL_SEQ)
-			VALUES (#{item.formCode}, #{item.formDetailCode}, #{item.formDetailSeq})
-		</foreach>
-	</insert>
-	
-	
-	
 	<select id="selectDocDetail" resultType="ApprovalDocVo">
-		SELECT A.DOC_CODE, A.PERIOD_CODE, A.DOC_FORM_CODE, A.EMP_CODE, A.DOC_TITLE, TO_CHAR(A.DOC_ENROLL_DATE, 'YYYY.MM.DD') AS DOC_ENROLL_DATE, A.DOC_UPDATED, A.DOC_STATUS , 
+		SELECT A.DOC_CODE, A.PERIOD_CODE, A.DOC_FORM_CODE, A.EMP_CODE, A.DOC_TITLE, TO_CHAR(A.DOC_ENROLL_DATE, 'YYYY.MM.DD') AS DOC_ENROLL_DATE, A.DOC_UPDATED, A.DOC_STATUS , TO_CHAR(A.DOC_APPR_DATE, 'YYYY.MM.DD') AS DOC_APPR_DATE, 
 		       P.PERIOD, E.EMP_NAME, D.DEPT_NAME, F.FORM_NAME
 		FROM APPROVAL_DOC A
 		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
@@ -144,7 +113,7 @@
 	</select>
 	
 	<select id="selectApproverList" resultType="ApprovalListVo">
-		SELECT A.DOC_CODE, A.APPR_TYPE_CODE, A.APPR_EMP_CODE, A.APPR_SEQ, A.APPR_DATE, A.APPR_STATUS
+		SELECT A.DOC_CODE, A.APPR_TYPE_CODE, A.APPR_EMP_CODE, A.APPR_SEQ, TO_CHAR(A.APPR_DATE, 'YYYY.MM.DD') AS APPR_DATE, A.APPR_STATUS
 		     , E.EMP_NAME, D.DEPT_NAME, R.RANK_NAME, T.APPR_TYPE_NAME
 		FROM APPROVAL_LIST A
 		INNER JOIN EMP E ON E.EMP_CODE = A.APPR_EMP_CODE
@@ -170,11 +139,71 @@
 		ORDER BY A.APPR_TYPE_CODE ASC
 	</select>
 	
+	<select id="selectUnApprComment" resultType="DocCommentVo">
+		SELECT E.EMP_NAME AS WRITER_NAME, C.COMMENT_CODE, C.DOC_CODE, C.WRITER_CODE, TO_CHAR(C.COM_ENROLL_DATE, 'YYYY.MM.DD') AS COM_ENROLL_DATE, C.COM_CONTENT, C.COM_STATUS FROM DOC_COMMENT C
+		INNER JOIN EMP E ON E.EMP_CODE = C.WRITER_CODE
+		WHERE DOC_CODE = #{docCode}
+		AND COM_STATUS = 'C'
+	</select>
+	
+	
+	<update id="updateApprove">
+		UPDATE APPROVAL_LIST SET APPR_STATUS = 'A', APPR_DATE = SYSDATE
+		WHERE DOC_CODE = #{docCode}
+		AND APPR_EMP_CODE = #{apprEmpCode}
+		AND APPR_SEQ = #{apprSeq}
+	</update>
+	
+	<select id="maxApprSeq" resultType="ApprovalListVo">
+		SELECT MAX(APPR_SEQ) AS MAX_SEQ
+		FROM APPROVAL_LIST
+		WHERE DOC_CODE = #{docCode}
+	</select>
+	
+	<update id="updateUnApprove">
+		UPDATE APPROVAL_LIST SET APPR_STATUS = 'C', APPR_DATE = SYSDATE
+		WHERE DOC_CODE = #{docCode}
+		AND APPR_EMP_CODE = #{apprEmpCode}
+		AND APPR_SEQ = #{apprSeq}
+	</update>
+	
+	<insert id="insertUnApproveComment">
+		INSERT INTO DOC_COMMENT (COMMENT_CODE, DOC_CODE, WRITER_CODE, COM_CONTENT, COM_STATUS)
+		VALUES (SEQ_DOC_COMMENT_CODE.NEXTVAL, #{docCode}, #{apprEmpCode}, #{comContent}, 'C')
+	</insert>
+	
+	<update id="updateDocApprStatus">
+		UPDATE APPROVAL_LIST SET APPR_STATUS = 'C', APPR_DATE = SYSDATE
+		WHERE DOC_CODE = #{docCode}
+		AND APPR_STATUS = 'W'
+	</update>
+	
+	<update id="updateDocApprDate">
+		UPDATE APPROVAL_DOC SET DOC_APPR_DATE = SYSDATE
+		WHERE DOC_CODE = #{docCode}
+	</update>
+	
+	
+	
+	
+	<select id="selectCountAll" resultType="int">
+		SELECT COUNT(*) FROM APPROVAL_DOC WHERE DOC_STATUS = 'N'
+	</select>
+	
+	<select id="selectDocList" resultType="ApprovalDocVo">
+		SELECT D.DOC_CODE, D.PERIOD_CODE, D.DOC_FORM_CODE, D.EMP_CODE, D.DOC_TITLE, TO_CHAR(D.DOC_ENROLL_DATE, 'YYYY.MM.DD') AS DOC_ENROLL_DATE, TO_CHAR(D.DOC_UPDATED, 'YYYY.MM.DD') AS DOC_UPDATED, D.DOC_STATUS, F.FORM_NAME, E.EMP_NAME
+		FROM APPROVAL_DOC D
+		INNER JOIN DOC_FORM F ON D.DOC_FORM_CODE = F.FORM_CODE
+		INNER JOIN EMP E ON E.EMP_CODE = D.EMP_CODE
+		WHERE D.DOC_STATUS = 'N'
+		ORDER BY D.DOC_CODE DESC
+	</select>
+	
 	
 	<select id="selectExpectCount" resultType="int">
 		SELECT COUNT(*) FROM APPROVAL_DOC A
 		INNER JOIN APPROVAL_LIST L ON L.DOC_CODE = A.DOC_CODE
-		WHERE L.APPR_STATUS = ALL (SELECT L.APPR_STATUS
+		WHERE L.APPR_STATUS = ANY (SELECT L.APPR_STATUS
 		                         FROM APPROVAL_LIST L
 		                         WHERE L.APPR_STATUS = 'W')
 		AND L.APPR_EMP_CODE = #{empCode}
@@ -182,16 +211,24 @@
 	</select>
 	
 	<select id="selectExpectDocList" resultType="ApprovalDocVo">
-		SELECT A.DOC_CODE, A.DOC_FORM_CODE, A.DOC_TITLE, A.EMP_CODE, TO_CHAR(A.DOC_ENROLL_DATE, 'YYYY.MM.DD') AS DOC_ENROLL_DATE, E.EMP_NAME, F.FORM_NAME 
+		SELECT DISTINCT(A.DOC_CODE) AS DOC_CODE, A.DOC_FORM_CODE, A.DOC_TITLE, A.EMP_CODE, TO_CHAR(A.DOC_ENROLL_DATE, 'YYYY.MM.DD') AS DOC_ENROLL_DATE, E.EMP_NAME, F.FORM_NAME 
 		FROM APPROVAL_DOC A
 		INNER JOIN DOC_FORM F ON A.DOC_FORM_CODE = F.FORM_CODE
 		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
 		INNER JOIN APPROVAL_LIST L ON L.DOC_CODE = A.DOC_CODE
-		WHERE L.APPR_STATUS = ALL (SELECT L.APPR_STATUS
+		WHERE L.APPR_STATUS = ANY (SELECT L.APPR_STATUS
 		                         FROM APPROVAL_LIST L
 		                         WHERE L.APPR_STATUS = 'W')
 		AND L.APPR_EMP_CODE = #{empCode}
 		AND A.DOC_STATUS = 'N'
+	</select>
+	
+	
+	<select id="selectRefListTotalCnt" resultType="int">
+		SELECT COUNT(*) FROM APPROVAL_DOC A 
+		INNER JOIN APPROVAL_REF R ON A.DOC_CODE = R.DOC_CODE 
+		WHERE R.REF_EMP_CODE = #{empCode} 
+		AND A.DOC_APPR_DATE IS NULL	
 	</select>
 	
 	<select id="selectRefDocList" resultType="ApprovalDocVo">
@@ -204,12 +241,31 @@
 		WHERE A.DOC_CODE = F.DOC_CODE
 		AND A.EMP_CODE = E.EMP_CODE
 		AND A.DOC_FORM_CODE = DF.FORM_CODE
-		AND L.APPR_STATUS = ALL (SELECT L.APPR_STATUS
+		AND L.APPR_STATUS = ANY (SELECT L.APPR_STATUS
 		                         FROM APPROVAL_LIST L
 		                         WHERE L.APPR_STATUS = 'W')
 		AND L.DOC_CODE = F.DOC_CODE
 		AND A.DOC_STATUS = 'N'
 		AND F.REF_EMP_CODE = #{empCode}
+	</select>
+	
+	<select id="selectWaitListTotalCnt" resultType="int">
+		WITH T1 AS 
+		(SELECT A.DOC_CODE, A.DOC_TITLE, A.DOC_FORM_CODE, L.APPR_SEQ, L.APPR_STATUS , F.FORM_NAME, E.EMP_NAME, TO_CHAR(A.DOC_ENROLL_DATE, 'YYYY.MM.DD') AS DOC_ENROLL_DATE, A.DOC_STATUS, A.DOC_APPR_DATE
+		FROM APPROVAL_DOC A
+		INNER JOIN APPROVAL_LIST L ON A.DOC_CODE = L.DOC_CODE
+		INNER JOIN DOC_FORM F ON A.DOC_FORM_CODE = F.FORM_CODE
+		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
+		WHERE L.APPR_STATUS = 'W'
+		AND A.DOC_STATUS = 'N'
+		AND L.APPR_EMP_CODE = #{empCode}) 
+		SELECT COUNT(*)
+		FROM T1
+		INNER JOIN APPROVAL_LIST L ON T1.DOC_CODE = L.DOC_CODE
+		WHERE L.DOC_CODE = T1.DOC_CODE
+		AND L.APPR_SEQ = T1.APPR_SEQ-1
+		AND L.APPR_STATUS = 'A'
+		AND T1.DOC_APPR_DATE IS NULL
 	</select>
 	
 	<select id="selectWaitList" resultType="ApprovalDocVo">
@@ -230,6 +286,12 @@
 		AND L.APPR_STATUS = 'A'
 	</select>
 	
+	<select id="selectProgressListTotalCnt" resultType="int">
+		SELECT COUNT(*) FROM APPROVAL_DOC
+		WHERE EMP_CODE = #{empCode}
+		AND DOC_APPR_DATE IS NULL
+	</select>
+	
 	<select id="selectProgressList" resultType="ApprovalDocVo">
 		WITH T1 AS 
 		(SELECT A.DOC_CODE, A.DOC_TITLE, A.DOC_FORM_CODE, L.APPR_SEQ, L.APPR_STATUS , F.FORM_NAME, E.EMP_NAME, TO_CHAR(A.DOC_ENROLL_DATE, 'YYYY.MM.DD') AS DOC_ENROLL_DATE, A.DOC_STATUS
@@ -245,6 +307,25 @@
 		INNER JOIN APPROVAL_LIST L ON T1.DOC_CODE = L.DOC_CODE
 		WHERE L.DOC_CODE = T1.DOC_CODE
 	</select>
+	
+	
+	<insert id="insertDocForm">
+		INSERT INTO DOC_FORM (FORM_CODE, FORM_NAME, FORM_INTRO, FORM_USE_YN)
+		VALUES (SEQ_DOC_FORM_CODE.NEXTVAL, #{formName}, #{formIntro}, #{formUseYn})
+		<selectKey keyProperty="formCode" order="AFTER" resultType="java.lang.String">
+			SELECT SEQ_DOC_FORM_CODE.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+
+	<insert id="insertDocFormMapping" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" ">
+			INTO DOC_FORM_MAPPING (FORM_CODE, FORM_DETAIL_CODE, FORM_DETAIL_SEQ)
+			VALUES (#{item.formCode}, #{item.formDetailCode}, #{item.formDetailSeq})
+		</foreach>
+	</insert>
+	
+	
+	
 	
 	
 </mapper>

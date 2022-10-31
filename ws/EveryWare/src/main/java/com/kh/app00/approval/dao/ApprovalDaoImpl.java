@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.app00.approval.doc.vo.DocCommentVo;
 import com.kh.app00.approval.doc.vo.DocDataVo;
 import com.kh.app00.approval.doc.vo.DocFormDetailTemplateVo;
 import com.kh.app00.approval.doc.vo.DocFormMapperVo;
@@ -94,6 +95,72 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		return sst.insert("approvalMapper.insertApprovalFile", approvalFileList);
 	}
 	
+	//작성된 문서 상세정보 불러오기
+	@Override
+	public ApprovalDocVo selectDocDetail(SqlSessionTemplate sst, String docCode) {
+		return sst.selectOne("approvalMapper.selectDocDetail", docCode);
+	}
+	//작성된 문서내용 불러오기
+	@Override
+	public List<DocDataVo> selectDocDataList(SqlSessionTemplate sst, String docCode) {
+		return sst.selectList("approvalMapper.selectDocDataList", docCode);
+	}
+	//작성된 문서 결재자 불러오기
+	@Override
+	public List<ApprovalListVo> selectApproverList(SqlSessionTemplate sst, String docCode) {
+		return sst.selectList("approvalMapper.selectApproverList", docCode);
+	}
+	//작성된 문서 참조인 불러오기
+	@Override
+	public List<ApprovalRefVo> selectRefVoList(SqlSessionTemplate sst, String docCode) {
+		return sst.selectList("approvalMapper.selectRefVoList", docCode);
+	}
+	//결재타입 갯수 구하기
+	@Override
+	public List<ApprovalListVo> selectTypeCountList(SqlSessionTemplate sst, String docCode) {
+		return sst.selectList("approvalMapper.selectTypeCountList", docCode);
+	}
+	//반려 메세지 조회
+	@Override
+	public DocCommentVo selectUnApprComment(SqlSessionTemplate sst, String docCode) {
+		return sst.selectOne("approvalMapper.selectUnApprComment", docCode);
+	}
+	//문서 승인
+	@Override
+	public int updateApprove(SqlSessionTemplate sst, ApprovalListVo vo) {
+		return sst.update("approvalMapper.updateApprove", vo);
+	}
+	//최종 결재권자 결재순서 가져오기
+	@Override
+	public ApprovalListVo maxApprSeq(SqlSessionTemplate sst, ApprovalListVo vo) {
+		return sst.selectOne("approvalMapper.maxApprSeq", vo);
+	}
+	
+	
+	
+	
+	
+	//문서 반려
+	@Override
+	public int updateUnApprove(SqlSessionTemplate sst, ApprovalListVo apprVo) {
+		return sst.update("approvalMapper.updateUnApprove", apprVo);
+	}
+	//문서 반려 메세지
+	@Override
+	public int insertUnApproveComment(SqlSessionTemplate sst, ApprovalListVo apprVo) {
+		return sst.insert("approvalMapper.insertUnApproveComment", apprVo);
+	}
+	//결재 문서 상태 변경 (반려)
+	@Override
+	public int updateDocApprStatus(SqlSessionTemplate sst, ApprovalListVo apprVo) {
+		return sst.update("approvalMapper.updateDocApprStatus", apprVo);
+	}
+	//결재 완료 날짜
+	@Override
+	public int updateDocApprDate(SqlSessionTemplate sst, ApprovalListVo apprVo) {
+		return sst.update("approvalMapper.updateDocApprDate", apprVo);
+	}
+	
 	
 	//게시글 갯수 조회
 	@Override
@@ -137,56 +204,41 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	
 	
 	
-	//작성된 문서 상세정보 불러오기
-	@Override
-	public ApprovalDocVo selectDocDetail(SqlSessionTemplate sst, String docCode) {
-		return sst.selectOne("approvalMapper.selectDocDetail", docCode);
-	}
-	//작성된 문서내용 불러오기
-	@Override
-	public List<DocDataVo> selectDocDataList(SqlSessionTemplate sst, String docCode) {
-		return sst.selectList("approvalMapper.selectDocDataList", docCode);
-	}
-	//작성된 문서 결재자 불러오기
-	@Override
-	public List<ApprovalListVo> selectApproverList(SqlSessionTemplate sst, String docCode) {
-		return sst.selectList("approvalMapper.selectApproverList", docCode);
-	}
-	//작성된 문서 참조인 불러오기
-	@Override
-	public List<ApprovalRefVo> selectRefVoList(SqlSessionTemplate sst, String docCode) {
-		return sst.selectList("approvalMapper.selectRefVoList", docCode);
-	}
-	//결재타입 갯수 구하기
-	@Override
-	public List<ApprovalListVo> selectTypeCountList(SqlSessionTemplate sst, String docCode) {
-		return sst.selectList("approvalMapper.selectTypeCountList", docCode);
-	}
-
+	
+	
 	
 	
 	//결재 예정 리스트 개수 구하기
 	@Override
-	public int selectExpectCount(SqlSessionTemplate sst) {
-		return sst.selectOne("approvalMapper.selectExpectCount");
+	public int selectExpectCount(SqlSessionTemplate sst, ApprovalDocVo vo) {
+		return sst.selectOne("approvalMapper.selectExpectCount", vo);
 	}
 	//결재 예정 문서 목록 조회
 	@Override
-	public List<ApprovalDocVo> selectExpectDocList(SqlSessionTemplate sst, String empCode, PageVo pv) {
+	public List<ApprovalDocVo> selectExpectDocList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv) {
 		
 		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
 		
-		return sst.selectList("approvalMapper.selectExpectDocList", empCode, rb);
+		return sst.selectList("approvalMapper.selectExpectDocList", vo, rb);
 	}
 
-	
-	//결재 진행중인 참조된 문서 목록 조회
+	//결재 확인 문서 전체 갯수 조회
+	@Override
+	public int selectRefListTotalCnt(SqlSessionTemplate sst, String empCode) {
+		return sst.selectOne("approvalMapper.selectRefListTotalCnt", empCode);
+	}
+	//결재 확인 문서 목록 조회
 	@Override
 	public List<ApprovalDocVo> selectRefDocList(SqlSessionTemplate sst, String empCode, PageVo pv) {
 		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
 		return sst.selectList("approvalMapper.selectRefDocList", empCode, rb);
+	}
+	//결제 대기 문서 전체 갯수 조회
+	@Override
+	public int selectWaitListTotalCnt(SqlSessionTemplate sst, String empCode) {
+		return sst.selectOne("approvalMapper.selectWaitListTotalCnt", empCode);
 	}
 	//결재 대기 문서 목록 조회
 	@Override
@@ -195,6 +247,11 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
 		return sst.selectList("approvalMapper.selectWaitList", empCode, rb);
 	}
+	//결재 진행 문서 목록 전체 갯수 조회
+	@Override
+	public int selectProgressListTotalCnt(SqlSessionTemplate sst, String empCode) {
+		return sst.selectOne("approvalMapper.selectProgressListTotalCnt", empCode);
+	}
 	//결재 진행 문서 목록 조회
 	@Override
 	public List<ApprovalDocVo> selectProgressList(SqlSessionTemplate sst, String empCode, PageVo pv) {
@@ -202,6 +259,23 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
 		return sst.selectList("approvalMapper.selectProgressList", empCode, rb);
 	}
+
+	
+
+	
+
+
+	
+
+	
+
+	
+	
+
+	
+	
+
+	
 
 	
 

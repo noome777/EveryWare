@@ -15,4 +15,6 @@ public class ApprovalListVo {
 	private String deptName;
 	private String rankName;
 	private String apprTypeName;
+	private String comContent;
+	private String maxSeq;
 }

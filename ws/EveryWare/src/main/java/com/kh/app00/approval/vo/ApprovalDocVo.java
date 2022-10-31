@@ -2,6 +2,8 @@ package com.kh.app00.approval.vo;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.kh.app00.approval.doc.vo.DocDataVo;
 
 import lombok.Data;
@@ -16,6 +18,7 @@ public class ApprovalDocVo {
 	private String docEnrollDate;
 	private String docUpdated;
 	private String docStatus;
+	private String docApprDate;
 	
 	private String formName;
 	private String empName;

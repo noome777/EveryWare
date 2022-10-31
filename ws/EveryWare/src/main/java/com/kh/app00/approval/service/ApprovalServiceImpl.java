@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.app00.approval.dao.ApprovalDao;
+import com.kh.app00.approval.doc.vo.DocCommentVo;
 import com.kh.app00.approval.doc.vo.DocDataVo;
 import com.kh.app00.approval.doc.vo.DocFormDetailTemplateVo;
 import com.kh.app00.approval.doc.vo.DocFormMapperVo;
@@ -120,6 +121,66 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return approvalDocResult;
 	}
 	
+	//작성된 문서 상세정보 불러오기
+	@Override
+	public ApprovalDocVo selectDocDetail(String docCode) {
+		return dao.selectDocDetail(sst, docCode);
+	}
+	//작성된 문서내용 불러오기
+	@Override
+	public List<DocDataVo> selectDocDataList(String docCode) {
+		return dao.selectDocDataList(sst, docCode);
+	}
+	//작성된 문서 결재자 불러오기
+	@Override
+	public List<ApprovalListVo> selectApproverList(String docCode) {
+		return dao.selectApproverList(sst, docCode);
+	}
+	//작성된 문서 참조인 불러오기
+	@Override
+	public List<ApprovalRefVo> selectRefVoList(String docCode) {
+		return dao.selectRefVoList(sst, docCode);
+	}
+	//결재타입 갯수 구하기
+	@Override
+	public List<ApprovalListVo> selectTypeCountList(String docCode) {
+		return dao.selectTypeCountList(sst, docCode);
+	}
+	//반려 메세지 불러오기
+	@Override
+	public DocCommentVo selectUnApprComment(String docCode) {
+		return dao.selectUnApprComment(sst, docCode);
+	}
+	//문서 승인
+	@Override
+	public int updateApprove(ApprovalListVo vo) {
+		
+		int updateAppr = dao.updateApprove(sst, vo);
+		ApprovalListVo maxSeq = dao.maxApprSeq(sst, vo);
+		if(vo.getApprSeq().equals(maxSeq.getMaxSeq())) {
+			int updateApprDate = dao.updateDocApprDate(sst, vo);
+		}
+		
+		return updateAppr;
+	}
+	//문서 반려
+	@Override
+	@Transactional(rollbackFor = {Exception.class})
+	public int updateUnApprove(ApprovalListVo apprVo) {
+		
+		//반려처리
+		int apprResult = dao.updateUnApprove(sst, apprVo);
+		//반려 메세지 insert
+		int comResult = dao.insertUnApproveComment(sst, apprVo);
+		//해당 결재문서 결재상태 처리
+		int docUpdate = dao.updateDocApprStatus(sst, apprVo);
+		//결재완료 날짜 update
+		int apprDate = dao.updateDocApprDate(sst, apprVo);
+		
+		return apprResult * comResult * apprDate;
+	}
+	
+	
 	//문서 갯수 조회
 	@Override
 	public int selectTotalCnt() {
@@ -159,60 +220,66 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	
-	//작성된 문서 상세정보 불러오기
-	@Override
-	public ApprovalDocVo selectDocDetail(String docCode) {
-		return dao.selectDocDetail(sst, docCode);
-	}
-	//작성된 문서내용 불러오기
-	@Override
-	public List<DocDataVo> selectDocDataList(String docCode) {
-		return dao.selectDocDataList(sst, docCode);
-	}
-	//작성된 문서 결재자 불러오기
-	@Override
-	public List<ApprovalListVo> selectApproverList(String docCode) {
-		return dao.selectApproverList(sst, docCode);
-	}
-	//작성된 문서 참조인 불러오기
-	@Override
-	public List<ApprovalRefVo> selectRefVoList(String docCode) {
-		return dao.selectRefVoList(sst, docCode);
-	}
-	//결재타입 갯수 구하기
-	@Override
-	public List<ApprovalListVo> selectTypeCountList(String docCode) {
-		return dao.selectTypeCountList(sst, docCode);
-	}
-
+	
+	
 	
 	//결재 예정 리스트 개수 구하기
 	@Override
-	public int selectExpectCount() {
-		return dao.selectExpectCount(sst);
+	public int selectExpectCount(ApprovalDocVo vo) {
+		return dao.selectExpectCount(sst, vo);
 	}
 	//결재 예정 문서 목록 조회
 	@Override
-	public List<ApprovalDocVo> selectExpectDocList(String empCode, PageVo pv) {
-		return dao.selectExpectDocList(sst, empCode, pv);
+	public List<ApprovalDocVo> selectExpectDocList(ApprovalDocVo vo, PageVo pv) {
+		return dao.selectExpectDocList(sst, vo, pv);
 	}
 
 	
-	//결재 진행중인 참조된 문서 조회
+	
+	//결재 확인 문서 전체 갯수 조회
+	@Override
+	public int selectRefListTotalCnt(String empCode) {
+		return dao.selectRefListTotalCnt(sst, empCode);
+	}
+	//결재 확인 문서 목록 조회
 	@Override
 	public List<ApprovalDocVo> selectRefDocList(String empCode, PageVo pv) {
 		return dao.selectRefDocList(sst, empCode, pv);
+	}
+	//결재 대기 문서 전체 갯수 조회
+	@Override
+	public int selectWaitListTotalCnt(String empCode) {
+		return dao.selectWaitListTotalCnt(sst, empCode);
 	}
 	//결재 대기 목록 조회
 	@Override
 	public List<ApprovalDocVo> selectWaitList(String empCode, PageVo pv) {
 		return dao.selectWaitList(sst, empCode, pv);
 	}
+	//결재 진행 목록 전체 갯수 조회
+	@Override
+	public int selectProgressListTotalCnt(String empCode) {
+		return dao.selectProgressListTotalCnt(sst, empCode);
+	}
 	//결재 진행 목록 조회
 	@Override
 	public List<ApprovalDocVo> selectProgressList(String empCode, PageVo pv) {
 		return dao.selectProgressList(sst, empCode, pv);
 	}
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
 
 	
 
