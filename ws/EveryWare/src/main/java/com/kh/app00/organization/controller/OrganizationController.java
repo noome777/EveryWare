@@ -36,12 +36,11 @@ import com.kh.app00.common.SpaceRemover;
 public class OrganizationController {
 	
 	private final OrganizationService organizationService;
-	private final Gson gson;
+	private Gson gson;
 	
 	@Autowired
-	public OrganizationController(OrganizationService organizationService, Gson gson) {
+	public OrganizationController(OrganizationService organizationService) {
 		this.organizationService = organizationService;
-		this.gson = gson;
 	}
 
 	//임직원 정보 
