@@ -2,6 +2,7 @@ package com.kh.app00.contacts.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +32,17 @@ public class ContactController {
 	
 	//주소록 목록
 	@GetMapping("contactList")
-	public String contactList(Model model) {
+	public String contactList(Model model , HttpServletRequest req) {
+		
+		//String no = ((EmpVo)req.getSession().getAttribute("loginMember")).getEmpCode();
 		
 		List<ContactsVo> cList = service.selectList();
 		
 		model.addAttribute("cList" , cList);
 		
 		return "contacts/contactList";
-	}
+		
+		}
 	
 	//주소록 삭제
 	@GetMapping("contactList/{no}")
@@ -62,9 +66,9 @@ public class ContactController {
 	public String write(ContactsVo vo , Model model , HttpSession session) {
 		
 		EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
-		String no = loginMember.getEmpCode();
+		String name = loginMember.getEmpName();
 		
-		vo.setConWriter(no);
+		vo.setConWriter(name);
 		
 		int result = service.write(vo);
 		
@@ -80,6 +84,25 @@ public class ContactController {
 	}
 	
 	//주소록 내용 상세조회
+	@GetMapping("detail/{no}")
+	public String detail(@PathVariable String no , Model model) {
+		
+		ContactsVo vo = service.selectOne(no);
+		
+		model.addAttribute("vo" , vo);
+		
+		return "contacts/contactList";
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

@@ -119,8 +119,8 @@
                         </td>
                       </tr>
                       
-                      
-                     <c:forEach items="${cList}" var="list">
+                    <c:forEach items="${cList}" var="list">
+                    <c:if test="${ list.conWriter eq loginMember.empName }">
                       <tr>
                        <td>
                          <i class="fe fe-24 fe-circle small text-muted"></i>
@@ -159,7 +159,7 @@
                             </div>
                             
                             <div class="modal-body">
-                              <form action="">
+                              <form action="${root}/contacts/edit" method="get">
                                <label for="simpleinput">Name</label>
 		                        <input type="text" id="simpleinput" class="form-control" placeholder="Name" name="conName">
 		                       <label for="example-email">Email</label>
@@ -187,8 +187,8 @@
                          </div>
                        </td>
                       </tr>
-                     </c:forEach>
-                      
+                    </c:if>
+                    </c:forEach>
                       
                       <!-- Dtail Modal -->
                       <div class="modal fade" id="verticalModal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
@@ -203,17 +203,17 @@
                             <div class="modal-body">
                             
                             <div>
-                              <form action="">
+                              <form action="${root}/contacts/detail" method="get">
                                <label for="simpleinput">Name</label>
-		                        <input type="text" class="form-control" id="example-disable" disabled="" value="이름" name="conName">
+		                        <input type="text" class="form-control" id="example-disable" disabled="" value="이름!!" name="conName">
 		                       <label for="example-email">Email</label>
-		                         <input type="text" class="form-control" id="example-disable" disabled="" value="이메일" name="conEmail">
+		                         <input type="text" class="form-control" id="example-disable" disabled="" value="${list.conEmail}" name="conEmail">
 		                       <label for="simpleinput">Phone</label>
-		                        <input type="text" class="form-control" id="example-disable" disabled="" value="연락처" name="conTel">
+		                        <input type="text" class="form-control" id="example-disable" disabled="" value="${list.conTel}" name="conTel">
 		                       <label for="simpleinput">Company</label>
-		                        <input type="text" class="form-control" id="example-disable" disabled="" value="회사명" name="conCompany">
+		                        <input type="text" class="form-control" id="example-disable" disabled="" value="${list.conCompany}" name="conCompany">
 		                       <label for="example-textarea">Memo</label>
-		                        <textarea class="form-control" id="example-textarea" rows="4" disabled="" value="메모" name="conMemo"></textarea>
+		                        <textarea class="form-control" id="example-textarea" rows="4" disabled="" value="${list.conMemo}" name="conMemo"></textarea>
 		                       <label for="customFile">Image file</label>
 		                       <div class="custom-file">
 		                        <input type="file" class="custom-file-input" id="customFile" disabled="" value="파일">
@@ -224,7 +224,6 @@
                             
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="btn mb-2 btn-primary">Edit</button>
                               <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
                             </div>
                           </div>

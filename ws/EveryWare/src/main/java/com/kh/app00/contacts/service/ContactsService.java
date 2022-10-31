@@ -15,4 +15,7 @@ public interface ContactsService {
 	//주소록 작성
 	int write(ContactsVo vo);
 
+	//주소록 상세조회
+	ContactsVo selectOne(String no);
+
 }

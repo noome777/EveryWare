@@ -16,6 +16,9 @@ public interface ContactsDao {
 
 	//주소록 작성
 	int insertContacts(SqlSessionTemplate sst, ContactsVo vo);
+
+	//주소록 상세보기
+	ContactsVo selectOne(SqlSessionTemplate sst, String no);
 	
 	
 	

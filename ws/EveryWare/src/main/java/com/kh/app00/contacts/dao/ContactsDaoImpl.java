@@ -33,6 +33,12 @@ public class ContactsDaoImpl implements ContactsDao{
 		return sst.insert("contactsMapper.insert", vo);
 	}
 
+	//주소록 상세보기
+	@Override
+	public ContactsVo selectOne(SqlSessionTemplate sst, String no) {
+		return sst.selectOne("contactsMapper.selectOne" , no);
+	}
+
 	
 	
 

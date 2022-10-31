@@ -5,14 +5,15 @@
 	<!-- 주소록 목록 조회 -->
 	<select id="selectList" resultType="ContactsVo">
 		SELECT 
-		   	CON_NO
+            CON_NO
+			, CON_WRITER
 			, CON_NAME
 			, CON_EMAIL
 			, CON_TEL
 			, CON_COMPANY
 		FROM CONTACTS
 	</select>
-
+	
 	<!-- 주소록 삭제 -->
 	<delete id="delete">
 		 DELETE FROM CONTACTS
@@ -43,7 +44,18 @@
 		)
 	</insert>
 
-
+	<select id="selectOne" resultType="ContactsVo">
+		SELECT 
+			  CON_NO             
+            , CON_WRITER   
+            , CON_NAME      
+            , CON_EMAIL        
+            , CON_TEL           
+            , CON_COMPANY
+            , CON_MEMO      
+		FROM CONTACTS
+		WHERE CON_NO = #{conNo};
+	</select>
 
 
 
