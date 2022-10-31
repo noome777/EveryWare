@@ -37,7 +37,13 @@ public class ContactsServiceImpl implements ContactsService{
 	//주소록 작성
 	@Override
 	public int write(ContactsVo vo) {
-		return dao.insertContacts(sst , vo);
+		return dao.insertContacts(sst, vo);
+	}
+
+	//주소록 상세조회
+	@Override
+	public ContactsVo selectOne(String no) {
+		return dao.selectOne(sst, no);
 	}
 
 }
