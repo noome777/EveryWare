@@ -161,8 +161,8 @@ public class OrganizationDaoImpl implements OrganizationDao {
 
 	//권한 관리 - 관리자 추가
 	@Override
-	public int updateEmpToAdmin(SqlSessionTemplate sqlSessionTemplate, List<String> empCodeList) {
-		return sqlSessionTemplate.update("organizationMapper.updateEmpToAdmin",empCodeList);
+	public int updateEmpToAdmin(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> updateTarget) {
+		return sqlSessionTemplate.update("organizationMapper.updateEmpToAdmin",updateTarget);
 	}
 
 	//포지션 관리 - 직위 불러오기
@@ -175,6 +175,12 @@ public class OrganizationDaoImpl implements OrganizationDao {
 	@Override
 	public int insertRank(SqlSessionTemplate sqlSessionTemplate, RankVo rankVo) {
 		return sqlSessionTemplate.insert("organizationMapper.insertRank",rankVo);
+	}
+
+	//직위 수정
+	@Override
+	public int updateRankName(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> updateTarget) {
+		return sqlSessionTemplate.update("organizationMapper.updateRankName",updateTarget);
 	}
 
 	

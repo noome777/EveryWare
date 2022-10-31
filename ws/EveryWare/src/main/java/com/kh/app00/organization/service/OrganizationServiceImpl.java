@@ -223,8 +223,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 	//권한 관리 - 관리자 추가
 	@Override
-	public int updateEmpToAdmin(List<String> empCodeList) {
-		return organizationDao.updateEmpToAdmin(sqlSessionTemplate,empCodeList);
+	public int updateEmpToAdmin(Map<String, List<String>> updateTarget) {
+		return organizationDao.updateEmpToAdmin(sqlSessionTemplate,updateTarget);
 	}
 
 
@@ -241,6 +241,13 @@ public class OrganizationServiceImpl implements OrganizationService {
 		String replacedRankName = spaceRemover.removeSpace(rankVo.getRankName());
 		rankVo.setRankName(replacedRankName);
 		return organizationDao.insertRank(sqlSessionTemplate, rankVo);
+	}
+
+
+
+	@Override
+	public int updateRankName(Map<String, List<String>> updateTarget) {
+		return organizationDao.updateRankName(sqlSessionTemplate, updateTarget);
 	}
 
 

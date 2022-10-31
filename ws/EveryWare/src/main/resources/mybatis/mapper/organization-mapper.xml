@@ -325,6 +325,7 @@
 		ON E.RIGHT_CODE = T.RIGHT_CODE
 		WHERE E.RIGHT_CODE = 1
 		OR E.RIGHT_CODE = 2
+		OR E.RIGHT_CODE = 3
 	</select>
 	
 	<update id="updateAdmin">
@@ -352,11 +353,11 @@
 		ORDER BY R.RANK_CODE ASC, D.DEPT_DEPTH ASC
 	</select>
 	
-	<update id="updateEmpToAdmin">
-		<foreach collection="list" item="item" index="index" open="DECLARE BEGIN" close="; END;" separator=";">
+	<update id="updateEmpToAdmin" parameterType="java.util.Map">
+		<foreach collection="empCodeList" item="item" index="index" open="DECLARE BEGIN" close="; END;" separator=";">
 			UPDATE EMP
 			SET
-				RIGHT_CODE = '2'
+				RIGHT_CODE = #{rightCodeList[0]}
 				WHERE EMP_CODE = #{item}
 		 </foreach> 
 	</update>
@@ -385,6 +386,10 @@
 			, #{rankName}
 		)
 	</insert>
+	
+	<update id="updateRankName" parameterType="java.util.Map">
+	
+	</update>
 	
 	
 </mapper>

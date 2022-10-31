@@ -83,13 +83,16 @@ public interface OrganizationService {
 	List<EmpVo> selectEmpListForAdmin(String word);
 
 	//권한 관리 - 관리자 추가
-	int updateEmpToAdmin(List<String> empCodeList);
+	int updateEmpToAdmin(Map<String, List<String>> updateTarget);
 
 	//포지션 관리 - 직위 불러오기
 	List<RankVo> selectRankListForManagement();
 
 	//직위 추가
 	int insertRank(RankVo rankVo);
+
+	//직위 수정
+	int updateRankName(Map<String, List<String>> updateTarget);
 
 
 }

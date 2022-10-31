@@ -36,10 +36,12 @@ import com.kh.app00.common.SpaceRemover;
 public class OrganizationController {
 	
 	private final OrganizationService organizationService;
+	private final Gson gson;
 	
 	@Autowired
-	public OrganizationController(OrganizationService organizationService) {
+	public OrganizationController(OrganizationService organizationService, Gson gson) {
 		this.organizationService = organizationService;
+		this.gson = gson;
 	}
 
 	//임직원 정보 
@@ -203,8 +205,6 @@ public class OrganizationController {
 			resultList.add(updatedRank.getRankName());
 			resultList.add(updatedRank.getEmpPromotionDate());
 			
-			
-			Gson gson = new Gson();
 			String jsonStr = gson.toJson(resultList);
 			
 			System.out.println(jsonStr);
@@ -239,7 +239,6 @@ public class OrganizationController {
 			String updatedEmpCode = empCodeList.get(0);
 			String updatedJob = organizationService.selectUpdatedJob(updatedEmpCode);
 			
-			Gson gson = new Gson();
 			String jsonStr = gson.toJson(updatedJob);
 			
 			System.out.println(jsonStr);
@@ -276,7 +275,6 @@ public class OrganizationController {
 			String updatedEmpCode = empCodeList.get(0);
 			String updatedDept = organizationService.selectUpdatedDept(updatedEmpCode);
 			
-			Gson gson = new Gson();
 			String jsonStr = gson.toJson(updatedDept);
 			
 			return jsonStr;
@@ -310,7 +308,6 @@ public class OrganizationController {
 			String updatedEmpCode = empCodeList.get(0);
 			String updatedStatus = organizationService.selectUpdatedStatus(updatedEmpCode);
 			
-			Gson gson = new Gson();
 			String jsonStr = gson.toJson(updatedStatus);
 			
 			System.out.println(jsonStr);
@@ -349,7 +346,6 @@ public class OrganizationController {
 			String updatedEmpCode = empCodeList.get(0);
 			String updatedStatus = organizationService.selectUpdatedFileName(updatedEmpCode);
 			
-			Gson gson = new Gson();
 			String jsonStr = gson.toJson(updatedStatus);
 			
 			System.out.println("json :" + jsonStr);
@@ -388,7 +384,6 @@ public class OrganizationController {
 		if(result != 1) {
 			String fail = "관리자 삭제에 실패하였습니다. 다시 한 번 시도해보시길 바랍니다.";
 			
-			Gson gson = new Gson();
 			String jsonStr = gson.toJson(fail);
 			
 			System.out.println("json :" + jsonStr);
@@ -398,7 +393,6 @@ public class OrganizationController {
 			
 			String success = "관리자 삭제에 성공하였습니다.";
 			
-			Gson gson = new Gson();
 			String jsonStr = gson.toJson(success);
 			
 			System.out.println("json :" + jsonStr);
@@ -416,40 +410,36 @@ public class OrganizationController {
 		
 		if(empList.size() == 0) {
 			String fail = "null";
-			Gson gson = new Gson();
 			String jsonStr = gson.toJson(fail);
-			System.out.println("json :" + jsonStr);
 			
 			return jsonStr;
 		} else {
-			System.out.println("권한관리 > 임직원 검색 성공");
-			System.out.println("empList : " + empList);
-			
-			System.out.println(empList.size());
-			
-			Gson gson = new Gson();
 			String jsonStr = gson.toJson(empList);
-			
-			System.out.println(jsonStr);
 			
 			return jsonStr;
 		}
 	}
 	
+	//관리자 추가
 	@PostMapping("management/right/add")
 	@ResponseBody
-	public String addAdmin(@RequestParam("checkBoxArr") String[] checkBoxArr ) {
+	public String addAdmin(@RequestParam("checkBoxArr") String[] checkBoxArr, @RequestParam("rightValue") String rightCode) {
 		
 		
 		List<String> empCodeList = new ArrayList<String>();
-		
 		for (String empCode : checkBoxArr) {
 			empCodeList.add(empCode);
 		}
+		List<String > rightCodeList = new ArrayList<String>();
+		rightCodeList.add(rightCode);
 		
-		int result = organizationService.updateEmpToAdmin(empCodeList);
+		Map<String, List<String>> updateTarget = new HashMap<String,List<String>>();
+		updateTarget.put("empCodeList", empCodeList);
+		updateTarget.put("rightCodeList", rightCodeList);
 		
-		Gson gson = new Gson();
+		
+		int result = organizationService.updateEmpToAdmin(updateTarget);
+		
 		
 		if (result != -1) {
 			String fail = "ERROR : 관리자 추가에 실패하였습니다.";
@@ -472,10 +462,23 @@ public class OrganizationController {
 	public String managePosition(Model model, HttpSession session) {
 		
 		List<RankVo> rankList = organizationService.selectRankListForManagement();
+		List<RankVo> rankLevelList = organizationService.selectRankList();
 		List<JobVo> jobList = organizationService.selectJobList();
+		
+		HashMap<String, ArrayList<RankVo>> rankMap = new HashMap<String, ArrayList<RankVo>>();
+		
+		for(RankVo rankVo : rankLevelList) {
+			String level = rankVo.getRankLevel();
+			ArrayList<RankVo> list = rankMap.getOrDefault( level, new ArrayList<RankVo>());
+			list.add(rankVo);
+			rankMap.put(level, list);
+		}
+		
+		
 		
 		if(rankList != null && jobList != null) {
 			
+			model.addAttribute("rankMap", rankMap);
 			model.addAttribute("rankList", rankList);
 			model.addAttribute("jobList",jobList);
 			return "organization/positionManager";
@@ -498,6 +501,37 @@ public class OrganizationController {
 		} else {
 			session.setAttribute("errorMsg","직위 추가에 실패하였습니다.");
 			return "redirect:/organization/management/position";
+		}
+		
+	}
+	
+	//직위수정
+	@PostMapping("management/rank/edit")
+	@ResponseBody
+	public String editRank(@RequestParam("checkBoxArr") String[] checkBoxArr, @RequestParam("editRankArr") String[] editRankArr) {
+		
+		List<String> empCodeList = new ArrayList<String>();
+		for (String empCode : checkBoxArr) {
+			empCodeList.add(empCode);
+		}
+		
+		List<String> editRankList = new ArrayList<String>();
+		for (String editRankName : editRankArr) {
+			editRankList.add(editRankName);
+		}
+		
+		Map<String, List<String>> updateTarget = new HashMap<String,List<String>>();
+		updateTarget.put("empCodeList",empCodeList);
+		updateTarget.put("editRankList", editRankList);
+		
+		int result = organizationService.updateRankName(updateTarget);
+		
+		if(result!=-1) {
+			String errorMsg = gson.toJson("직위 업데이트에 실패하였습니다.");
+			return errorMsg;
+		} else {
+			String jsonStr = gson.toJson("직위 업데이트에 성공하였습니다!");
+			return jsonStr;
 		}
 		
 	}
