@@ -160,6 +160,7 @@ public class CommuteController {
             model.addAttribute("voList", voList);
             
         }else {
+
             //출퇴근 전체 리스트 조회
 //            List<CommuteVo> totalList = service.selectAdminTotalList();
             
