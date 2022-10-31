@@ -15,7 +15,7 @@
 		<typeAlias alias="DocFormMapperVo" type="com.kh.app00.approval.doc.vo.DocFormMapperVo"/>
 		<typeAlias alias="DocDataVo" type="com.kh.app00.approval.doc.vo.DocDataVo"/>
 		<typeAlias alias="DocFormDetailTemplateVo" type="com.kh.app00.approval.doc.vo.DocFormDetailTemplateVo"/>
-
+		<typeAlias alias="DocCommentVo" type="com.kh.app00.approval.doc.vo.DocCommentVo"/>
 		
 		<typeAlias alias="ApprovalDocVo" type="com.kh.app00.approval.vo.ApprovalDocVo"/>
 		<typeAlias alias="ApprovalTypeVo" type="com.kh.app00.approval.vo.ApprovalTypeVo"/>
@@ -54,6 +54,10 @@
 		<!-- 주소록 -->
 		<typeAlias alias="ContactsVo" type="com.kh.app00.contacts.vo.ContactsVo"/>
 		<typeAlias alias="CommuteVo" type="com.kh.app00.commute.vo.CommuteVo"/>
+		
+		<!-- 메일 -->
+		<typeAlias alias="MailVo" type="com.kh.app00.mail.vo.MailVo"/>
+		
 	</typeAliases>
 	
 </configuration>

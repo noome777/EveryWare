@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="root" value="${pageContext.request.contextPath}" />	
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,6 +27,30 @@
 
 .buttonSet {
 	margin-bottom: 20px;
+}
+
+#sender{
+	text-align: center;
+}
+
+#title {
+	text-align: center;	
+}
+
+#senddate{
+	text-align: center;	
+}
+
+#msender{
+	text-align: center;
+}
+
+#mtitle{
+	text-align: center;
+}
+
+#mSenddate {
+	text-align: center;
 }
 </style>
 </head>
@@ -52,7 +78,8 @@
 			<br>
 			<div class="buttonSet">
 				<button type="button" id="sendBtn" class="btn btn-primary">삭제</button>
-				<button type="button" id="cancelBtn" class="btn btn-primary" onclick="location.href='${root}/mail/reply'">답장</button>
+				<button type="button" id="leadBtn" class="btn btn-primary">읽음</button>
+				<button type="button" id="noleadBtn" class="btn btn-primary">안읽음</button>
 			</div>
 			<!-- <div class="input-group w-50" >
 		<span class="input-group-text" id="basic-addon1">
@@ -68,60 +95,21 @@
 
 						<tr>
 							<th></th>
-							<th>발신자</th>
-							<th>제목</th>
-							<th>작성일</th>
+							<th id="sender">발신자</th>
+							<th id="title">제목</th>
+							<th id ="senddate">작성일</th>
 						</tr>
 						<tbody>
+							<c:forEach items="${mList}" var="m">
+								<c:if test="${m.mailDelete eq null}"> 
 							<tr>
 								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>EVERYWARE</td>
-								<td>안녕하세요</td>
-								<td>12:12</td>
+								<td id="msender">${m.mailSender}</td>
+								<td id="mtitle">${m.mailTitle}</td>
+								<td id="mSenddate">${m.mailSenddate}</td>
 							</tr>
-							<tr>
-								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>EVERYWARE</td>
-								<td>안녕하세요2</td>
-								<td>12:12</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>EVERYWARE</td>
-								<td>안녕하세요3</td>
-								<td>12:12</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>EVERYWARE</td>
-								<td>안녕하세요4</td>
-								<td>12:12</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>EVERYWARE</td>
-								<td>안녕하세요5</td>
-								<td>12:12</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>EVERYWARE</td>
-								<td>안녕하세요6</td>
-								<td>12:12</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>EVERYWARE</td>
-								<td>안녕하세요7</td>
-								<td>12:12</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>EVERYWARE</td>
-								<td>안녕하세요8</td>
-								<td>12:12</td>
-							</tr>
-
+								</c:if> 
+							</c:forEach>
 						</tbody>
 					</table>
 					<nav aria-label="Page navigation example">
