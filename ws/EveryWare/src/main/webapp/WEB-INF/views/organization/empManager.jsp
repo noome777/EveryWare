@@ -844,8 +844,8 @@ padding: 10px;
         const nameHan = /^[ㄱ-ㅎ|가-힣]+$/;
 
       //비밀번호
-        if(pwd.length < 8 || pwd.lengthd > 20){
-          alert("비밀번호는 8자리 ~ 20자리 이내로 입력해주세요.");
+        if(pwd.length < 6 || pwd.lengthd > 20){
+          alert("비밀번호는 6자리 ~ 20자리 이내로 입력해주세요.");
           return false;
         }else if(pwd.search(/\s/) != -1){
           alert("비밀번호는 공백 없이 입력해주세요.");

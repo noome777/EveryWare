@@ -165,6 +165,18 @@ public class OrganizationDaoImpl implements OrganizationDao {
 		return sqlSessionTemplate.update("organizationMapper.updateEmpToAdmin",empCodeList);
 	}
 
+	//포지션 관리 - 직위 불러오기
+	@Override
+	public List<RankVo> selectRankListForManagement(SqlSessionTemplate sqlSessionTemplate) {
+		return sqlSessionTemplate.selectList("organizationMapper.selectRankListForManagement");
+	}
+
+	//직위 추가 
+	@Override
+	public int insertRank(SqlSessionTemplate sqlSessionTemplate, RankVo rankVo) {
+		return sqlSessionTemplate.insert("organizationMapper.insertRank",rankVo);
+	}
+
 	
 	
 

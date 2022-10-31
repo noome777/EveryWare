@@ -228,6 +228,22 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 
 
+   //포지션 관리 - 직위 불러오기
+	@Override
+	public List<RankVo> selectRankListForManagement() {
+		return organizationDao.selectRankListForManagement(sqlSessionTemplate);
+	}
+
+
+	//직위 추가
+	@Override
+	public int insertRank(RankVo rankVo) {
+		String replacedRankName = spaceRemover.removeSpace(rankVo.getRankName());
+		rankVo.setRankName(replacedRankName);
+		return organizationDao.insertRank(sqlSessionTemplate, rankVo);
+	}
+
+
 
 
 

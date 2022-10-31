@@ -359,14 +359,6 @@ public class OrganizationController {
 		
 	}
 	
-		
-	
-	// 직위/직무설정
-	
-	@GetMapping("management/position")
-	public String managePosition() {
-		return "organization/positionManager";
-	}
 	
 	//권한 관리 페이지
 	@GetMapping("management/right")
@@ -472,6 +464,42 @@ public class OrganizationController {
 		System.out.println(jsonStr);
 		
 		return jsonStr;
+	}
+	
+	// 직위/직무설정
+	
+	@GetMapping("management/position")
+	public String managePosition(Model model, HttpSession session) {
+		
+		List<RankVo> rankList = organizationService.selectRankListForManagement();
+		List<JobVo> jobList = organizationService.selectJobList();
+		
+		if(rankList != null && jobList != null) {
+			
+			model.addAttribute("rankList", rankList);
+			model.addAttribute("jobList",jobList);
+			return "organization/positionManager";
+		} else {
+			session.setAttribute("errorMsg", "페이지 로딩을 위한 정보를 불러오는데 실패하였습니다.");
+			return "redirect:/";
+		}
+		
+	}
+	
+	// 직위추가
+	@PostMapping("management/rank/add")
+	public String addRank(RankVo rankVo, HttpServletRequest session) {
+		
+		int result = organizationService.insertRank(rankVo);
+		
+		if(result==1 ) {
+			session.setAttribute("alertMsg","직위 추가에 성공하였습니다.");
+			return "redirect:/organization/management/position";
+		} else {
+			session.setAttribute("errorMsg","직위 추가에 실패하였습니다.");
+			return "redirect:/organization/management/position";
+		}
+		
 	}
 	
 	

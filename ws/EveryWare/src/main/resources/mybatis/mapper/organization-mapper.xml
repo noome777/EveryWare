@@ -362,6 +362,31 @@
 	</update>
 	
 	
+	<select id="selectRankListForManagement" resultType="RankVo">
+		SELECT
+		    RANK_LEVEL
+		    , LISTAGG(RANK_NAME,' ') WITHIN GROUP (ORDER BY RANK_CODE) RANK_NAME
+		  FROM RANK
+		 GROUP BY RANK_LEVEL
+	</select>
+	
+	
+	<insert id="insertRank">
+		INSERT INTO RANK 
+		(
+			RANK_CODE
+			, RANK_LEVEL
+			, RANK_NAME
+		)
+		VALUES
+		(
+			SEQ_RANK_NO.NEXTVAL
+			, #{rankLevel}
+			, #{rankName}
+		)
+	</insert>
+	
+	
 </mapper>
 
 

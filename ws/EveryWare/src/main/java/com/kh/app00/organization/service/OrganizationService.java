@@ -85,5 +85,11 @@ public interface OrganizationService {
 	//권한 관리 - 관리자 추가
 	int updateEmpToAdmin(List<String> empCodeList);
 
+	//포지션 관리 - 직위 불러오기
+	List<RankVo> selectRankListForManagement();
+
+	//직위 추가
+	int insertRank(RankVo rankVo);
+
 
 }

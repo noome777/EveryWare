@@ -86,6 +86,12 @@ public interface OrganizationDao {
 	//권한 관리 - 관리자 추가
 	int updateEmpToAdmin(SqlSessionTemplate sqlSessionTemplate, List<String> empCodeList);
 
+	//포지션 관리 - 직위 불러오기
+	List<RankVo> selectRankListForManagement(SqlSessionTemplate sqlSessionTemplate);
+
+	//직위 추가
+	int insertRank(SqlSessionTemplate sqlSessionTemplate, RankVo rankVo);
+
 
 
 }
