@@ -24,12 +24,10 @@
   <body class="vertical  light  ">
     <div class="wrapper">
     
-      <%@ include file="/WEB-INF/views/common/header.jsp" %>
-      <%@ include file="/WEB-INF/views/common/sidemenu-content.jsp" %>
-      <%-- <%@ include file="/WEB-INF/views/commute/commuteWidget.jsp" %> --%>
-      
-      <!-- 근태위젯 -->
-      <div class="card shadow mb-5" id="commute" style="width: 40%; height: 240px;">
+      <%-- <%@ include file="/WEB-INF/views/common/header.jsp" %> --%>
+      <%-- <%@ include file="/WEB-INF/views/common/sidemenu-content.jsp" %> --%>
+     
+     <div class="card shadow mb-5" id="commute" style="width: 40%; height: 240px;">
         <div class="card-body">
           <div class="d-flex mb-2">
             <div class="flex-fill pt-2">
@@ -46,24 +44,15 @@
                   <h4>출근시간 : 미등록</h4>
                   <h4>퇴근시간 : 미등록</h4>
                 </c:if>
+                <!-- <input type="text" value="${cookie.startTimeFormat.value}"> -->
               </div>
             </div>
           </div> <!-- .row -->
         </div> <!-- .card-body -->
       </div>
      </div>
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
   </body>
+
 <script>
   /*시간 출력하는 함수 호출*/
 

@@ -121,6 +121,7 @@ public class EmpController {
         return "smtp/EmailSendMain";
     }
    
+    //비밀번호 찾기 시 메일전송
     @PostMapping("mailSend")
     public String success(EmpVo vo, HttpServletRequest req, HttpSession session) {
         
@@ -158,6 +159,52 @@ public class EmpController {
             return "redirect:/emp/mailMain";
         }
        
+    }
+    
+    //임시비밀번호 비밀번호 재설정 화면
+    @GetMapping("resetPwd")
+    public String resetPwd() {
+        return "emp/resetPwd";
+    }
+    
+    //임시비밀번호로 비밀번호 재설정 실행
+    @PostMapping("resetPwd")
+    public String resetPwd(String empId, String empPwd, EmpVo vo, HttpSession session) {
+        
+        String[] tempAndNew = empPwd.split(",");
+        String tempPwd = tempAndNew[0];
+        String newPwd = tempAndNew[1];
+        
+        //임시비밀번호 vo에 세팅해주기
+        vo.setEmpId(empId);
+        vo.setEmpPwd(tempPwd);
+        
+        try {
+            //임시비밀번호와 db의 비밀번호의 일치 여부 체크(조회)
+            EmpVo searchTempPwd = service.selectSearchTempPwd(vo);
+            
+            //비밀번호 일치시, 새로운 비밀번호로 비밀번호 업데이트
+            if(searchTempPwd != null) {
+                vo.setEmpPwd(newPwd);
+                
+                //임시비밀번호를 새로운 비밀번호로 변경
+                int result = service.updateNewPwd(vo);
+                
+                if(result == 1) {
+                    session.setAttribute("alertMsg", "비밀번호를 성공적으로 변경하였습니다.");
+                    return "emp/resetPwd";
+                }else {
+                    session.setAttribute("alertMsg", "비밀번호 변경에 실패하였습니다.");
+                    return "emp/resetPwd";
+                }
+            }else {
+                session.setAttribute("alertMsg", "입력하신 임시비밀번호를 확인해주세요.");
+            }
+        } catch (Exception e) {
+            return "error/404";
+        }
+        
+        return "emp/resetPwd";
     }
     
      @GetMapping("myPage")

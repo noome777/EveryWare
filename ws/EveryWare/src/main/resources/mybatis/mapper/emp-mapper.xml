@@ -4,13 +4,7 @@
 
 	<select id="selectOneById" resultType="EmpVo">
 		SELECT 
-			EMP_CODE
-		  , EMP_NAME
-		  , EMP_ID
-		  , EMP_PWD
-		  , EMP_E_MAIL
-		  , EMP_PHONE
-		  , EMP_ADDRESS1
+		*
 		FROM EMP
 		WHERE EMP_ID = #{empId}
 		AND EMP_STATUS = 'N'
@@ -37,6 +31,15 @@
 	<update id="updateTempPwd">
 		UPDATE EMP SET EMP_PWD = #{empPwd}
 		WHERE EMP_E_MAIL = #{empEMail}
+	</update>
+	
+	<select id="selectSearchTempPwd" resultType="EmpVo">
+		SELECT EMP_PWD FROM EMP WHERE EMP_ID = #{empId}
+	</select>
+	
+	<update id="updateNewPwd">
+		UPDATE EMP SET EMP_PWD = #{empPwd}
+		WHERE EMP_ID = #{empId}
 	</update>
 
 

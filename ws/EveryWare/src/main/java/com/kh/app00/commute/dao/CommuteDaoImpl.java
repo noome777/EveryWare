@@ -1,6 +1,7 @@
 package com.kh.app00.commute.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -187,6 +188,24 @@ public class CommuteDaoImpl implements CommuteDao {
     @Override
     public int selectWorkToday(SqlSessionTemplate sst, CommuteVo vo) {
         return sst.selectOne("commuteMapper.selectWorkToday", vo);
+    }
+
+    //사원의 프로필 사진 업데이트 반영
+    @Override
+    public EmpVo selectEmpProfile(SqlSessionTemplate sst, EmpVo empVo) {
+        return sst.selectOne("commuteMapper.selectEmpProfileName", empVo);
+    }
+
+    //메인페이지 근태 위젯 출퇴근 조회
+    @Override
+    public CommuteVo selectCommute(SqlSessionTemplate sst, EmpVo empVo) {
+        return sst.selectOne("commuteMapper.selectCommute", empVo);
+    }
+
+    //관리자 출퇴근 기록 조회 (job, 사원이름 검색 실행)
+    @Override
+    public List<CommuteVo> selectCommuteAdminList(SqlSessionTemplate sst, EmpVo empVo) {
+        return sst.selectList("commuteMapper.selectCommuteAdminList", empVo);
     }
 
 

@@ -32,6 +32,19 @@ public class EmpDaoImpl implements EmpDao {
         return sst.update("empMapper.updateTempPwd", vo);
     }
 
+    //임시비밀번호와 db의 비밀번호의 일치 여부 체크(조회)
+    @Override
+    public EmpVo selectSearchTempPwd(SqlSessionTemplate sst, EmpVo vo) {
+        return sst.selectOne("empMapper.selectSearchTempPwd", vo);
+    }
+
+    //임시비밀번호를 새로운 비밀번호로 변경
+    @Override
+    public int updateNewPwd(SqlSessionTemplate sst, EmpVo vo) {
+        return sst.update("empMapper.updateNewPwd", vo);
+    }
+
+   
 
 
     

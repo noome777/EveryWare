@@ -18,5 +18,13 @@ public interface EmpDao {
     //비밀번호 랜덤값으로 업데이트
     int updateTempPwd(SqlSessionTemplate sst, EmpVo vo);
 
+    //임시비밀번호와 db의 비밀번호의 일치 여부 체크(조회)
+    EmpVo selectSearchTempPwd(SqlSessionTemplate sst, EmpVo vo);
+
+    //임시비밀번호를 새로운 비밀번호로 변경
+    int updateNewPwd(SqlSessionTemplate sst, EmpVo vo);
+
+   
+
 
 }

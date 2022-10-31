@@ -52,7 +52,7 @@
     <div class="wrapper">
         
         <%@ include file="/WEB-INF/views/common/header.jsp" %>
-        <%@ include file="/WEB-INF/views/commute/commute-side.jsp" %>
+        <%@ include file="/WEB-INF/views/commute/admin-side.jsp" %>
      
     <!-- 시간외 근무 조회 -->
 

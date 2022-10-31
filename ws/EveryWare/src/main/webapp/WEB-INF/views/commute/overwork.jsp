@@ -164,13 +164,13 @@
                   <td>${y.overReason}</td>
                   <c:if test="${y.overApproval == 'W'}">
                   <td><span class="badge badge-pill badge-warning">결재대기중</span></td>
-                </c:if>
-                <c:if test="${y.overApproval == 'A'}">
-                  <td><span class="badge badge-pill badge-success">승인완료</span></td>
-                </c:if>
-                <c:if test="${y.overApproval == 'C'}">
-                  <td><span class="badge badge-pill badge-danger">반려</span></td>
-                </c:if>
+                  </c:if>
+                  <c:if test="${y.overApproval == 'A'}">
+                    <td><span class="badge badge-pill badge-success">승인완료</span></td>
+                  </c:if>
+                  <c:if test="${y.overApproval == 'C'}">
+                    <td><span class="badge badge-pill badge-danger">반려</span></td>
+                  </c:if>
                 </tr>
               </c:forEach>
           	</c:if>
