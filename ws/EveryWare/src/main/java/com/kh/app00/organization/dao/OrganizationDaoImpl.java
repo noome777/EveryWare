@@ -183,6 +183,12 @@ public class OrganizationDaoImpl implements OrganizationDao {
 		return sqlSessionTemplate.update("organizationMapper.updateRankName",updateTarget);
 	}
 
+	//직위 삭제
+	@Override
+	public int updateRankToDelete(SqlSessionTemplate sqlSessionTemplate, List<String> rankCodeList) {
+		return sqlSessionTemplate.update("organizationMapper.updateRankToDelete",rankCodeList);
+	}
+
 	
 	
 

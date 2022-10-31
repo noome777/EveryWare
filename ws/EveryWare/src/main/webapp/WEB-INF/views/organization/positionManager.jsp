@@ -22,7 +22,7 @@
 		background-color: white;
 	}
 
-	#list-wrap{
+	.list-wrap{
 
 		display: flex;
 		flex-direction : column;
@@ -42,13 +42,22 @@
 		grid-template-columns: 1fr 3fr;
 	}
 
-	#rank-setting-bar > div {
+	#job-setting-bar {
+		width:96%;
+		height: 9%;
+		border-radius: 5px;
+		display: grid;
+		padding: 20px;
+		grid-template-columns: 1fr 2fr;
+	}
+
+	#rank-setting-bar > div, #job-setting-bar > div {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 	}
 	
-	#rank-list {
+	#rank-list, #job-list {
 		width: 96%;
 		height: 86%;
 		border-radius: 5px;
@@ -70,13 +79,21 @@
 		flex-direction: column;
 	}
 
-	#grid-area {
+	#rank-grid-area {
 		width: 95%;
 		display: grid;
 		grid-template-columns: 80px 2fr;
 	}
+	
+	#job-grid-area {
+		width: 95%;
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		gap: 30px;
+		padding: 10px;
+	}
 
-	#grid-area > div {
+	#rank-grid-area > div {
 		height: 42px;
 		display: flex;
 		flex-direction: column;
@@ -161,20 +178,23 @@
                 	</div>
 					<div class="card-body grid-wrap mb-4">
 						<div class="shadow" id="info-nav">
-							<div id="list-wrap">
+							<div class="list-wrap">
 							
 								<div id="rank-setting-bar" class="shadow">
-									<div><strong>직위설정</strong></div>
 									<div>
-										<a id="add-rank-btn" data-toggle="modal" href="#rank-add-modal"><small>+ 직위추가</small></a>
+										<strong>직위설정</strong>
+									</div>
+									<div>
+										<a id="add-rank-btn" data-toggle="modal" href="#rank-add-modal">
+											<small>+ 직위추가</small>
+										</a>
 									</div>
 								</div>
 								
 
 								<div id="rank-list" class="shadow or-scroll-bar">
 									
-									<div id="grid-area">
-									
+									<div id="rank-grid-area">
 										<c:forEach items="${rankList}" var="rankList" >
 
 										<div>${rankList.rankLevel}등급</div>
@@ -185,9 +205,6 @@
 										</div>
 										
 										</c:forEach>
-										
-										
-
 									</div>
 
 
@@ -200,10 +217,29 @@
 							</div>
 						</div>
 
-						<div id="profile-wrap" class="shadow tab-content">
+						<div class="shadow tab-content list-wrap">
 
-						
-							
+							<div id="job-setting-bar" class="shadow">
+								<div>
+									<strong>직무설정</strong>
+								</div>
+								<div>
+									<a id="add-job-btn" data-toggle="modal" href="#job-add-modal">
+										<small>+ 직무추가</small>
+									</a>
+								</div>
+							</div>
+
+							<div id="job-list" class="shadow or-scroll-bar">
+								<div id="job-grid-area">
+									<c:forEach items="${jobList}" var="jobList" >
+										<a class="rank-name"  data-toggle="modal" href="#job-modal-${jobList.jobCode}">
+											${jobList.jobName}
+										</a>
+									</c:forEach>
+								</div>
+							</div>
+
 						</div>
 					</div>
 				</div>
@@ -237,7 +273,7 @@
 				</div>
 	          </div>  
 	          <div class="modal-footer">
-	            <input type="submit" class="btn mb-2 btn-primary"  value="추가">
+	            <input type="submit" class="btn mb-2 btn-primary" value="추가">
 	            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
 	          </div>
 	        </div>
@@ -290,7 +326,7 @@
 					
 					<div class="modal-footer">
 					<button type="button" class="btn mb-2 btn-primary" onclick=" return editRank();" >수정</button>
-					<button type="button" class="btn mb-2 btn-danger" data-dismiss="modal" >삭제</button>
+					<button type="button" class="btn mb-2 btn-danger" data-dismiss="modal" onclick=" return deleteRank();">삭제</button>
 					</div>
 				</div>
 				</div>
@@ -304,6 +340,30 @@
 
 	<!--1. 직위명 중복체크-->
 	<!--2. 직위명 문자열 검사-->
+
+	<script>
+
+		/*
+		function checkInput() {
+
+			const inputName = $('#rankNameInput').val();
+			const nameHan = /^[ㄱ-ㅎ|가-힣]+$/;
+
+			if(inputName.length>10) {
+				alert("직위명은 10글자 이내로 작성해주시길 바랍니다.");
+				return false;
+			} else if (inputName.search(/\s/) != -1){
+				alert("직위명은 공백 없이 입력해주시길 바랍니다.");
+				return false;
+			} else if(!(nameHan.test(inputVal))) {
+				alert("이름에 한글을 사용해 주시길 바랍니다.");
+				return false;
+			} else {
+				return true;
+			}
+		}
+		*/
+	</script>
 
 	<script>
 		function editRank() {
@@ -323,7 +383,7 @@
 
 				const nameHan = /^[ㄱ-ㅎ|가-힣]+$/;
 
-			 	//비밀번호
+			 	
 				if(rankSpe.length > 10){
 					alert("직위명은 10글자 이내로 작성해주시길 바랍니다.");
 					check = false;
@@ -359,9 +419,8 @@
 				},
 				success : function(jsonStr) {
 					
-					console.log(jsonStr);
 					alert(jsonStr);
-					//ㅋ
+					window.location.href = "${root}/organization/management/position";
 
 				},
 				error : function() {
@@ -371,6 +430,46 @@
 
 			});
 		}
+	</script>
+
+	<script>
+
+		function deleteRank() {
+
+			const checkBoxArr = [];
+			const check = true;
+
+			$('input:checkbox[name=rankCode]:checked').each(function(){
+				checkBoxArr.push($(this).val());
+			});
+
+			window.confirm("정말로 삭제하시겠습니까?");
+
+			$.ajax({
+				url : "${root}/organization/management/rank/delete",
+				type : "POST",
+				traditional : true,
+				dataType : "JSON",
+				async : false,
+				cache: false,
+				data : {
+					checkBoxArr : checkBoxArr
+				},
+				success : function(jsonStr) {
+					
+					alert(jsonStr);
+					window.location.href = "${root}/organization/management/position";
+
+				},
+				error : function() {
+				alert("직위 삭제에 실패하였습니다. 다시 시도해보시길 바랍니다.");
+				}
+
+			});
+
+
+		}
+
 	</script>
 
 	
