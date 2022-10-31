@@ -8,5 +8,8 @@ public interface MailService {
 	
 	//전체 메일함 조회
 	List<MailVo> selectList();
+	
+	//메일 작성
+	int write(MailVo mvo);
 
 }

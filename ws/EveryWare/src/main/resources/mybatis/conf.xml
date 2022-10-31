@@ -15,7 +15,7 @@
 		<typeAlias alias="DocFormMapperVo" type="com.kh.app00.approval.doc.vo.DocFormMapperVo"/>
 		<typeAlias alias="DocDataVo" type="com.kh.app00.approval.doc.vo.DocDataVo"/>
 		<typeAlias alias="DocFormDetailTemplateVo" type="com.kh.app00.approval.doc.vo.DocFormDetailTemplateVo"/>
-
+		<typeAlias alias="DocCommentVo" type="com.kh.app00.approval.doc.vo.DocCommentVo"/>
 		
 		<typeAlias alias="ApprovalDocVo" type="com.kh.app00.approval.vo.ApprovalDocVo"/>
 		<typeAlias alias="ApprovalTypeVo" type="com.kh.app00.approval.vo.ApprovalTypeVo"/>

@@ -28,6 +28,30 @@
 .buttonSet {
 	margin-bottom: 20px;
 }
+
+#sender{
+	text-align: center;
+}
+
+#title {
+	text-align: center;	
+}
+
+#senddate{
+	text-align: center;	
+}
+
+#msender{
+	text-align: center;
+}
+
+#mtitle{
+	text-align: center;
+}
+
+#mSenddate {
+	text-align: center;
+}
 </style>
 </head>
 <body>
@@ -54,7 +78,8 @@
 			<br>
 			<div class="buttonSet">
 				<button type="button" id="sendBtn" class="btn btn-primary">삭제</button>
-				<button type="button" id="cancelBtn" class="btn btn-primary" onclick="location.href='${root}/mail/reply'">답장</button>
+				<button type="button" id="leadBtn" class="btn btn-primary">읽음</button>
+				<button type="button" id="noleadBtn" class="btn btn-primary">안읽음</button>
 			</div>
 			<!-- <div class="input-group w-50" >
 		<span class="input-group-text" id="basic-addon1">
@@ -70,16 +95,16 @@
 
 						<tr>
 							<th></th>
-							<th>발신자</th>
-							<th>제목</th>
-							<th>작성일</th>
+							<th id="sender">발신자</th>
+							<th id="title">제목</th>
+							<th id ="senddate">작성일</th>
 						</tr>
 						<tbody>
 							<c:forEach items="${mList}" var="m">
 								<c:if test="${m.mailDelete eq null}"> 
 							<tr>
 								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>${m.mailCode}</td>
+								<td id="msender">${m.mailSender}</td>
 								<td id="mtitle">${m.mailTitle}</td>
 								<td id="mSenddate">${m.mailSenddate}</td>
 							</tr>

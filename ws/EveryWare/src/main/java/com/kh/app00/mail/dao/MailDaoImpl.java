@@ -15,4 +15,9 @@ public class MailDaoImpl implements MailDao {
 		return sst.selectList("mailMapper.selectList");
 	}
 
+	@Override
+	public int insertMail(SqlSessionTemplate sst, MailVo mvo) {
+		return sst.insert("mailMapper.insertMail", mvo);
+	}
+
 }

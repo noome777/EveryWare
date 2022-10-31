@@ -11,5 +11,9 @@ public interface MailDao {
 	//전체 메일함 조회
 	List<MailVo> selectList(SqlSessionTemplate sst);
 	
+	
+	//메일 작성
+	int insertMail(SqlSessionTemplate sst, MailVo mvo);
+	
 
 }

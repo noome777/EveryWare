@@ -18,4 +18,27 @@
 		WHERE MAIL_DELETE IS NULL
 		ORDER BY MAIL_CODE DESC
 	</select>		
+	
+	<insert id="insertMail">
+		INSERT INTO MAIL 
+		(
+		MAIL_CODE
+		, EMP_CODE
+		, MAIL_SENDER
+		, MAIL_TITLE
+		, MAIL_CONTENT
+		, MAIL_SENDDATE
+		, MAIL_RECEIVER
+		)
+		VALUES 
+		(
+		SEQ_MAIL_CODE.NEXTVAL
+		 ,#{empCode}
+		 ,#{mailSender}
+		 ,#{mailTitle}
+		 ,#{mailContent}
+		 ,SYSDATE
+		 ,#{mailReceiver}
+		 )
+	</insert>
 </mapper>

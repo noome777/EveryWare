@@ -24,5 +24,11 @@ public class MailServiceImpl implements MailService{
 	public List<MailVo> selectList() {
 		return dao.selectList(sst);
 	}
+
+
+	@Override
+	public int write(MailVo mvo) {
+		return dao.insertMail(sst, mvo);
+	}
 	
 }

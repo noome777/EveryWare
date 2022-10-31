@@ -1,5 +1,7 @@
 package com.kh.app00.mail.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
@@ -13,4 +15,6 @@ public class MailVo {
 	private String mailSenddate;
 	private String mailReceiver;
 	private String mailDelete;
+	
+	private MultipartFile[] f;
 }
