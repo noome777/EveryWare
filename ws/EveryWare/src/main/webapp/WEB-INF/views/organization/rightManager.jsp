@@ -125,6 +125,15 @@
 	align-items: center;
 }
 
+#rightSelector{
+  width: 90px;
+  height: 26px;
+	border : 1px solid rgb(27, 104, 255); 
+	text-align: center;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
 
 </style>
 
@@ -246,17 +255,17 @@
               </thead>
               <tbody id="target">
                 <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                  <td colspan="5"></td>
                 </tr>
               </tbody>
             </table>
           </div>
           
           <div class="modal-footer">
+            <select name="rightName" id="rightSelector">
+              <option value="2">인사관리자</option>
+              <option value="3">결재관리자</option>
+            </select>
             <button type="button" class="btn mb-2 btn-primary" onclick="addAdmin();">추가</button>
             <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal" onclick="cleanModal();">취소</button>
           </div>
@@ -385,6 +394,10 @@
 	      $('input:checkbox:checked').each(function(){
 	       checkBoxArr.push($(this).val());
 	      });
+
+        const rightValue = $('#rightSelector').val();
+
+        console.log(rightValue);
 	      
         var confirm = window.confirm("정말로 관리자에 추가하시겠습니까?");
 
@@ -401,7 +414,8 @@
           async : false,
           cache: false,
           data : {
-            checkBoxArr : checkBoxArr
+            checkBoxArr : checkBoxArr,
+            rightValue : rightValue
           },
           success : function(jsonStr) {
             alert(jsonStr);
