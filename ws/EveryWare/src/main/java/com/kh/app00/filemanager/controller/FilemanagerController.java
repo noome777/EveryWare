@@ -206,4 +206,11 @@ public class FilemanagerController {
 			.body(res);
 	}
 	
+	@PostMapping("detail")
+	public String detail() {
+		System.out.println();
+		
+		return "";
+	}
+	
 }
