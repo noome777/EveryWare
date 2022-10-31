@@ -3,6 +3,7 @@ package com.kh.app00.approval.service;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.app00.approval.doc.vo.DocCommentVo;
 import com.kh.app00.approval.doc.vo.DocDataVo;
 import com.kh.app00.approval.doc.vo.DocFormDetailTemplateVo;
 import com.kh.app00.approval.doc.vo.DocFormMapperVo;
@@ -20,28 +21,38 @@ public interface ApprovalService {
 
 	//문서종류 불러오기
 	List<DocFormVo> selectFormList();
-
 	//보존연한 불러오기
 	List<DocPeriodVo> selectPeriodList();
-	
 	//양식 내용 불러오기
 	List<DocFormMapperVo> formSelect(int formCode);
-	
 	//결재타입 불러오기
 	List<ApprovalTypeVo> selectTypeList();
-	
 	//부서 불러오기
 	List<DeptVo> selectDeptList();
-	
 	//임직원 불러오기
 	List<EmpVo> selectEmpList();
-
 	//부서별 임직원 불러오기
 	List<EmpVo> selectDeptEmp(int deptCode);
 
 	//결재문서 작성
 	int insertApprovalDoc(ApprovalDocVo docVo);
 	
+	//작성된 문서 상세정보 불러오기
+	ApprovalDocVo selectDocDetail(String docCode);
+	//작성된 문서내용 불러오기
+	List<DocDataVo> selectDocDataList(String docCode);
+	//작성된 문서 결재자 불러오기
+	List<ApprovalListVo> selectApproverList(String docCode);
+	//작성된 문서 참조인 불러오기
+	List<ApprovalRefVo> selectRefVoList(String docCode);
+	//결재타입 갯수 구하기
+	List<ApprovalListVo> selectTypeCountList(String docCode);
+	//문서 승인
+	int updateApprove(ApprovalListVo vo);
+	//문서 반려
+	int updateUnApprove(ApprovalListVo apprVo);
+	//반려 메세지
+	DocCommentVo selectUnApprComment(String docCode);
 	
 	
 	
@@ -56,30 +67,28 @@ public interface ApprovalService {
 	//문서양식 insert
 	int insertForm(DocFormVo formVo);
 	
-	//작성된 문서 상세정보 불러오기
-	ApprovalDocVo selectDocDetail(String docCode);
-	//작성된 문서내용 불러오기
-	List<DocDataVo> selectDocDataList(String docCode);
-	//작성된 문서 결재자 불러오기
-	List<ApprovalListVo> selectApproverList(String docCode);
-	//작성된 문서 참조인 불러오기
-	List<ApprovalRefVo> selectRefVoList(String docCode);
-	//결재타입 갯수 구하기
-	List<ApprovalListVo> selectTypeCountList(String docCode);
-
-	
 	//결재 예정 리스트 개수 구하기
-	int selectExpectCount();
+	int selectExpectCount(ApprovalDocVo vo);
 	//결재 예정 문서 목록 조회
-	List<ApprovalDocVo> selectExpectDocList(String empCode, PageVo pv);
-
-	
+	List<ApprovalDocVo> selectExpectDocList(ApprovalDocVo vo, PageVo pv);
+	//결재 확인 문서 전체 갯수 조회
+	int selectRefListTotalCnt(String empCode);
 	//결재 확인 문서 목록 조회
 	List<ApprovalDocVo> selectRefDocList(String empCode, PageVo pv);
+	//결재 대기 문서 전체 갯수 조회
+	int selectWaitListTotalCnt(String empCode);
 	//결재 대기 문서 목록 조회
 	List<ApprovalDocVo> selectWaitList(String empCode, PageVo pv);
+	//결재 진행 문서 전체 갯수 조회
+	int selectProgressListTotalCnt(String empCode);
 	//결재 진행 문서 목록 조회
 	List<ApprovalDocVo> selectProgressList(String empCode, PageVo pv);
+
+
+	
+
+
+
 
 
 

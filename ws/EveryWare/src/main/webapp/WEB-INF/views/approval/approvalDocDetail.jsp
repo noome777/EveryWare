@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,8 +67,11 @@
   #appr-comment > button{
     width: 80px;
     margin:  0 20px;
-
   }
+  #approval-table{
+    width: auto;
+  }
+
 </style>
 </head>
 <body>
@@ -86,7 +90,7 @@
             <td class="appr-table-color">문서 종류</td>
             <td>${apprDocVo.formName}</td>
             <td class="appr-table-color">문서 번호</td>
-            <td>${apprDocVo.docCode}</td>
+            <td id="doc-code">${apprDocVo.docCode}</td>
           </tr>
           <tr>
             <td class="appr-table-color">작성부서</td>
@@ -104,36 +108,42 @@
             <td class="appr-table-color">작성일시</td>
             <td>${apprDocVo.docEnrollDate}</td>
             <td class="appr-table-color">완료일시</td>
-            <td></td>
+            <td id="appr-date">${apprDocVo.docApprDate}</td>
           </tr>
         </table>
         
         <!-- 결재라인 -->
         <table id="approval-table" class="table table-bordered mb-0 shadow">
           <c:forEach items="${apprTypeCountList}" var="c">
-          <tr class="appr-table-color">
-            <td rowspan="3" style="width: 100px;">${c.apprTypeName}</td>
+          <tr class="appr-table-color appr-line">
+            <td rowspan="3" style="width: 160px;">${c.apprTypeName}</td>
             <c:forEach items="${approverVoList}" var="a">
             	<c:if test="${c.apprTypeCode eq a.apprTypeCode}">
-	            	<td>${a.rankName}</td>
+	            	<td style="width: 160px;">${a.rankName}</td>
             	</c:if>
             </c:forEach>
           </tr>
-          <tr style="height: 100px;">
+          <tr style="height: 160px;" class="appr-length" class="appr-line">
           	<c:forEach items="${approverVoList}" var="a">
           		<c:if test="${c.apprTypeCode eq a.apprTypeCode}">
 	          		<c:choose>
 	          			<c:when test="${a.apprStatus eq 'A'}">
-			          		<td class="appr-mark-td" style="width: 100px;"><img class="appr-mark" src="${root}/resources/img/appr-mark.png" alt="승인"> <br> 22.10.03</td>
+			          		<td  style="width: 160px;"><img class="appr-mark" src="${root}/resources/img/appr-mark.png" alt="승인"> <br>${a.apprDate}</td>
+	          			</c:when>
+              		    <c:when test="${a.apprStatus eq 'C'}">
+			          		<td class="font-weight-bold text-dark" style="width: 160px;">반려<br>${a.apprDate}</td></td> 
 	          			</c:when>
 	          			<c:otherwise>
-	          				<td></td>
+	          				<td class="appr-mark-td" style="width: 100px;">
+		                      <button status="${a.apprStatus}" apprSeq="${a.apprSeq}" apprEmpCode="${a.apprEmpCode}" type="button" class="btn mb-2 btn-outline-info d-none appr-btn">승인</button> 
+		                      <button status="${a.apprStatus}" apprSeq="${a.apprSeq}" apprEmpCode="${a.apprEmpCode}" type="button" class="btn mb-2 btn-outline-secondary d-none un-appr-btn" data-toggle="modal" data-target="#unApprModal">반려</button> 
+		                    </td>
 	          			</c:otherwise>
 	          		</c:choose>
           		</c:if>
             </c:forEach>
           </tr>
-          <tr>
+          <tr class="appr-line">
           	<c:forEach items="${approverVoList}" var="a">
 	          	<c:if test="${c.apprTypeCode eq a.apprTypeCode}">
     	        	<td>${a.empName}</td>
@@ -195,28 +205,138 @@
 	
      <div class="card shadow mb-4">
         <div class="card-body">
+          <c:if test="${not empty unApprComment}">
+          
+
+          <h6 class="mb-4">반려 메세지</h6>
+          <span>${unApprComment.writerName}</span> &nbsp;&nbsp; <span>${unApprComment.comEnrollDate}</span>
+          <div class="d-flex">
+            <div class="form-group mt-3 mb-5 ml-3" id="appr-comment">
+              ${unApprComment.comContent}
+            </div>
+            <div class="form-group mb-5 mt-3 ml-3  w-25 align-items-center"></div>
+          </div>
+          </c:if>
+
           <h6>의견 남기기</h6>
           <div class="form-group mb-3" id="appr-comment">
             <textarea class="form-control" id="example-textarea" ></textarea>
             <button class="btn mb-2 btn-outline-info">등록</button>
           </div>
-
-
-
         </div>
       </div>
-
-        
-        
-        
-		
-		
+	
+      <div class="modal fade" id="unApprModal" tabindex="-1" role="dialog" aria-labelledby="varyModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="varyModalLabel">반려</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="message-text" class="col-form-label">의견 남기기</label>
+                <textarea class="form-control" id="un-appr-message"></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">닫기</button>
+              <button type="button" class="btn mb-2 btn-primary un-appr">반려하기</button>
+            </div>
+          </div>
+        </div>
+      </div>
 	
 	
-	
-	
-
 	</main>
-	
+
+	<script>
+
+    $('document').ready(function () {
+      
+      //내가 결재해야 할 문서이면 내 순서일 때 승인 버튼 표시
+      let currentAppr = $('.appr-btn').attr('status', 'W').eq(0);
+      let currentUnAppr = $('.un-appr-btn').attr('status', 'W').eq(0);
+      let docCode = $('#doc-code')[0].innerHTML;
+
+      if('${loginMember.empCode}' == currentAppr.attr('apprEmpCode')){
+        currentAppr.removeClass('d-none');
+        currentUnAppr.removeClass('d-none');
+      }
+
+      //승인
+      $('.appr-btn').on('click', function(){
+
+        let apprConfirm = confirm('승인 하시겠습니까?');
+
+        if(apprConfirm == true) {
+          let param =  JSON.stringify({
+              docCode : docCode,
+              apprEmpCode : currentAppr.attr('apprEmpCode'),
+              apprSeq : currentAppr.attr('apprSeq')
+            });
+          
+          $.ajax({
+            url : "${root}/approval/approve",
+            method : "POST",
+            data : param,
+            dataType : 'text',
+            contentType : 'application/json; charset=UTF-8',
+            success : function () {
+              alert("승인 완료");
+              location.reload();
+            },
+            error : (error) => {
+              alert("승인 실패")
+              console.log(JSON.stringify(error));
+            }
+  
+          })
+        }
+
+      })
+
+      //반려
+      $('.un-appr').on('click', function () {
+        
+        let comment = $('#un-appr-message').val();
+        console.log(comment);
+
+        let param =  JSON.stringify({
+            docCode : docCode,
+            apprEmpCode : currentUnAppr.attr('apprEmpCode'),
+            apprSeq : currentUnAppr.attr('apprSeq'),
+            comContent : $('#un-appr-message').val()
+          });
+        
+        $.ajax({
+          url : "${root}/approval/unApprove",
+          method : "POST",
+          data : param,
+          dataType : 'text',
+          contentType : 'application/json; charset=UTF-8',
+          success : function (data) {
+            alert("반려 완료");
+            location.reload();
+          },
+          error : (error) => {
+            alert("반려 실패")
+            console.log(JSON.stringify(error));
+          }
+
+        })
+
+
+
+      })
+
+      
+
+
+
+    })  
+  </script>
 </body>
 </html>

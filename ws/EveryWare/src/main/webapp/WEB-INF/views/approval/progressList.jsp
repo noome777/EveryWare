@@ -76,7 +76,7 @@
                 </c:if>
                 
                 <c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
-                	<li class="page-item"><a class="page-link" href="${root}/approval/progressAllList/${i}">${i}</a></li>
+                	<li class="page-item"><a class="page-link" href="${root}/approval/progressList/${i}">${i}</a></li>
                 </c:forEach>
 <!--                 <li class="page-item active"><a class="page-link" href="#">1</a></li> -->
                 
