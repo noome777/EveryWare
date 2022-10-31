@@ -27,6 +27,10 @@
 								<div class="col-md-3">
 									<div class="card shadow text-center mb-4">
 										<div class="card-body file">
+											<form name="fileNo">
+												<input id="fileCodeNo" value="${fr.fileCode}" hidden>
+											</form>
+										
 											<div class="file-action">
 												<button type="button"
 													class="btn btn-link dropdown-toggle more-vertical p-0 text-muted mx-auto"
@@ -78,6 +82,9 @@
 								<div class="col-md-3">
 									<div class="card shadow text-center mb-4">
 										<div class="card-body file">
+											<form name="fileNo">
+												<input id="fileCodeNo" value="${f.fileCode}" hidden>
+											</form>
 											<div class="file-action">
 												<button type="button"
 													class="btn btn-link dropdown-toggle more-vertical p-0 text-muted mx-auto"
@@ -129,7 +136,7 @@
 							<div class="d-flex align-items-center mb-3">
 								<div class="flex-fill">
 									<span class="circle circle-sm bg-white mr-2"> <span
-										class="fe fe-image fe-12 text-success"></span>
+										class="fe fe-file fe-12 text-success"></span>
 									</span> <span class="h6"> f.fileTitle
 									</span>
 								</div>
@@ -161,6 +168,7 @@
 									</dl>
 								</div>
 							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -170,5 +178,21 @@
 </main>
 <!-- main -->
 
+<script type="text/javascript">
+	$('.card').on('click', function (info) {
+	    
+	    alert(info);
+	    console.log(info);
+	    
+		/* $.ajax({
+            url: "${root}/filemanager/detail",
+            method: "POST",
+            dataType: "json",
+            data: allData,
+            contentType: 'application/json',
+        }) */
+	});
+
+</script>
 
 <script src="${root}/resources/js/apps.js"></script>

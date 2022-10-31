@@ -74,7 +74,7 @@
 							<div class="d-flex align-items-center mb-3">
 								<div class="flex-fill">
 									<span class="circle circle-sm bg-white mr-2"> <span
-										class="fe fe-image fe-12 text-success"></span>
+										class="fe fe-file fe-12 text-success"></span>
 									</span> <span class="h6">파일이름.확장자명</span>
 								</div>
 								<span class="btn close-info"> <i class="fe fe-x"></i>
