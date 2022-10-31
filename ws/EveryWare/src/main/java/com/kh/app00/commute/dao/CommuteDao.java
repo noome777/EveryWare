@@ -1,6 +1,7 @@
 package com.kh.app00.commute.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -89,6 +90,12 @@ public interface CommuteDao   {
 
     //사원의 프로필 사진 업데이트 반영
     EmpVo selectEmpProfile(SqlSessionTemplate sst, EmpVo empVo);
+
+    //메인페이지 근태 위젯 출퇴근 조회
+    CommuteVo selectCommute(SqlSessionTemplate sst, EmpVo empVo);
+
+    //관리자 출퇴근 기록 조회 (job, 사원이름 검색 실행)
+    List<CommuteVo> selectCommuteAdminList(SqlSessionTemplate sst, EmpVo empVo);
 
 
 

@@ -1,6 +1,7 @@
 package com.kh.app00.commute.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kh.app00.common.PageVo;
 import com.kh.app00.commute.vo.CommuteVo;
@@ -87,6 +88,15 @@ public interface CommuteService {
 
     //사원의 프로필 사진 업데이트 반영
     EmpVo selectEmpProfile(EmpVo empVo);
+
+    //메인페이지 근태 위젯 출퇴근 조회
+    CommuteVo selectCommute(EmpVo empVo);
+
+    //관리자 출퇴근 기록 조회 (job, 사원이름 검색 실행)
+    List<CommuteVo> selectCommuteAdminList(EmpVo empVo);
+
+    //관리자 출퇴근 전체 조회
+//    List<CommuteVo> selectAdminTotalList();
 
 
 }

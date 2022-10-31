@@ -1,10 +1,17 @@
 package com.kh.app00.commute.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +21,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.app00.common.PageVo;
 import com.kh.app00.common.Pagination;
@@ -22,6 +31,7 @@ import com.kh.app00.commute.vo.CommuteVo;
 import com.kh.app00.commute.vo.OverworkVo;
 import com.kh.app00.dayoff.vo.DayoffVo;
 import com.kh.app00.emp.vo.EmpVo;
+import com.kh.app00.organization.vo.JobVo;
 
 @Controller
 @RequestMapping("commute")
@@ -51,7 +61,7 @@ public class CommuteController {
         vo.setECode(loginMember.getEmpCode());
 
         if (!rightCode.equals("4")) {
-            return "redirect:/commute/main/admin";
+            return "redirect:/commute/main/admin/1";
         }
 
         // 사원의 프로필 사진 업데이트 반영
@@ -124,15 +134,49 @@ public class CommuteController {
     }
 
     // 관리자 출퇴근 기록 조회
-    @GetMapping("main/admin")
-    public String commteMainAdmin() {
+    @GetMapping("main/admin/{pno}")
+    public String commuteMainAdmin(@PathVariable int pno) {
         return "commute/commuteAdminMain";
     }
+    
+    //관리자 출퇴근 기록 조회 (job, 사원이름 검색 실행)
+    @PostMapping("main/admin/{pno}")
+    public String commuteAdminSearch(@PathVariable int pno, String jobCode, 
+            String name, CommuteVo vo, Model model) {
+
+        if(jobCode != null && name != null) {
+            
+            //부서, 사원명으로 검색시
+            //사원 이름
+            EmpVo empVo = new EmpVo();
+            empVo.setEmpName(name);
+            empVo.setEmpJobCode(jobCode);
+            
+            //페이징 아직 안함
+//            int commuteDateCnt = service.selectCommuteDateCnt(vo);
+//            PageVo pv2 = Pagination.getPageVo(commuteDateCnt, pno, 5, 5);
+
+            List<CommuteVo> voList = service.selectCommuteAdminList(empVo);
+            model.addAttribute("voList", voList);
+            
+        }else {
+            //출퇴근 전체 리스트 조회
+//            List<CommuteVo> totalList = service.selectAdminTotalList();
+//            
+//            model.addAttribute("totalList", totalList);
+            
+        }
+        
+        
+        
+        return "commute/commuteAdminMain";
+    }
+    
 
     // 근태 메인화면에서 출퇴근 버튼 입력 후 submit시
     @PostMapping("main/{pno}")
     public String commuteMain(CommuteVo vo, HttpSession session,
-            @PathVariable int pno, Model model) throws ParseException {
+            @PathVariable int pno, Model model, HttpServletResponse resp, HttpServletRequest req) throws ParseException{
 
         // 로그인 여부 체크
         if (session.getAttribute("loginMember") == null) {
@@ -186,10 +230,13 @@ public class CommuteController {
         int result = service.insertCommute(vo);
         if (result == 1) {
             // 근태 테이블에 insert 성공
-            session.setAttribute("startTimeFormat", startTimeFormat);
-            session.setAttribute("endTimeFormat", endTimeFormat);
+            
+            // 메인화면 근태 위젯에 출퇴근 시간 표시 -> 쿠키로 해서 세션??
+            model.addAttribute("startTimeFormat", startTimeFormat);
+            model.addAttribute("endTimeFormat", endTimeFormat);
             
             return "redirect:/commute/main/1";
+
         } else {
             // 실패
             return "error/404";

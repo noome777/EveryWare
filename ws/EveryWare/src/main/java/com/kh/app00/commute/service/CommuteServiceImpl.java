@@ -1,6 +1,7 @@
 package com.kh.app00.commute.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -180,6 +181,24 @@ public class CommuteServiceImpl implements CommuteService {
     public EmpVo selectEmpProfile(EmpVo empVo) {
         return dao.selectEmpProfile(sst, empVo);
     }
+
+    //메인페이지 근태 위젯 출퇴근 조회
+    @Override
+    public CommuteVo selectCommute(EmpVo empVo) {
+        return dao.selectCommute(sst, empVo);
+    }
+
+    //관리자 출퇴근 기록 조회 (job, 사원이름 검색 실행)
+    @Override
+    public List<CommuteVo> selectCommuteAdminList(EmpVo empVo) {
+        return dao.selectCommuteAdminList(sst, empVo);
+    }
+
+    //관리자 출퇴근 전체 조회
+//    @Override
+//    public List<CommuteVo> selectAdminTotalList() {
+//        return dao.selectAdminTotalList(sst);
+//    }
 
    
 
