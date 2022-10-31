@@ -66,7 +66,7 @@
             <%if (calendarList != null) {%>
             <%for (DayoffVo vo : calendarList) {%>
             {
-            	title : '<%=vo.getECode()%>',
+            	title : '<%=vo.getECode() + " / " +vo.getDeptCode() %>',
                 start : '<%=vo.getOffStartDate()%>',
                 end : '<%=vo.getOffEndDate()%>',
                 color : '#' + Math.round(Math.random() * 0xffffff).toString(16),

@@ -54,4 +54,7 @@ public interface DayoffService {
     //휴가 현황 조회
     List<DayoffVo> getCalendar(DayoffVo vo);
 
+    //관리자의 휴가 현황 조회(모든 부서의 모든 사원)
+    List<DayoffVo> getAdminCalendar();
+
 }

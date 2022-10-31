@@ -219,8 +219,18 @@ public class DayoffController {
     
     //관리자의 휴가 현황 조회(모든 부서의 모든 사원)
     @GetMapping("calendar/admin")
-    public String calendar() {
-        return "dayoff/dayoffCalAdmin";
+    public ModelAndView calendar(ModelAndView mv, HttpServletRequest req) {
+        
+        String viewpage = "dayoff/dayoffCalAdmin";
+        List<DayoffVo> calendar = null;
+        try {
+            calendar = service.getAdminCalendar();
+            req.setAttribute("calendarList", calendar);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mv.setViewName(viewpage);
+        return mv;
     }
 
 }

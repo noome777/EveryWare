@@ -27,7 +27,6 @@
       <%-- <%@ include file="/WEB-INF/views/common/header.jsp" %> --%>
       <%-- <%@ include file="/WEB-INF/views/common/sidemenu-content.jsp" %> --%>
      
-     
      <div class="card shadow mb-5" id="commute" style="width: 40%; height: 240px;">
         <div class="card-body">
           <div class="d-flex mb-2">
@@ -37,14 +36,15 @@
               <div id="commute-content">
               	<h3 id="todayDate"></h3>
               	<h2 id="clock"></h2><br>
-                <c:if test="${not empty sessionScope.startTimeFormat && not empty sessionScope.endTimeFormat}">
-                  <h4>출근시간 : ${sessionScope.startTimeFormat}</h4>
-                  <h4>퇴근시간 : ${sessionScope.endTimeFormat}</h4>
+                <c:if test="${not empty startTimeFormat && not empty endTimeFormat}">
+                  <h4>출근시간 : ${startTimeFormat}</h4>
+                  <h4>퇴근시간 : ${endTimeFormat}</h4>
                 </c:if>
-                <c:if test="${empty sessionScope.startTimeFormat && empty sessionScope.endTimeFormat}">
+                <c:if test="${empty startTimeFormat && empty endTimeFormat}">
                   <h4>출근시간 : 미등록</h4>
                   <h4>퇴근시간 : 미등록</h4>
                 </c:if>
+                <!-- <input type="text" value="${cookie.startTimeFormat.value}"> -->
               </div>
             </div>
           </div> <!-- .row -->
