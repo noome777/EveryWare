@@ -38,14 +38,15 @@ public class NoticeController {
 	public String noticeMain(Model model, @PathVariable int pno) {
 
 		int totalCount = ns.selectTotalCnt();
-
 		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
+		
 
 		List<NoticeVo> nList = ns.selectList(pv);
 
 		model.addAttribute("nList", nList);
 		model.addAttribute("pv", pv);
 		
+		System.out.println(pv);
 		
 		return "notice/noticeMain";
 

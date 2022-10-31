@@ -65,7 +65,7 @@
 		SELECT COUNT (*)
 		FROM
 		NOTICE
-		WHERE NOTICE_CODE = #{noticeCode}
+		WHERE NOTICE_DELETE IS NULL
 	</select>
 	
 	<update id="deleteNotice">

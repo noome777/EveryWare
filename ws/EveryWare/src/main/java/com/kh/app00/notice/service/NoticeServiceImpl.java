@@ -27,6 +27,12 @@ public class NoticeServiceImpl implements NoticeService {
 		return dao.selectList(sst, pv);
 	}
 	
+	//개시글 갯수 조회
+		@Override
+		public int selectTotalCnt() {
+			return dao.selectCountAll(sst);
+		}
+	
 	//사내공지 작성
 	@Override
 	public int write(NoticeVo vo) {
@@ -43,11 +49,7 @@ public class NoticeServiceImpl implements NoticeService {
 		}
 	}
 	
-	//개시글 갯수 조회
-	@Override
-	public int selectTotalCnt() {
-		return dao.selectCountAll(sst);
-	}
+	
 
 	@Override
 	public int delete(String noticeCode) {

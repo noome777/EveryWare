@@ -19,5 +19,4 @@ public class MailDaoImpl implements MailDao {
 	public int insertMail(SqlSessionTemplate sst, MailVo mvo) {
 		return sst.insert("mailMapper.insertMail", mvo);
 	}
-
 }

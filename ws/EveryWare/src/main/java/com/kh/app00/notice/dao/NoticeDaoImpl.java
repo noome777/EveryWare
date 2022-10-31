@@ -21,6 +21,11 @@ public class NoticeDaoImpl implements NoticeDao {
 		
 		return sst.selectList("noticeMapper.selectList", null , rb);
 	}
+	
+	@Override
+	public int selectCountAll(SqlSessionTemplate sst) {
+		return sst.selectOne("noticeMapper.selectCountAll");
+	}
 
 	@Override
 	public int insertNotice(SqlSessionTemplate sst, NoticeVo vo, NoticeFileVo fvo) {
@@ -37,10 +42,7 @@ public class NoticeDaoImpl implements NoticeDao {
 		return sst.update("noticeMapper.increaseViews" , noticeCode);
 	}
 
-	@Override
-	public int selectCountAll(SqlSessionTemplate sst) {
-		return sst.selectOne("noticeMapper.selectCountAll");
-	}
+	
 
 	@Override
 	public int delete(SqlSessionTemplate sst, String noticeCode) {
