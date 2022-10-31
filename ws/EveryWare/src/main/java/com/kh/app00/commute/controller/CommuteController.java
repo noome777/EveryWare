@@ -162,6 +162,9 @@ public class CommuteController {
         }else {
             //출퇴근 전체 리스트 조회
 //            List<CommuteVo> totalList = service.selectAdminTotalList();
+            
+//            int commuteCnt = service.selectCommuteTotalCnt(vo);
+//            PageVo pv = Pagination.getPageVo(commuteCnt, pno, 5, 5);
 //            
 //            model.addAttribute("totalList", totalList);
             
