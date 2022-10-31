@@ -204,8 +204,34 @@ public class CommuteDaoImpl implements CommuteDao {
 
     //관리자 출퇴근 기록 조회 (job, 사원이름 검색 실행)
     @Override
-    public List<CommuteVo> selectCommuteAdminList(SqlSessionTemplate sst, EmpVo empVo) {
-        return sst.selectList("commuteMapper.selectCommuteAdminList", empVo);
+    public List<CommuteVo> selectCommuteAdminList(SqlSessionTemplate sst, EmpVo empVo, PageVo pv2) {
+        
+        int offset = (pv2.getCurrentPage()-1) * pv2.getBoardLimit();
+        RowBounds rb = new RowBounds(offset , pv2.getBoardLimit());
+        
+        return sst.selectList("commuteMapper.selectCommuteAdminList", empVo, rb);
+    }
+
+    //위의 리스트 카운트
+    @Override
+    public int selectCommuteSearchCnt(SqlSessionTemplate sst, EmpVo empVo) {
+        return sst.selectOne("commuteMapper.selectCommuteSearchCnt", empVo);
+    }
+
+    //관리자 출퇴근 전체 리스트 조회
+    @Override
+    public List<CommuteVo> selectAdminList(SqlSessionTemplate sst, PageVo pv) {
+
+        int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+        RowBounds rb = new RowBounds(offset , pv.getBoardLimit());
+        
+        return sst.selectList("commuteMapper.selectAdminList", null, rb);
+    }
+
+    //위의 리스트 카운트
+    @Override
+    public int selectAdminCommuteCnt(SqlSessionTemplate sst) {
+        return sst.selectOne("commuteMapper.selectAdminCommuteCnt", sst);
     }
 
 

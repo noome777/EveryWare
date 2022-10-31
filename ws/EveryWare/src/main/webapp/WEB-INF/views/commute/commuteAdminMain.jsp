@@ -9,6 +9,7 @@
       alert('${alertMsg}');
     </script>
 </c:if>
+<c:remove var="alertMsg" scope="session" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,7 +75,7 @@
       <div style="margin-left: 20px; margin-top: 20px;">
         <h4 class="card-title">출퇴근 기록 조회</h4><br><br>
 
-        <form action="" method="post">
+        <form action="" method="get" name="frm" onSubmit="return Checkform()">
           <h5 class="card-title">사원명 검색</h5>
             <select id="jobCode" name="jobCode" id="">
               <option value="1">관리</option>
@@ -88,14 +89,13 @@
           <br><br>
         </form>
     
-        <%-- <c:if test="${empty adDateCount}">
-	        <h6 class="card-title">조회 결과 ${adListCount} 건</h6>
+        <c:if test="${empty searchCnt}">
+	        <h6 class="card-title">조회 결과 ${commuteCnt} 건</h6>
         </c:if>  
-        <c:if test="${empty adListCount}">
-	        <h6 class="card-title">조회 결과  ${adDateCount} 건</h6>
-        </c:if> --%>
+        <c:if test="${empty commuteCnt}">
+	        <h6 class="card-title">조회 결과  ${searchCnt} 건</h6>
+        </c:if> 
 
-      <!-- <form action="${root}/dayoff/sendApproval" method="post"> -->
         <table class="table table-hover">
           <thead>
             <tr>
@@ -108,8 +108,8 @@
             </tr>
           </thead>
           <tbody>
-            <!-- <c:if test="${empty comDateList}"> -->
-              <c:forEach items="${voList}" var="x" varStatus="vs">
+            <c:if test="${empty totalList}">
+              <c:forEach items="${searchVoList}" var="x">
                 <tr>
                   <td>${x.enrollDate}</td>
                   <td>${x.ECode}</td>
@@ -130,11 +130,12 @@
                   </c:if>
                 </tr>
               </c:forEach> 
-            <!-- </c:if>
-            <c:if test="${empty comList}">
-          		<c:forEach items="${comDateList}" var="y">
+            </c:if>
+            <c:if test="${empty searchVoList}">
+          		<c:forEach items="${totalList}" var="y">
                 <tr>
                   <td>${y.enrollDate}</td>
+                  <td>${y.ECode}</td>
                   <td>${y.startTimeFormat}</td>
                   <td>${y.endTimeFormat}</td>
                   <td>${y.workingTime}</td>
@@ -152,51 +153,50 @@
                   </c:if>
                 </tr>
               </c:forEach>
-          	</c:if> -->
+          	</c:if>
           </tbody>
         </table>
-      <!-- </form> -->
-      
-        <!-- <c:if test="${y.offApproval == 'W'}">
-            <td><span class="badge badge-pill badge-warning">결재대기중</span></td>
-        </c:if>
-        <c:if test="${y.offApproval == 'A'}">
-            <td><span class="badge badge-pill badge-success">승인완료</span></td>
-        </c:if>
-        <c:if test="${y.offApproval == 'C'}">
-            <td><span class="badge badge-pill badge-danger">반려</span></td>
-        </c:if>
-
        
-         <c:if test="${empty AdDateList && empty vo}">
+        <c:if test="${empty searchVoList}">
           <div id="page-area">
             <c:if test="${pv.startPage ne 1}">
-              <a href="${root}/dayoff/admin/${pv.startPage - 1}" class="btn mb-2 btn-primary"><</a>
+              <a href="${root}/commute/main/admin/${pv.startPage - 1}" class="btn mb-2 btn-primary"><</a>
             </c:if>
             <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" var="i">
-                <a href="${root}/dayoff/admin/${i}" class="btn mb-2 btn-primary">${i}</a>
+                <a href="${root}/commute/main/admin/${i}" class="btn mb-2 btn-primary">${i}</a>
             </c:forEach>
             <c:if test="${pv.endPage ne pv.maxPage }">
-              <a href="${root}/dayoff/admin/${pv.endPage + 1}" class="btn mb-2 btn-primary">></a>
+              <a href="${root}/commute/main/admin/${pv.endPage + 1}" class="btn mb-2 btn-primary">></a>
             </c:if>	
           </div>
         </c:if>
-        <c:if test="${empty voList && not empty vo}">
+        <c:if test="${empty totalList && not empty empVo}">
         	<div id="page-area">
 	          <c:if test="${pv.startPage ne 1}">
-	            <a href="${root}/dayoff/admin/${pv.startPage - 1}?offStartDate=${vo.offStartDate}&offEndDate=${vo.offEndDate}" class="btn mb-2 btn-primary"><</a>
+	            <a href="${root}/commute/main/admin/${pv.startPage - 1}?jobCode=${empVo.empJobCode}&name=${empVo.empName}" class="btn mb-2 btn-primary"><</a>
 	          </c:if>
 	          <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" var="i">
-	              <a href="${root}/dayoff/admin/${i}?offStartDate=${vo.offStartDate}&offEndDate=${vo.offEndDate}" class="btn mb-2 btn-primary">${i}</a>
+	              <a href="${root}/commute/main/admin/${i}?jobCode=${empVo.empJobCode}&name=${empVo.empName}" class="btn mb-2 btn-primary">${i}</a>
 	          </c:forEach>
 	          <c:if test="${pv.endPage ne pv.maxPage }">
-	            <a href="${root}/dayoff/admin/${pv.endPage + 1}?offStartDate=${vo.offStartDate}&offEndDate=${vo.offEndDate}" class="btn mb-2 btn-primary">></a>
+	            <a href="${root}/commute/main/admin/${pv.endPage + 1}?jobCode=${empVo.empJobCode}&name=${empVo.empName}" class="btn mb-2 btn-primary">></a>
 	          </c:if>	
 	        </div>
-        </c:if> -->
+        </c:if>
       </div>
     </div> 
 
+
+<script>
+function Checkform() {
+    if( frm.name.value == "" ) {
+      frm.name.focus();
+      alert("사원명을 입력해주세요.");
+      
+      return false;
+    }
+}
+</script>
 </body>
 </html>
 
