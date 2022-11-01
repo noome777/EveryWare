@@ -36,7 +36,13 @@ public class ContactsDaoImpl implements ContactsDao{
 	//주소록 상세보기
 	@Override
 	public ContactsVo selectOne(SqlSessionTemplate sst, String no) {
-		return sst.selectOne("contactsMapper.selectOne" , no);
+		return sst.selectOne("contactsMapper.selectOne", no);
+	}
+
+	//주소록 수정
+	@Override
+	public int updateOne(SqlSessionTemplate sst, ContactsVo vo) {
+		return sst.update("contactsMapper.updateOne", vo);
 	}
 
 	
