@@ -111,6 +111,8 @@ public class FilemanagerController {
 			vo.setFileName(changeName);
 			System.out.println("FileName 이후 ::: " + vo.getFileName());
 			
+			String ext = changeName.substring(changeName.lastIndexOf(".")+ 1);
+			vo.setFileType(ext);
 			vo.setFileUrl(savePath);
 			System.out.println("changeName ::: " + changeName);
 		}

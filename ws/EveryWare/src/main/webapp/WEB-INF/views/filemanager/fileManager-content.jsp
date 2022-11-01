@@ -158,7 +158,7 @@
 										<dt class="col-6 text-muted">작성자</dt>
 										<dd class="col-6 filewriter"></dd>
 										<dt class="col-6 text-muted">타입</dt>
-										<dd class="col-6 fileType" >Image</dd>
+										<dd class="col-6 fileType" ></dd>
 										<dt class="col-6 text-muted">파일크기</dt>
 										<dd class="col-6">32M</dd>
 										<dt class="col-6 text-muted">내용</dt>
@@ -190,8 +190,10 @@
 				"num" : num
 			},
 			success: function (result) {
+				console.log(result)
 				$('.fileTitle').html(result.fileTitle);
-				$('.filewriter').html(result.empCode);
+				$('.filewriter').html(result.fileWriter);
+				$('.fileType').html(result.fileType);
 				$('.fileContent').html(result.fileContent);
 				$('.fileEnroll').html(result.fileEnrolldate);
 			}
