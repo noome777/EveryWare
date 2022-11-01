@@ -28,10 +28,10 @@
                 
                 <div class="col-auto">
                   
-                  <!-- Button trigger modal -->
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#defaultModal"><span class="fe fe-filter fe-12 mr-2"></span> Create </button>
+                 <!-- Button trigger modal -->
+                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#defaultModal"><span class="fe fe-filter fe-12 mr-2"></span> Create </button>
                   
-                  <!-- Modal -->
+                 <!-- Modal -->
                  <form action="${root}/contacts/write" method="post">
                   <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -92,6 +92,7 @@
                     
                     <tbody>
                     
+                    <!-- 김춘배 -->
                       <tr>
                         <td>
 			              <i class="fe fe-24 fe-check-circle small text-muted"></i>
@@ -118,6 +119,7 @@
                         </div>
                         </td>
                       </tr>
+                      <!-- /김춘배 -->
                       
                     <c:forEach items="${cList}" var="list">
                     <c:if test="${ list.conWriter eq loginMember.empName }">
@@ -130,7 +132,8 @@
                             <img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
                           </div>
                         </td>
-                        <td data-toggle="modal" data-target="#verticalModal">
+                        <td>
+                          <a href="${root}/contacts/detail/${list.conNo}">
                           <p class="mb-0 text-muted"><strong>${list.conName}</strong></p>
                         </td>
                         <td>
@@ -141,94 +144,19 @@
                           <p class="mb-0 text-muted">${list.conTel}</p>
                         </td>
                         
+                        <!-- 수정/삭제 버튼 -->
                         <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn mb-2 btn-primary btn-sm" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo"> Edit </button>
+                        <button type="button" class="btn mb-2 btn-primary btn-sm" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" onclick="location.href='${root}/contacts/edit/${list.conNo}';"> Edit </button>
                         <button type="button" class="btn mb-2 btn-secondary btn-sm" onclick="location.href='${root}/contacts/contactList/${list.conNo}';"> Delete </button>
                         </div>
-                        
-                      <!-- Edit Modal -->
-                       <div class="modal fade" id="varyModal" tabindex="-1" role="dialog" aria-labelledby="varyModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="varyModalLabel">수정하기</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            
-                            <div class="modal-body">
-                              <form action="${root}/contacts/edit" method="get">
-                               <label for="simpleinput">Name</label>
-		                        <input type="text" id="simpleinput" class="form-control" placeholder="Name" name="conName">
-		                       <label for="example-email">Email</label>
-		                         <input type="email" id="example-email" class="form-control" placeholder="Email" name="conEmail">
-		                       <label for="simpleinput">Phone</label>
-		                        <input type="text" id="simpleinput" class="form-control" placeholder="Phone" name="conTel">
-		                       <label for="simpleinput">Company</label>
-		                        <input type="text" id="simpleinput" class="form-control" placeholder="Company" name="conCompany">
-		                       <label for="example-textarea">Memo</label>
-		                        <textarea class="form-control" id="example-textarea" rows="4" name="conMemo"></textarea>
-		                       <label for="customFile">Image file</label>
-		                       <div class="custom-file">
-		                        <input type="file" class="custom-file-input" id="customFile">
-		                        <label class="custom-file-label" for="customFile">Choose file</label>
-		                       </div>
-                              </form>
-                            </div>
-                            
-                            <div class="modal-footer">
-                              <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">닫기</button>
-                              <button type="submit" class="btn mb-2 btn-primary">수정하기</button>
-                            </div>
-                           </div>
-                          </div>
-                         </div>
                        </td>
+                       
                       </tr>
                     </c:if>
                     </c:forEach>
                       
-                      <!-- Dtail Modal -->
-                      <div class="modal fade" id="verticalModal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="verticalModalTitle">상세보기</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                            
-                            <div>
-                              <form action="${root}/contacts/detail" method="get">
-                               <label for="simpleinput">Name</label>
-		                        <input type="text" class="form-control" id="example-disable" disabled="" value="이름!!" name="conName">
-		                       <label for="example-email">Email</label>
-		                         <input type="text" class="form-control" id="example-disable" disabled="" value="${list.conEmail}" name="conEmail">
-		                       <label for="simpleinput">Phone</label>
-		                        <input type="text" class="form-control" id="example-disable" disabled="" value="${list.conTel}" name="conTel">
-		                       <label for="simpleinput">Company</label>
-		                        <input type="text" class="form-control" id="example-disable" disabled="" value="${list.conCompany}" name="conCompany">
-		                       <label for="example-textarea">Memo</label>
-		                        <textarea class="form-control" id="example-textarea" rows="4" disabled="" value="${list.conMemo}" name="conMemo"></textarea>
-		                       <label for="customFile">Image file</label>
-		                       <div class="custom-file">
-		                        <input type="file" class="custom-file-input" id="customFile" disabled="" value="파일">
-		                        <label class="custom-file-label" for="customFile">file</label>
-		                       </div>
-                              </form>
-                            </div>
-                            
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      
     
                     </tbody>
                   </table>

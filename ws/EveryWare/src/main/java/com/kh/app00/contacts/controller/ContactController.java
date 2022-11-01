@@ -91,20 +91,39 @@ public class ContactController {
 		
 		model.addAttribute("vo" , vo);
 		
-		return "contacts/contactList";
+		return "contacts/detail";
+	}
+	
+	//주소록 수정_화면
+	@GetMapping("edit/{no}")
+	public String edit(@PathVariable String no , Model model) {
+		ContactsVo vo = service.selectOne(no);
+		model.addAttribute("vo" , vo);
+		return "contacts/edit";
+	}
+	
+	//주소록 수정
+	@PostMapping("edit/{no}")
+	public String edit(@PathVariable String no , ContactsVo vo, HttpSession session) {
 		
+		vo.setConNo(no);
+		
+		int result = service.edit(vo);
+		
+		if(result == 1) {
+			//수정 성공
+			session.setAttribute("alertMsg", "수정되었습니다.");
+			return "contacts/contactList";
+		}else {
+			//수정 실패
+			session.setAttribute("alertMsg", "수정 실패하였습니다.");
+			return "redirect:/";
+		}
 	}
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 }//class

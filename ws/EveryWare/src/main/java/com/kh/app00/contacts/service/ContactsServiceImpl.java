@@ -46,4 +46,10 @@ public class ContactsServiceImpl implements ContactsService{
 		return dao.selectOne(sst, no);
 	}
 
+	//주소록 수정
+	@Override
+	public int edit(ContactsVo vo) {
+		return dao.updateOne(sst , vo);
+	}
+
 }

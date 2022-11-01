@@ -44,21 +44,35 @@
 		)
 	</insert>
 
+	<!-- 주소록 상세보기 -->
 	<select id="selectOne" resultType="ContactsVo">
 		SELECT 
-			  CON_NO             
-            , CON_WRITER   
-            , CON_NAME      
-            , CON_EMAIL        
-            , CON_TEL           
-            , CON_COMPANY
-            , CON_MEMO      
-		FROM CONTACTS
-		WHERE CON_NO = #{conNo};
+			C.CON_NO             
+            ,C. CON_WRITER   
+            , C.CON_NAME      
+            , C.CON_EMAIL        
+            , C.CON_TEL           
+            , C.CON_COMPANY
+            , C.CON_MEMO      
+			, E.EMP_NAME AS CON_WRITER
+		FROM CONTACTS C
+		JOIN EMP E
+		ON C. CON_WRITER  =  E.EMP_NAME
+		WHERE C.CON_NO = #{conNo}
 	</select>
+	
+	<!-- 주소록 수정 -->
+	<update id="updateOne">
+	UPDATE CONTACTS
+			SET
+             CON_NAME = #{conName}   
+            , CON_EMAIL = #{conEmail}        
+            , CON_TEL = #{conTel}           
+            , CON_COMPANY = #{conCompany} 
+            , CON_MEMO = #{conMemo}       
+			WHERE CON_NO = #{conNo}
+	</update>
 
-
-
-
-
+ 
+ 
 </mapper>
