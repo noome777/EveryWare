@@ -93,10 +93,23 @@ public interface CommuteService {
     CommuteVo selectCommute(EmpVo empVo);
 
     //관리자 출퇴근 기록 조회 (job, 사원이름 검색 실행)
-    List<CommuteVo> selectCommuteAdminList(EmpVo empVo);
+    List<CommuteVo> selectCommuteAdminList(EmpVo empVo, PageVo pv2);
 
-    //관리자 출퇴근 전체 조회
-//    List<CommuteVo> selectAdminTotalList();
+    //위의 리스트 카운트
+    int selectCommuteSearchCnt(EmpVo empVo);
+
+    //관리자 출퇴근 전체 리스트 조회
+    List<CommuteVo> selectAdminList(PageVo pv);
+    
+    //위의 리스트 카운트
+    int selectAdminCommuteCnt();
+
+    //월별 근태 현황 조회
+    Map<String, Integer> selectByMonth(Map<String, String> vo);
+
+   
+
+
 
 
 }

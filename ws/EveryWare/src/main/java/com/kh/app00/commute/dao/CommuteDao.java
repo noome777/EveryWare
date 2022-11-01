@@ -95,7 +95,22 @@ public interface CommuteDao   {
     CommuteVo selectCommute(SqlSessionTemplate sst, EmpVo empVo);
 
     //관리자 출퇴근 기록 조회 (job, 사원이름 검색 실행)
-    List<CommuteVo> selectCommuteAdminList(SqlSessionTemplate sst, EmpVo empVo);
+    List<CommuteVo> selectCommuteAdminList(SqlSessionTemplate sst, EmpVo empVo, PageVo pv2);
+
+    //위의 리스트 카운트
+    int selectCommuteSearchCnt(SqlSessionTemplate sst, EmpVo empVo);
+
+    //관리자 출퇴근 전체 리스트 조회
+    List<CommuteVo> selectAdminList(SqlSessionTemplate sst, PageVo pv);
+
+    //위의 리스트 카운트
+    int selectAdminCommuteCnt(SqlSessionTemplate sst);
+
+    //월별 근태 현황 조회
+    Map<String, Integer> selectByMonth(SqlSessionTemplate sst, Map<String, String> vo);
+
+   
+
 
 
 

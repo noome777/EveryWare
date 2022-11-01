@@ -56,132 +56,225 @@
     margin-bottom: 80px;
     margin-top: -70px;
   }
+  #month{
+    float: right;
+  }
 </style>
 </head>
 <body style="width: 100%; overflow-x: hidden;" class="vertical  light  " >
-  <div class="wrapper">
+<div class="wrapper">
+
+  <%@ include file="/WEB-INF/views/common/header.jsp" %>
+  <%@ include file="/WEB-INF/views/commute/commute-side.jsp" %>
+  <main role="main" class="main-content">
+
+  <button id="bar" class="btn mb-2 btn-outline-primary" onclick="offLine();">BAR</button>
+  <button id="line" class="btn mb-2 btn-outline-primary" onclick="onLine();">LINE</button>
+  <button id="pie" class="btn mb-2 btn-outline-primary" onclick="onPie();">PIE</button>
+  <form action="${root}/commute/selectByMonth" method="get" >
+    <select name="month" id="month" onchange="this.form.submit();">
+      <option value="1">월선택</option>
+      <option value="1">1월</option>
+      <option value="2">2월</option>
+      <option value="3">3월</option>
+      <option value="4">4월</option>
+      <option value="5">5월</option>
+      <option value="6">6월</option>
+      <option value="7">7월</option>
+      <option value="8">8월</option>
+      <option value="9">9월</option>
+      <option value="10">10월</option>
+      <option value="11">11월</option>
+      <option value="12">12월</option>
+    </select>
+  </form>
+
+
+  <!-- chart.js -->
+  <canvas id="myChartBar" width="45" height="22"></canvas>
+  <canvas id="myChartLine" width="45" height="22"></canvas>
+  <canvas id="myChartPie" width="45" height="22"></canvas>
   
-    <%@ include file="/WEB-INF/views/common/header.jsp" %>
-    <%@ include file="/WEB-INF/views/commute/commute-side.jsp" %>
-   	<main role="main" class="main-content">
+<script>
+  window.onload = function showBar(){
+    $('#myChartLine').hide();
+    $('#myChartPie').hide();
+    $('#myChartBar').show();
+  }
 
-    <!-- 기간 선택 후 조회  -->
+  function offLine(){
+    $('#myChartLine').hide();
+    $('#myChartPie').hide();
+    $('#myChartBar').show();
+  }
 
-    <form style="margin-left: 30px;" action="">
-      <h4 class="card-title">기간 선택</h4>
-      <div class="form-row mb-3">
-        <div class="col-md-4 mb-3">
-          <div class="input-group">
-            <input class="form-control" id="example-date" type="date" name="startDate" required>
-          </div>
-        </div>
-        ~ 
-        <div class="col-md-4 mb-3">
-          <div class="input-group">
-            <input class="form-control" id="example-date" type="date" name="endDate" required>
-          </div>
-        </div>
-      </div>
-      <button class="btn btn-outline-primary" type="submit" id="search-btn">search</button>
-    </form>
+  function onLine(){
+    $('#myChartBar').hide();
+    $('#myChartPie').hide();
+    $('#myChartLine').show();
+  }
 
-    <!-- chart.js -->
-    <canvas id="myChart" width="45" height="18"></canvas>
-    <script>
-      const ctx = document.getElementById('myChart').getContext('2d');
-      const myChart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+  function onPie(){
+    $('#myChartLine').hide();
+    $('#myChartBar').hide();
+    $('#myChartPie').show();
+  }
+  
+</script>
+
+<!-- bar 형태 -->
+<script>
+var context = document
+      .getElementById('myChartBar')
+      .getContext('2d');
+var myChart = new Chart(context, {
+    type: 'bar', // 차트의 형태
+    data: { // 차트에 들어갈 데이터
+        labels: [
+            //x 축
+            '정상출근','결근','지각','조기퇴근'
+        ],
+        datasets: [
+            { //데이터
+                label: '월별 근태 현황', //차트 제목
+                fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                data: [
+                    ${normal},${absent},${late},${early} //x축 label에 대응되는 데이터 값
+                ],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
+                    //색상
                     'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
                     'rgba(255, 206, 86, 0.2)',
                     'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
                 ],
                 borderColor: [
-                    'rgba(255, 99, 132, 1)',
+                    //경계선 색상
                     'rgba(54, 162, 235, 1)',
+                    'rgba(255, 99, 132, 1)',
                     'rgba(255, 206, 86, 1)',
                     'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
                 ],
-                borderWidth: 1
-            }]
-          },
-          options: {
-              scales: {
-                  y: {
-                      beginAtZero: true
-                  }
-              }
-          }
-      });
-    </script>
+                borderWidth: 1 //경계선 굵기
+            },
+        ]
+    },
+    options: {
+        scales: {
+            yAxes: [
+                {
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }
+            ]
+        }
+    }
+});
+     
+</script>
 
+<script>
+var context = document
+      .getElementById('myChartLine')
+      .getContext('2d');
+var myChart = new Chart(context, {
+    type: 'line', // 차트의 형태
+    data: { // 차트에 들어갈 데이터
+        labels: [
+            //x 축
+            '정상출근','결근','지각','조기퇴근'
+        ],
+        datasets: [
+            { //데이터
+                label: '월별 근태 현황', //차트 제목
+                fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                data: [
+                    ${normal},${absent},${late},${early} //x축 label에 대응되는 데이터 값
+                ],
+                backgroundColor: [
+                    //색상
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                ],
+                borderColor: [
+                    //경계선 색상
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                ],
+                borderWidth: 1 //경계선 굵기
+            },
+        ]
+    },
+    options: {
+        scales: {
+            yAxes: [
+                {
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }
+            ]
+        }
+    }
+});
+</script>
 
-
-    <!-- 근무결과 조회 -->
-    <!-- <div class="card shadow mb-5" >
-      <div style="margin-left: 20px; margin-top: 20px;">
-      <h4 class="card-title">근무결과 조회</h4><br><br>
-      <h6 class="card-title">조회 결과 {}건</h6>
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>일자</th>
-            <th>근무시간</th>
-            <th>시간외 근무 시간</th>
-            <th>총근무시간</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>3224</td>
-            <td>Keith Baird</td>
-            <td>Enim Limited</td>
-            <td>Apr 24, 2019</td>
-          </tr>
-          <tr>
-            <td>3218</td>
-            <td>Graham Price</td>
-            <td>Nunc Lectus Incorporated</td>
-            <td>May 23, 2020</td>
-          </tr>
-          <tr>
-            <td>2651</td>
-            <td>Reuben Orr</td>
-            <td>Nisi Aenean Eget Limited</td>
-            <td>Nov 4, 2019</td>
-          </tr>
-          <tr>
-            <td>2636</td>
-            <td>Akeem Holder</td>
-            <td>Pellentesque Associates</td>
-            <td>Mar 27, 2020</td>
-          </tr>
-          <tr>
-            <td>2757</td>
-            <td>Beau Barrera</td>
-            <td>Augue Incorporated</td>
-            <td>Jan 13, 2020</td>
-          </tr>
-          <tr>
-            <td>2757</td>
-            <td>Beau Barrera</td>
-            <td>Augue Incorporated</td>
-            <td>Jan 13, 2020</td>
-          </tr>
-        </tbody>
-      </table>
-    </div> -->
-	</main>
+<script>
+var context = document
+      .getElementById('myChartPie')
+      .getContext('2d');
+var myChart = new Chart(context, {
+    type: 'pie', // 차트의 형태
+    data: { // 차트에 들어갈 데이터
+        labels: [
+            //x 축
+            '정상출근','결근','지각','조기퇴근'
+        ],
+        datasets: [
+            { //데이터
+                label: '월별 근태 현황', //차트 제목
+                fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                data: [
+                    ${normal},${absent},${late},${early} //x축 label에 대응되는 데이터 값
+                ],
+                backgroundColor: [
+                    //색상
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                ],
+                borderColor: [
+                    //경계선 색상
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                ],
+                borderWidth: 1 //경계선 굵기
+            },
+        ]
+    },
+    options: {
+        scales: {
+            yAxes: [
+                {
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }
+            ]
+        }
+    }
+});
+      
+</script>
+</main>
 </div>
 </body>
 </html>

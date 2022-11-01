@@ -190,15 +190,38 @@ public class CommuteServiceImpl implements CommuteService {
 
     //관리자 출퇴근 기록 조회 (job, 사원이름 검색 실행)
     @Override
-    public List<CommuteVo> selectCommuteAdminList(EmpVo empVo) {
-        return dao.selectCommuteAdminList(sst, empVo);
+    public List<CommuteVo> selectCommuteAdminList(EmpVo empVo, PageVo pv2) {
+        return dao.selectCommuteAdminList(sst, empVo, pv2);
     }
 
-    //관리자 출퇴근 전체 조회
-//    @Override
-//    public List<CommuteVo> selectAdminTotalList() {
-//        return dao.selectAdminTotalList(sst);
-//    }
+    //위의 리스트 카운트
+    @Override
+    public int selectCommuteSearchCnt(EmpVo empVo) {
+        return dao.selectCommuteSearchCnt(sst, empVo);
+    }
+
+    //관리자 출퇴근 전체 리스트 조회
+    @Override
+    public List<CommuteVo> selectAdminList(PageVo pv) {
+        return dao.selectAdminList(sst, pv);
+    }
+   
+    //위의 리스트 카운트
+    @Override
+    public int selectAdminCommuteCnt() {
+        return dao.selectAdminCommuteCnt(sst);
+    }
+
+    //월별 근태 현황 조회
+    @Override
+    public Map<String, Integer> selectByMonth(Map<String, String> vo) {
+        return dao.selectByMonth(sst, vo);
+    }
+
+   
+
+
+
 
    
 

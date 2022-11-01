@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -72,7 +73,7 @@ public class CommuteController {
         if (profileVo != null) {
             model.addAttribute("profileVo", profileVo.getEmpProfileName());
         }
-
+        
         // 사원 해당 월 근태 현황 조회
         int normalCnt = service.selectNormalCnt(vo);
         int earlyCnt = service.selectEarlyCnt(vo);
@@ -135,51 +136,46 @@ public class CommuteController {
 
     // 관리자 출퇴근 기록 조회
     @GetMapping("main/admin/{pno}")
-    public String commuteMainAdmin(@PathVariable int pno) {
-        return "commute/commuteAdminMain";
-    }
-    
-    //관리자 출퇴근 기록 조회 (job, 사원이름 검색 실행)
-    @PostMapping("main/admin/{pno}")
-    public String commuteAdminSearch(@PathVariable int pno, String jobCode, 
-            String name, CommuteVo vo, Model model) {
+    public String commuteMainAdmin(@PathVariable int pno, String jobCode,
+            String name, CommuteVo vo, Model model, EmpVo empVo, HttpSession session) {
 
-        if(jobCode != null && name != null) {
-            
-            //부서, 사원명으로 검색시
-            //사원 이름
-            EmpVo empVo = new EmpVo();
+        if (jobCode != null && name != null) {
+            // 부서, 사원명으로 검색시
+            // 사원 이름
             empVo.setEmpName(name);
             empVo.setEmpJobCode(jobCode);
-            
-            //페이징 아직 안함
-//            int commuteDateCnt = service.selectCommuteDateCnt(vo);
-//            PageVo pv2 = Pagination.getPageVo(commuteDateCnt, pno, 5, 5);
 
-            List<CommuteVo> voList = service.selectCommuteAdminList(empVo);
-            model.addAttribute("voList", voList);
-            
-        }else {
-            //출퇴근 전체 리스트 조회
-//            List<CommuteVo> totalList = service.selectAdminTotalList();
-            
-//            int commuteCnt = service.selectCommuteTotalCnt(vo);
-//            PageVo pv = Pagination.getPageVo(commuteCnt, pno, 5, 5);
-//            
-//            model.addAttribute("totalList", totalList);
-            
+            int searchCnt = service.selectCommuteSearchCnt(empVo);
+            PageVo pv2 = Pagination.getPageVo(searchCnt, pno, 5, 10);
+
+            List<CommuteVo> searchVoList = service.selectCommuteAdminList(empVo, pv2);
+
+            model.addAttribute("searchVoList", searchVoList);
+            model.addAttribute("searchCnt", searchCnt);
+            model.addAttribute("empVo", empVo);
+            model.addAttribute("pv", pv2);
+
+        } else {
+            // 출퇴근 전체 리스트 조회
+            int commuteCnt = service.selectAdminCommuteCnt();
+            PageVo pv = Pagination.getPageVo(commuteCnt, pno, 5, 10);
+
+            List<CommuteVo> totalList = service.selectAdminList(pv);
+
+            model.addAttribute("totalList", totalList);
+            model.addAttribute("commuteCnt", commuteCnt);
+            model.addAttribute("pv", pv);
+
         }
-        
-        
-        
+
         return "commute/commuteAdminMain";
     }
-    
 
     // 근태 메인화면에서 출퇴근 버튼 입력 후 submit시
     @PostMapping("main/{pno}")
     public String commuteMain(CommuteVo vo, HttpSession session,
-            @PathVariable int pno, Model model, HttpServletResponse resp, HttpServletRequest req) throws ParseException{
+            @PathVariable int pno, Model model, HttpServletResponse resp, HttpServletRequest req)
+            throws ParseException {
 
         // 로그인 여부 체크
         if (session.getAttribute("loginMember") == null) {
@@ -233,11 +229,11 @@ public class CommuteController {
         int result = service.insertCommute(vo);
         if (result == 1) {
             // 근태 테이블에 insert 성공
-            
+
             // 메인화면 근태 위젯에 출퇴근 시간 표시 -> 쿠키로 해서 세션??
             model.addAttribute("startTimeFormat", startTimeFormat);
             model.addAttribute("endTimeFormat", endTimeFormat);
-            
+
             return "redirect:/commute/main/1";
 
         } else {
@@ -248,7 +244,22 @@ public class CommuteController {
 
     // 월 근무 내역 조회
     @GetMapping("selectByMonth")
-    public String selectByMonth() {
+    public String selectByMonth(String month, Model model, HttpSession session) {
+
+        EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
+        String loginMember2 = loginMember.getEmpCode().toString();
+
+        Map<String, String> vo = new HashMap();
+        vo.put("loginMember", loginMember2);
+        vo.put("month", month);
+
+        Map<String, Integer> monthList = service.selectByMonth(vo);
+
+        model.addAttribute("late", monthList.get("LATE"));
+        model.addAttribute("early", monthList.get("EARLY"));
+        model.addAttribute("absent", monthList.get("ABSENT"));
+        model.addAttribute("normal", monthList.get("NORMAL"));
+
         return "commute/selectByMonth";
     }
 
@@ -265,17 +276,12 @@ public class CommuteController {
         vo.setDeptCode(loginMember.getDeptCode());
 
         // 만약, 로그인 유저가 관리자, 결재 관리자, 인사 관리자 등등이면 다른 페이지 보여주기 (RIGHT_CODE가 4가 아닐 때)
-        // RIGHT_CODE 조회하기
-        EmpVo rvo = service.selectRightVo(vo);
+        String rightCode = loginMember.getRightCode();
+        vo.setECode(loginMember.getEmpCode());
 
-        if (!rvo.getRightCode().equals("4")) {
-            return "redirect:/commute/admin/1";
+        if (!rightCode.equals("4")) {
+            return "redirect:/commute/main/admin/1";
         }
-
-        // 변경 예정
-//        if (rvo.getRightCode().equals("1") || rvo.getRightCode().equals("2")) {
-//            return "redirect:/commute/admin/1";
-//        }
 
         // 기간 선택 조회 여부(시간 외 근무 메인의 전체리스트 || 기간 선택 후 리스트)
         if (overDate != null) {
