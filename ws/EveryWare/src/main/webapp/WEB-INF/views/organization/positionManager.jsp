@@ -403,6 +403,13 @@
 
 			const check = true;
 
+			const checkedLength = $('input:checkbox[name=rankCode]:checked').length;
+
+			if(checkedLength==0) {
+				alert('수정하시려는 직위에 체크 하시고 직위명을 변경하신 후 버튼을 눌러주시길 바랍니다.');
+				return false;
+			}
+
 			const result = window.confirm("정말로 수정하시겠습니까?");
 			if(result==false) {
 			 alert('수정이 취소되었습니다.');

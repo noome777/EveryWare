@@ -493,7 +493,7 @@ padding: 10px;
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form action="${root}/organization/management/emp/update/selectOne" method="post">
+            <form action="${root}/organization/management/emp/update/one" method="post">
               
               <div class="modal-body profile-wrap"> 
                 <div class="profile-img-wrap">
@@ -534,6 +534,8 @@ padding: 10px;
                     </div>
                   </div>
                   <div class="flex-items">
+
+                    <!--비밀번호 유효성 검사 (서비스/프론트)-->
                     <div>
                       <p class="mb-0 text-muted"><strong>비밀번호</strong></p>
                     </div>
@@ -566,6 +568,8 @@ padding: 10px;
                     </div>
                   </div>
                   <div class="flex-items">
+
+                    <!--특정날짜 유효성검사-->
                     <div>
                       <p class="mb-0 text-muted"><strong>생년월일</strong></p>
                     </div>
@@ -574,6 +578,7 @@ padding: 10px;
                     </div>
                   </div>
                   <div class="flex-items">
+                    <!--사내전화 유효성검사-->
                     <div>
                       <p class="mb-0 text-muted" ><strong>사내전화</strong></p>
                     </div>
@@ -582,6 +587,7 @@ padding: 10px;
                     </div>
                   </div>
                   <div class="flex-items">
+                    <!--휴대전화 유효성검사-->
                     <div>
                       <p class="mb-0 text-muted"><strong>휴대전화</strong></p>
                     </div>
@@ -590,6 +596,7 @@ padding: 10px;
                     </div>
                   </div>
                   <div class="flex-items">
+                    <!--email 유효성검사-->
                     <div>
                       <p class="mb-0 text-muted" ><strong>e-mail</strong></p>
                     </div>
@@ -598,6 +605,8 @@ padding: 10px;
                     </div>
                   </div>
                   <div class="flex-items">
+
+                    <!--도로명주소 api 확인-->
                     <div>
                       <p class="mb-0 text-muted"><strong>자택주소1</strong></p>
                     </div>

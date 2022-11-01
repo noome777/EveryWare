@@ -659,4 +659,10 @@ public class OrganizationController {
 	public String manageChart() {
 		return "organization/chartManager";
 	}
+	
+	//조직도
+		@GetMapping("management/chart2")
+		public String manageChart2() {
+			return "organization/chartManager2";
+		}
 }
