@@ -115,6 +115,19 @@ public class FilemanagerController {
 			vo.setFileType(ext);
 			vo.setFileUrl(savePath);
 			System.out.println("changeName ::: " + changeName);
+			
+			File file = new File(savePath+changeName);
+			long bytes = file.length();
+			long kilobyte = bytes / 1024;
+			String size = "";
+			if(kilobyte<1024) {
+				size = Long.toString(kilobyte);
+				size = size + "KB";
+			}else {
+				size = Long.toString(kilobyte);
+				size = size + "MB";
+			}
+			vo.setFileSize(size);
 		}
 		
 		

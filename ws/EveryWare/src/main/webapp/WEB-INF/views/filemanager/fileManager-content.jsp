@@ -55,8 +55,8 @@
 												<span class="fe fe-file fe-24 text-secondary"></span>
 											</div>
 											<div class="file-info">
-												<span class="badge badge-light text-muted mr-2">14.8M</span>
-												<span class="badge badge-pill badge-light text-muted"></span>
+												<span class="badge badge-light text-muted mr-2">${fr.fileSize}</span>
+												<span class="badge badge-pill badge-light text-muted">${fr.fileType}</span>
 											</div>
 										</div>
 										<!-- .card-body -->
@@ -110,8 +110,8 @@
 												<span class="fe fe-file fe-24 text-secondary"></span>
 											</div>
 											<div class="file-info">
-												<span class="badge badge-light text-muted mr-2">14.8M</span>
-												<span class="badge badge-pill badge-light text-muted"></span>
+												<span class="badge badge-light text-muted mr-2">${f.fileSize}</span>
+												<span class="badge badge-pill badge-light text-muted">${f.fileType}</span>
 											</div>
 											
 										</div>
@@ -160,7 +160,7 @@
 										<dt class="col-6 text-muted">타입</dt>
 										<dd class="col-6 fileType" ></dd>
 										<dt class="col-6 text-muted">파일크기</dt>
-										<dd class="col-6">32M</dd>
+										<dd class="col-6 fileSize"></dd>
 										<dt class="col-6 text-muted">내용</dt>
 										<dd class="col-6 fileContent"></dd>
 										<dt class="col-6 text-muted">등록 날짜</dt>
@@ -195,6 +195,7 @@
 				$('.filewriter').html(result.fileWriter);
 				$('.fileType').html(result.fileType);
 				$('.fileContent').html(result.fileContent);
+				$('.fileSize').html(result.fileSize);
 				$('.fileEnroll').html(result.fileEnrolldate);
 			}
 		});
