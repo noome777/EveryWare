@@ -1,7 +1,6 @@
 package com.kh.app00.approval.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.kh.app00.approval.doc.vo.DocCommentVo;
 import com.kh.app00.approval.doc.vo.DocDataVo;
@@ -72,18 +71,26 @@ public interface ApprovalService {
 	//결재 예정 문서 목록 조회
 	List<ApprovalDocVo> selectExpectDocList(ApprovalDocVo vo, PageVo pv);
 	//결재 확인 문서 전체 갯수 조회
-	int selectRefListTotalCnt(String empCode);
+	int selectRefListTotalCnt(ApprovalDocVo vo);
 	//결재 확인 문서 목록 조회
-	List<ApprovalDocVo> selectRefDocList(String empCode, PageVo pv);
+	List<ApprovalDocVo> selectRefDocList(ApprovalDocVo vo, PageVo pv);
 	//결재 대기 문서 전체 갯수 조회
-	int selectWaitListTotalCnt(String empCode);
+	int selectWaitListTotalCnt(ApprovalDocVo vo);
 	//결재 대기 문서 목록 조회
-	List<ApprovalDocVo> selectWaitList(String empCode, PageVo pv);
+	List<ApprovalDocVo> selectWaitList(ApprovalDocVo vo, PageVo pv);
 	//결재 진행 문서 전체 갯수 조회
-	int selectProgressListTotalCnt(String empCode);
+	int selectProgressListTotalCnt(ApprovalDocVo vo);
 	//결재 진행 문서 목록 조회
-	List<ApprovalDocVo> selectProgressList(String empCode, PageVo pv);
-
+	List<ApprovalDocVo> selectProgressList(ApprovalDocVo vo, PageVo pv);
+	
+	//문서함 - 기안 문서 전체 갯수
+	int selectCompletWriteTotalCnt(ApprovalDocVo vo);
+	//문서함 - 기안 문서 목록 조회
+	List<ApprovalDocVo> selectCompletWriteDocList(ApprovalDocVo vo, PageVo pv);
+	//문서함 - 결재 문서 전체 갯수
+	int selectCompletApprTotalCnt(ApprovalDocVo vo);
+	//문서함 - 결재 문서 목록 조회
+	List<ApprovalDocVo> selectCompletApprDocList(ApprovalDocVo vo, PageVo pv);
 
 	
 

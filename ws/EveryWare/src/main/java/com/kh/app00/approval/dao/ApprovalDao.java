@@ -106,17 +106,25 @@ public interface ApprovalDao {
 	List<ApprovalDocVo> selectExpectDocList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv);
 
 	//결재 확인 문서 전체 갯수 조회
-	int selectRefListTotalCnt(SqlSessionTemplate sst, String empCode);
+	int selectRefListTotalCnt(SqlSessionTemplate sst,  ApprovalDocVo vo);
 	//결재 확인 문서 목록 조회
-	List<ApprovalDocVo> selectRefDocList(SqlSessionTemplate sst, String empCode, PageVo pv);
+	List<ApprovalDocVo> selectRefDocList(SqlSessionTemplate sst,  ApprovalDocVo vo, PageVo pv);
 	//결재 대기 문서 전체 갯수 조회
-	int selectWaitListTotalCnt(SqlSessionTemplate sst, String empCode);
+	int selectWaitListTotalCnt(SqlSessionTemplate sst,  ApprovalDocVo vo);
 	//결재 대기 문서 조회
-	List<ApprovalDocVo> selectWaitList(SqlSessionTemplate sst, String empCode, PageVo pv);
+	List<ApprovalDocVo> selectWaitList(SqlSessionTemplate sst,  ApprovalDocVo vo, PageVo pv);
 	//결재 진행 문서 전채 갯수 조회
-	int selectProgressListTotalCnt(SqlSessionTemplate sst, String empCode);
+	int selectProgressListTotalCnt(SqlSessionTemplate sst,  ApprovalDocVo vo);
 	//결재 진행 문서 목록 조회
-	List<ApprovalDocVo> selectProgressList(SqlSessionTemplate sst, String empCode, PageVo pv);
+	List<ApprovalDocVo> selectProgressList(SqlSessionTemplate sst,  ApprovalDocVo vo, PageVo pv);
+	//문서함 - 기안 문서 전체 갯수
+	int selectCompletWriteTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo);
+	//문서함 - 기안 문서 목록 조회
+	List<ApprovalDocVo> selectCompletWriteDocList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv);
+	//문서함 - 결재 문서 전체 갯수
+	int selectCompletApprTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo);
+	//문서함 - 결재 문서 목록 조회
+	List<ApprovalDocVo> selectCompletApprDocList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv);
 
 
 
