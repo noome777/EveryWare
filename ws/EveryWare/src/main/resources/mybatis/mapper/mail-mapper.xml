@@ -41,4 +41,11 @@
 		 ,#{mailReceiver}
 		 )
 	</insert>
+	
+	<update id="deleteMail">
+		UPDATE MAIL
+		SET
+		MAIL_DELETE = SYSDATE
+		WHERE MAIL_CODE = #{mailCode}
+	</update>
 </mapper>

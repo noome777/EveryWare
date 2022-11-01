@@ -31,7 +31,7 @@
 	</div>
 
 	<main role="main" class="main-content">
-	  <c:if test="${ loginMember.empId eq 'ADMIN' }">
+	  <c:if test="${ loginMember.empId eq 'admin' }">
 		<div class="buttonSet">
 				<button type="button" id="sendBtn" class="btn btn-primary"  onclick="location.href='${root}/notice/noticeEdit/${nvo.noticeCode}'">수정</button>
 				<button type="button" id="sendBtn" class="btn btn-primary"  onclick="location.href='${root}/notice/noticeDelete/${nvo.noticeCode}'">삭제</button>

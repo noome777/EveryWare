@@ -20,4 +20,8 @@ public class MailDaoImpl implements MailDao {
 		return sst.insert("mailMapper.insertMail", mvo);
 	}
 
+	@Override
+	public int deleteMail(SqlSessionTemplate sst, String mailCode) {
+		return sst.delete("mailMapper.deleteMail", mailCode);
+	}
 }
