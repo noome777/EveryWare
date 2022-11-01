@@ -46,7 +46,7 @@ public class NoticeController {
 		model.addAttribute("nList", nList);
 		model.addAttribute("pv", pv);
 		
-		System.out.println(pv);
+		System.out.println(nList);
 		
 		return "notice/noticeMain";
 
@@ -96,7 +96,7 @@ public class NoticeController {
 				}
 			}
 		}
-
+				
 		if (result == 1) {
 			session.setAttribute("alertMsg", "사내공지 작성 성공!");
 			return "redirect:/notice/noticeMain/1";

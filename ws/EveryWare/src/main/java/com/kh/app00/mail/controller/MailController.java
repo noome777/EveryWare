@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -96,6 +97,20 @@ public class MailController {
 		
 		
 	}
+	
+	@PostMapping("mailDelete")
+	public String mailDelete(@PathVariable String mailCode, HttpServletRequest req,HttpSession session, Model model) {
+		
+		String [] ajaxMsg = req.getParameterValues("valueArr");
+		int size = ajaxMsg.length;
+		
+		for(int i = 0; i<size; i++) {
+			ms.delete(ajaxMsg[i]);
+		}
+		
+		return "redirect:/mail/mailMain";
+		
+	}	
 	
 	@GetMapping("reply")
 	public String mailReply() {

@@ -11,5 +11,8 @@ public interface MailService {
 	
 	//메일 작성
 	int write(MailVo mvo);
+	
+	//메일 삭제
+	int delete(String mailCode);
 
 }

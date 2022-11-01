@@ -30,5 +30,11 @@ public class MailServiceImpl implements MailService{
 	public int write(MailVo mvo) {
 		return dao.insertMail(sst, mvo);
 	}
+
+
+	@Override
+	public int delete(String mailCode) {
+		return dao.deleteMail(sst, mailCode);
+	}
 	
 }

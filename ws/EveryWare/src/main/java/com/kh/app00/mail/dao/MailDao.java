@@ -14,6 +14,9 @@ public interface MailDao {
 	
 	//메일 작성
 	int insertMail(SqlSessionTemplate sst, MailVo mvo);
+
+	//선택 삭제
+	int deleteMail(SqlSessionTemplate sst, String mailCode);
 	
 
 }
