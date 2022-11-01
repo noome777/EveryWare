@@ -3,6 +3,7 @@ package com.kh.app00.filemanager.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,7 +20,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.app00.common.FileUploader;
@@ -207,10 +210,16 @@ public class FilemanagerController {
 	}
 	
 	@PostMapping("detail")
-	public String detail() {
-		System.out.println();
+	@ResponseBody
+	public String detail(@RequestParam String num, Model model) {
+		FilemanagerVo voinfo = service.selectOne(num);
 		
-		return "";
+		System.out.println(voinfo);
+		
+		model.addAttribute("voinfo", voinfo);
+		
+		
+		return ""; 
 	}
 	
 }

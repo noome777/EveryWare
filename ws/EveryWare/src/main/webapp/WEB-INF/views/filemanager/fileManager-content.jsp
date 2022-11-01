@@ -27,9 +27,7 @@
 								<div class="col-md-3">
 									<div class="card shadow text-center mb-4">
 										<div class="card-body file">
-											<form name="fileNo">
-												<input id="fileCodeNo" value="${fr.fileCode}" hidden>
-											</form>
+											<input id="fileCodeNo" value="${fr.fileCode}" hidden>
 										
 											<div class="file-action">
 												<button type="button"
@@ -82,9 +80,10 @@
 								<div class="col-md-3">
 									<div class="card shadow text-center mb-4">
 										<div class="card-body file">
-											<form name="fileNo">
-												<input id="fileCodeNo" value="${f.fileCode}" hidden>
-											</form>
+											<input id="fileCodeNo" value="${f.fileCode}" hidden>
+										
+											
+											
 											<div class="file-action">
 												<button type="button"
 													class="btn btn-link dropdown-toggle more-vertical p-0 text-muted mx-auto"
@@ -114,7 +113,7 @@
 												<span class="badge badge-light text-muted mr-2">14.8M</span>
 												<span class="badge badge-pill badge-light text-muted"></span>
 											</div>
-											</form>
+											
 										</div>
 										<!-- .card-body -->
 										<div class="card-footer bg-transparent border-0 fname">
@@ -123,6 +122,7 @@
 										<!-- .card-footer -->
 									</div>
 									<!-- .card -->
+									</form>
 								</div>
 							</c:forEach>
 							
@@ -137,7 +137,7 @@
 								<div class="flex-fill">
 									<span class="circle circle-sm bg-white mr-2"> <span
 										class="fe fe-file fe-12 text-success"></span>
-									</span> <span class="h6"> f.fileTitle
+									</span> <span class="h6"> ${finfo.fileCode}
 									</span>
 								</div>
 								<span class="btn close-info"> <i class="fe fe-x"></i>
@@ -179,19 +179,39 @@
 <!-- main -->
 
 <script type="text/javascript">
-	$('.card').on('click', function (info) {
-	    
-	    alert(info);
-	    console.log(info);
-	    
-		/* $.ajax({
-            url: "${root}/filemanager/detail",
-            method: "POST",
-            dataType: "json",
-            data: allData,
-            contentType: 'application/json',
-        }) */
-	});
+	
+	$('.card').click(function (e) {
+		
+		const num = event.currentTarget.children[0].children[0].value;
+		
+		$.ajax({
+			url : "${root}/filemanager/detail" ,
+			type : "POST" ,
+			data : {
+				"num" : num
+			} 
+			
+		});
+		
+		
+
+	})
+	
+	
+	
+	/* 
+	$('.card').click(function (info) {
+		
+		var b = $('input').val;
+		
+		var a = JSON.stringify(info);
+		alert(a);
+		console.log(a);
+		
+		alert("b =" + b);
+		console.log(b);
+	}); */
+	
 
 </script>
 
