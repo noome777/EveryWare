@@ -3,6 +3,7 @@ package com.kh.app00.filemanager.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,7 +20,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.app00.common.FileUploader;
@@ -108,8 +111,23 @@ public class FilemanagerController {
 			vo.setFileName(changeName);
 			System.out.println("FileName 이후 ::: " + vo.getFileName());
 			
+			String ext = changeName.substring(changeName.lastIndexOf(".")+ 1);
+			vo.setFileType(ext);
 			vo.setFileUrl(savePath);
 			System.out.println("changeName ::: " + changeName);
+			
+			File file = new File(savePath+changeName);
+			long bytes = file.length();
+			long kilobyte = bytes / 1024;
+			String size = "";
+			if(kilobyte<1024) {
+				size = Long.toString(kilobyte);
+				size = size + "KB";
+			}else {
+				size = Long.toString(kilobyte);
+				size = size + "MB";
+			}
+			vo.setFileSize(size);
 		}
 		
 		
@@ -207,10 +225,16 @@ public class FilemanagerController {
 	}
 	
 	@PostMapping("detail")
-	public String detail() {
-		System.out.println();
+	@ResponseBody
+	public FilemanagerVo detail(@RequestParam String num, Model model) {
+		FilemanagerVo voinfo = service.selectOne(num);
 		
-		return "";
+		System.out.println(voinfo);
+		
+		model.addAttribute("voinfo", voinfo);
+		
+		
+		return voinfo; 
 	}
 	
 }

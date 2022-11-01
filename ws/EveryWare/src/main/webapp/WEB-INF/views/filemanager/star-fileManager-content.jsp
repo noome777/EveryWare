@@ -22,6 +22,7 @@
 								<div class="col-md-3">
 									<div class="card shadow text-center mb-4">
 										<div class="card-body file">
+											<input id="fileCodeNo" value="${f.fileCode}" hidden>
 											<div class="file-action">
 												<button type="button"
 													class="btn btn-link dropdown-toggle more-vertical p-0 text-muted mx-auto"
@@ -48,8 +49,8 @@
 												<span class="fe fe-file fe-24 text-secondary"></span>
 											</div>
 											<div class="file-info">
-												<span class="badge badge-light text-muted mr-2">14.8M</span>
-												<span class="badge badge-pill badge-light text-muted"></span>
+												<span class="badge badge-light text-muted mr-2">${f.fileSize}</span>
+												<span class="badge badge-pill badge-light text-muted">${f.fileType}</span>
 											</div>
 										</div>
 										<!-- .card-body -->
@@ -68,14 +69,15 @@
 
 						
 					</div>
-					<!-- .file-panel -->
+										<!-- .file-panel -->
 					<div class="info-panel">
 						<div class="info-content p-3 border-left">
 							<div class="d-flex align-items-center mb-3">
 								<div class="flex-fill">
 									<span class="circle circle-sm bg-white mr-2"> <span
 										class="fe fe-file fe-12 text-success"></span>
-									</span> <span class="h6">파일이름.확장자명</span>
+									</span> <span class="h6 fileTitle"> 
+									</span>
 								</div>
 								<span class="btn close-info"> <i class="fe fe-x"></i>
 								</span>
@@ -93,15 +95,15 @@
 										class="img-fluid rounded">
 									<dl class="row my-4 small">
 										<dt class="col-6 text-muted">작성자</dt>
-										<dd class="col-6">Whilemina Pate</dd>
+										<dd class="col-6 filewriter"></dd>
 										<dt class="col-6 text-muted">타입</dt>
-										<dd class="col-6">Image</dd>
+										<dd class="col-6 fileType" ></dd>
 										<dt class="col-6 text-muted">파일크기</dt>
-										<dd class="col-6">32M</dd>
+										<dd class="col-6 fileSize"></dd>
 										<dt class="col-6 text-muted">내용</dt>
-										<dd class="col-6">파일 설명ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</dd>
+										<dd class="col-6 fileContent"></dd>
 										<dt class="col-6 text-muted">등록 날짜</dt>
-										<dd class="col-6">Aug 20, 2020</dd>
+										<dd class="col-6 fileEnroll"></dd>
 									</dl>
 								</div>
 							</div>
@@ -113,6 +115,32 @@
 	</div>
 </main>
 <!-- main -->
+
+<script type="text/javascript">
+	
+	$('.card').click(function (e) {
+		
+		const num = event.currentTarget.children[0].children[0].value;
+		
+		$.ajax({
+			url : "${root}/filemanager/detail" ,
+			type : "POST" ,
+			data : {
+				"num" : num
+			},
+			success: function (result) {
+				console.log(result)
+				$('.fileTitle').html(result.fileTitle);
+				$('.filewriter').html(result.fileWriter);
+				$('.fileType').html(result.fileType);
+				$('.fileContent').html(result.fileContent);
+				$('.fileSize').html(result.fileSize);
+				$('.fileEnroll').html(result.fileEnrolldate);
+			}
+		});
+	})
+</script>
+
 
 
 <script src="${root}/resources/js/apps.js"></script>

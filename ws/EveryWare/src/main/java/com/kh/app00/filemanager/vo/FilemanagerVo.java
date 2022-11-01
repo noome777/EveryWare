@@ -21,4 +21,8 @@ public class FilemanagerVo {
 	private String fileBookmark;
 	private String fileDeldate;
 	private String fileRange;
+	
+	private String fileType;
+	private String fileWriter;
+	private String fileSize;
 }
