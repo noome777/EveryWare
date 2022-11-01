@@ -211,7 +211,7 @@ public class FilemanagerController {
 	
 	@PostMapping("detail")
 	@ResponseBody
-	public String detail(@RequestParam String num, Model model) {
+	public FilemanagerVo detail(@RequestParam String num, Model model) {
 		FilemanagerVo voinfo = service.selectOne(num);
 		
 		System.out.println(voinfo);
@@ -219,7 +219,7 @@ public class FilemanagerController {
 		model.addAttribute("voinfo", voinfo);
 		
 		
-		return ""; 
+		return voinfo; 
 	}
 	
 }
