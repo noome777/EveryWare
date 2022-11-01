@@ -573,6 +573,86 @@ public class OrganizationController {
 		}
 	}
 	
+	//직무추가
+	@PostMapping("management/job/add")
+	@ResponseBody
+	public String addJob(@RequestParam("jobName") String jobName) {
+		
+		int result = organizationService.insertJob(jobName);
+		
+		Gson gson = new Gson();
+		String msg = "";
+		
+		if(result==1 ) {
+			msg =  "직무 추가에 성공하였습니다.";
+		} else if (result==-5) {
+			msg =  "직무명은 10글자내로 작성해주시길 바랍니다.";
+		} else if(result==-10) {
+			msg =  "직무명은 한글로 적어주시길 바랍니다.";
+		} else {
+			msg = "직무 추가에 실패하였습니다. 다시 한 번 시도해보시길 바랍니다.";
+		}
+		String jsonStr = gson.toJson(msg);
+		
+		System.out.println(jsonStr);
+		
+		return jsonStr;
+	}
+	
+	//직무수정
+	@PostMapping("management/job/edit")
+	@ResponseBody
+	public String editJob(@RequestParam("jobName") String jobName, @RequestParam("previousName") String previousName) {
+		
+		int result = organizationService.updateJob(jobName, previousName);
+		
+		Gson gson = new Gson();
+		String msg = "";
+		
+		if(result==1 ) {
+			msg =  "직무 수정에 성공하였습니다.";
+		} else if (result==-5) {
+			msg =  "직무명은 10글자내로 작성해주시길 바랍니다.";
+		} else if(result==-10) {
+			msg =  "직무명은 한글로 적어주시길 바랍니다.";
+		} else {
+			msg = "직무 수정에 실패하였습니다. 다시 한 번 시도해보시길 바랍니다.";
+		}
+		String jsonStr = gson.toJson(msg);
+		
+		System.out.println(jsonStr);
+		
+		return jsonStr;
+		
+	}
+	
+	//직무삭제
+	@PostMapping("management/job/delete")
+	@ResponseBody
+	public String deleteJob(@RequestParam("jobName") String jobName) {
+		
+		int result = organizationService.updateJobToD(jobName);
+		
+		Gson gson = new Gson();
+		String msg = "";
+		if(result ==1) {
+			msg = "직무 삭제에 성공하였습니다.";
+		} else {
+			msg = "직무 삭제에 실패하였습니다. 다시 한 번 시도해보시길 바랍니다.";
+		}
+		
+		String jsonStr = gson.toJson(msg);
+		
+		return jsonStr;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	//조직도
 	@GetMapping("management/chart")

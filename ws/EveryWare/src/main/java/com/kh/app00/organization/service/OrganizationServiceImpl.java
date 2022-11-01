@@ -271,6 +271,57 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 
 
+	//직무 추가
+	@Override
+	public int insertJob(String jobName) {
+		
+		String replacedJobName = spaceRemover.removeSpace(jobName);
+		
+		int rankNameLength = replacedJobName.length();
+		boolean nameHangel = Pattern.matches("^[ㄱ-ㅎ가-힣]*$", replacedJobName);
+		
+		if(rankNameLength>15) {
+			return -5;
+		} else if (nameHangel!=true) {
+			return -10;
+		}
+		
+		return organizationDao.insertJob(sqlSessionTemplate, replacedJobName);
+	}
+
+
+
+	//직무 수정
+	@Override
+	public int updateJob(String jobName, String previousName) {
+		String replacedJobName = spaceRemover.removeSpace(jobName);
+		
+		int rankNameLength = replacedJobName.length();
+		boolean nameHangel = Pattern.matches("^[ㄱ-ㅎ가-힣]*$", replacedJobName);
+		
+		if(rankNameLength>15) {
+			return -5;
+		} else if (nameHangel!=true) {
+			return -10;
+		}
+		
+		Map<String,String> jobNameMap = new HashMap<String, String>();
+		jobNameMap.put("jobName", replacedJobName);
+		jobNameMap.put("previousName", previousName);
+		
+		return organizationDao.updateJob(sqlSessionTemplate, jobNameMap);
+	}
+
+
+
+	//직무 삭제
+	@Override
+	public int updateJobToD(String jobName) {
+		return organizationDao.updateJobToD(sqlSessionTemplate,jobName);
+	}
+
+
+
 
 
 	

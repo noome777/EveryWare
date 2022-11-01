@@ -11,7 +11,7 @@
  	.grid-wrap {
 		height : 85vh;
 		display:grid;
-		grid-template-columns: 65% 35%;
+		grid-template-columns: 70% 30%;
 		grid-template-rows: 100%;
 		justify-content: center;
 		align-content: center;
@@ -39,7 +39,7 @@
 		border-radius: 5px;
 		display: grid;
 		padding: 20px;
-		grid-template-columns: 1fr 3fr;
+		grid-template-columns: 1fr 4fr;
 	}
 
 	#job-setting-bar {
@@ -66,6 +66,10 @@
 		justify-content: center;
 		align-items: flex-start;
 		padding-top: 25px;
+	}
+
+	#job-list, #job-setting-bar {
+		width: 92%;
 	}
 
 	.style-none {
@@ -112,7 +116,7 @@
 		overflow: auto;
 	}
 	
-	#rank-add-modal input, #rank-add-modal select {
+	#jobNameInput, #rank-add-modal select, #rankNameInput, #editJobName {
 		border : 1px solid lightgray;
 		border-radius : 5px;
 		color : gray;
@@ -150,6 +154,10 @@
 		boder-bottom:0px;
 	 	 color : gray;
 	 	border-radius : 8px;
+	}
+
+	.job-name:hover {
+		cursor: pointer;
 	}
 
 
@@ -233,7 +241,7 @@
 							<div id="job-list" class="shadow or-scroll-bar">
 								<div id="job-grid-area">
 									<c:forEach items="${jobList}" var="jobList" >
-										<a class="rank-name"  data-toggle="modal" href="#job-modal-${jobList.jobCode}">
+										<a class="job-name"  data-toggle="modal" data-value="${jobList.jobName}" onclick="writeThis(this);">
 											${jobList.jobName}
 										</a>
 									</c:forEach>
@@ -269,7 +277,7 @@
 	              </select> 
 	            </div>
 				<div>
-					<input type="text" name="rankName" id="rankNameInput">
+					<input type="text" name="rankName" id="rankNameInput" placeholder="직위명">
 				</div>
 	          </div>  
 	          <div class="modal-footer">
@@ -335,35 +343,57 @@
 	  	</form>
 	</c:forEach>
 
-	
-		
+	<!-- 직무 추가 모달 -->
+	<form action="${root}/organization/management/job/add" method="post">
+	    <div class="modal fade" id="job-add-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+	      <div class="modal-dialog modal-dialog-centered" role="document">
+	        <div class="modal-content">
+	          <div class="modal-header">
+	            <h5 class="modal-title" >직무추가</h5>
+	            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	              <span aria-hidden="true">&times;</span>
+	            </button>
+	          </div>
+	          <div class="modal-body add-modal-body">
+				<div>
+					<input type="text" name="rankName" id="jobNameInput" placeholder="직무명">
+				</div>
+	          </div>  
+	          <div class="modal-footer">
+	            <button type="button" class="btn mb-2 btn-primary" onclick="return addJob();">추가</button>
+	            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	 </form>
 
-	<!--1. 직위명 중복체크-->
-	<!--2. 직위명 문자열 검사-->
+	 <!-- 직무 수정/삭제 모달 -->
+	<form action="${root}/organization/management/job/add" method="post">
+	    <div class="modal fade" id="edit-job-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+	      <div class="modal-dialog modal-dialog-centered" role="document">
+	        <div class="modal-content">
+	          <div class="modal-header">
+	            <h5 class="modal-title" >직무수정</h5>
+	            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	              <span aria-hidden="true">&times;</span>
+	            </button>
+	          </div>
+	          <div class="modal-body add-modal-body">
+				<div>
+					<input type="text" name="rankName" id="editJobName" placeholder="직무명 수정">
+				</div>
+	          </div>  
+	          <div class="modal-footer">
+	            <button type="button" class="btn mb-2 btn-primary" onclick="return editJob();">수정</button>
+	            <button type="button" class="btn mb-2 btn-danger" data-dismiss="modal" onclick="return deleteJob();">삭제</button>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	 </form>
 
-	<script>
 
-		/*
-		function checkInput() {
-
-			const inputName = $('#rankNameInput').val();
-			const nameHan = /^[ㄱ-ㅎ|가-힣]+$/;
-
-			if(inputName.length>10) {
-				alert("직위명은 10글자 이내로 작성해주시길 바랍니다.");
-				return false;
-			} else if (inputName.search(/\s/) != -1){
-				alert("직위명은 공백 없이 입력해주시길 바랍니다.");
-				return false;
-			} else if(!(nameHan.test(inputVal))) {
-				alert("이름에 한글을 사용해 주시길 바랍니다.");
-				return false;
-			} else {
-				return true;
-			}
-		}
-		*/
-	</script>
 
 	<script>
 		function editRank() {
@@ -372,6 +402,12 @@
 			const editRankArr = [];
 
 			const check = true;
+
+			const result = window.confirm("정말로 수정하시겠습니까?");
+			if(result==false) {
+			 alert('수정이 취소되었습니다.');
+			 return false;
+			}
 
 			$('input:checkbox[name=rankCode]:checked').each(function(){
 				
@@ -400,6 +436,7 @@
 			});
 
 			if(check==false) {
+				alert('수정이 취소되었습니다.');
 				return false;
 			}
 
@@ -443,8 +480,11 @@
 				checkBoxArr.push($(this).val());
 			});
 
-			window.confirm("정말로 삭제하시겠습니까?");
-
+			const result = window.confirm("정말로 삭제하시겠습니까?");
+			 if(result==false) {
+				alert('삭제가 취소되었습니다.');
+				return false;
+			}
 			$.ajax({
 				url : "${root}/organization/management/rank/delete",
 				type : "POST",
@@ -470,6 +510,167 @@
 
 		}
 
+	</script>
+
+
+	<script>
+
+		function writeThis(e) {
+
+			const value = $(e).attr('data-value');
+			$('#editJobName').attr("value", value);
+			$('#editJobName').attr('data-value', value);
+
+			$('#edit-job-modal').modal();
+		}	
+	</script>
+
+	<script>
+		function addJob() {
+
+			const jobName = $('#jobNameInput').val();
+			const jobSpe = jobName.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi); 
+
+			const nameHan = /^[ㄱ-ㅎ|가-힣]+$/;
+
+			 	
+			if(jobSpe.length > 10){
+				alert("직무명은 10글자 이내로 작성해주시길 바랍니다.");
+				return false;
+			}else if(jobName.search(/\s/) != -1){
+				alert("직위명은 공백 없이 입력해주시길 바랍니다.");
+				return false;
+			}else if(!(nameHan.test(jobName))) {
+				alert("이름에 한글을 사용해 주시길 바랍니다.")
+				return false;
+			}
+
+			const result = window.confirm("직무를 추가하시겠습니까?");
+			if(result==false) { 
+				alert('추가가 취소되었습니다.');
+				return false;
+			}
+			$.ajax({
+				url : "${root}/organization/management/job/add",
+				type : "POST",
+				traditional : true,
+				dataType : "JSON",
+				async : false,
+				cache: false,
+				data : {
+					jobName : jobName
+				},
+				success : function(jsonStr) {
+					
+					alert(jsonStr);
+					window.location.href = "${root}/organization/management/position";
+
+				},
+				error : function() {
+				alert("직무 추가에 실패하였습니다. 다시 시도해보시길 바랍니다.");
+				}
+
+			});
+
+		}
+	</script>
+
+	<script>
+		function editJob() {
+
+			const jobName = $('#editJobName').val();
+			const previousName = $('#editJobName').attr('data-value');
+
+			
+
+			if(jobName == previousName) {
+				alert('직무명이 이전과 같습니다. 수정하여 주시길 바랍니다.');
+				return false;
+			}
+
+
+			const jobSpe = jobName.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi); 
+			const nameHan = /^[ㄱ-ㅎ|가-힣]+$/;
+
+			 	
+			if(jobSpe.length > 10){
+				alert("직무명은 10글자 이내로 작성해주시길 바랍니다.");
+				return false;
+			}else if(jobName.search(/\s/) != -1){
+				alert("직위명은 공백 없이 입력해주시길 바랍니다.");
+				return false;
+			}else if(!(nameHan.test(jobName))) {
+				alert("이름에 한글을 사용해 주시길 바랍니다.")
+				return false;
+			}
+
+
+			const result = window.confirm("직무를 수정하시겠습니까?");
+			if(result==false) { 
+				alert('수정이 취소되었습니다.');
+				return false;
+			}
+
+			$.ajax({
+
+				url : "${root}/organization/management/job/edit",
+				type : "POST",
+				traditional : true,
+				dataType : "JSON",
+				async : false,
+				cache: false,
+				data : {
+					jobName : jobName,
+					previousName : previousName
+				},
+				success : function(jsonStr) {
+					
+					alert(jsonStr);
+					window.location.href = "${root}/organization/management/position";
+
+				},
+				error : function() {
+				alert("직무 수정에 실패하였습니다. 다시 시도해보시길 바랍니다.");
+				}
+
+			});
+
+		}
+	</script>
+
+	<script>
+		function deleteJob() {
+
+			const jobName = $('#editJobName').val();
+
+			const result = window.confirm("직무를 삭제하시겠습니까?");
+			if(result==false) { 
+				alert('삭제가 취소되었습니다.');
+				return false;
+			}
+			$.ajax({
+				url : "${root}/organization/management/job/delete",
+				type : "POST",
+				traditional : true,
+				dataType : "JSON",
+				async : false,
+				cache: false,
+				data : {
+					jobName : jobName
+				},
+				success : function(jsonStr) {
+					
+					alert(jsonStr);
+					window.location.href = "${root}/organization/management/position";
+
+				},
+				error : function() {
+				alert("직무 삭제에 실패하였습니다. 다시 시도해보시길 바랍니다.");
+				}
+
+			});
+
+		}
 	</script>
 
 	

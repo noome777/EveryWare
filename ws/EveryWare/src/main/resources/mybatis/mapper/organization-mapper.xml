@@ -409,6 +409,33 @@
 		</foreach>
 	</update>
 	
+	<insert id="insertJob">
+		INSERT INTO JOB
+		(
+			JOB_CODE
+			, JOB_NAME
+		)
+		VALUES
+		(
+			SEQ_JOB_NO.NEXTVAL
+			, #{jobName}
+		)
+	</insert>
+	
+	<update id="updateJob" parameterType="java.util.Map">
+		UPDATE JOB
+		SET
+			JOB_NAME = #{jobName}
+			WHERE JOB_NAME = #{previousName}
+	</update>
+	
+	<update id="updateJobToD">
+		UPDATE JOB
+		 SET
+		 	JOB_STATUS = 'D'
+		 	WHERE JOB_NAME = #{jobName}
+	</update>
+	
 	
 </mapper>
 
