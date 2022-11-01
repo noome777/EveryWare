@@ -326,6 +326,7 @@
 		WHERE E.RIGHT_CODE = 1
 		OR E.RIGHT_CODE = 2
 		OR E.RIGHT_CODE = 3
+		ORDER BY E.RIGHT_CODE ASC, E.EMP_CODE ASC
 	</select>
 	
 	<update id="updateAdmin">
@@ -368,6 +369,7 @@
 		    RANK_LEVEL
 		    , LISTAGG(RANK_NAME,' ') WITHIN GROUP (ORDER BY RANK_CODE) RANK_NAME
 		  FROM RANK
+		 WHERE RANK_STATUS = 'N'
 		 GROUP BY RANK_LEVEL
 	</select>
 	
@@ -387,8 +389,65 @@
 		)
 	</insert>
 	
-	<update id="updateRankName" parameterType="java.util.Map">
 	
+	
+	
+	<update id="updateRankName" parameterType="java.util.Map">
+		<foreach collection="rankCodeList"  item="rankCode" index="index" open="DECLARE BEGIN" close="; END;"  separator=";"> 
+		
+		UPDATE RANK
+			SET
+				RANK_NAME =  #{editRankList[${index}]}
+				WHERE RANK_CODE = #{rankCodeList[${index}]}
+		
+		 </foreach>
+	</update>
+	
+	
+	<!-- <foreach collection="editRankList"  item="editRank" index="index" separator=";">
+			UPDATE RANK
+			SET
+				RANK_NAME = #{editRank}
+				WHERE RANK_CODE = #{rankCode}
+			</foreach> -->
+	
+	
+	
+	
+	<update id="updateRankToDelete" parameterType="java.util.List">
+		<foreach collection="list" item="rankCode" index="index" open="DECLARE BEGIN" close="; END;"  separator=";"> 
+			UPDATE RANK
+			SET
+				RANK_STATUS = 'D'
+				WHERE RANK_CODE = #{rankCode}
+		</foreach>
+	</update>
+	
+	<insert id="insertJob">
+		INSERT INTO JOB
+		(
+			JOB_CODE
+			, JOB_NAME
+		)
+		VALUES
+		(
+			SEQ_JOB_NO.NEXTVAL
+			, #{jobName}
+		)
+	</insert>
+	
+	<update id="updateJob" parameterType="java.util.Map">
+		UPDATE JOB
+		SET
+			JOB_NAME = #{jobName}
+			WHERE JOB_NAME = #{previousName}
+	</update>
+	
+	<update id="updateJobToD">
+		UPDATE JOB
+		 SET
+		 	JOB_STATUS = 'D'
+		 	WHERE JOB_NAME = #{jobName}
 	</update>
 	
 	

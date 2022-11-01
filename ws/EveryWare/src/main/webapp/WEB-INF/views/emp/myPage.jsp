@@ -176,7 +176,7 @@
 										<strong>직위</strong>
 									</div>
 									<div class="rowValue">
-										${loginMember.rankCode}
+										${loginMember.rankName}
 									</div>
 									<div class="rowName">
 										<strong>직무</strong>

@@ -95,6 +95,19 @@ public interface OrganizationDao {
 	//직위 수정
 	int updateRankName(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> updateTarget);
 
+	//직위 삭제
+	int updateRankToDelete(SqlSessionTemplate sqlSessionTemplate, List<String> rankCodeList);
+
+	//직무 추가
+	int insertJob(SqlSessionTemplate sqlSessionTemplate, String replacedJobName);
+
+	//직무 수정
+	int updateJob(SqlSessionTemplate sqlSessionTemplate, Map<String, String> jobNameMap);
+
+	//직무 삭제
+	int updateJobToD(SqlSessionTemplate sqlSessionTemplate, String jobName);
+
+
 
 
 }

@@ -183,6 +183,32 @@ public class OrganizationDaoImpl implements OrganizationDao {
 		return sqlSessionTemplate.update("organizationMapper.updateRankName",updateTarget);
 	}
 
+	//직위 삭제
+	@Override
+	public int updateRankToDelete(SqlSessionTemplate sqlSessionTemplate, List<String> rankCodeList) {
+		return sqlSessionTemplate.update("organizationMapper.updateRankToDelete",rankCodeList);
+	}
+
+	//직무 추가
+	@Override
+	public int insertJob(SqlSessionTemplate sqlSessionTemplate, String replacedJobName) {
+		return sqlSessionTemplate.insert("organizationMapper.insertJob",replacedJobName);
+	}
+
+	//직무 수정
+	@Override
+	public int updateJob(SqlSessionTemplate sqlSessionTemplate, Map<String, String> jobNameMap) {
+		return sqlSessionTemplate.update("organizationMapper.updateJob",jobNameMap);
+	}
+
+	//직무 삭제
+	@Override
+	public int updateJobToD(SqlSessionTemplate sqlSessionTemplate, String jobName) {
+		return sqlSessionTemplate.update("organizationMapper.updateJobToD",jobName);
+	}
+
+	
+
 	
 	
 

@@ -3,6 +3,7 @@ package com.kh.app00.organization.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -239,15 +240,84 @@ public class OrganizationServiceImpl implements OrganizationService {
 	@Override
 	public int insertRank(RankVo rankVo) {
 		String replacedRankName = spaceRemover.removeSpace(rankVo.getRankName());
+		
+		int rankNameLength = replacedRankName.length();
+		boolean nameHangel = Pattern.matches("^[ㄱ-ㅎ가-힣]*$", replacedRankName);
+		
+		if(rankNameLength>15) {
+			return -5;
+		} else if (nameHangel!=true) {
+			return -10;
+		}
+		
 		rankVo.setRankName(replacedRankName);
+		
 		return organizationDao.insertRank(sqlSessionTemplate, rankVo);
 	}
 
 
-
+	//직위 수정
 	@Override
 	public int updateRankName(Map<String, List<String>> updateTarget) {
 		return organizationDao.updateRankName(sqlSessionTemplate, updateTarget);
+	}
+
+
+	//직위 삭제
+	@Override
+	public int updateRankToDelete(List<String> rankCodeList) {
+		return organizationDao.updateRankToDelete(sqlSessionTemplate,rankCodeList);
+	}
+
+
+
+	//직무 추가
+	@Override
+	public int insertJob(String jobName) {
+		
+		String replacedJobName = spaceRemover.removeSpace(jobName);
+		
+		int rankNameLength = replacedJobName.length();
+		boolean nameHangel = Pattern.matches("^[ㄱ-ㅎ가-힣]*$", replacedJobName);
+		
+		if(rankNameLength>15) {
+			return -5;
+		} else if (nameHangel!=true) {
+			return -10;
+		}
+		
+		return organizationDao.insertJob(sqlSessionTemplate, replacedJobName);
+	}
+
+
+
+	//직무 수정
+	@Override
+	public int updateJob(String jobName, String previousName) {
+		String replacedJobName = spaceRemover.removeSpace(jobName);
+		
+		int rankNameLength = replacedJobName.length();
+		boolean nameHangel = Pattern.matches("^[ㄱ-ㅎ가-힣]*$", replacedJobName);
+		
+		if(rankNameLength>15) {
+			return -5;
+		} else if (nameHangel!=true) {
+			return -10;
+		}
+		
+		Map<String,String> jobNameMap = new HashMap<String, String>();
+		jobNameMap.put("jobName", replacedJobName);
+		jobNameMap.put("previousName", previousName);
+		
+		return organizationDao.updateJob(sqlSessionTemplate, jobNameMap);
+	}
+
+
+
+	//직무 삭제
+	@Override
+	public int updateJobToD(String jobName) {
+		return organizationDao.updateJobToD(sqlSessionTemplate,jobName);
 	}
 
 
