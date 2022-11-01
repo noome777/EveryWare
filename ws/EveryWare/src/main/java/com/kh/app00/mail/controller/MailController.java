@@ -98,7 +98,7 @@ public class MailController {
 		
 	}
 	
-	@PostMapping("mailDelete")
+	@PostMapping("mailDelete/{mailCode}")
 	public String mailDelete(@PathVariable String mailCode, HttpServletRequest req,HttpSession session, Model model) {
 		
 		String [] ajaxMsg = req.getParameterValues("valueArr");

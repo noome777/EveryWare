@@ -161,7 +161,6 @@
 			});
 		});
 		function deleteValue() {
-			debugger;
 			var url = "${root}/mail/mailDelete/${mvo.mailCode}";
 			var valueArr = new Array();
 			var list = $("input[name='RowCheck']");
