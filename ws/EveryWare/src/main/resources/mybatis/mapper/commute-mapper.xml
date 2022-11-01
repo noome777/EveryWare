@@ -145,8 +145,9 @@
 	</select>
 	
 	<select id="selectCommute" resultType="CommuteVo">
-		SELECT START_TIME_FORMAT, END_TIME_FORMAT FROM COMMUTE 
-		WHERE ECODE = #{empCode} AND TO_CHAR(ENROLL_DATE,'YYYY-MM-DD') = TO_CHAR(SYSDATE,'YYYY-MM-DD')
+		SELECT START_TIME_FORMAT, END_TIME_FORMAT FROM
+		(SELECT *FROM COMMUTE ORDER BY ENROLL_DATE DESC)
+		WHERE ROWNUM= 1	
 	</select> 
 	
 	<select id="selectCommuteAdminList" resultType="CommuteVo">
@@ -175,6 +176,19 @@
 	
 	<select id="selectAdminCommuteCnt" resultType="int">
 		SELECT COUNT(*) FROM COMMUTE
+	</select>
+	
+	<select id="selectByMonth" resultType="map">
+		SELECT DISTINCT
+	    (SELECT COUNT(*) AS EARLY FROM COMMUTE WHERE EXTRACT(MONTH FROM ENROLL_DATE) =  #{month} 
+	    AND COM_STATUS = '조기퇴근' AND ECODE = #{loginMember}) AS EARLY
+	    , (SELECT COUNT(*) AS ABSENT FROM COMMUTE WHERE EXTRACT(MONTH FROM ENROLL_DATE) =  #{month} 
+	    AND COM_STATUS = '결근' AND ECODE = #{loginMember}) AS ABSENT
+	    , (SELECT COUNT(*) AS NORMAL FROM COMMUTE WHERE EXTRACT(MONTH FROM ENROLL_DATE) =  #{month} 
+	    AND COM_STATUS = '정상출근' AND ECODE = #{loginMember}) AS NORMAL
+	    , (SELECT COUNT(*) AS NORMAL FROM COMMUTE WHERE EXTRACT(MONTH FROM ENROLL_DATE) =  #{month} 
+	    AND COM_STATUS = '지각' AND ECODE = #{loginMember}) AS LATE
+        FROM COMMUTE
 	</select>
 	
 </mapper>

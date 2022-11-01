@@ -234,6 +234,14 @@ public class CommuteDaoImpl implements CommuteDao {
         return sst.selectOne("commuteMapper.selectAdminCommuteCnt", sst);
     }
 
+    //월별 근태 현황 조회
+    @Override
+    public Map<String, Integer> selectByMonth(SqlSessionTemplate sst, Map<String, String> vo) {
+        return sst.selectOne("commuteMapper.selectByMonth", vo);
+    }
+
+    
+
 
 
 }

@@ -104,6 +104,11 @@ public interface CommuteService {
     //위의 리스트 카운트
     int selectAdminCommuteCnt();
 
+    //월별 근태 현황 조회
+    Map<String, Integer> selectByMonth(Map<String, String> vo);
+
+   
+
 
 
 

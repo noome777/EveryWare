@@ -212,6 +212,14 @@ public class CommuteServiceImpl implements CommuteService {
         return dao.selectAdminCommuteCnt(sst);
     }
 
+    //월별 근태 현황 조회
+    @Override
+    public Map<String, Integer> selectByMonth(Map<String, String> vo) {
+        return dao.selectByMonth(sst, vo);
+    }
+
+   
+
 
 
 

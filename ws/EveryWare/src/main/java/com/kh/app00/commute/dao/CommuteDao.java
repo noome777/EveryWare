@@ -106,6 +106,11 @@ public interface CommuteDao   {
     //위의 리스트 카운트
     int selectAdminCommuteCnt(SqlSessionTemplate sst);
 
+    //월별 근태 현황 조회
+    Map<String, Integer> selectByMonth(SqlSessionTemplate sst, Map<String, String> vo);
+
+   
+
 
 
 

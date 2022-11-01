@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -72,7 +73,7 @@ public class CommuteController {
         if (profileVo != null) {
             model.addAttribute("profileVo", profileVo.getEmpProfileName());
         }
-
+        
         // 사원 해당 월 근태 현황 조회
         int normalCnt = service.selectNormalCnt(vo);
         int earlyCnt = service.selectEarlyCnt(vo);
@@ -243,7 +244,22 @@ public class CommuteController {
 
     // 월 근무 내역 조회
     @GetMapping("selectByMonth")
-    public String selectByMonth() {
+    public String selectByMonth(String month, Model model, HttpSession session) {
+
+        EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
+        String loginMember2 = loginMember.getEmpCode().toString();
+
+        Map<String, String> vo = new HashMap();
+        vo.put("loginMember", loginMember2);
+        vo.put("month", month);
+
+        Map<String, Integer> monthList = service.selectByMonth(vo);
+
+        model.addAttribute("late", monthList.get("LATE"));
+        model.addAttribute("early", monthList.get("EARLY"));
+        model.addAttribute("absent", monthList.get("ABSENT"));
+        model.addAttribute("normal", monthList.get("NORMAL"));
+
         return "commute/selectByMonth";
     }
 

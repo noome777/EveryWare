@@ -132,7 +132,7 @@ table>tbody>tr>td *{
         <div class="card-body">
           <div class="d-flex mb-2">
             <div class="flex-fill pt-2">
-              <h4 class="mb-0">근태현황</h4>
+              <h4 class="mb-0" id="todayStatus">{월}근태현황</h4>
               <div class="row commute-status">
                 <div class="col-6 text-center border-right border-bottom mb-3">
                   <h4 class="mb-1">정상출근</h4><br>
@@ -161,7 +161,7 @@ table>tbody>tr>td *{
         <div class="card-body">
           <div class="d-flex mb-2">
             <div class="flex-fill pt-2">
-              <h4 class="mb-0">근무시간</h4>
+              <h4 class="mb-0" id="todayWork">[월}근무시간</h4>
               <div class="row commute-status">
                 <div class="col-6 text-center border-right border-bottom mb-3">
                   <h4 class="mb-1">근무일수</h4><br>
@@ -405,6 +405,25 @@ table>tbody>tr>td *{
 	}
 	
 </script>
+
+<script>
+/*날짜 출력하는 함수 호출*/
+function todayDate(){
+
+const todayStatus = document.getElementById('todayStatus');
+const todayWork = document.getElementById('todayWork');
+
+const today = new Date();
+
+const month = ('0' + (today.getMonth() + 1)).slice(-2);
+
+todayStatus.innerHTML = month + '월 근태현황' ;
+todayWork.innerHTML = month + '월 근무시간' ;
+}
+
+todayDate();
+</script>
+
 
 
 </body>
