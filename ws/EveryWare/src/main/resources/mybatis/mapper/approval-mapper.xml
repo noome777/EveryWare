@@ -208,6 +208,9 @@
 		                         WHERE L.APPR_STATUS = 'W')
 		AND L.APPR_EMP_CODE = #{empCode}
 		AND A.DOC_STATUS = 'N'
+		<if test="docFormCode != null and docFormCode != 0">
+			AND A.DOC_FORM_CODE = #{docFormCode}
+		</if>
 	</select>
 	
 	<select id="selectExpectDocList" resultType="ApprovalDocVo">
@@ -221,6 +224,10 @@
 		                         WHERE L.APPR_STATUS = 'W')
 		AND L.APPR_EMP_CODE = #{empCode}
 		AND A.DOC_STATUS = 'N'
+		<if test="docFormCode != null and docFormCode != 0">
+			AND A.DOC_FORM_CODE = #{docFormCode}
+		</if>
+		ORDER BY A.DOC_CODE DESC
 	</select>
 	
 	
@@ -229,6 +236,9 @@
 		INNER JOIN APPROVAL_REF R ON A.DOC_CODE = R.DOC_CODE 
 		WHERE R.REF_EMP_CODE = #{empCode} 
 		AND A.DOC_APPR_DATE IS NULL	
+		<if test="docFormCode != null and docFormCode != 0">
+			AND A.DOC_FORM_CODE = #{docFormCode}
+		</if>
 	</select>
 	
 	<select id="selectRefDocList" resultType="ApprovalDocVo">
@@ -247,6 +257,10 @@
 		AND L.DOC_CODE = F.DOC_CODE
 		AND A.DOC_STATUS = 'N'
 		AND F.REF_EMP_CODE = #{empCode}
+		<if test="docFormCode != null and docFormCode != 0">
+			AND A.DOC_FORM_CODE = #{docFormCode}
+		</if>
+		ORDER BY A.DOC_CODE DESC
 	</select>
 	
 	<select id="selectWaitListTotalCnt" resultType="int">
@@ -266,6 +280,9 @@
 		AND L.APPR_SEQ = T1.APPR_SEQ-1
 		AND L.APPR_STATUS = 'A'
 		AND T1.DOC_APPR_DATE IS NULL
+		<if test="docFormCode != null and docFormCode != 0">
+			AND T1.DOC_FORM_CODE = #{docFormCode}
+		</if>
 	</select>
 	
 	<select id="selectWaitList" resultType="ApprovalDocVo">
@@ -284,12 +301,30 @@
 		WHERE L.DOC_CODE = T1.DOC_CODE
 		AND L.APPR_SEQ = T1.APPR_SEQ-1
 		AND L.APPR_STATUS = 'A'
+		<if test="docFormCode != null and docFormCode != 0">
+			AND T1.DOC_FORM_CODE = #{docFormCode}
+		</if>
+		ORDER BY T1.DOC_CODE DESC
 	</select>
 	
 	<select id="selectProgressListTotalCnt" resultType="int">
-		SELECT COUNT(*) FROM APPROVAL_DOC
-		WHERE EMP_CODE = #{empCode}
-		AND DOC_APPR_DATE IS NULL
+		WITH T1 AS 
+		(SELECT A.DOC_CODE, A.DOC_TITLE, A.DOC_FORM_CODE, L.APPR_SEQ, L.APPR_STATUS , F.FORM_NAME, E.EMP_NAME, TO_CHAR(A.DOC_ENROLL_DATE, 'YYYY.MM.DD') AS DOC_ENROLL_DATE, A.DOC_STATUS
+		FROM APPROVAL_DOC A
+		INNER JOIN APPROVAL_LIST L ON A.DOC_CODE = L.DOC_CODE
+		INNER JOIN DOC_FORM F ON A.DOC_FORM_CODE = F.FORM_CODE
+		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
+		WHERE L.APPR_STATUS = 'W'
+		AND A.DOC_STATUS = 'N'
+		AND A.EMP_CODE = #{empName}) 
+		SELECT COUNT(DISTINCT(T1.DOC_CODE)) 
+		FROM T1
+		INNER JOIN APPROVAL_LIST L ON T1.DOC_CODE = L.DOC_CODE
+		WHERE L.DOC_CODE = T1.DOC_CODE
+		<if test="docFormCode != null and docFormCode != 0">
+			AND T1.DOC_FORM_CODE = #{docFormCode}
+		</if>
+		ORDER BY T1.DOC_CODE DESC
 	</select>
 	
 	<select id="selectProgressList" resultType="ApprovalDocVo">
@@ -306,7 +341,74 @@
 		FROM T1
 		INNER JOIN APPROVAL_LIST L ON T1.DOC_CODE = L.DOC_CODE
 		WHERE L.DOC_CODE = T1.DOC_CODE
+		<if test="docFormCode != null and docFormCode != 0">
+			AND T1.DOC_FORM_CODE = #{docFormCode}
+		</if>
+		ORDER BY T1.DOC_CODE DESC
 	</select>
+	
+	<select id="selectCompletWriteTotalCnt" resultType="int">
+		SELECT COUNT(*) FROM APPROVAL_DOC
+		WHERE EMP_CODE = #{empCode}
+		AND DOC_APPR_DATE IS NOT NULL
+		<if test="docFormCode != null and docFormCode != 0">
+			AND DOC_FORM_CODE = #{docFormCode}
+		</if>
+	</select>
+	
+	<select id="selectCompletWriteDocList" resultType="ApprovalDocVo">
+		SELECT D.DOC_CODE, D.PERIOD_CODE, D.DOC_FORM_CODE, D.EMP_CODE, D.DOC_TITLE, TO_CHAR(D.DOC_ENROLL_DATE, 'YYYY.MM.DD') AS DOC_ENROLL_DATE, TO_CHAR(D.DOC_UPDATED, 'YYYY.MM.DD') AS DOC_UPDATED, D.DOC_STATUS, F.FORM_NAME, E.EMP_NAME
+		FROM APPROVAL_DOC D
+		INNER JOIN DOC_FORM F ON D.DOC_FORM_CODE = F.FORM_CODE
+		INNER JOIN EMP E ON E.EMP_CODE = D.EMP_CODE
+		WHERE D.DOC_STATUS = 'N'
+		AND D.EMP_CODE = #{empCode}
+		AND D.DOC_APPR_DATE IS NOT NULL
+		<if test="docFormCode != null and docFormCode != 0">
+			AND D.DOC_FORM_CODE = #{docFormCode}
+		</if>
+		ORDER BY D.DOC_CODE DESC
+	</select>
+	
+	<select id="selectCompletApprTotalCnt" resultType="int">
+		SELECT COUNT(DISTINCT(A.DOC_CODE))
+		FROM APPROVAL_DOC A
+		INNER JOIN APPROVAL_LIST L ON L.DOC_CODE = A.DOC_CODE
+		WHERE L.APPR_EMP_CODE = #{empCode}
+		AND A.DOC_STATUS = 'N'
+		AND A.DOC_APPR_DATE IS NOT NULL
+		<if test="docFormCode != null and docFormCode != 0">
+			AND A.DOC_FORM_CODE = #{docFormCode}
+		</if>
+	</select>
+	
+	<select id="selectCompletApprDocList" resultType="ApprovalDocVo">
+		SELECT DISTINCT(A.DOC_CODE) AS DOC_CODE, A.DOC_FORM_CODE, A.DOC_TITLE, A.EMP_CODE, TO_CHAR(A.DOC_ENROLL_DATE, 'YYYY.MM.DD') AS DOC_ENROLL_DATE, E.EMP_NAME, F.FORM_NAME 
+		FROM APPROVAL_DOC A
+		INNER JOIN DOC_FORM F ON A.DOC_FORM_CODE = F.FORM_CODE
+		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
+		INNER JOIN APPROVAL_LIST L ON L.DOC_CODE = A.DOC_CODE
+		WHERE L.APPR_EMP_CODE = #{empCode}
+		AND A.DOC_STATUS = 'N'
+		AND A.DOC_APPR_DATE IS NOT NULL
+		<if test="docFormCode != null and docFormCode != 0">
+			AND A.DOC_FORM_CODE = #{docFormCode}
+		</if>
+		ORDER BY A.DOC_CODE DESC
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	<insert id="insertDocForm">

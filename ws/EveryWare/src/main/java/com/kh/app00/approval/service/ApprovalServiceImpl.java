@@ -233,38 +233,55 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public List<ApprovalDocVo> selectExpectDocList(ApprovalDocVo vo, PageVo pv) {
 		return dao.selectExpectDocList(sst, vo, pv);
 	}
-
-	
-	
 	//결재 확인 문서 전체 갯수 조회
 	@Override
-	public int selectRefListTotalCnt(String empCode) {
-		return dao.selectRefListTotalCnt(sst, empCode);
+	public int selectRefListTotalCnt(ApprovalDocVo vo) {
+		return dao.selectRefListTotalCnt(sst, vo);
 	}
 	//결재 확인 문서 목록 조회
 	@Override
-	public List<ApprovalDocVo> selectRefDocList(String empCode, PageVo pv) {
-		return dao.selectRefDocList(sst, empCode, pv);
+	public List<ApprovalDocVo> selectRefDocList(ApprovalDocVo vo, PageVo pv) {
+		return dao.selectRefDocList(sst, vo, pv);
 	}
 	//결재 대기 문서 전체 갯수 조회
 	@Override
-	public int selectWaitListTotalCnt(String empCode) {
-		return dao.selectWaitListTotalCnt(sst, empCode);
+	public int selectWaitListTotalCnt(ApprovalDocVo vo) {
+		return dao.selectWaitListTotalCnt(sst, vo);
 	}
 	//결재 대기 목록 조회
 	@Override
-	public List<ApprovalDocVo> selectWaitList(String empCode, PageVo pv) {
-		return dao.selectWaitList(sst, empCode, pv);
+	public List<ApprovalDocVo> selectWaitList(ApprovalDocVo vo, PageVo pv) {
+		return dao.selectWaitList(sst, vo, pv);
 	}
 	//결재 진행 목록 전체 갯수 조회
 	@Override
-	public int selectProgressListTotalCnt(String empCode) {
-		return dao.selectProgressListTotalCnt(sst, empCode);
+	public int selectProgressListTotalCnt(ApprovalDocVo vo) {
+		return dao.selectProgressListTotalCnt(sst, vo);
 	}
 	//결재 진행 목록 조회
 	@Override
-	public List<ApprovalDocVo> selectProgressList(String empCode, PageVo pv) {
-		return dao.selectProgressList(sst, empCode, pv);
+	public List<ApprovalDocVo> selectProgressList(ApprovalDocVo vo, PageVo pv) {
+		return dao.selectProgressList(sst, vo, pv);
+	}
+	//문서함 - 기안 문서 전체 갯수
+	@Override
+	public int selectCompletWriteTotalCnt(ApprovalDocVo vo) {
+		return dao.selectCompletWriteTotalCnt(sst, vo);
+	}
+	//문서함 - 기안 문서 목록 조회
+	@Override
+	public List<ApprovalDocVo> selectCompletWriteDocList(ApprovalDocVo vo, PageVo pv) {
+		return dao.selectCompletWriteDocList(sst, vo, pv);
+	}
+	//문서함 - 결재 문서 전체 갯수
+	@Override
+	public int selectCompletApprTotalCnt(ApprovalDocVo vo) {
+		return dao.selectCompletApprTotalCnt(sst, vo);
+	}
+	//문서함 - 결재 문서 목록 조회
+	@Override
+	public List<ApprovalDocVo> selectCompletApprDocList(ApprovalDocVo vo, PageVo pv) {
+		return dao.selectCompletApprDocList(sst, vo, pv);
 	}
 
 	

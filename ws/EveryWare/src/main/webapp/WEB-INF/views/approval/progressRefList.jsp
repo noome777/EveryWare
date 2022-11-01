@@ -27,9 +27,9 @@
 	    <!-- simple table -->
 	       <div class="form-group mb-3">
 	         <select class="custom-select" id="custom-select">
-	           <option value="0" selected>전체</option>
+	           <option value="0">전체</option>
 	           <c:forEach items="${formList}" var="f">
-                  <option value="${f.formCode}">${f.formName}</option>
+                  <option value="${f.formCode}" <c:if test="${selectedFormCode == f.formCode}">selected="selected"</c:if>>${f.formName}</option>
                 </c:forEach>
 	         </select>
 	       </div>
@@ -76,7 +76,7 @@
                 </c:if>
                 
                 <c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
-                	<li class="page-item"><a class="page-link" href="${root}/approval/progressRefList/${i}">${i}</a></li>
+                	<li class="page-item"><a class="page-link" href="${root}/approval/progressRefList/${i}/${selectedFormCode}">${i}</a></li>
                 </c:forEach>
 <!--                 <li class="page-item active"><a class="page-link" href="#">1</a></li> -->
                 
@@ -90,5 +90,13 @@
         </div>
 	</main>
    
+  <script>
+    $('#custom-select').on('change', function () {
+
+      let docFormCode = $('#custom-select option:selected').val();
+      location.href='${root}/approval/progressRefList/1/' + docFormCode;
+
+    })
+  </script>
 </body>
 </html>

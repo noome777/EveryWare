@@ -27,9 +27,9 @@
 	    <!-- simple table -->
 	       <div class="form-group mb-3">
 	         <select class="custom-select" id="custom-select">
-	           <option value="0" selected>전체</option>
+	           <option value="0">전체</option>
 	           <c:forEach items="${formList}" var="f">
-                  <option value="${f.formCode}">${f.formName}</option>
+                  <option value="${f.formCode}" <c:if test="${selectedFormCode == f.formCode}">selected="selected"</c:if>>${f.formName}</option>
                 </c:forEach>
 	         </select>
 	       </div>
@@ -89,6 +89,13 @@
           </div>
         </div>
 	</main>
-   
+  <script>
+    $('#custom-select').on('change', function () {
+
+      let docFormCode = $('#custom-select option:selected').val();
+      location.href='${root}/approval/progressWaitList/1/' + docFormCode;
+
+    })
+  </script>
 </body>
 </html>

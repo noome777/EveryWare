@@ -225,39 +225,63 @@ public class ApprovalDaoImpl implements ApprovalDao {
 
 	//결재 확인 문서 전체 갯수 조회
 	@Override
-	public int selectRefListTotalCnt(SqlSessionTemplate sst, String empCode) {
-		return sst.selectOne("approvalMapper.selectRefListTotalCnt", empCode);
+	public int selectRefListTotalCnt(SqlSessionTemplate sst,  ApprovalDocVo vo) {
+		return sst.selectOne("approvalMapper.selectRefListTotalCnt", vo);
 	}
 	//결재 확인 문서 목록 조회
 	@Override
-	public List<ApprovalDocVo> selectRefDocList(SqlSessionTemplate sst, String empCode, PageVo pv) {
+	public List<ApprovalDocVo> selectRefDocList(SqlSessionTemplate sst,  ApprovalDocVo vo, PageVo pv) {
 		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
-		return sst.selectList("approvalMapper.selectRefDocList", empCode, rb);
+		return sst.selectList("approvalMapper.selectRefDocList", vo, rb);
 	}
 	//결제 대기 문서 전체 갯수 조회
 	@Override
-	public int selectWaitListTotalCnt(SqlSessionTemplate sst, String empCode) {
-		return sst.selectOne("approvalMapper.selectWaitListTotalCnt", empCode);
+	public int selectWaitListTotalCnt(SqlSessionTemplate sst,  ApprovalDocVo vo) {
+		return sst.selectOne("approvalMapper.selectWaitListTotalCnt", vo);
 	}
 	//결재 대기 문서 목록 조회
 	@Override
-	public List<ApprovalDocVo> selectWaitList(SqlSessionTemplate sst, String empCode, PageVo pv) {
+	public List<ApprovalDocVo> selectWaitList(SqlSessionTemplate sst,  ApprovalDocVo vo, PageVo pv) {
 		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
-		return sst.selectList("approvalMapper.selectWaitList", empCode, rb);
+		return sst.selectList("approvalMapper.selectWaitList", vo, rb);
 	}
 	//결재 진행 문서 목록 전체 갯수 조회
 	@Override
-	public int selectProgressListTotalCnt(SqlSessionTemplate sst, String empCode) {
-		return sst.selectOne("approvalMapper.selectProgressListTotalCnt", empCode);
+	public int selectProgressListTotalCnt(SqlSessionTemplate sst,  ApprovalDocVo vo) {
+		return sst.selectOne("approvalMapper.selectProgressListTotalCnt", vo);
 	}
 	//결재 진행 문서 목록 조회
 	@Override
-	public List<ApprovalDocVo> selectProgressList(SqlSessionTemplate sst, String empCode, PageVo pv) {
+	public List<ApprovalDocVo> selectProgressList(SqlSessionTemplate sst,  ApprovalDocVo vo, PageVo pv) {
 		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
-		return sst.selectList("approvalMapper.selectProgressList", empCode, rb);
+		return sst.selectList("approvalMapper.selectProgressList", vo, rb);
+	}
+	//문서함 - 기안 문서 전체 갯수
+	@Override
+	public int selectCompletWriteTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo) {
+		return sst.selectOne("approvalMapper.selectCompletWriteTotalCnt", vo);
+	}
+	//문서함 - 기안 문서 목록 조회
+	@Override
+	public List<ApprovalDocVo> selectCompletWriteDocList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv) {
+		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
+		return sst.selectList("approvalMapper.selectCompletWriteDocList", vo, rb);
+	}
+	//문서함 - 결재 문서 전체 갯수
+	@Override
+	public int selectCompletApprTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo) {
+		return sst.selectOne("approvalMapper.selectCompletApprTotalCnt", vo);
+	}
+	//문서함 - 결재 문서 목록 조회
+	@Override
+	public List<ApprovalDocVo> selectCompletApprDocList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv) {
+		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
+		return sst.selectList("approvalMapper.selectCompletApprDocList", vo, rb);
 	}
 
 	
