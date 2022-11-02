@@ -37,7 +37,7 @@
 													<i class="fe fe-star fe-12 mr-4"></i>즐겨찾기</a> 
 													<a class="dropdown-item" href="${root}/filemanager/addCopy/${f.fileCode}">
 													<i class="fe fe-copy fe-12 mr-4"></i>복사</a>
-													<a class="dropdown-item" href="${root}/filemanager/addEdit/${f.fileCode}">
+													<a class="dropdown-item" href="${root}/filemanager/edit/${f.fileCode}">
 													<i class="fe fe-edit-3 fe-12 mr-4"></i>수정</a> 
 													<a class="dropdown-item" href="${root}/filemanager/addDel/${f.fileCode}">
 													<i class="fe fe-delete fe-12 mr-4"></i>삭제</a> 

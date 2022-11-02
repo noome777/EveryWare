@@ -81,6 +81,12 @@ public class FilemanagerServiceImpl implements FilemanagerService {
 		return dao.addCopy(sst, vo);
 	}
 
+	@Override
+	public int edit(FilemanagerVo vo) {
+		// TODO Auto-generated method stub
+		return dao.edit(sst, vo);
+	}
+
 	
 
 

@@ -285,4 +285,32 @@ public class FilemanagerController {
 		
 		return "redirect:/filemanager/select"; 
 	}
+	
+	//수정 화면 추가
+	@GetMapping("edit/{fileCode}")
+	public String edit(@PathVariable String fileCode,Model model){
+			
+		FilemanagerVo vo = service.selectOne(fileCode);
+
+		model.addAttribute("vo", vo);
+		
+		
+		return "filemanager/edit-fileManager"; 
+	}
+	
+	//수정기능 추가
+	@PostMapping("edit/{fileCode}")
+	public String edit(@PathVariable String fileCode, FilemanagerVo vo, Model model){
+			
+	// DB 전달하기
+	int result = service.edit(vo);
+	
+	if (result == 1) {
+		System.out.println("1");
+	}else {
+		System.out.println("2");
+	}
+			
+		return "redirect:/filemanager/select"; 
+	}
 }

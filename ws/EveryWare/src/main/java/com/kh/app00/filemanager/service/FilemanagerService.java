@@ -33,6 +33,9 @@ public interface FilemanagerService {
 	
 	//복사하기 추가
 	int addCopy(FilemanagerVo vo);
+	
+	//수정하기 추가
+	int edit(FilemanagerVo vo);
 
 
 }

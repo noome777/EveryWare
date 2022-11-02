@@ -153,4 +153,12 @@
 		VALUES ( SEQ_FILE_CODE.NEXTVAL ,1 , #{fileTitle} , #{fileContent}  , #{fileName} , #{fileUrl} , 0 , #{fileType}, #{fileSize})
 	
 	</insert>
+	
+	<update id="edit">
+		UPDATE FILECLOUD
+		SET 
+		FILE_TITLE = #{fileTitle}
+		, FILE_CONTENT = #{fileContent}
+		WHERE FILE_CODE = #{fileCode}
+	</update>
 </mapper>
