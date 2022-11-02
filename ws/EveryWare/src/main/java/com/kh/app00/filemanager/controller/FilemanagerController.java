@@ -2,6 +2,8 @@ package com.kh.app00.filemanager.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Map;
 
@@ -107,6 +109,7 @@ public class FilemanagerController {
 			System.out.println("savePath ::: " + savePath);
 			String changeName = FileUploader.fileUpload(vo.getFileOriginname(), savePath);
 			System.out.println("getFileOriginname ::: " + vo.getFileOriginname());
+			vo.setFileOriginname(vo.getFileOriginname());
 			System.out.println("FileName ::: " + vo.getFileName());
 			vo.setFileName(changeName);
 			System.out.println("FileName 이후 ::: " + vo.getFileName());
@@ -124,7 +127,8 @@ public class FilemanagerController {
 				size = Long.toString(kilobyte);
 				size = size + "KB";
 			}else {
-				size = Long.toString(kilobyte);
+				long megabyte = kilobyte / 1024;
+				size = Long.toString(megabyte);
 				size = size + "MB";
 			}
 			vo.setFileSize(size);
@@ -237,4 +241,76 @@ public class FilemanagerController {
 		return voinfo; 
 	}
 	
+	//복사기능 추가
+	@GetMapping("addCopy/{fileCode}")
+	public String addCopy(@PathVariable String fileCode,HttpSession session) throws IOException {
+			
+		FilemanagerVo vo = service.selectOne(fileCode);
+
+		//원본 File 준비
+		File file = new File(vo.getFileUrl()+vo.getFileName());
+		
+		//복사를 위해 제목 타이틀 변경
+		vo.setFileTitle(vo.getFileTitle()+" 복사본");
+		
+		
+		
+		//복사하기 위해 vo에 저장된 파일명 가져오기
+		String fileName = vo.getFileName();
+		int pos = fileName.lastIndexOf(".");
+		String name = fileName.substring(0, pos);
+		
+		//_copy 붙이고 확장자 붙이기
+		name = name+ "_copy" + "." + vo.getFileType();
+		
+		vo.setFileName(name);
+		
+		
+        //복사할 File 준비
+        File newFile = new File(vo.getFileUrl()+name);
+ 
+        // 2. 복사
+        Files.copy(file.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+ 
+        
+        // DB 전달하기
+		int result = service.addCopy(vo);
+		
+		if (result == 1) {
+			session.setAttribute("alertMsg", "해당 파일이 복사 되었습니다.");
+			System.out.println("1");
+		}else {
+			System.out.println("2");
+		}
+		
+		return "redirect:/filemanager/select"; 
+	}
+	
+	//수정 화면 추가
+	@GetMapping("edit/{fileCode}")
+	public String edit(@PathVariable String fileCode,Model model){
+			
+		FilemanagerVo vo = service.selectOne(fileCode);
+
+		model.addAttribute("vo", vo);
+		
+		
+		return "filemanager/edit-fileManager"; 
+	}
+	
+	//수정기능 추가
+	@PostMapping("edit/{fileCode}")
+	public String edit(@PathVariable String fileCode, FilemanagerVo vo, Model model){
+			
+	// DB 전달하기
+	int result = service.edit(vo);
+	
+	if (result == 1) {
+		System.out.println("1");
+	}else {
+		System.out.println("2");
+	}
+			
+		return "redirect:/filemanager/select"; 
+	}
 }

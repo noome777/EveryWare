@@ -35,7 +35,7 @@
 													<i class="fe fe-star fe-12 mr-4"></i>즐겨찾기</a> 
 													<a class="dropdown-item" href="${root}/filemanager/addCopy/${f.fileCode}">
 													<i class="fe fe-copy fe-12 mr-4"></i>복사</a>
-													<a class="dropdown-item" href="${root}/filemanager/addEdit/${f.fileCode}">
+													<a class="dropdown-item" href="${root}/filemanager/edit/${f.fileCode}">
 													<i class="fe fe-edit-3 fe-12 mr-4"></i>수정</a> 
 													<a class="dropdown-item" href="${root}/filemanager/addDel/${f.fileCode}">
 													<i class="fe fe-delete fe-12 mr-4"></i>삭제</a> 
@@ -91,7 +91,7 @@
 							<div class="tab-content" id="file-tabs">
 								<div class="tab-pane fade show active" id="detail"
 									role="tabpanel" aria-labelledby="tab-detail">
-									<img src="${root}/resources/assets/products/p4.jpg" alt="..."
+									<img id="infoimg" src="${root}/resources/assets/products/p4.jpg" alt="..."
 										class="img-fluid rounded">
 									<dl class="row my-4 small">
 										<dt class="col-6 text-muted">작성자</dt>
@@ -131,6 +131,7 @@
 			success: function (result) {
 				console.log(result)
 				$('.fileTitle').html(result.fileTitle);
+				$('#infoimg').attr({src: "${root}/resources/upload/filemanager/"+result.fileName});
 				$('.filewriter').html(result.fileWriter);
 				$('.fileType').html(result.fileType);
 				$('.fileContent').html(result.fileContent);

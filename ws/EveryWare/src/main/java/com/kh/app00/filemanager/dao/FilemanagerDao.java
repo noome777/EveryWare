@@ -32,5 +32,11 @@ public interface FilemanagerDao {
 	
 	//선택조회
 	FilemanagerVo selectOne(SqlSessionTemplate sst, String fileCode);
+	
+	//복사하기 추가
+	int addCopy(SqlSessionTemplate sst, FilemanagerVo vo);
+	
+	//수정하기 추가
+	int edit(SqlSessionTemplate sst, FilemanagerVo vo);
 
 }
