@@ -124,7 +124,8 @@ public class FilemanagerController {
 				size = Long.toString(kilobyte);
 				size = size + "KB";
 			}else {
-				size = Long.toString(kilobyte);
+				long megabyte = kilobyte / 1024;
+				size = Long.toString(megabyte);
 				size = size + "MB";
 			}
 			vo.setFileSize(size);
