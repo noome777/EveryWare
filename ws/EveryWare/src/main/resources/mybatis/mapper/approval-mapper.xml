@@ -3,7 +3,7 @@
 <mapper namespace="approvalMapper">
 
 	<select id="selectFormList" resultType="DocFormVo">
-		SELECT FORM_CODE, FORM_NAME FROM DOC_FORM ORDER BY FORM_CODE
+		SELECT FORM_CODE, FORM_NAME FROM DOC_FORM WHERE FORM_USE_YN = 'Y' ORDER BY FORM_CODE
 	</select>
   	
   	<select id="selectPeriodList" resultType="DocPeriodVo">
@@ -316,7 +316,7 @@
 		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
 		WHERE L.APPR_STATUS = 'W'
 		AND A.DOC_STATUS = 'N'
-		AND A.EMP_CODE = #{empName}) 
+		AND A.EMP_CODE = #{empCode}) 
 		SELECT COUNT(DISTINCT(T1.DOC_CODE)) 
 		FROM T1
 		INNER JOIN APPROVAL_LIST L ON T1.DOC_CODE = L.DOC_CODE
@@ -397,15 +397,74 @@
 		ORDER BY A.DOC_CODE DESC
 	</select>
 	
+	<select id="selectCompletRefTotalCnt" resultType="int">
+		SELECT COUNT(DISTINCT(A.DOC_CODE))
+		FROM APPROVAL_DOC A
+		INNER JOIN DOC_FORM F ON A.DOC_FORM_CODE = F.FORM_CODE
+		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
+        INNER JOIN APPROVAL_REF R ON R.DOC_CODE = A.DOC_CODE
+		WHERE R.REF_EMP_CODE = #{empCode}
+		AND A.DOC_STATUS = 'N'
+		AND A.DOC_APPR_DATE IS NOT NULL
+		<if test="docFormCode != null and docFormCode != 0">
+			AND A.DOC_FORM_CODE = #{docFormCode}
+		</if>
+	</select>
 	
+	<select id="selectCompletRefDocList" resultType="ApprovalDocVo">
+		SELECT DISTINCT(A.DOC_CODE) AS DOC_CODE, A.DOC_FORM_CODE, A.DOC_TITLE, A.EMP_CODE, TO_CHAR(A.DOC_ENROLL_DATE, 'YYYY.MM.DD') AS DOC_ENROLL_DATE, E.EMP_NAME, F.FORM_NAME 
+		FROM APPROVAL_DOC A
+		INNER JOIN DOC_FORM F ON A.DOC_FORM_CODE = F.FORM_CODE
+		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
+        INNER JOIN APPROVAL_REF R ON R.DOC_CODE = A.DOC_CODE
+		WHERE R.REF_EMP_CODE = #{empCode}
+		AND A.DOC_STATUS = 'N'
+		AND A.DOC_APPR_DATE IS NOT NULL
+		<if test="docFormCode != null and docFormCode != 0">
+			AND A.DOC_FORM_CODE = #{docFormCode}
+		</if>
+		ORDER BY A.DOC_CODE DESC
+	</select>
 	
+	<select id="selectUnApprTotalCnt" resultType="int">
+		SELECT COUNT(DISTINCT(A.DOC_CODE))
+		FROM APPROVAL_DOC A
+		INNER JOIN DOC_FORM F ON A.DOC_FORM_CODE = F.FORM_CODE
+		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
+		INNER JOIN APPROVAL_LIST L ON L.DOC_CODE = A.DOC_CODE
+		WHERE A.EMP_CODE = #{empCode}
+		AND A.DOC_STATUS = 'N'
+		AND L.APPR_STATUS = 'C'
+		AND A.DOC_APPR_DATE IS NOT NULL
+		<if test="docFormCode != null and docFormCode != 0">
+			AND A.DOC_FORM_CODE = #{docFormCode}
+		</if>
+	</select>
 	
+	<select id="selectUnApprDocList" resultType="ApprovalDocVo">
+		SELECT DISTINCT(A.DOC_CODE) AS DOC_CODE, A.DOC_FORM_CODE, A.DOC_TITLE, A.EMP_CODE, TO_CHAR(A.DOC_ENROLL_DATE, 'YYYY.MM.DD') AS DOC_ENROLL_DATE, E.EMP_NAME, F.FORM_NAME 
+		FROM APPROVAL_DOC A
+		INNER JOIN DOC_FORM F ON A.DOC_FORM_CODE = F.FORM_CODE
+		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
+		INNER JOIN APPROVAL_LIST L ON L.DOC_CODE = A.DOC_CODE
+		WHERE A.EMP_CODE = #{empCode}
+		AND A.DOC_STATUS = 'N'
+		AND L.APPR_STATUS = 'C'
+		AND A.DOC_APPR_DATE IS NOT NULL
+		<if test="docFormCode != null and docFormCode != 0">
+			AND A.DOC_FORM_CODE = #{docFormCode}
+		</if>
+		ORDER BY A.DOC_CODE DESC
+	</select>
 	
+	<select id="selectDocFormList" resultType="DocFormVo">
+		SELECT FORM_CODE, FORM_NAME, FORM_INTRO, FORM_USE_YN FROM DOC_FORM
+		ORDER BY FORM_CODE DESC
+	</select>
 	
-	
-	
-	
-	
+	<select id="selectDocForm" resultType="DocFormVo">
+		SELECT FORM_CODE, FORM_NAME, FORM_INTRO, FORM_USE_YN FROM DOC_FORM WHERE FORM_CODE = #{formCode} 
+	</select>
 	
 	
 	
@@ -426,8 +485,29 @@
 		</foreach>
 	</insert>
 	
+	<update id="updateDocForm">
+		UPDATE DOC_FORM SET FORM_INTRO = #{formIntro} , FORM_USE_YN = #{formUseYn}
+		WHERE FORM_CODE = #{formCode}
+	</update>
 	
+	<select id="selectAllDocTotalCnt" resultType="int">
+		SELECT COUNT(*) FROM APPROVAL_DOC
+		WHERE DOC_STATUS = 'N'
+		<if test="docFormCode != null and docFormCode != 0">
+			AND DOC_FORM_CODE = #{docFormCode}
+		</if>
+	</select>
 	
-	
+	<select id="selectAllDocList" resultType="ApprovalDocVo">
+		SELECT DISTINCT(A.DOC_CODE) AS DOC_CODE, A.DOC_FORM_CODE, A.DOC_TITLE, A.EMP_CODE, TO_CHAR(A.DOC_ENROLL_DATE, 'YYYY.MM.DD') AS DOC_ENROLL_DATE, E.EMP_NAME, F.FORM_NAME 
+		FROM APPROVAL_DOC A
+		INNER JOIN DOC_FORM F ON A.DOC_FORM_CODE = F.FORM_CODE
+		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
+		WHERE A.DOC_STATUS = 'N'
+		<if test="docFormCode != null and docFormCode != 0">
+			AND A.DOC_FORM_CODE = #{docFormCode}
+		</if>
+		ORDER BY A.DOC_CODE DESC
+	</select>
 	
 </mapper>

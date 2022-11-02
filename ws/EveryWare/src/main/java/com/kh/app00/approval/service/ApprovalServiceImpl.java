@@ -192,37 +192,6 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public List<ApprovalDocVo> selectDocList(PageVo pv) {
 		return dao.selectDocList(sst, pv);
 	}
-	
-	//문서 양식상세 항목 불러오기
-	@Override
-	public List<DocFormDetailTemplateVo> selectFormDetailList() {
-		return dao.selectFormDetailList(sst);
-	}
-
-	//문서양식 insert
-	@Override
-	@Transactional(rollbackFor = {Exception.class})
-	public int insertForm(DocFormVo formVo) {
-
-		int docFormResult = dao.insertDocForm(sst, formVo);
-		
-		// insert된 pk select key로 가져왔으니 값이 있어야함
-		String constructedFormCode = formVo.getFormCode();
-		
-		List<DocFormMapperVo> mappingList = formVo.getFormDetailList();
-		for(DocFormMapperVo vo : mappingList) {
-			vo.setFormCode(constructedFormCode);
-		}
-		
-		int docFormMappingResult = dao.insertDocFormMapping(sst, mappingList);
-		
-		return docFormResult * docFormMappingResult;
-	}
-
-	
-	
-	
-	
 	//결재 예정 리스트 개수 구하기
 	@Override
 	public int selectExpectCount(ApprovalDocVo vo) {
@@ -283,9 +252,88 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public List<ApprovalDocVo> selectCompletApprDocList(ApprovalDocVo vo, PageVo pv) {
 		return dao.selectCompletApprDocList(sst, vo, pv);
 	}
+	//문서함 - 참조 문서 전체 갯수
+	@Override
+	public int selectCompletRefTotalCnt(ApprovalDocVo vo) {
+		return dao.selectCompletRefTotalCnt(sst, vo);
+	}
+	//문서함 - 참조 문서 목록 조회
+	@Override
+	public List<ApprovalDocVo> selectCompletRefDocList(ApprovalDocVo vo, PageVo pv) {
+		return dao.selectCompletRefDocList(sst, vo, pv);
+	}
+	//문서함 - 반려 문서 전체 갯수
+	@Override
+	public int selectUnApprTotalCnt(ApprovalDocVo vo) {
+		return dao.selectUnApprTotalCnt(sst, vo);
+	}
+	//문서함 - 반려 문서 목록 조회
+	@Override
+	public List<ApprovalDocVo> selectUnApprDocList(ApprovalDocVo vo, PageVo pv) {
+		return dao.selectUnApprDocList(sst, vo, pv);
+	}
 
 	
+	
+	
+	
+	
+	//문서 양식 목록 조회
+	@Override
+	public List<DocFormVo> selectDocFormList() {
+		return dao.selectDocFormList(sst);
+	}
+	//문서 양식 상세 조회
+	@Override
+	public DocFormVo selectDocForm(int formCode) {
+		return dao.selectDocForm(sst, formCode);
+	}
+	
+	
+	
+	//문서 양식상세 항목 불러오기
+	@Override
+	public List<DocFormDetailTemplateVo> selectFormDetailList() {
+		return dao.selectFormDetailList(sst);
+	}
 
+	//문서양식 insert
+	@Override
+	@Transactional(rollbackFor = {Exception.class})
+	public int insertForm(DocFormVo formVo) {
+
+		int docFormResult = dao.insertDocForm(sst, formVo);
+		
+		// insert된 pk select key로 가져왔으니 값이 있어야함
+		String constructedFormCode = formVo.getFormCode();
+		
+		List<DocFormMapperVo> mappingList = formVo.getFormDetailList();
+		for(DocFormMapperVo vo : mappingList) {
+			vo.setFormCode(constructedFormCode);
+		}
+		
+		int docFormMappingResult = dao.insertDocFormMapping(sst, mappingList);
+		
+		return docFormResult * docFormMappingResult;
+	}
+	//문서양식 수정
+	@Override
+	public int updateDocForm(DocFormVo vo) {
+		return dao.updateDocForm(sst, vo);
+	}
+	//전체 문서 갯수 조회
+	@Override
+	public int selectAllDocTotalCnt(ApprovalDocVo vo) {
+		return dao.selectAllDocTotalCnt(sst, vo);
+	}
+	//전체 문서 목록 조회
+	@Override
+	public List<ApprovalDocVo> selectAllDocList(ApprovalDocVo vo, PageVo pv) {
+		return dao.selectAllDocList(sst, vo, pv);
+	}
+
+	
+	
 	
 
 	

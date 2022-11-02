@@ -308,7 +308,7 @@ public class ApprovalController {
 //		return "approval/completAllList";
 //	}
 	
-	//뮨서함 - 기안
+	//문서함 - 기안
 	@GetMapping("completWriteList/{pno}/{docFormCode}")
 	public String completWriteList(Model model, HttpSession session, @PathVariable int pno, @PathVariable String docFormCode) {
 		
@@ -333,7 +333,7 @@ public class ApprovalController {
 		return "approval/completWriteList";
 	}
 	
-	//뮨서함 - 결재
+	//문서함 - 결재
 	@GetMapping("completApprList/{pno}/{docFormCode}")
 	public String completApprList(Model model, HttpSession session, @PathVariable int pno, @PathVariable String docFormCode) {
 		
@@ -358,12 +358,55 @@ public class ApprovalController {
 		return "approval/completApprList";
 	}
 	
+	//문서함 - 참조
+	@GetMapping("completRefList/{pno}/{docFormCode}")
+	public String completRefList(Model model, HttpSession session, @PathVariable int pno, @PathVariable String docFormCode) {
+		
+		EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
+
+		ApprovalDocVo vo = new ApprovalDocVo();
+		vo.setEmpCode(loginMember.getEmpCode());
+		vo.setDocFormCode(docFormCode);
+		
+		int totalCount = service.selectCompletRefTotalCnt(vo);
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 3, 15);
+		
+		//문서종류 불러오기
+		List<DocFormVo> formList = service.selectFormList();
+		List<ApprovalDocVo> docList = service.selectCompletRefDocList(vo, pv);
+		
+		model.addAttribute("formList", formList);
+		model.addAttribute("docList", docList);
+		model.addAttribute("pv", pv);
+		model.addAttribute("selectedFormCode", vo.getDocFormCode());
+		
+		return "approval/completRefList";
+	}
 	
-	
-	
-	
-	
-	
+	//문서함 - 반려
+	@GetMapping("unApprList/{pno}/{docFormCode}")
+	public String unApprList(Model model, HttpSession session, @PathVariable int pno, @PathVariable String docFormCode) {
+		
+		EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
+
+		ApprovalDocVo vo = new ApprovalDocVo();
+		vo.setEmpCode(loginMember.getEmpCode());
+		vo.setDocFormCode(docFormCode);
+		
+		int totalCount = service.selectUnApprTotalCnt(vo);
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 3, 15);
+		
+		//문서종류 불러오기
+		List<DocFormVo> formList = service.selectFormList();
+		List<ApprovalDocVo> docList = service.selectUnApprDocList(vo, pv);
+		
+		model.addAttribute("formList", formList);
+		model.addAttribute("docList", docList);
+		model.addAttribute("pv", pv);
+		model.addAttribute("selectedFormCode", vo.getDocFormCode());
+		
+		return "approval/unApprList";
+	}
 	
 	@GetMapping("storage")
 	public String storage() {
@@ -371,29 +414,51 @@ public class ApprovalController {
 	}
 	
 	
-	
-	@GetMapping("approvalAdmin")
-	public String admin() {
-		return "approval/approvalAdmin";
-	}
-	
-	
 	@GetMapping("formManager")
-	public String formManager() {
+	public String formManager(Model model) {
+		
+		List<DocFormVo> docFormList = service.selectDocFormList();
+		model.addAttribute("docFormList", docFormList);
+		
 		return "approval/formManager";
 	}
 	
-	@GetMapping("formManagerDetail")
-	public String formManagerDetail() {
+	@GetMapping("formManagerDetail/{formCode}")
+	public String formManagerDetail(@PathVariable int formCode, Model model) {
+		
+		DocFormVo docForm = service.selectDocForm(formCode);
+		List<DocFormMapperVo> formMappingList = service.formSelect(formCode);
+		
+		model.addAttribute("docForm", docForm);
+		model.addAttribute("formMappingList", formMappingList);
+		
 		return "approval/formManagerDetail";
 	}
 	
-	@GetMapping("formEdit")
-	public String formEdit() {
+	@GetMapping("formEdit/{formCode}")
+	public String formEdit(@PathVariable int formCode, Model model) {
+		
+		DocFormVo docForm = service.selectDocForm(formCode);
+		List<DocFormMapperVo> formMappingList = service.formSelect(formCode);
+		List<DocFormDetailTemplateVo> formDetailList = service.selectFormDetailList();
+		
+		model.addAttribute("formDetailList", formDetailList);
+		model.addAttribute("docForm", docForm);
+		model.addAttribute("formMappingList", formMappingList);
+		
 		return "approval/formEdit";
 	}
 	
-	
+	@PostMapping("formEdit")
+	@ResponseBody
+	public String forEdit(@RequestBody DocFormVo vo) {
+		int updateForm = service.updateDocForm(vo);
+		if(updateForm == 1) {
+			return "수정 성공";
+		} else {
+			return "수정 실패";
+		}
+	}
 	
 	@GetMapping("formInsert")
 	public String formInsert(Model model) {
@@ -414,5 +479,38 @@ public class ApprovalController {
 			return "실패";
 		}
 	}
+	
+	@GetMapping("approvalAllList/{pno}/{docFormCode}")
+	public String approvalAllList(Model model, HttpSession session, @PathVariable int pno, @PathVariable String docFormCode) {
+		
+		ApprovalDocVo vo = new ApprovalDocVo();
+		vo.setDocFormCode(docFormCode);
+		
+		int totalCount = service.selectAllDocTotalCnt(vo);
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 3, 15);
+		
+		//문서종류 불러오기
+		List<DocFormVo> formList = service.selectFormList();
+		List<ApprovalDocVo> docList = service.selectAllDocList(vo, pv);
+		
+		model.addAttribute("formList", formList);
+		model.addAttribute("docList", docList);
+		model.addAttribute("pv", pv);
+		model.addAttribute("selectedFormCode", vo.getDocFormCode());
+		
+		return "approval/approvalAllList";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

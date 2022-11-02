@@ -408,6 +408,7 @@
 
     //결재라인 설정 완료하기
     $('#approver-submit').on('click', function () {
+      
       let userCode = $('.approver-select-box option').val();
       
       $('#approval-table *').remove();
@@ -442,16 +443,14 @@
           let writerCode = $('.writer-name').attr('id');
           if(i == 0 && j == 0){
            
-            rankHtml += '<td style="width : 80px"></td>';
+            rankHtml += '<td></td>';
             markHtml += '<td></td>';
-            nameHtml += '<td>' + writer + writerCode + '</td>';
+            nameHtml += '<td>' + writer + '</td>';
           }
 
-          rankHtml += '<td style="width : 80px">' + empRankName + '</td>';
+          rankHtml += '<td>' + empRankName + '</td>';
           markHtml += '<td></td>';
           nameHtml += '<td>' + empName + '</td>';
-          
-
 
         })
         let blankTd;
@@ -637,7 +636,8 @@
         })
 
       })
-      console.log(approverList);
+      
+      
       //참조인 -> 사원코드
       let approvalRefList = [];
       $('.ref-select-box option').each(function (i) {
@@ -647,32 +647,37 @@
         approvalRefList.push(object);
       })
       console.log(approvalRefList);
-
-
-      //
-      let param = {
-        periodCode : $('#custom-select').val(),
-        docFormCode : $('#formSelect').val(),
-        docTitle : $('[name=docTitle]').val(),
-        docDataList : docDataList,
-        approverList : approverList,
-        approvalRefList : approvalRefList
-        // approvalFileList : '서버에 업로드된 경로 리스트'
-      }
-      console.log(param);
-      $.ajax({
-        url : "${root}/approval/write" ,
-        method : "POST" ,
-        data : JSON.stringify(param),
-        contentType: "application/json; charset=utf-8",
-        success : function(data){
-          alert('작성 성공');
-          location.href='${root}/approval/progressAllList/1';
-        } , 
-        error : (error) => {
-          console.log(JSON.stringify(error));
+      
+      
+      if(approverList.length < 1){
+        alert('결재자를 추가해주세요');
+      } else {
+        
+        let param = {
+          periodCode : $('#custom-select').val(),
+          docFormCode : $('#formSelect').val(),
+          docTitle : $('[name=docTitle]').val(),
+          docDataList : docDataList,
+          approverList : approverList,
+          approvalRefList : approvalRefList
+          // approvalFileList : '서버에 업로드된 경로 리스트'
         }
-      })
+        console.log(param);
+        $.ajax({
+          url : "${root}/approval/write" ,
+          method : "POST" ,
+          data : JSON.stringify(param),
+          contentType: "application/json; charset=utf-8",
+          success : function(data){
+            alert('작성 성공');
+            location.href='${root}/approval/progressAllList/1';
+          } , 
+          error : (error) => {
+            console.log(JSON.stringify(error));
+          }
+        })
+
+      }
     }
 
 	</script>

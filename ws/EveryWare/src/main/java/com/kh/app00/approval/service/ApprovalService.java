@@ -59,13 +59,6 @@ public interface ApprovalService {
 	int selectTotalCnt();
 	//문서 목록 조회
 	List<ApprovalDocVo> selectDocList(PageVo pv);
-
-	
-	//문서 양식상세 항목 불러오기
-	List<DocFormDetailTemplateVo> selectFormDetailList();
-	//문서양식 insert
-	int insertForm(DocFormVo formVo);
-	
 	//결재 예정 리스트 개수 구하기
 	int selectExpectCount(ApprovalDocVo vo);
 	//결재 예정 문서 목록 조회
@@ -91,6 +84,35 @@ public interface ApprovalService {
 	int selectCompletApprTotalCnt(ApprovalDocVo vo);
 	//문서함 - 결재 문서 목록 조회
 	List<ApprovalDocVo> selectCompletApprDocList(ApprovalDocVo vo, PageVo pv);
+	//문서함 - 참조 문서 전체 갯수
+	int selectCompletRefTotalCnt(ApprovalDocVo vo);
+	//문서함 - 참조 문서 목록 조회
+	List<ApprovalDocVo> selectCompletRefDocList(ApprovalDocVo vo, PageVo pv);
+	//문서함 - 반려 문서 전체 갯수
+	int selectUnApprTotalCnt(ApprovalDocVo vo);
+	//문서함 - 반려 문서 목록 조회
+	List<ApprovalDocVo> selectUnApprDocList(ApprovalDocVo vo, PageVo pv);
+
+	
+	//문서 양식 목록 조회
+	List<DocFormVo> selectDocFormList();
+	//문서 양식 상세 조회
+	DocFormVo selectDocForm(int formCode);
+	
+	
+	
+	
+	//문서 양식상세 항목 불러오기
+	List<DocFormDetailTemplateVo> selectFormDetailList();
+	//문서양식 insert
+	int insertForm(DocFormVo formVo);
+	//문서양식 수정
+	int updateDocForm(DocFormVo vo);
+	//전체 문서 갯수 조회
+	int selectAllDocTotalCnt(ApprovalDocVo vo);
+	//전체 문서 목록 조회
+	List<ApprovalDocVo> selectAllDocList(ApprovalDocVo vo, PageVo pv);
+	
 
 	
 
