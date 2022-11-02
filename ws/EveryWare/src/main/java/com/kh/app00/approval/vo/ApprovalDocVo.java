@@ -25,6 +25,7 @@ public class ApprovalDocVo {
 	private String deptName;
 	private String rankName;
 	private String period;
+	private String rightCode;
 	
 	private List<DocDataVo> docDataList;
 	private List<ApprovalListVo> approverList;

@@ -14,7 +14,7 @@
     .appr-table-color{
         background-color: rgb(244, 249, 255);
     }
-    #form-manager-table{
+    .appr-tab{
         margin: 0 auto;
         margin-top: 30px;
         width: 80%;
@@ -36,9 +36,10 @@
         margin: 0 auto;
         width: 60vw;
     }
-    #content-box{
-        margin-left: 70px;
-    }
+		#content-box{
+			width: 70%;
+			margin: 0 auto;
+		}
 </style>
 </head>
 <body>
@@ -46,44 +47,54 @@
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     <%@ include file="/WEB-INF/views/approval/sidemenu-content.jsp" %>
 
-    <main role="main" class="main-content">
-        <a href="${root}/approval/formEdit">수정하기</a>
-        <div class="card shadow mb-4">
-            <div class="card-body">
-                <div>
-                    <h3 class="center">양식 상세</h3>
-                    <table class="table table-bordered mb-0 shadow" id="form-manager-table">
-                        <tr>
-                            <td class="appr-table-color">양식 번호</td>
-                            <td class="appr-table-color">양식명</td>
-                            <td class="appr-table-color">상태</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>품의서</td>
-                            <td>사용</td>
-                        </tr>
-                    </table>
-                    
-                    <div id="content-box">
-                        <h5 id="detail-title" class="appr-font-color">양식 설명</h5> 
-                        <div id="detail-box">
-                            품의할 수있는 품의서 입니다~~
-                        </div>
-        
-                        <h5 id="detail-title" class="appr-font-color">양식 항목</h5>
-                        <div id="detail-box">
-                            <div>회계월</div>
-                            <div>적요</div>
-                            <div>송금요청</div>
-                            <div>등</div>
-                            <div>등</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+	<main role="main" class="main-content">
+		
+		<div class="card shadow mb-4">
+			<div class="card-body">
+				<div>
+					<h3 class="center">양식 상세</h3>
+					<table class="table table-bordered mb-0 shadow appr-tab w-75" id="form-manager-table">
+						<tr>
+							<td class="appr-table-color">양식 번호</td>
+							<td class="appr-table-color">양식명</td>
+							<td class="appr-table-color">사용여부</td>
+						</tr>
+						<tr>
+							<td>${docForm.formCode}</td>
+							<td>${docForm.formName}</td>
+							<td>${docForm.formUseYn}</td>
+						</tr>
+					</table>
+					
+					<div id="content-box">
+						<h5 id="detail-title" class="appr-font-color">양식 설명</h5> 
+						<hr>
+						<div id="detail-box">
+							${docForm.formIntro}
+						</div>
+
+						<h5 id="detail-title" class="appr-font-color">양식 항목</h5>
+						<hr>
+						<table class="table table-bordered shadow appr-tab">
+							<tr>
+								<td class="appr-table-color w-50">표시 순서</td>
+								<td class="appr-table-color w-50">항목명</td>
+							</tr>
+							<c:forEach items="${formMappingList}" var="f">
+								<tr>
+									<td>${f.formDetailSeq}</td>
+									<td>${f.formDetailName}</td>
+								</tr>
+							</c:forEach>
+						</table>   
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="text-center">
+			<a href="${root}/approval/formEdit/${docForm.formCode}"><button class="btn mb-2 btn-secondary text-center">수정하기</button></a>
+		</div>
+	</main>
 
 </body>
 </html>

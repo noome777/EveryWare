@@ -76,7 +76,7 @@
               </td>
             </tr>
             <tr>
-                <td class="appr-table-color">상태</td>
+                <td class="appr-table-color">사용여부</td>
                 <td>
                     <select class="custom-select form-control" id="formSelect" name="formUseYn">
                         <option selected>선택</option>
@@ -128,14 +128,12 @@
 	</main>
 
   <script>
-    //결재자 추가하기
-    $('.add-user').on('click', function () {
-      let formCode = $('#form-name option:selected').val();
-      let formOption = $('#form-name option[value=' + formCode + ']')[0].outerHTML;
+     $('.add-user').on('click', function () {
+      let detailCode = $('#form-name option:selected').val();
+      let formOption = $('#form-name option[value=' + detailCode + ']')[0].outerHTML;
 
-      //중복체크
       let selectedOptionVal = [];
-      $($('#selected-detail option[value=' + formCode + ']')).each(function () {
+      $($('#selected-detail option[value=' + detailCode + ']')).each(function () {
         var selected = $(this).val();
         selectedOptionVal.push(selected);
       })
@@ -143,7 +141,7 @@
       if(selectedOptionVal.length == 0){
         $('#selected-detail').append(formOption);
       } else {
-          if($.inArray(formCode, selectedOptionVal) != -1){
+          if($.inArray(detailCode, selectedOptionVal) != -1){
             alert('이미 추가한 항목입니다.');
           } else {
             $('#selected-detail').append(formOption);
@@ -151,14 +149,9 @@
       }
     })
 
-    //결재자 삭제하기
     $('.delete-user').on('click', function () {
-      let formCode = $('#form-name option:selected').val();
-      let formOption = $('#form-name option[value=' + formCode + ']');
-
-      $('#selected-detail option[value=' + formCode + ']').remove();
-
-      
+      let detailCode = $('#selected-detail option:selected').val();
+      $('#selected-detail option[value=' + detailCode + ']').remove();
     })
     
     $('[type=submit]').on('click', function () {
@@ -193,7 +186,7 @@
         url : "${root}/approval/formInsert" ,
         method : "POST" ,
         contentType: "application/json; charset=utf-8",
-        data : JSON.stringify(param) , // 컨텐츠 타입 및 stringify 작업을 통해 제이쿼리 ajax와 spring 사이의 파싱이슈 대비
+        data : JSON.stringify(param) ,
         success : function (data) {
           alert('양식 생성 성공');
           location.href='${root}/approval/formManager'

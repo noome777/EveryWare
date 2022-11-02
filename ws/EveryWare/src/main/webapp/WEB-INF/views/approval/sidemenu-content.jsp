@@ -107,9 +107,15 @@
                   <span class="ml-3 item-text">설정</span>
                 </a>
                 <ul class="collapse list-unstyled pl-4 w-100" id="contact">
-                  <a class="nav-link pl-3" href="${root}/approval/formManager"><span class="ml-1">양식 관리</span></a>
-                  <a class="nav-link pl-3" href="${root}/approval/list/1"><span class="ml-1">전체 문서 목록</span></a>
-                  <a class="nav-link pl-3" href="${root}/approval/list/1"><span class="ml-1">삭제 문서 목록</span></a>
+                  <li class="nav-item">
+                    <a class="nav-link pl-3" href="${root}/approval/formManager"><span class="ml-1">양식 관리</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link pl-3" href="${root}/approval/approvalAllList/1/0"><span class="ml-1">전체 문서 목록</span></a>
+                  </li>                  
+                  <li class="nav-item">
+                    <a class="nav-link pl-3" href="${root}/approval/deleteList/1"><span class="ml-1">삭제 문서 목록</span></a>
+                  </li>
                 </ul>
               </li>
             </ul>

@@ -29,37 +29,31 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	public List<DocFormVo> selectFormList(SqlSessionTemplate sst) {
 		return sst.selectList("approvalMapper.selectFormList");
 	}
-
 	//보존연한
 	@Override
 	public List<DocPeriodVo> selectPeriodList(SqlSessionTemplate sst) {
 		return sst.selectList("approvalMapper.selectPeriodList");
 	}
-	
 	//양식항목
 	@Override
 	public List<DocFormMapperVo> formSelect(SqlSessionTemplate sst, int formCode) {
 		return sst.selectList("approvalMapper.formSelectList", formCode);
 	}
-
 	//결재타입
 	@Override
 	public List<ApprovalTypeVo> selectTypeList(SqlSessionTemplate sst) {
 		return sst.selectList("approvalMapper.selectTypeList");
 	}
-	
 	//부서 불러오기
 	@Override
 	public List<DeptVo> selectDeptList(SqlSessionTemplate sst) {
 		return sst.selectList("approvalMapper.selectDeptList");
 	}
-
 	//임직원 불러오기
 	@Override
 	public List<EmpVo> selectEmpList(SqlSessionTemplate sst) {
 		return sst.selectList("approvalMapper.selectEmpList");
 	}
-
 	//부서별 임직원 불러오기
 	@Override
 	public List<EmpVo> selectDeptEmp(SqlSessionTemplate sst, int deptCode) {
@@ -76,25 +70,22 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	public int insertDocData(SqlSessionTemplate sst, List<DocDataVo> docDataList) {
 		return sst.insert("approvalMapper.insertDocData", docDataList);
 	}
-
 	//결재자리스트 insert
 	@Override
 	public int insertApproverList(SqlSessionTemplate sst, List<ApprovalListVo> approverList) {
 		return sst.insert("approvalMapper.insertApproverList", approverList);
 	}
-
 	//참조인 insert
 	@Override
 	public int insertApprovalRef(SqlSessionTemplate sst, List<ApprovalRefVo> approvalRefList) {
 		return sst.insert("approvalMapper.insertApprovalRef", approvalRefList);
 	}
-
 	//첨부파일 insert
 	@Override
 	public int insertApprovalFile(SqlSessionTemplate sst, List<ApprovalFileVo> approvalFileList) {
 		return sst.insert("approvalMapper.insertApprovalFile", approvalFileList);
 	}
-	
+
 	//작성된 문서 상세정보 불러오기
 	@Override
 	public ApprovalDocVo selectDocDetail(SqlSessionTemplate sst, String docCode) {
@@ -125,6 +116,7 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	public DocCommentVo selectUnApprComment(SqlSessionTemplate sst, String docCode) {
 		return sst.selectOne("approvalMapper.selectUnApprComment", docCode);
 	}
+	
 	//문서 승인
 	@Override
 	public int updateApprove(SqlSessionTemplate sst, ApprovalListVo vo) {
@@ -135,11 +127,6 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	public ApprovalListVo maxApprSeq(SqlSessionTemplate sst, ApprovalListVo vo) {
 		return sst.selectOne("approvalMapper.maxApprSeq", vo);
 	}
-	
-	
-	
-	
-	
 	//문서 반려
 	@Override
 	public int updateUnApprove(SqlSessionTemplate sst, ApprovalListVo apprVo) {
@@ -181,24 +168,7 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	
 	
 	
-	//문서 상세항목 불러오기
-	@Override
-	public List<DocFormDetailTemplateVo> selectFormDetailList(SqlSessionTemplate sst) {
-		return sst.selectList("approvalMapper.selectFormDetailList");
-	}
-
-	//문서양식 insert
-	//docForm insert
-	@Override
-	public int insertDocForm(SqlSessionTemplate sst, DocFormVo formVo) {
-		return sst.insert("approvalMapper.insertDocForm", formVo);
-	}
-	//docFormMapping insert
-	@Override
-	public int insertDocFormMapping(SqlSessionTemplate sst, List<DocFormMapperVo> mappingList) {
-		return sst.insert("approvalMapper.insertDocFormMapping", mappingList);
-	}
-
+	
 	
 	
 	
@@ -283,12 +253,80 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
 		return sst.selectList("approvalMapper.selectCompletApprDocList", vo, rb);
 	}
+	//문서함 - 참조 문서 전체 갯수
+	@Override
+	public int selectCompletRefTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo) {
+		return sst.selectOne("approvalMapper.selectCompletRefTotalCnt", vo);
+	}
+	//문서함 - 참조 문서 목록 조회
+	@Override
+	public List<ApprovalDocVo> selectCompletRefDocList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv) {
+		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
+		return sst.selectList("approvalMapper.selectCompletRefDocList", vo, rb);
+	}
+	//문서함 - 반려 문서 전체 갯수
+	@Override
+	public int selectUnApprTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo) {
+		return sst.selectOne("approvalMapper.selectUnApprTotalCnt", vo);
+	}
+	//문서함 - 반려 문서 목록 조회
+	@Override
+	public List<ApprovalDocVo> selectUnApprDocList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv) {
+		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
+		return sst.selectList("approvalMapper.selectUnApprDocList", vo, rb);
+	}
+	
+	//문서 양식 목록 조회
+	@Override
+	public List<DocFormVo> selectDocFormList(SqlSessionTemplate sst) {
+		return sst.selectList("approvalMapper.selectDocFormList");
+	}
+	//문서 양식 상세 조회
+	@Override
+	public DocFormVo selectDocForm(SqlSessionTemplate sst, int formCode) {
+		return sst.selectOne("approvalMapper.selectDocForm", formCode);
+	}
 
 	
 
+
 	
+	//문서 상세항목 불러오기
+	@Override
+	public List<DocFormDetailTemplateVo> selectFormDetailList(SqlSessionTemplate sst) {
+		return sst.selectList("approvalMapper.selectFormDetailList");
+	}
 
-
+	//문서양식 insert
+	//docForm insert
+	@Override
+	public int insertDocForm(SqlSessionTemplate sst, DocFormVo formVo) {
+		return sst.insert("approvalMapper.insertDocForm", formVo);
+	}
+	//docFormMapping insert
+	@Override
+	public int insertDocFormMapping(SqlSessionTemplate sst, List<DocFormMapperVo> mappingList) {
+		return sst.insert("approvalMapper.insertDocFormMapping", mappingList);
+	}
+	//문서양식 수정
+	@Override
+	public int updateDocForm(SqlSessionTemplate sst, DocFormVo vo) {
+		return sst.update("approvalMapper.updateDocForm", vo);
+	}
+	//전체 문서 갯수 조회
+	@Override
+	public int selectAllDocTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo) {
+		return sst.selectOne("approvalMapper.selectAllDocTotalCnt", vo);
+	}
+	//전체 문서 목록 조회
+	@Override
+	public List<ApprovalDocVo> selectAllDocList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv) {
+		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
+		return sst.selectList("approvalMapper.selectAllDocList", vo, rb);
+	}
 	
 
 	

@@ -23,22 +23,16 @@ public interface ApprovalDao {
 	
 	//문서종류 불러오기
 	List<DocFormVo> selectFormList(SqlSessionTemplate sst);
-
 	//보존연한 불러오기
 	List<DocPeriodVo> selectPeriodList(SqlSessionTemplate sst);
-	
 	//양식항목 불러오기
 	List<DocFormMapperVo> formSelect(SqlSessionTemplate sst, int formCode);
-	
 	//결재타입 불러오기
 	List<ApprovalTypeVo> selectTypeList(SqlSessionTemplate sst);
-
 	//부서 불러오기
 	List<DeptVo> selectDeptList(SqlSessionTemplate sst);
-
 	//임직원 불러오기
 	List<EmpVo> selectEmpList(SqlSessionTemplate sst);
-
 	//부서별 임직원 불러오기
 	List<EmpVo> selectDeptEmp(SqlSessionTemplate sst, int deptCode);
 
@@ -87,19 +81,6 @@ public interface ApprovalDao {
 
 	
 	
-	//문서 양식상세 항목 불러오기
-	List<DocFormDetailTemplateVo> selectFormDetailList(SqlSessionTemplate sst);
-	//문서양식 insert
-	//docForm insert
-	int insertDocForm(SqlSessionTemplate sst, DocFormVo formVo);
-	//docFormMapping insert
-	int insertDocFormMapping(SqlSessionTemplate sst, List<DocFormMapperVo> mappingList);
-
-	
-	
-
-	
-	
 	//결재 예정 리스트 개수 구하기
 	int selectExpectCount(SqlSessionTemplate sst, ApprovalDocVo vo);
 	//결재 예정 문서 목록 조회
@@ -125,10 +106,34 @@ public interface ApprovalDao {
 	int selectCompletApprTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo);
 	//문서함 - 결재 문서 목록 조회
 	List<ApprovalDocVo> selectCompletApprDocList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv);
-
-
-
+	//문서함 - 참조 문서 전체 갯수
+	int selectCompletRefTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo);
+	//문서함 - 참조 문서 목록 조회
+	List<ApprovalDocVo> selectCompletRefDocList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv);
+	//문서함 - 반려 문서 전체 갯수
+	int selectUnApprTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo);
+	//문서함 - 반려 문서 목록 조회
+	List<ApprovalDocVo> selectUnApprDocList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv);
 	
+	//문서 양식 목록 조회
+	List<DocFormVo> selectDocFormList(SqlSessionTemplate sst);
+	//문서 양식 상세 조회
+	DocFormVo selectDocForm(SqlSessionTemplate sst, int formCode);
+
+
+	//문서 양식상세 항목 불러오기
+	List<DocFormDetailTemplateVo> selectFormDetailList(SqlSessionTemplate sst);
+	//문서양식 insert
+	//docForm insert
+	int insertDocForm(SqlSessionTemplate sst, DocFormVo formVo);
+	//docFormMapping insert
+	int insertDocFormMapping(SqlSessionTemplate sst, List<DocFormMapperVo> mappingList);
+	//문서양식 수정
+	int updateDocForm(SqlSessionTemplate sst, DocFormVo vo);
+	//전체 문서 갯수 조회
+	int selectAllDocTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo);
+	//전체 문서 목록 조회
+	List<ApprovalDocVo> selectAllDocList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv);
 	
 
 	
