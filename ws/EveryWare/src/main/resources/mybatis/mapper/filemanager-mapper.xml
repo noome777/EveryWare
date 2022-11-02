@@ -146,4 +146,11 @@
         ON F.EMP_CODE = E.EMP_CODE
 		WHERE FILE_CODE = #{fileCode}
 	</select>
+	
+	<insert id="addCopy">
+		INSERT INTO 
+		FILECLOUD ( FILE_CODE , EMP_CODE , FILE_TITLE , FILE_CONTENT,  FILE_NAME , FILE_URL, FILE_BOOKMARK ,FILE_TYPE, FILE_SIZE) 
+		VALUES ( SEQ_FILE_CODE.NEXTVAL ,1 , #{fileTitle} , #{fileContent}  , #{fileName} , #{fileUrl} , 0 , #{fileType}, #{fileSize})
+	
+	</insert>
 </mapper>
