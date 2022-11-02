@@ -48,7 +48,6 @@ public class OrganizationController {
 		
 		List<DeptVo> deptList = organizationService.selectDeptList();
 		List<EmpVo> empList = organizationService.selectEmpList();
-		
 		/*
 		 * HashMap 통해서 key : level, value : DeptVo를 담은 list 전달 (level별로 묶음)
 		 */
@@ -656,13 +655,31 @@ public class OrganizationController {
 	
 	//조직도
 	@GetMapping("management/chart")
-	public String manageChart() {
+	public String manageChart(HttpSession session,Model model) {
+		
+		List<DeptVo> deptList = organizationService.selectDeptList();
+		/*
+		 * HashMap 통해서 key : level, value : DeptVo를 담은 list 전달 (level별로 묶음)
+		 */
+		
+		if(deptList==null) {
+			session.setAttribute("errorMsg", "조직도를 불러오는데 실패하였습니다. 다시 한 번 시도해보시길 바랍니다.");
+			return "redirect:/organization/management/info";
+		}
+		
+		HashMap<String, ArrayList<DeptVo>> deptMap = new HashMap<String, ArrayList<DeptVo>>();
+		
+		for(DeptVo vo : deptList) {
+			String depth = vo.getDeptDepth();
+			ArrayList<DeptVo> list = deptMap.getOrDefault(depth, new ArrayList<DeptVo>());
+			list.add(vo);
+			deptMap.put(depth, list);
+		}
+		
+		model.addAttribute("deptMap",deptMap);
 		return "organization/chartManager";
+		
+		
 	}
 	
-	//조직도
-		@GetMapping("management/chart2")
-		public String manageChart2() {
-			return "organization/chartManager2";
-		}
 }

@@ -5,9 +5,17 @@
 <head></head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="icon" href="img/logo.png">
+  <link rel="stylesheet" href="/EveryWare/resources/css/organization/jquery.orgchart.css">
+  <link rel="stylesheet" href="/EveryWare/resources/css/organization/style.css">
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
+  <style>
+    .orgchart { background: white; }
+    #chart-container {
+      border-radius: 8px;
+      border : none;
+    }
+  </style>
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -27,7 +35,9 @@
               <!-- table -->
               <div class="card shadow card-wrap">
                 <div class="card-body">
-                  <div id="chart_div"></div>
+                  <div id="chart-container" class="shadow"></div>
+
+                 
                 </div>
               </div>
             </div>
@@ -38,31 +48,55 @@
 </body>
 
 
-<script type="text/javascript">
-  google.charts.load('current', {packages:["orgchart"]});
-  google.charts.setOnLoadCallback(drawChart);
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/EveryWare/resources/js/organization/jquery.orgchart.js"></script>
+  <script type="text/javascript">
+      $(function() {
 
-  function drawChart() {
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Name');
-    data.addColumn('string', 'Manager');
-    data.addColumn('string', 'ToolTip');
+var datascource = {
+  'name': 'Lao Lao',
+  'title': '테스트부서1',
+  'children': [
+    { 'name': 'Bo Miao', 'title': 'department manager' },
+    { 'name': 'Su Miao', 'title': 'department manager',
+      'children': [
+        { 'name': 'Tie Hua', 'title': 'senior engineer' },
+        { 'name': 'Hei Hei', 'title': 'senior engineer',
+          'children': [
+            { 'name': 'Pang Pang', 'title': 'engineer' },
+            { 'name': 'Dan Zai', 'title': 'UE engineer',
+              'children': [
+                { 'name': 'Er Dan Zai', 'title': 'Intern' }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    { 'name': 'Hong Miao', 'title': 'department manager' },
+    { 'name': 'Chun Miao', 'title': 'department manager' }
+  ]
+};
 
-    // For each orgchart box, provide the name, manager, and tooltip to show.
-    data.addRows([
-      [{'v':'Mike', 'f':'Mike<div style="color:red; font-style:italic">President</div>'},
-       '', 'The President'],
-      [{'v':'Jim', 'f':'Jim<div style="color:red; font-style:italic">Vice President</div>'},
-       'Mike', 'VP'],
-      ['Alice', 'Mike', ''],
-      ['Bob', 'Jim', 'Bob Sponge'],
-      ['Carol', 'Bob', '']
-    ]);
-
-    // Create the chart.
-    var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
-    // Draw the chart, setting the allowHtml option to true for the tooltips.
-    chart.draw(data, {'allowHtml':true});
+$('#chart-container').orgchart({
+  'visibleLevel': 2,
+  'pan': true,
+  'data' : datascource,
+  'nodeContent': 'title',
+  'createNode': function($node, data) {
+    $node.on('click', function(event) {
+      if (!$(event.target).is('.edge, .toggleBtn')) {
+        var $this = $(this);
+        var $chart = $this.closest('.orgchart');
+        var newX = window.parseInt(($chart.outerWidth(true)/2) - ($this.offset().left - $chart.offset().left) - ($this.outerWidth(true)/2));
+        var newY = window.parseInt(($chart.outerHeight(true)/2) - ($this.offset().top - $chart.offset().top) - ($this.outerHeight(true)/2));
+        $chart.css('transform', 'matrix(1, 0, 0, 1, ' + newX + ', ' + newY + ')');
+      }
+    });
   }
-</script>
+});
+
+});
+  </script>
+
 </html>
