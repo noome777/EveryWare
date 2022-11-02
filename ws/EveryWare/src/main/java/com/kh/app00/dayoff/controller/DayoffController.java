@@ -34,7 +34,15 @@ public class DayoffController {
         this.service = service;
     }
 
-    // 휴가 신청 화면 && 리스트 조회
+    /** 휴가 신청 화면 && 리스트 조회
+     * @param vo
+     * @param model
+     * @param session
+     * @param pno
+     * @param offStartDate
+     * @param offEndDate
+     * @return dayoffMain.jsp
+     */
     @GetMapping("main/{pno}")
     public String main(DayoffVo vo, Model model, HttpSession session,
             @PathVariable int pno, String offStartDate, String offEndDate) {
@@ -100,7 +108,14 @@ public class DayoffController {
         return "dayoff/dayoffMain";
     }
 
-    // 휴가 신청
+    /** 휴가 신청
+     * @param vo
+     * @param session
+     * @param offStartDate
+     * @param offEndDate
+     * @param pno
+     * @return
+     */
     @PostMapping("main/{pno}")
     public String insertOff(DayoffVo vo, HttpSession session,
             String offStartDate, String offEndDate, @PathVariable int pno) {
@@ -131,7 +146,14 @@ public class DayoffController {
 
     }
 
-    // 휴가의 관리자 페이지 (휴가 결재)
+    /** 휴가의 관리자 페이지 (휴가 결재)
+     * @param pno
+     * @param model
+     * @param vo
+     * @param offStartDate
+     * @param offEndDate
+     * @return adminDayoff.jsp
+     */
     @GetMapping("admin/{pno}")
     public String dayoffAdmin(@PathVariable int pno, Model model, DayoffVo vo,
             String offStartDate, String offEndDate) {
@@ -170,7 +192,13 @@ public class DayoffController {
 
     }
 
-    // 관리자의 결재 상태 반영
+    /** 관리자의 결재 상태 반영
+     * @param num
+     * @param approval
+     * @param vo
+     * @param model
+     * @return
+     */
     @PostMapping("sendApproval")
     public String sendApproval(String num, String approval, DayoffVo vo, Model model) {
 
@@ -193,7 +221,13 @@ public class DayoffController {
 
     }
 
-    //휴가 현황 조회 (full calendar)
+    /** 휴가 현황 조회 (full calendar)
+     * @param mv
+     * @param req
+     * @param vo
+     * @param session
+     * @return dayoffCal.jsp
+     */
     @GetMapping("calendar")
     public ModelAndView getCalendar(ModelAndView mv, HttpServletRequest req, DayoffVo vo, HttpSession session) {
 
@@ -217,7 +251,11 @@ public class DayoffController {
         return mv;
     }
     
-    //관리자의 휴가 현황 조회(모든 부서의 모든 사원)
+    /** 관리자의 휴가 현황 조회(모든 부서의 모든 사원)
+     * @param mv
+     * @param req
+     * @return dayoffCalAdmin.jsp
+     */
     @GetMapping("calendar/admin")
     public ModelAndView calendar(ModelAndView mv, HttpServletRequest req) {
         

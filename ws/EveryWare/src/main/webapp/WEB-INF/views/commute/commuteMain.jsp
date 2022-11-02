@@ -107,7 +107,7 @@ table>tbody>tr>td *{
               <div class="col-md-6 pt-4">
                 <h6 class="mb-0">
                   <input type="button" value="출근하기" id="enter" class="btn mb-2 btn-primary commute" onclick="Alert(); entertime();">
-                  <button class="btn mb-2 btn-light commute" >QR생성</button>
+                  <!-- <button class="btn mb-2 btn-light commute">QR생성</button> -->
                   <input type="text" class="mb-0" name="startTimeFormat" id="enter-time" value="" style="font-size: 20px; background-color:transparent;  border:0px transparent solid;"></input>
                   <input type="hidden" class="mb-0" name="startTime" id="enter-time-format" value="" style="font-size: 20px; background-color:transparent;  border:0px transparent solid;"></input>
                 </h6>
@@ -123,8 +123,6 @@ table>tbody>tr>td *{
             </div> <!-- .row -->
           </div> <!-- .card-body -->
         </div>
-        <!-- https://jamesdreaming.tistory.com/206 -->
-        <!-- https://truecode-95.tistory.com/37 -->
       </form>
 
       <!-- 근태현황 -->
@@ -424,7 +422,6 @@ todayWork.innerHTML = month + '월 근무시간' ;
 todayDate();
 </script>
 
-
-
 </body>
 </html>
+
