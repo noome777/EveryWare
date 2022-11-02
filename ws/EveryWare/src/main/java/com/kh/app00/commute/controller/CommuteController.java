@@ -45,7 +45,16 @@ public class CommuteController {
         this.service = service;
     }
 
-    // 근태 메인화면 (근태 현황조회, 근무시간 조회, 근태 리스트 조회)
+    /** 근태 메인화면 (근태 현황조회, 근무시간 조회, 근태 리스트 조회)
+     * @param model
+     * @param session
+     * @param vo
+     * @param empVo
+     * @param pno
+     * @param enrollDate
+     * @param comStatus
+     * @return commuteMain.jsp
+     */
     @GetMapping("main/{pno}")
     public String commuteMain(Model model, HttpSession session, CommuteVo vo, EmpVo empVo,
             @PathVariable int pno, String enrollDate, String comStatus) {
@@ -134,7 +143,17 @@ public class CommuteController {
         return "commute/commuteMain";
     }
 
-    // 관리자 출퇴근 기록 조회
+    
+    /** 관리자 출퇴근 기록 조회
+     * @param pno
+     * @param jobCode
+     * @param name
+     * @param vo
+     * @param model
+     * @param empVo
+     * @param session
+     * @return commuteAdminMain.jsp
+     */
     @GetMapping("main/admin/{pno}")
     public String commuteMainAdmin(@PathVariable int pno, String jobCode,
             String name, CommuteVo vo, Model model, EmpVo empVo, HttpSession session) {
@@ -171,7 +190,16 @@ public class CommuteController {
         return "commute/commuteAdminMain";
     }
 
-    // 근태 메인화면에서 출퇴근 버튼 입력 후 submit시
+    /** 근태 메인화면에서 출퇴근 버튼 입력 후 submit시
+     * @param vo
+     * @param session
+     * @param pno
+     * @param model
+     * @param resp
+     * @param req
+     * @return
+     * @throws ParseException
+     */
     @PostMapping("main/{pno}")
     public String commuteMain(CommuteVo vo, HttpSession session,
             @PathVariable int pno, Model model, HttpServletResponse resp, HttpServletRequest req)
@@ -242,7 +270,12 @@ public class CommuteController {
         }
     }
 
-    // 월 근무 내역 조회
+    /** 월 근무 내역 조회
+     * @param month
+     * @param model
+     * @param session
+     * @return selectByMonth.jsp
+     */
     @GetMapping("selectByMonth")
     public String selectByMonth(String month, Model model, HttpSession session) {
 
@@ -263,7 +296,14 @@ public class CommuteController {
         return "commute/selectByMonth";
     }
 
-    // 시간 외 근무 화면 && 리스트 조회
+    /** 시간 외 근무 화면 && 리스트 조회
+     * @param vo
+     * @param model
+     * @param session
+     * @param pno
+     * @param overDate
+     * @return overwork.jsp
+     */
     @GetMapping("overwork/{pno}")
     public String overwork(OverworkVo vo, Model model, HttpSession session,
             @PathVariable int pno, String overDate) {
@@ -317,7 +357,13 @@ public class CommuteController {
         return "commute/overwork";
     }
 
-    // 시간 외 근무 신청
+    /** 시간 외 근무 신청
+     * @param vo
+     * @param session
+     * @param pno
+     * @param overDate
+     * @return
+     */
     @PostMapping("overwork/{pno}")
     public String overwork(OverworkVo vo, HttpSession session, @PathVariable int pno, String overDate) {
 
@@ -346,7 +392,13 @@ public class CommuteController {
 
     }
 
-    // 시간 외 근무의 관리자 페이지 (시간 외 근무 결재)
+    /** 시간 외 근무의 관리자 페이지 (시간 외 근무 결재)
+     * @param pno
+     * @param model
+     * @param vo
+     * @param overDate
+     * @return adminOverwork.jsp
+     */
     @GetMapping("admin/{pno}")
     public String overworkAdmin(@PathVariable int pno, Model model, OverworkVo vo,
             String overDate) {
@@ -385,7 +437,13 @@ public class CommuteController {
         return "commute/adminOverwork";
     }
 
-    // 관리자의 결재 상태 반영
+    /** 관리자의 결재 상태 반영
+     * @param num
+     * @param approval
+     * @param vo
+     * @param model
+     * @return
+     */
     @PostMapping("sendApproval")
     public String sendApproval(String num, String approval, OverworkVo vo, Model model) {
 
@@ -406,5 +464,5 @@ public class CommuteController {
         }
 
     }
-
+    
 }
