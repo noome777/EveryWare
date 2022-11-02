@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="bookingMapper">
+
+	<!-- 예약 목록 조회 -->
+	<select id="selectList" resultType="BookingVo">
+		SELECT 
+            BK_NO
+            , BK_WRITER
+            , BK_TARGETNO
+            , BK_STARTDATE
+            , BK_STARTTIME
+            , BK_ENDDATE
+            , BK_ENDTIME
+		FROM BOOKING
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

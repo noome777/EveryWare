@@ -16,14 +16,12 @@ public class ContactsDaoImpl implements ContactsDao{
 	//주소록 목록
 	@Override
 	public List<ContactsVo> selectList(SqlSessionTemplate sst) {
-		
 		return sst.selectList("contactsMapper.selectList");
 	}
 
 	//주소록 삭제
 	@Override
 	public int delete(SqlSessionTemplate sst, String no) {
-
 		return sst.delete("contactsMapper.delete", no);
 	}
 

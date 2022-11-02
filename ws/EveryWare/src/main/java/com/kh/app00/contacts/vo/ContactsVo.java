@@ -1,7 +1,5 @@
 package com.kh.app00.contacts.vo;
 
-import com.kh.app00.commute.vo.CommuteVo;
-
 import lombok.Data;
 
 @Data
