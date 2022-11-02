@@ -16,9 +16,15 @@
 	margin-bottom: 20px;
 }
 .returnBtn{
-border: 0;
-outline: 0;
-background-color:transparent;
+	border: 0;
+	outline: 0;
+	background-color:transparent;
+}
+.booking-box{
+	margin: 10px;
+}
+.booking-label{
+	margin-top:20px;
 }
 </style>
 </head>
@@ -69,24 +75,26 @@ background-color:transparent;
                         
                       <div class="modal-body">
                        <!-- 카테고리 선택 -->
-                        <label for="example-select">자원 이름</label>
+                        <label for="example-select"><b>* 자원 이름</b></label>
                         <select class="form-control" id="example-select">
                           <option>비품1</option>
                           <option>비품2</option>
                           <option>비품3</option>
                         </select>
                  
-	                 	  <!-- 예약일자 -->      
+	                 	  <!-- 예약일자 -->       
 	                      <div id="booking-date">
-	                      <label for="example-date">예약기간</label>
+	                      <label for="example-date"><b>* 예약기간</b></label>
+	                      
 		                 	  <div class="input-group">
-		                        <input class="form-control" id="example-date" type="date" name="date">
-		                        <input class="form-control" id="example-time" type="time" name="time">
+		                 	  	<label class="booking-label" >예약 시작</label>
+		                        <input class="form-control booking-box" id="example-date" type="date" name="date">
+		                        <input class="form-control booking-box" id="example-time" type="time" name="time">
 		                      </div>
-		                      
 		                      <div class="input-group">
-		                      	<input class="form-control" id="example-date" type="date" name="date">
-		                        <input class="form-control" id="example-time" type="time" name="time">
+		                      <label class="booking-label">예약 종료</label>
+		                      	<input class="form-control booking-box" id="example-date"  type="date" name="date">
+		                        <input class="form-control booking-box" id="example-time" type="time" name="time">
 		                       </div>
 	                      </div>
                        </div>
@@ -125,6 +133,7 @@ background-color:transparent;
                     </thead>
                     
                     <tbody>
+                    <!-- 예시 -->
                       <tr>
                         <td>
                           <div class="custom-control custom-checkbox">
@@ -151,6 +160,40 @@ background-color:transparent;
                           <button class="returnBtn" onclick="javascript:btn()"><span class="badge badge-primary">반납하기</span></button>
                         </td> 
                       </tr>
+                      <!-- /예시 -->
+                      
+                    <c:forEach items="${bList}" var="list">
+                    <c:if test="${not empty loginMember}">
+                      <tr>
+                        <td>
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="2474">
+                            <label class="custom-control-label" for="2474"></label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="avatar avatar-sm">
+                            <img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+                          </div>
+                        </td>
+                        <td>
+                          <p class="mb-0 text-muted"><strong>비품이름</strong></p>
+                          <small class="mb-0 text-muted">${list.bkTargetNo}</small>
+                        </td>
+                        <td>
+                          <p class="mb-0 text-muted">${list.bkStartDate} ${list.bkStartTime} 부터
+                          <br> ${list.bkEndDate} ${list.bkEndTime} 까지 </p>
+                        </td>
+                        <td>
+                          <span class="badge badge-primary">예약중</span>
+                        </td>
+                        <td>
+                          <button class="returnBtn" onclick="javascript:btn()"><span class="badge badge-primary">반납하기</span></button>
+                        </td> 
+                      </tr>
+                    </c:if>
+                    </c:forEach>
+                      
                     </tbody>
                     
                   </table>

@@ -113,7 +113,7 @@ public class ContactController {
 		if(result == 1) {
 			//수정 성공
 			session.setAttribute("alertMsg", "수정되었습니다.");
-			return "contacts/contactList";
+			return "redirect:/";
 		}else {
 			//수정 실패
 			session.setAttribute("alertMsg", "수정 실패하였습니다.");

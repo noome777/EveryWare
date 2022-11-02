@@ -58,6 +58,9 @@
 		<!-- 메일 -->
 		<typeAlias alias="MailVo" type="com.kh.app00.mail.vo.MailVo"/>
 		
+		<!-- 예약 -->
+		<typeAlias alias="BookingVo" type="com.kh.app00.booking.vo.BookingVo"/>
+		
 	</typeAliases>
 	
 </configuration>
