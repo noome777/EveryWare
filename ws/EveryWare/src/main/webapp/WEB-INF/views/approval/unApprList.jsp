@@ -76,7 +76,7 @@
                 </c:if>
                 
                 <c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
-                	<li class="page-item"><a class="page-link" href="${root}/approval/progressList/${i}">${i}</a></li>
+                	<li class="page-item"><a class="page-link" href="${root}/approval/unApprList/${i}">${i}</a></li>
                 </c:forEach>
 <!--                 <li class="page-item active"><a class="page-link" href="#">1</a></li> -->
                 
@@ -89,6 +89,12 @@
           </div>
         </div>
 	</main>
-   
+
+  <script>
+    $('#custom-select').on('change', function () {
+      let docFormCode = $('#custom-select option:selected').val();
+      location.href='${root}/approval/progressWaitList/1/' + docFormCode;
+    })
+  </script>
 </body>
 </html>

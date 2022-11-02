@@ -72,7 +72,7 @@
             <nav aria-label="Table Paging" class="my-3">
               <ul class="pagination justify-content-center mb-0">
               	<c:if test="${pv.startPage ne 1}">
-            	    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            	    <li class="page-item"><a class="page-link" href="${root}/approval/progressList/${pv.startPage - 1}/${selectedFormCode}">Previous</a></li>
                 </c:if>
                 
                 <c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
@@ -80,7 +80,7 @@
                 </c:forEach>
                 
                 <c:if test="${pv.endPage ne pv.maxPage}">
-           	     <li class="page-item"><a class="page-link" href="#">Next</a></li>
+           	     <li class="page-item"><a class="page-link" href="${root}/approval/progressList/${pv.endPage + 1}/${selectedFormCode}">Next</a></li>
                 </c:if>
               </ul>
             </nav>
