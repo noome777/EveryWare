@@ -1,6 +1,7 @@
 package com.kh.app00.mail.controller;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.app00.emp.vo.EmpVo;
@@ -99,16 +101,25 @@ public class MailController {
 	}
 	
 	@PostMapping("mailDelete")
-	public String mailDelete(@PathVariable String mailCode, HttpServletRequest req,HttpSession session, Model model) {
+	@ResponseBody
+	public String mailDelete(
+			//@PathVariable String mailCode, 
+			HttpServletRequest req, 
+			HttpSession session,
+			Model model) {
 		
-		String [] ajaxMsg = req.getParameterValues("valueArr");
+		
+		String [] ajaxMsg = req.getParameterValues("checkArr");
 		int size = ajaxMsg.length;
+		
+		System.out.println("controller : " + Arrays.toString(ajaxMsg));
 		
 		for(int i = 0; i<size; i++) {
 			ms.delete(ajaxMsg[i]);
 		}
 		
-		return "redirect:/mail/mailMain";
+//		return "redirect:/mail/mailMain";
+		return "ok";
 		
 	}	
 	
