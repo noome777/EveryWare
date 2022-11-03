@@ -40,7 +40,7 @@
               </a>
             </li>
             <li class="nav-item dropdown">
-              <a href="${root}/approval/progressAllList/1" aria-expanded="false" class="nav-link">
+              <a href="${root}/approval/progressAllList/1/0" aria-expanded="false" class="nav-link">
                 <i class="fe fe-check-square fe-16"></i>
                 <span class="ml-3 item-text">전자결재</span>
               </a>
