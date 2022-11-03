@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,6 +33,7 @@ public class MailController {
 
 	@GetMapping("mailMain")
 	public String mailMain(Model model) {
+		
 		
 		List<MailVo> mList = ms.selectList();
 		
@@ -123,6 +123,7 @@ public class MailController {
 		
 	}	
 	
+	
 	@GetMapping("reply")
 	public String mailReply() {
 		return "mail/mailReply";
@@ -145,9 +146,57 @@ public class MailController {
 	}
 	
 	@GetMapping("trash")
-	public String mailTrash() {
+	public String mailTrash(Model model) {
+		
+		List<MailVo> trashList = ms.selectTrashlist();
+		
+		model.addAttribute("trashList", trashList);
+		
 		return "mail/mailTrash";
 	}
+	
+	@PostMapping("mailClean")
+	@ResponseBody
+	public String mailClean(
+			HttpServletRequest req, 
+			HttpSession session,
+			Model model) {
+		
+		
+		String [] ajaxMsg = req.getParameterValues("trashArr");
+		int size = ajaxMsg.length;
+		
+		System.out.println("controller : " + Arrays.toString(ajaxMsg));
+		
+		for(int i = 0; i<size; i++) {
+			ms.clean(ajaxMsg[i]);
+		}
+		
+		return "ok";
+		
+	}	
+
+	@PostMapping("mailBack")
+	@ResponseBody
+	public String mailBack(
+			HttpServletRequest req, 
+			HttpSession session,
+			Model model) {
+		
+		
+		String [] ajaxMsg = req.getParameterValues("backArr");
+		int size = ajaxMsg.length;
+		
+		System.out.println("controller : " + Arrays.toString(ajaxMsg));
+		
+		for(int i = 0; i<size; i++) {
+			ms.back(ajaxMsg[i]);
+		}
+		
+//		return "redirect:/mail/mailMain";
+		return "ok";
+		
+	}	
 	
 	@GetMapping("detail")
 	public String mailDetail() {

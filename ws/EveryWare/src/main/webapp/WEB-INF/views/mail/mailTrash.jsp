@@ -59,71 +59,36 @@
 
 			<br>
 			<div class="buttonSet">
-				<button type="button" id="sendBtn" class="btn btn-primary">삭제</button>
-				<button type="button" id="cancelBtn" class="btn btn-primary">답장</button>
+				<input type="button" value="삭제" id="deleteBtn"
+						onclick="cleanValue();" class="btn btn-primary"/>
+						<input type="button" value="복원" id="deleteBtn"
+						onclick="backValue();" class="btn btn-primary"/>
 			</div>
 
 			<div class="card shadow">
-				<div class="card-body">
+				<div class="card-body" id = "trashListForm">
 
 					<table class="table table-striped" id="maillist">
 
 						<tr>
-							<th></th>
+							<th><input type="checkbox" name="allCheckbox"
+									id="allCheckbox"></th>
 							<th>발신자</th>
 							<th>제목</th>
 							<th>작성일</th>
 						</tr>
 						<tbody>
-							<tr>
-								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>EVERYWARE</td>
-								<td>안녕하세요</td>
-								<td>12:12</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>EVERYWARE</td>
-								<td>안녕하세요2</td>
-								<td>12:12</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>EVERYWARE</td>
-								<td>안녕하세요3</td>
-								<td>12:12</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>EVERYWARE</td>
-								<td>안녕하세요4</td>
-								<td>12:12</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>EVERYWARE</td>
-								<td>안녕하세요5</td>
-								<td>12:12</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>EVERYWARE</td>
-								<td>안녕하세요6</td>
-								<td>12:12</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>EVERYWARE</td>
-								<td>안녕하세요7</td>
-								<td>12:12</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" name="xxx" value="yyy"></td>
-								<td>EVERYWARE</td>
-								<td>안녕하세요8</td>
-								<td>12:12</td>
-							</tr>
-
+							<c:forEach items="${trashList}" var="t">
+									<c:if test="${t.mailDelete ne null}">
+										<tr>
+											<td><input type="checkbox" name="trashCheck"
+												class="trashCheck" value="${t.mailCode}"></td>
+											<td id="msender">${t.mailSender}</td>
+											<td id="mtitle">${t.mailTitle}</td>
+											<td id="mSenddate">${t.mailSenddate}</td>
+										</tr>
+									</c:if>
+								</c:forEach>
 						</tbody>
 					</table>
 					<nav aria-label="Page navigation example">
@@ -140,5 +105,104 @@
 			</div>
 		</div>
 	</div>
+	
+	<script>
+	
+	//전체선택
+		
+		$('#trashListForm #allCheckbox').on('click', function() {
+		if ($('#allCheckbox').prop("checked")) {
+			$("input[type=checkbox]").prop("checked", true);
+		} else {
+			$("input[type=checkbox]").prop("checked", false);
+		}
+	});
+	
+function cleanValue() {
+			
+			
+			// 체크된 애들 번호를 전달하기
+			
+			//1. 체크박스 전부 가져오기
+			//2. 1에서 가져온 요소의 숫자 가져오기
+			//3. 2 에서 가져온 숫자들을 배열 형태로 만들기
+			let trashArr = [];
+			
+			$('input:checkbox[name=trashCheck]').each(function (index) {
+				if($(this).is(":checked")){
+					console.log(this);
+					trash = $(this).val();
+					trashArr.push(trash);
+					
+			    }
+			})
+			
+			if (trashArr.length == 0) {
+ 				alert("선택된 글이 없습니다.");
+ 			} 
+			
+			$.ajax({
+ 					url : "${root}/mail/mailClean",
+ 					method : "POST",
+ 					traditional : true,
+ 					data : {trashArr : trashArr},
+ 					success : function(tdata) {
+ 						if (tdata == 'ok') {
+ 							alert("삭제 성공");
+ 							location.replace("${root}/mail/trash");
+ 						} else {
+ 							alert("삭제 실패");
+ 						}
+					},
+					error : function(){
+						alert("삭제 실패(ERROR)");
+					}
+				})
+		   
+		}
+		
+function backValue() {
+	
+	
+	// 체크된 애들 번호를 전달하기
+	
+	//1. 체크박스 전부 가져오기
+	//2. 1에서 가져온 요소의 숫자 가져오기
+	//3. 2 에서 가져온 숫자들을 배열 형태로 만들기
+	let backArr = [];
+	
+	$('input:checkbox[name=trashCheck]').each(function (index) {
+		if($(this).is(":checked")){
+			console.log(this);
+			back = $(this).val();
+			backArr.push(back);
+			
+	    }
+	})
+	
+	if (backArr.length == 0) {
+			alert("선택된 글이 없습니다.");
+		} 
+	
+	$.ajax({
+				url : "${root}/mail/mailBack",
+				method : "POST",
+				traditional : true,
+				data : {backArr : backArr},
+				success : function(bdata) {
+					if (bdata == 'ok') {
+						alert("복원 성공");
+						location.replace("${root}/mail/trash");
+					} else {
+						alert("복원 실패");
+					}
+			},
+			error : function(){
+				alert("복원 실패(ERROR)");
+			}
+		})
+   
+}
+ 	</script>
 </body>
 </html>

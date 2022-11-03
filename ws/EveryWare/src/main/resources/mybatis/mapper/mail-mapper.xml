@@ -48,4 +48,35 @@
 		MAIL_DELETE = SYSDATE
 		WHERE MAIL_CODE = #{mailCode}
 	</update>
+	
+	<select id="selectTrashlist" resultType="MailVo">
+		SELECT
+		MAIL.MAIL_CODE
+		,MAIL.EMP_CODE
+		,MAIL.MAIL_SENDER 
+		,MAIL.MAIL_TITLE
+		,MAIL.MAIL_CONTENT
+		,MAIL.MAIL_SENDDATE
+		,MAIL.MAIL_RECEIVER
+		,MAIL.MAIL_DELETE 
+		FROM MAIL
+		JOIN EMP
+		ON MAIL.EMP_CODE = EMP.EMP_CODE
+		WHERE MAIL_DELETE IS NOT NULL
+		ORDER BY MAIL_DELETE DESC
+	</select>
+	
+	<delete id="cleanMail">
+		DELETE 
+		FROM MAIL WHERE MAIL_DELETE IS NOT NULL
+		AND MAIL_CODE = #{mailCode}
+	</delete>
+	
+	<update id="backMail">
+		UPDATE MAIL
+		SET
+		MAIL_DELETE = NULL
+		WHERE MAIL_CODE = #{mailCode}
+	</update>
+	
 </mapper>

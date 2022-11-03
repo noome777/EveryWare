@@ -14,5 +14,14 @@ public interface MailService {
 	
 	//메일 삭제
 	int delete(String mailCode);
+	
+	//휴지통
+	List<MailVo> selectTrashlist();
+	
+	//휴지통 비우기
+	int clean(String mailCode);
+	
+	//복원
+	int back(String mailCode);
 
 }

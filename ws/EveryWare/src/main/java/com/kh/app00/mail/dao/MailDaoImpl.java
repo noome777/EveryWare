@@ -24,4 +24,19 @@ public class MailDaoImpl implements MailDao {
 	public int deleteMail(SqlSessionTemplate sst, String mailCode) {
 		return sst.delete("mailMapper.deleteMail", mailCode);
 	}
+
+	@Override
+	public List<MailVo> selectTrashlist(SqlSessionTemplate sst) {
+		return sst.selectList("mailMapper.selectTrashlist");
+	}
+
+	@Override
+	public int clean(SqlSessionTemplate sst, String mailCode) {
+		return sst.delete("mailMapper.cleanMail", mailCode);
+	}
+
+	@Override
+	public int back(SqlSessionTemplate sst, String mailCode) {
+		return sst.update("mailMapper.backMail", mailCode);
+	}
 }
