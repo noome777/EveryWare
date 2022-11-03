@@ -81,7 +81,6 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	@Transactional(rollbackFor = {Exception.class})
 	public int insertApprovalDoc(ApprovalDocVo docVo) {
-		System.out.println(docVo);
 		
 		int approvalDocResult = dao.insertApprovalDoc(sst, docVo);
 		String constructedDocCode = docVo.getDocCode();
@@ -151,6 +150,39 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public DocCommentVo selectUnApprComment(String docCode) {
 		return dao.selectUnApprComment(sst, docCode);
 	}
+	//결재 수정,삭제 여부 판단
+	@Override
+	public ApprovalListVo selectSeq(String docCode) {
+		return dao.selectSeq(sst, docCode);
+	}
+	//문서 수정
+	@Override
+	@Transactional(rollbackFor = {Exception.class})
+	public int updateApprovalDoc(ApprovalDocVo docVo) {
+		
+		String docCode = docVo.getDocCode();
+		List<DocDataVo> docDataList = docVo.getDocDataList();
+
+		int updateDoc;
+		if(docVo.getDocTitle() != null) {
+			updateDoc = dao.updateDoc(sst, docVo);
+		}
+		
+		int updateDocData;
+		if(docDataList.size() > 0) {
+			for(DocDataVo vo : docDataList) {
+				vo.setDocCode(docCode);
+			}
+			updateDocData = dao.updateDocData(sst, docDataList);
+		}
+		
+		return 1;
+	}
+	//문서 삭제
+	@Override
+	public int updateDocDelete(ApprovalDocVo vo) {
+		return dao.updateDocDelete(sst, vo);
+	}
 	//문서 승인
 	@Override
 	public int updateApprove(ApprovalListVo vo) {
@@ -179,18 +211,15 @@ public class ApprovalServiceImpl implements ApprovalService {
 		
 		return apprResult * comResult * apprDate;
 	}
-	
-	
 	//문서 갯수 조회
 	@Override
-	public int selectTotalCnt() {
-		return dao.selectCountAll(sst);
+	public int selectProgressTotalCnt(ApprovalDocVo vo) {
+		return dao.selectProgressTotalCnt(sst, vo);
 	}
-
 	//문서 목록 조회
 	@Override
-	public List<ApprovalDocVo> selectDocList(PageVo pv) {
-		return dao.selectDocList(sst, pv);
+	public List<ApprovalDocVo> selectProgressDocList(ApprovalDocVo vo, PageVo pv) {
+		return dao.selectProgressDocList(sst, vo, pv);
 	}
 	//결재 예정 리스트 개수 구하기
 	@Override
@@ -304,7 +333,6 @@ public class ApprovalServiceImpl implements ApprovalService {
 
 		int docFormResult = dao.insertDocForm(sst, formVo);
 		
-		// insert된 pk select key로 가져왔으니 값이 있어야함
 		String constructedFormCode = formVo.getFormCode();
 		
 		List<DocFormMapperVo> mappingList = formVo.getFormDetailList();
@@ -331,6 +359,24 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public List<ApprovalDocVo> selectAllDocList(ApprovalDocVo vo, PageVo pv) {
 		return dao.selectAllDocList(sst, vo, pv);
 	}
+	//삭제 문서 갯수 조회
+	@Override
+	public int selectApprDeleteDocTotalCnt(ApprovalDocVo vo) {
+		return dao.selectApprDeleteDocTotalCnt(sst, vo);
+	}
+	//삭제 문서 목록 조회
+	@Override
+	public List<ApprovalDocVo> selectApprDeleteDocList(ApprovalDocVo vo, PageVo pv) {
+		return dao.selectApprDeleteDocList(sst, vo, pv);
+	}
+
+	
+
+	
+
+	
+
+	
 
 	
 	

@@ -29,7 +29,7 @@
 	         <select class="custom-select" id="custom-select">
 	           <option value="0" selected>전체</option>
 	           <c:forEach items="${formList}" var="f">
-                  <option value="${f.formCode}">${f.formName}</option>
+                  <option value="${f.formCode}" <c:if test="${selectedFormCode == f.formCode}">selected="selected"</c:if>>${f.formName}</option>
                 </c:forEach>
 	         </select>
 	       </div>
@@ -45,7 +45,6 @@
                   <th>제목</th>
                   <th>작성자</th>
                   <th>작성일</th>
-                  <th>구분</th>
                 </tr>
               </thead>
               <tbody>
@@ -56,14 +55,6 @@
 	                  <td>${d.docTitle}</td>
 	                  <td>${d.empName}</td>
 	                  <td>${d.docEnrollDate}</td>
-	                  <%-- <c:choose>
-	                  	<c:when test="">
-		                  <td>진행중</td>
-	                  	</c:when>
-	                  	<c:when test="">
-		                  <td>완료</td>
-	                  	</c:when>
-	                  </c:choose> --%>
 	                </tr>
               	</c:forEach>
               </tbody>
@@ -86,6 +77,12 @@
           </div>
         </div>
 	</main>
-   
+	
+   <script>
+    $('#custom-select').on('change', function () {
+      let docFormCode = $('#custom-select option:selected').val();
+      location.href='${root}/approval/progressAllList/1/' + docFormCode;
+    })
+  </script>
 </body>
 </html>

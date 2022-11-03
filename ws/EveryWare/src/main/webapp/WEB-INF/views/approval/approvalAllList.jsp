@@ -29,7 +29,7 @@
 	         <select class="custom-select" id="custom-select">
 	           <option value="0" selected>전체</option>
 	           <c:forEach items="${formList}" var="f">
-                  <option value="${f.formCode}">${f.formName}</option>
+                  <option value="${f.formCode}" <c:if test="${selectedFormCode == f.formCode}">selected="selected"</c:if>>${f.formName}</option>
                 </c:forEach>
 	         </select>
 	       </div>
@@ -56,14 +56,7 @@
 	                  <td>${d.docTitle}</td>
 	                  <td>${d.empName}</td>
 	                  <td>${d.docEnrollDate}</td>
-	                  <%-- <c:choose>
-	                  	<c:when test="">
-		                  <td>진행중</td>
-	                  	</c:when>
-	                  	<c:when test="">
-		                  <td>완료</td>
-	                  	</c:when>
-	                  </c:choose> --%>
+	                  <td>${d.status}</td>
 	                </tr>
               	</c:forEach>
               </tbody>
@@ -72,13 +65,13 @@
             <nav aria-label="Table Paging" class="my-3">
               <ul class="pagination justify-content-center mb-0">
               	<c:if test="${pv.startPage ne 1}">
-            	    <li class="page-item"><a class="page-link" href="${root}/approval/progressAllList/${pv.startPage - 1}">Previous</a></li>
+            	    <li class="page-item"><a class="page-link" href="${root}/approval/approvalAllList/${pv.startPage - 1}/${selectedFormCode}">Previous</a></li>
                 </c:if>
                 <c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
-                	<li class="page-item"><a class="page-link" href="${root}/approval/progressAllList/${i}">${i}</a></li>
+                	<li class="page-item"><a class="page-link" href="${root}/approval/approvalAllList/${i}/${selectedFormCode}">${i}</a></li>
                 </c:forEach>
                 <c:if test="${pv.endPage ne pv.maxPage}">
-           	     <li class="page-item"><a class="page-link" href="${root}/approval/progressAllList/${pv.endPage + 1}">Next</a></li>
+           	     <li class="page-item"><a class="page-link" href="${root}/approval/approvalAllList/${pv.endPage + 1}/${selectedFormCode}">Next</a></li>
                 </c:if>
               </ul>
             </nav>
@@ -86,6 +79,15 @@
           </div>
         </div>
 	</main>
+	
+	<script>
+    $('#custom-select').on('change', function () {
+
+      let docFormCode = $('#custom-select option:selected').val();
+      location.href='${root}/approval/approvalAllList/1/' + docFormCode;
+
+    })
+  </script>
    
 </body>
 </html>

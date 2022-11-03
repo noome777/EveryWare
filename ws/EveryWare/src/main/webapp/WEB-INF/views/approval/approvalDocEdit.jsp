@@ -100,19 +100,17 @@
           </tr>
           <tr>
             <td class="appr-table-color">문서상태</td>
-            <c:choose>
-            	<c:when test="${apprDocVo.docStatus eq 'N'}">
-	            	<td>정상</td>
-            	</c:when>
-            	<c:when test="${apprDocVo.docStatus eq 'D'}">
-            		<td>삭제</td>
-            	</c:when>
-            	<c:otherwise>
-            		<td>임시저장</td>
-            	</c:otherwise>
-            </c:choose>
+            <td>정상</td>
             <td class="appr-table-color">보존연한</td>
-            <td>${apprDocVo.period}</td>
+            <td>
+              <div class="form-group mb-3">
+                <select class="custom-select form-control align-items-center justify-content-center" id="custom-select" name="periodCode">
+                  <c:forEach items="${periodList}" var="p">
+                    <option value="${p.periodCode}" <c:if test="${apprDocVo.period == p.periodCode}">selected="selected"</c:if>>${p.period}</option>
+                  </c:forEach>
+                </select>
+              </div>
+            </td>
           </tr>
           <tr>
             <td class="appr-table-color">작성일시</td>
@@ -176,74 +174,37 @@
      </div>
          
          
+     <div class="card shadow mb-4">
+       <div class="card-body" id="form-content">
+         <div class="form-group mb-3">
+           <label>제목</label>
+           <input type="text" class="form-control" name="docTitle" value="${apprDocVo.docTitle}">
+         </div>	
+         <c:forEach items="${formMappingList}" var="f">
+            <div class="form-group mb-3">
+              <label>${f.formDetailName}</label>
+              <c:choose>
+                <c:when test="${f.formDetailType eq 'textarea'}">
+                  <textarea class="form-control" detailCode="${f.formDetailCode}" name="docContent"><c:forEach items="${docDataVoList}" var="d"><c:if test="${f.formDetailCode eq d.formDetailCode}">${d.docContent}</c:if></c:forEach></textarea>
+                </c:when>
+                <c:otherwise>
+                  <input type="${f.formDetailType}" detailCode="${f.formDetailCode}" class="form-control" name="docContent" <c:forEach items="${docDataVoList}" var="d"><c:if test="${f.formDetailCode eq d.formDetailCode}">value="${d.docContent}"</c:if></c:forEach>>
+                </c:otherwise>
+              </c:choose>	            
+            </div>
+          </c:forEach>	
+       </div>
+     </div>
          
-		 <div class="card shadow mb-4">
-      <div class="card-body">
-        <div id="appr-content">
-          <h4>${apprDocVo.docTitle}</h4>
-          <hr>
-          
-          <c:forEach items="${docDataVoList}" var="d">
-              <c:if test="${d.formDetailCode == 1}">
-                <div class="font-size-1" style="white-space:pre-wrap">
-      ${d.docContent}	
-                </div>
-              </c:if>
-          </c:forEach>
-          
-         <div style="width: 800px;">
-           <table class="table table-bordered mb-0 shadow font-size-1">
-             <c:forEach items="${docDataVoList}" var="d">
-                <tr>
-                <c:if test="${d.formDetailCode != 1}">
-                 <td class="appr-table-color w-25">${d.formDetailName}</td>
-                 <td>${d.docContent}</td>
-                </c:if>
-              </tr>
-              </c:forEach>
-            <tr>
-          </table>		
-         </div>
-    
-          <hr>
-          <div>
-            구매 견적서.xlsx
-          </div>
-        </div>
-      </div>
-     </div>	
-	
      <div class="card shadow mb-4">
         <div class="card-body">
-          <c:if test="${not empty unApprComment}">
-          
-
-          <h6 class="mb-4">반려 메세지</h6>
-          <span>${unApprComment.writerName}</span> &nbsp;&nbsp; <span>${unApprComment.comEnrollDate}</span>
-          <div class="d-flex">
-            <div class="form-group mt-3 mb-5 ml-3" id="appr-comment">
-              ${unApprComment.comContent}
-            </div>
-            <div class="form-group mb-5 mt-3 ml-3  w-25 align-items-center"></div>
-          </div>
-          </c:if>
-
-          <h6>의견 남기기</h6>
-          <div class="form-group mb-3" id="appr-comment">
-            <textarea class="form-control" id="example-textarea" ></textarea>
-            <button class="btn mb-2 btn-outline-info">등록</button>
-          </div>
+          첨부파일
         </div>
       </div>
 	
-	  <c:if test="${apprDocVo.docStatus eq 'N'}">
-	  <c:if test="${(seqStatus.apprStatus eq 'W' && apprDocVo.empCode eq loginMember.empCode) || loginMember.rightCode eq 1 || loginMember.rightCode eq 3}">
       <div class="text-center">
-        <button class="btn mb-2 btn-secondary" onclick="location.href='${root}/approval/approvalDocEdit/${apprDocVo.docCode}/${apprDocVo.docFormCode}'"> 수정하기</button>
-        <button id="delete-btn" class="btn mb-2 btn-secondary"> 삭제하기</button>
+        <button id="edit-btn" class="btn mb-2 btn-secondary"> 수정하기</button>
       </div>
-	  </c:if>	
-	  </c:if>
 	
 	
       <div class="modal fade" id="unApprModal" tabindex="-1" role="dialog" aria-labelledby="varyModalLabel" aria-hidden="true">
@@ -275,102 +236,50 @@
 	<script>
 
     $('document').ready(function () {
-      
-      //내가 결재해야 할 문서이면 내 순서일 때 승인 버튼 표시
-      let currentAppr = $('.appr-btn').attr('status', 'W').eq(0);
-      let currentUnAppr = $('.un-appr-btn').attr('status', 'W').eq(0);
-      let docCode = $('#doc-code')[0].innerHTML;
 
-      if('${loginMember.empCode}' == currentAppr.attr('apprEmpCode')){
-        currentAppr.removeClass('d-none');
-        currentUnAppr.removeClass('d-none');
-      }
-
-      //승인
-      $('.appr-btn').on('click', function(){
-
-        let apprConfirm = confirm('승인 하시겠습니까?');
-
-        if(apprConfirm == true) {
-          let param =  JSON.stringify({
-              docCode : docCode,
-              apprEmpCode : currentAppr.attr('apprEmpCode'),
-              apprSeq : currentAppr.attr('apprSeq')
-            });
-          
-          $.ajax({
-            url : "${root}/approval/approve",
-            method : "POST",
-            data : param,
-            dataType : 'text',
-            contentType : 'application/json; charset=UTF-8',
-            success : function () {
-              alert("승인 완료");
-              location.reload();
-            },
-            error : (error) => {
-              alert("승인 실패")
-              console.log(JSON.stringify(error));
-            }
+      $('#edit-btn').on('click', function () {
+        
+        let docDataList = [];
+        $('[name=docContent]').each(function() {
+          let object = {
+            formDetailCode : $(this).attr('detailCode'),
+            docContent : $(this).val()  
+          }
+          docDataList.push(object);
+        })
   
-          })
-        }
-
-      })
-
-      //반려
-      $('.un-appr').on('click', function () {
+        let docCode = $('#doc-code')[0].innerHTML;
+        let periodCode = $('#custom-select').val();
+        let docTitle = $('[name=docTitle]').val();
         
-        let comment = $('#un-appr-message').val();
-        console.log(comment);
+        let param = JSON.stringify({
+          docCode : docCode,
+          periodCode : periodCode,
+          docTitle : docTitle,
+          docDataList : docDataList
+        })
 
-        let param =  JSON.stringify({
-            docCode : docCode,
-            apprEmpCode : currentUnAppr.attr('apprEmpCode'),
-            apprSeq : currentUnAppr.attr('apprSeq'),
-            comContent : $('#un-appr-message').val()
-          });
-        
+        console.log(param);
+
         $.ajax({
-          url : "${root}/approval/unApprove",
-          method : "POST",
+          url : '${root}/approval/approvalDocEdit',
+          method : 'POST',
           data : param,
           dataType : 'text',
-          contentType : 'application/json; charset=UTF-8',
-          success : function (data) {
-            alert("반려 완료");
-            location.reload();
-          },
+          contentType: "application/json; charset=utf-8",
+          success : function(data){
+            alert('수정 성공');
+            console.log(param);
+            location.href='${root}/approval/approvalDocDetail/' + docCode;
+          } , 
           error : (error) => {
-            alert("반려 실패")
             console.log(JSON.stringify(error));
           }
 
         })
-      })
-
-      //삭제
-      $('#delete-btn').on('click', function () {
         
-        if(confirm('문서를 삭제 하시겠습니까?')){
-
-          $.ajax({
-            url : "${root}/approval/approvalDocDelete",
-            method : "POST",
-            data : JSON.stringify({docCode : docCode}),
-            dataType : "text",
-            contentType : 'application/json; charset=UTF-8',
-            success : function () {
-              alert('삭제 완료');
-              location.href='${root}/approval/progressList/1/0'
-            },
-            error : function () {
-              console.log('문서 삭제 실패');
-            }
-          })
-
-        }
       })
+
 
     })  
   </script>
