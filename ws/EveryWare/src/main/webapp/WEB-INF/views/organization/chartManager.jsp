@@ -5,21 +5,41 @@
 <head></head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="icon" href="img/logo.png">
-  <link rel="stylesheet" href="/EveryWare/resources/css/organization/jquery.orgchart.css">
-  <link rel="stylesheet" href="/EveryWare/resources/css/organization/style.css">
 
-  <style>
-    .orgchart { background: white; }
-    #chart-container {
-      border-radius: 8px;
-      border : none;
-    }
-  </style>
+<style>
+	.ui-droppable {
+		background-color: rgba(27, 104, 255, 0.4) !important;
+		border-radius: 8px !important;
+		color : black !important;
+	}
+	
+	.jOrgChart {
+		left-padding : 200px;
+	}
+</style>
+
+
+    <link rel="stylesheet" href="/EveryWare/resources/css/organization/jquery.jOrgChart.css"/>
+    <link rel="stylesheet" href="/EveryWare/resources/css/organization/custom.css"/>
+    <link href="/EveryWare/resources/css/organization/prettify.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     <%@ include file="/WEB-INF/views/organization/sidemenu-content.jsp" %>
+    
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/EveryWare/resources/js/organization/prettify.js"></script>
+    <script src="/EveryWare/resources/js/organization/jquery.jOrgChart.js"></script>
+
+    <script>
+    jQuery(document).ready(function() {
+        $("#org").jOrgChart({
+            chartElement : '#chart',
+            dragAndDrop  : true
+        });
+    });
+    </script>
     
     <div class="wrapper">
 	    <main role="main" class="main-content">
@@ -28,14 +48,58 @@
             <div class="col-12">
               <div class="row align-items-center my-3 margin">
                 <div class="col">
-                  <h2 class="h3 mb-0 page-title">권한 관리</h2>
+                  <h2 class="h3 mb-0 page-title">조직도</h2>
                 </div>
               </div>
               
               <!-- table -->
               <div class="card shadow card-wrap">
                 <div class="card-body">
-                  <div id="chart-container" class="shadow"></div>
+                  
+    
+				    <ul id="org" style="display:none">
+				    <li>
+				       Food
+				       <ul>
+				         <li id="beer">Beer</li>
+				         <li>Vegetables
+				           <a href="http://wesnolte.com" target="_blank">Click me</a>
+				           <ul>
+				             <li>Pumpkin</li>
+				             <li>
+				                <a href="http://tquila.com" target="_blank">Aubergine</a>
+				                <p>A link and paragraph is all we need.</p>
+				             </li>
+				           </ul>
+				         </li>
+				         <li class="fruit">Fruit
+				           <ul>
+				             <li>Apple
+				               <ul>
+				                 <li>Granny Smith</li>
+				               </ul>
+				             </li>
+				             <li>Berries
+				               <ul>
+				                 <li>Blueberry</li>
+				                 <li><img src="images/raspberry.jpg" alt="Raspberry"/></li>
+				                 <li>Cucumber</li>
+				               </ul>
+				             </li>
+				           </ul>
+				         </li>
+				         <li>Bread</li>
+				         <li class="collapsed">Chocolate
+				           <ul>
+				             <li>Topdeck</li>
+				             <li>Reese's Cups</li>
+				           </ul>
+				         </li>
+				       </ul>
+				     </li>
+				   </ul>            
+				    
+				    <div id="chart" class="orgChart"></div>
 
                  
                 </div>
@@ -47,56 +111,34 @@
     </div>
 </body>
 
+ <script>
+        jQuery(document).ready(function() {
+            
+            /* Custom jQuery for the example */
+            $("#show-list").click(function(e){
+                e.preventDefault();
+                
+                $('#list-html').toggle('fast', function(){
+                    if($(this).is(':visible')){
+                        $('#show-list').text('Hide underlying list.');
+                    }else{
+                        $('#show-list').text('Show underlying list.');  
+                    }
+                });
+            });
+            
+            $('#list-html').text($('#org').html());
+            
+            $("#org").bind("DOMSubtreeModified", function() {
+                $('#list-html').text('');
+                
+                $('#list-html').text($('#org').html());
+                
+                prettyPrint();                
+            });
+        });
+    </script>
 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="/EveryWare/resources/js/organization/jquery.orgchart.js"></script>
-  <script type="text/javascript">
-      $(function() {
 
-var datascource = {
-  'name': 'Lao Lao',
-  'title': '테스트부서1',
-  'children': [
-    { 'name': 'Bo Miao', 'title': 'department manager' },
-    { 'name': 'Su Miao', 'title': 'department manager',
-      'children': [
-        { 'name': 'Tie Hua', 'title': 'senior engineer' },
-        { 'name': 'Hei Hei', 'title': 'senior engineer',
-          'children': [
-            { 'name': 'Pang Pang', 'title': 'engineer' },
-            { 'name': 'Dan Zai', 'title': 'UE engineer',
-              'children': [
-                { 'name': 'Er Dan Zai', 'title': 'Intern' }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    { 'name': 'Hong Miao', 'title': 'department manager' },
-    { 'name': 'Chun Miao', 'title': 'department manager' }
-  ]
-};
-
-$('#chart-container').orgchart({
-  'visibleLevel': 2,
-  'pan': true,
-  'data' : datascource,
-  'nodeContent': 'title',
-  'createNode': function($node, data) {
-    $node.on('click', function(event) {
-      if (!$(event.target).is('.edge, .toggleBtn')) {
-        var $this = $(this);
-        var $chart = $this.closest('.orgchart');
-        var newX = window.parseInt(($chart.outerWidth(true)/2) - ($this.offset().left - $chart.offset().left) - ($this.outerWidth(true)/2));
-        var newY = window.parseInt(($chart.outerHeight(true)/2) - ($this.offset().top - $chart.offset().top) - ($this.outerHeight(true)/2));
-        $chart.css('transform', 'matrix(1, 0, 0, 1, ' + newX + ', ' + newY + ')');
-      }
-    });
-  }
-});
-
-});
-  </script>
 
 </html>

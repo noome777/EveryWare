@@ -107,6 +107,9 @@ public interface OrganizationDao {
 	//직무 삭제
 	int updateJobToD(SqlSessionTemplate sqlSessionTemplate, String jobName);
 
+	//임직원 관리 - 임직원정보 수정
+	int updateEmp(SqlSessionTemplate sqlSessionTemplate, EmpVo empVo);
+
 
 
 

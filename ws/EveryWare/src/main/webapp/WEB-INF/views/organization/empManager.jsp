@@ -523,6 +523,7 @@ padding: 10px;
                     </div>
                     <div>
                       <p class="mb-0">${empList.empCode}</p>
+                      <input type="hidden" name="empCode" value="${empList.empCode}">
                     </div>
                   </div>
                   <div class="flex-items">
@@ -611,7 +612,7 @@ padding: 10px;
                       <p class="mb-0 text-muted"><strong>자택주소1</strong></p>
                     </div>
                     <div>
-                      <input type="text" name="empAddress1"  class="hide-input ${empList.empCode}-addr1" value="${empList.empAddress1}" placeholder="${empList.empAddress1}">
+                      <input type="text" name="empAddress1"  class="hide-input find-addr ${empList.empCode}-addr1" value="${empList.empAddress1}" placeholder="${empList.empAddress1}" data-id="${empList.empCode}">
 
                     </div>
                   </div>
@@ -1211,6 +1212,35 @@ padding: 10px;
            }
        });
 	}
+</script>
+
+  
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+<script>
+
+$(document).ready(function() {
+
+  $('.find-addr').click(function() {
+
+    const id = $(this).attr("data-id");
+    var addrSpace = $("input[data-id="+ id + "]");
+
+    new daum.Postcode({
+
+      oncomplete : function(data) {
+
+        var roadAddr = data.roadAddress;
+
+        addrSpace.val(data.address);
+
+
+
+      }
+    }).open();
+  })
+});
 </script>
 		  
 </body>

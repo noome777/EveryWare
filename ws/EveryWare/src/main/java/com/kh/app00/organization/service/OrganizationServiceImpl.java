@@ -96,7 +96,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 			EmpVo replacedEmpVo = SpaceRemover.removeEmpWhiteSpace(empVo);
 			replacedEmpVo.encodePwd(pwdEnc);
 			
-				int result = organizationDao.insertEmp(sqlSessionTemplate,replacedEmpVo);
+			int result = organizationDao.insertEmp(sqlSessionTemplate,replacedEmpVo);
 			if(result==1) {
 				return result;
 			} else {
@@ -318,6 +318,28 @@ public class OrganizationServiceImpl implements OrganizationService {
 	@Override
 	public int updateJobToD(String jobName) {
 		return organizationDao.updateJobToD(sqlSessionTemplate,jobName);
+	}
+
+
+	//임직원 관리 - 임직원정보 수정
+	@Override
+	public int updateEmp(EmpVo empVo) {
+		
+		if(empVo.getEmpPwd().length()>3) {
+			String replacedPwd = spaceRemover.removeSpace(empVo.getEmpPwd());
+			empVo.setEmpPwd(replacedPwd);
+			empVo.encodePwd(pwdEnc);
+		}
+		
+		int result =  organizationDao.updateEmp(sqlSessionTemplate, empVo);
+		
+		if(result==1) {
+			return result;
+		} else {
+			return -1;
+		}
+		
+		
 	}
 
 

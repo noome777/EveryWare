@@ -106,6 +106,9 @@ public interface OrganizationService {
 	//직무 삭제
 	int updateJobToD(String jobName);
 
+	//임직원정보 수정
+	int updateEmp(EmpVo empVo);
+
 
 
 }

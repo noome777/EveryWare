@@ -451,6 +451,23 @@
 	</update>
 	
 	
+	<update id="updateEmp">
+		UPDATE EMP
+		SET
+			EMP_BIRTHDAY = #{empBirthday}
+			, EMP_TEL = #{empTel}
+			, EMP_PHONE = #{empPhone}
+			, EMP_E_MAIL = #{empEMail}
+			, EMP_ADDRESS1 = #{empAddress1}
+			, EMP_ADDRESS2 = #{empAddress2}
+			, EMP_JOIN_DATE = #{empJoinDate}
+			<if test="empPwd != null and empPwd != '' ">
+				, EMP_PWD = #{empPwd}
+			</if>
+		WHERE EMP_CODE = #{empCode}
+	</update>
+	
+	
 </mapper>
 
 

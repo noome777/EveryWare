@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -357,6 +358,23 @@ public class OrganizationController {
 		
 	}
 	
+	//임직원 관리 - 임직원 수정
+	@PostMapping("management/emp/update/one")
+	public String updateEmp(Model model, HttpSession session, EmpVo empVo) {
+		
+		System.out.println(empVo);
+		System.out.println("ㅎㅇ");
+		int result = organizationService.updateEmp(empVo);
+		
+		if(result==1) {
+			session.setAttribute("alertMsg", "임직원 수정에 성공하였습니다.");
+			return "redirect:/organization/management/emp/1";
+		}else {
+			session.setAttribute("alertMsg", "임직원 수정에 실패하였습니다.");
+			return "redirect:/organization/management/emp/1";
+		}
+	}
+	
 	
 	//권한 관리 페이지
 	@GetMapping("management/right")
@@ -681,5 +699,6 @@ public class OrganizationController {
 		
 		
 	}
+	
 	
 }

@@ -207,6 +207,12 @@ public class OrganizationDaoImpl implements OrganizationDao {
 		return sqlSessionTemplate.update("organizationMapper.updateJobToD",jobName);
 	}
 
+	//임직원 관리 - 임직원정보 수정
+	@Override
+	public int updateEmp(SqlSessionTemplate sqlSessionTemplate, EmpVo empVo) {
+		return sqlSessionTemplate.update("organizationMapper.updateEmp",empVo);
+	}
+
 	
 
 	
