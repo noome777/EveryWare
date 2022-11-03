@@ -17,6 +17,15 @@ public interface MailDao {
 
 	//선택 삭제
 	int deleteMail(SqlSessionTemplate sst, String mailCode);
+
+	//휴지통
+	List<MailVo> selectTrashlist(SqlSessionTemplate sst);
+
+	//휴지통 비우기
+	int clean(SqlSessionTemplate sst,String mailCode);
+
+	//복원
+	int back(SqlSessionTemplate sst, String mailCode);
 	
 
 }
