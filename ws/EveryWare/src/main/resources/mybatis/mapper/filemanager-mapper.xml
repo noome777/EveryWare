@@ -24,6 +24,7 @@
     JOIN EMP E
         ON F.EMP_CODE = E.EMP_CODE
 	WHERE FILE_DELDATE IS NULL
+	AND F.EMP_CODE = #{empCode}
 	</select>
 	
 	<select id="selectRecent" resultType="filemanagerVo">
@@ -44,6 +45,7 @@
 	    , FILE_CONTENT
 	FROM FILECLOUD
     WHERE FILE_DELDATE IS NULL
+    AND EMP_CODE = #{empCode}
 	ORDER BY FILE_CODE DESC
 	</select>
 	
@@ -66,6 +68,7 @@
 	FROM FILECLOUD
     WHERE FILE_BOOKMARK = '1'
     AND FILE_DELDATE IS NULL
+    AND EMP_CODE = #{empCode}
 	ORDER BY FILE_CODE DESC
 	</select>
 	
@@ -87,6 +90,7 @@
 	    , FILE_CONTENT
 	FROM FILECLOUD
     WHERE FILE_DELDATE IS NOT NULL
+    AND EMP_CODE = #{empCode}
     ORDER BY FILE_DELDATE DESC
 	</select>
 	
@@ -114,14 +118,12 @@
 	SET 
 		FILE_DELDATE = SYSDATE 
 	WHERE FILE_CODE = #{fileCode}
-	
 	</update>
 	
 	<insert id="addFile">
 		INSERT INTO 
 		FILECLOUD ( FILE_CODE , EMP_CODE , FILE_TITLE , FILE_CONTENT,  FILE_NAME , FILE_URL, FILE_BOOKMARK ,FILE_TYPE, FILE_SIZE) 
-		VALUES ( SEQ_FILE_CODE.NEXTVAL ,1 , #{fileTitle} , #{fileContent}  , #{fileName} , #{fileUrl} , 0 , #{fileType}, #{fileSize})
-	
+		VALUES ( SEQ_FILE_CODE.NEXTVAL , #{empCode} , #{fileTitle} , #{fileContent}  , #{fileName} , #{fileUrl} , 0 , #{fileType}, #{fileSize})
 	</insert>
 	
 	<select id="selectOneByCode" resultType="filemanagerVo">
@@ -144,14 +146,13 @@
 	FROM FILECLOUD F
     JOIN EMP E
         ON F.EMP_CODE = E.EMP_CODE
-		WHERE FILE_CODE = #{fileCode}
+		WHERE F.FILE_CODE = #{fileCode}
 	</select>
 	
 	<insert id="addCopy">
 		INSERT INTO 
 		FILECLOUD ( FILE_CODE , EMP_CODE , FILE_TITLE , FILE_CONTENT,  FILE_NAME , FILE_URL, FILE_BOOKMARK ,FILE_TYPE, FILE_SIZE) 
-		VALUES ( SEQ_FILE_CODE.NEXTVAL ,1 , #{fileTitle} , #{fileContent}  , #{fileName} , #{fileUrl} , 0 , #{fileType}, #{fileSize})
-	
+		VALUES ( SEQ_FILE_CODE.NEXTVAL , #{empCode} , #{fileTitle} , #{fileContent}  , #{fileName} , #{fileUrl} , 0 , #{fileType}, #{fileSize})
 	</insert>
 	
 	<update id="edit">
@@ -161,4 +162,8 @@
 		, FILE_CONTENT = #{fileContent}
 		WHERE FILE_CODE = #{fileCode}
 	</update>
+	
+	<insert id="addCloud">
+	
+	</insert>
 </mapper>

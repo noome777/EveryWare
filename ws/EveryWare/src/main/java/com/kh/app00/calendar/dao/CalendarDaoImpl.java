@@ -13,15 +13,15 @@ public class CalendarDaoImpl implements CalendarDao{
 
 	//개인일정 조회
 	@Override
-	public List<CalendarVo> getPerCalendar(SqlSessionTemplate sst) {
-		return sst.selectList("calendarMapper.selectPerAll");
+	public List<CalendarVo> getPerCalendar(SqlSessionTemplate sst, String empCode) {
+		return sst.selectList("calendarMapper.selectPerAll", empCode);
 	}
 	
 	//부서일정 조회
-		@Override
-		public List<CalendarVo> getDepartCalendar(SqlSessionTemplate sst) {
-			return sst.selectList("calendarMapper.selectDepartAll");
-		}
+	@Override
+	public List<CalendarVo> getDepartCalendar(SqlSessionTemplate sst, String empCode) {
+		return sst.selectList("calendarMapper.selectDepartAll", empCode);
+	}
 	
 	@Override
 	public int insertOne(SqlSessionTemplate sst, CalendarVo vo) {

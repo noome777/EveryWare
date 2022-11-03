@@ -7,13 +7,13 @@ import com.kh.app00.filemanager.vo.FilemanagerVo;
 public interface FilemanagerService {
 	
 	//모든파일 조회
-	List<FilemanagerVo> selectAll();
-
-	List<FilemanagerVo> selectRecent();
-
-	List<FilemanagerVo> selectStar();
-
-	List<FilemanagerVo> selectDel();
+	List<FilemanagerVo> selectAll(String empCode);
+	//최근등록된 파일 조회
+	List<FilemanagerVo> selectRecent(String empCode);
+	//즐겨찾기된 파일 조회
+	List<FilemanagerVo> selectStar(String empCode);
+	//삭제된 파일 조회
+	List<FilemanagerVo> selectDel(String empCode);
 	
 	
 	//즐겨찾기 추가
@@ -36,6 +36,9 @@ public interface FilemanagerService {
 	
 	//수정하기 추가
 	int edit(FilemanagerVo vo);
+	
+	//공유하기 추가
+	int addCloud(FilemanagerVo vo);
 
 
 }

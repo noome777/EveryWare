@@ -6,9 +6,9 @@ import com.kh.app00.calendar.vo.CalendarVo;
 
 public interface CalendarService {
 
-	List<CalendarVo> getPerCalendar();
+	List<CalendarVo> getPerCalendar(String empCode);
 
-	List<CalendarVo> getDepartCalendar();
+	List<CalendarVo> getDepartCalendar(String empCode);
 	
 	int insertOne(CalendarVo vo);
 
