@@ -11,26 +11,26 @@ import com.kh.app00.filemanager.vo.FilemanagerVo;
 public class FilemanagerDaoImpl implements FilemanagerDao {
 
 	@Override
-	public List<FilemanagerVo> selectAll(SqlSessionTemplate sst) {
-		return sst.selectList("filemanagerMapper.selectAll");
+	public List<FilemanagerVo> selectAll(SqlSessionTemplate sst, String empCode) {
+		return sst.selectList("filemanagerMapper.selectAll", empCode);
 	}
 
 	@Override
-	public List<FilemanagerVo> selectRecent(SqlSessionTemplate sst) {
+	public List<FilemanagerVo> selectRecent(SqlSessionTemplate sst, String empCode) {
 		// TODO Auto-generated method stub
-		return sst.selectList("filemanagerMapper.selectRecent");
+		return sst.selectList("filemanagerMapper.selectRecent", empCode);
 	}
 
 	@Override
-	public List<FilemanagerVo> selectStar(SqlSessionTemplate sst) {
+	public List<FilemanagerVo> selectStar(SqlSessionTemplate sst, String empCode) {
 		// TODO Auto-generated method stub
-		return sst.selectList("filemanagerMapper.selectStar");
+		return sst.selectList("filemanagerMapper.selectStar", empCode);
 	}
 
 	@Override
-	public List<FilemanagerVo> selectDel(SqlSessionTemplate sst) {
+	public List<FilemanagerVo> selectDel(SqlSessionTemplate sst, String empCode) {
 		// TODO Auto-generated method stub
-		return sst.selectList("filemanagerMapper.selectDel");
+		return sst.selectList("filemanagerMapper.selectDel", empCode);
 	}
 
 	@Override
@@ -73,6 +73,12 @@ public class FilemanagerDaoImpl implements FilemanagerDao {
 	public int edit(SqlSessionTemplate sst, FilemanagerVo vo) {
 		// TODO Auto-generated method stub
 		return sst.update("filemanagerMapper.edit", vo);
+	}
+
+	@Override
+	public int addCloud(SqlSessionTemplate sst, FilemanagerVo vo) {
+		// TODO Auto-generated method stub
+		return sst.insert("filemanagerMapper.addCloud", vo);
 	}
 
 }

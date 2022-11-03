@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.app00.common.FileUploader;
+import com.kh.app00.emp.vo.EmpVo;
 import com.kh.app00.filemanager.service.FilemanagerService;
 import com.kh.app00.filemanager.vo.FilemanagerVo;
 
@@ -44,10 +45,19 @@ public class FilemanagerController {
 
 	//메인 파일함 조회(화면)
 	@GetMapping("select")
-	public String select(Model model) {
+	public String select(Model model, HttpSession session) {
 
-		List<FilemanagerVo> flist = service.selectAll();
-		List<FilemanagerVo> flistRecent = service.selectRecent();
+		// 로그인 여부 체크
+        if (session.getAttribute("loginMember") == null) {
+            session.setAttribute("alertMsg", "로그인 후 접근 가능합니다 !");
+            return "redirect:/emp/login";
+        }
+		
+        // 로그인 유저의 정보 vo에 저장
+        EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
+        
+		List<FilemanagerVo> flist = service.selectAll(loginMember.getEmpCode());
+		List<FilemanagerVo> flistRecent = service.selectRecent(loginMember.getEmpCode());
 		
 		model.addAttribute("flist", flist);
 		model.addAttribute("flistRecent", flistRecent);
@@ -57,8 +67,18 @@ public class FilemanagerController {
 	
 	//최근 업로드 파일함(화면)
 	@GetMapping("recent")
-	public String recent(Model model) {
-		List<FilemanagerVo> flist = service.selectRecent();
+	public String recent(Model model, HttpSession session) {
+		// 로그인 여부 체크
+        if (session.getAttribute("loginMember") == null) {
+            session.setAttribute("alertMsg", "로그인 후 접근 가능합니다 !");
+            return "redirect:/emp/login";
+        }
+		
+        // 로그인 유저의 정보 vo에 저장
+        EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
+		
+		
+		List<FilemanagerVo> flist = service.selectRecent(loginMember.getEmpCode());
 		model.addAttribute("flist", flist);
 		
 		return "filemanager/recent-fileManager";
@@ -66,23 +86,46 @@ public class FilemanagerController {
 	
 	//즐겨찾기 파일함(화면)
 	@GetMapping("star")
-	public String star(Model model) {
-		List<FilemanagerVo> flist = service.selectStar();
+	public String star(Model model, HttpSession session) {
+		// 로그인 여부 체크
+        if (session.getAttribute("loginMember") == null) {
+            session.setAttribute("alertMsg", "로그인 후 접근 가능합니다 !");
+            return "redirect:/emp/login";
+        }
+		
+        // 로그인 유저의 정보 vo에 저장
+        EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
+		
+		
+		List<FilemanagerVo> flist = service.selectStar(loginMember.getEmpCode());
 		model.addAttribute("flist", flist);
 		return "filemanager/star-fileManager";
 	}
 	
 	//공유 파일함(화면)
 	@GetMapping("cloud")
-	public String cloud() {
-
+	public String cloud(Model model, HttpSession session) {
+		// 로그인 여부 체크
+        if (session.getAttribute("loginMember") == null) {
+            session.setAttribute("alertMsg", "로그인 후 접근 가능합니다 !");
+            return "redirect:/emp/login";
+        }
 		return "filemanager/cloud-fileManager";
 	}
 	
 	//휴지통(화면)
 	@GetMapping("trash")
-	public String trash(Model model) {
-		List<FilemanagerVo> flist = service.selectDel();
+	public String trash(Model model, HttpSession session) {
+		// 로그인 여부 체크
+        if (session.getAttribute("loginMember") == null) {
+            session.setAttribute("alertMsg", "로그인 후 접근 가능합니다 !");
+            return "redirect:/emp/login";
+        }
+		
+        // 로그인 유저의 정보 vo에 저장
+        EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
+		
+		List<FilemanagerVo> flist = service.selectDel(loginMember.getEmpCode());
 		model.addAttribute("flist", flist);
 		
 		return "filemanager/trash-fileManager";
@@ -90,8 +133,13 @@ public class FilemanagerController {
 		
 	//파일 추가(화면)
 	@GetMapping("insert")
-	public String insert() {
-
+	public String insert(HttpSession session) {
+		// 로그인 여부 체크
+        if (session.getAttribute("loginMember") == null) {
+            session.setAttribute("alertMsg", "로그인 후 접근 가능합니다 !");
+            return "redirect:/emp/login";
+        }
+        
 		return "filemanager/insert-fileManager";
 	}
 	
@@ -100,24 +148,20 @@ public class FilemanagerController {
 	@PostMapping("addfile")
 	public String addFile(FilemanagerVo vo,HttpSession session, HttpServletRequest req) {
 		
-		System.out.println("vo ::: " + vo);
+        // 로그인 유저의 정보 vo에 저장
+        EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
 		
 		if (vo.getFileOriginname() != null && !vo.getFileOriginname().isEmpty()) {
 			//파일있음
 			//파일업로드후 저장된 파일명 얻기
 			String savePath = req.getServletContext().getRealPath("/resources/upload/filemanager/");
-			System.out.println("savePath ::: " + savePath);
 			String changeName = FileUploader.fileUpload(vo.getFileOriginname(), savePath);
-			System.out.println("getFileOriginname ::: " + vo.getFileOriginname());
 			vo.setFileOriginname(vo.getFileOriginname());
-			System.out.println("FileName ::: " + vo.getFileName());
 			vo.setFileName(changeName);
-			System.out.println("FileName 이후 ::: " + vo.getFileName());
 			
 			String ext = changeName.substring(changeName.lastIndexOf(".")+ 1);
 			vo.setFileType(ext);
 			vo.setFileUrl(savePath);
-			System.out.println("changeName ::: " + changeName);
 			
 			File file = new File(savePath+changeName);
 			long bytes = file.length();
@@ -133,26 +177,18 @@ public class FilemanagerController {
 			}
 			vo.setFileSize(size);
 		}
-		
-		
-		
+		vo.setEmpCode(loginMember.getEmpCode());
 		
 		int result = service.addFile(vo);
 		
-		
-		
-		
 		if (result == 1) {
 			session.setAttribute("alertMsg", "파일이 추가 되었습니다.");
-			System.out.println("1");
-			return "redirect:/filemanager/select";
 		}else {
-			System.out.println("2");
-			return "";
-		}
+            session.setAttribute("alertMsg", "파일등록 실패하셨습니다.");
+        }
 		
+		return "redirect:/filemanager/select";
 	}
-	
 	
 	//즐겨찾기 기능 추가
 	@GetMapping("addStar/{fileCode}")
@@ -161,11 +197,10 @@ public class FilemanagerController {
 		int result = service.addStar(fileCode);
 		
 		if (result == 1) {
-			session.setAttribute("alertMsg", "즐겨찾기 추가 되었습니다.");
-			System.out.println("1");
-		}else {
-			System.out.println("2");
-		}
+			session.setAttribute("alertMsg", "즐겨찾기 추가되었습니다.");
+        } else {
+            session.setAttribute("alertMsg", "즐겨찾기 실패하셨습니다.");
+        }
 		
 		return "redirect:/filemanager/select"; 
 	}
@@ -233,10 +268,7 @@ public class FilemanagerController {
 	public FilemanagerVo detail(@RequestParam String num, Model model) {
 		FilemanagerVo voinfo = service.selectOne(num);
 		
-		System.out.println(voinfo);
-		
 		model.addAttribute("voinfo", voinfo);
-		
 		
 		return voinfo; 
 	}
@@ -252,8 +284,6 @@ public class FilemanagerController {
 		
 		//복사를 위해 제목 타이틀 변경
 		vo.setFileTitle(vo.getFileTitle()+" 복사본");
-		
-		
 		
 		//복사하기 위해 vo에 저장된 파일명 가져오기
 		String fileName = vo.getFileName();
@@ -272,15 +302,13 @@ public class FilemanagerController {
         // 2. 복사
         Files.copy(file.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
  
-        
         // DB 전달하기
 		int result = service.addCopy(vo);
 		
 		if (result == 1) {
 			session.setAttribute("alertMsg", "해당 파일이 복사 되었습니다.");
-			System.out.println("1");
 		}else {
-			System.out.println("2");
+			session.setAttribute("alertMsg", "해당 파일 복사 실패.");
 		}
 		
 		return "redirect:/filemanager/select"; 
@@ -288,29 +316,59 @@ public class FilemanagerController {
 	
 	//수정 화면 추가
 	@GetMapping("edit/{fileCode}")
-	public String edit(@PathVariable String fileCode,Model model){
-			
-		FilemanagerVo vo = service.selectOne(fileCode);
+	public String edit(@PathVariable String fileCode, HttpSession session,Model model){
+		// 로그인 여부 체크
+        if (session.getAttribute("loginMember") == null) {
+            session.setAttribute("alertMsg", "로그인 후 접근 가능합니다 !");
+            return "redirect:/emp/login";
+        }
+        // 로그인 유저의 정보 vo에 저장
+        EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
+        
+        // empCode를 비교하기 위해 vo 불러오기
+        FilemanagerVo vo = service.selectOne(fileCode);
+		
+        if(!vo.getEmpCode().equals(loginMember.getEmpCode())) {
+        	session.setAttribute("alertMsg", "파일 권한이 없습니다.");
+        	return "redirect:/filemanager/select";
+        }
 
 		model.addAttribute("vo", vo);
-		
 		
 		return "filemanager/edit-fileManager"; 
 	}
 	
 	//수정기능 추가
 	@PostMapping("edit/{fileCode}")
-	public String edit(@PathVariable String fileCode, FilemanagerVo vo, Model model){
+	public String edit(@PathVariable String fileCode, FilemanagerVo vo, Model model, HttpSession session){
+
+		// DB 전달하기
+		int result = service.edit(vo);
+		
+		if (result == 1) {
+			session.setAttribute("alertMsg", "해당 파일이 수정되었습니다.");
+		}else {
+			session.setAttribute("alertMsg", "해당 파일 수정 실패.");
+		}
 			
-	// DB 전달하기
-	int result = service.edit(vo);
-	
-	if (result == 1) {
-		System.out.println("1");
-	}else {
-		System.out.println("2");
+		return "redirect:/filemanager/select"; 
 	}
+	
+	
+	//공유하기 기능추가
+	@GetMapping("addCloud/{fileCode}")
+	public String addCloud(@PathVariable String fileCode,HttpSession session) {
 			
+		FilemanagerVo vo = service.selectOne(fileCode);
+		
+		int result = service.addCloud(vo);
+		
+		if (result == 1) {
+			session.setAttribute("alertMsg", "해당 파일이 공유 되었습니다.");
+		}else {
+			session.setAttribute("alertMsg", "해당 파일 공유 실패.");
+		}
+		
 		return "redirect:/filemanager/select"; 
 	}
 }

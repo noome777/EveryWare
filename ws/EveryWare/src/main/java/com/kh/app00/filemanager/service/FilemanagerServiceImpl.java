@@ -23,26 +23,27 @@ public class FilemanagerServiceImpl implements FilemanagerService {
 
 	//모든 파일 조회
 	@Override
-	public List<FilemanagerVo> selectAll() {
-		return dao.selectAll(sst);
+	public List<FilemanagerVo> selectAll(String empCode) {
+		// TODO Auto-generated method stub
+		return dao.selectAll(sst, empCode);
 	}
 
 	@Override
-	public List<FilemanagerVo> selectRecent() {
+	public List<FilemanagerVo> selectRecent(String empCode) {
 		// TODO Auto-generated method stub
-		return dao.selectRecent(sst);
+		return dao.selectRecent(sst, empCode);
 	}
 
 	@Override
-	public List<FilemanagerVo> selectStar() {
+	public List<FilemanagerVo> selectStar(String empCode) {
 		// TODO Auto-generated method stub
-		return dao.selectStar(sst);
+		return dao.selectStar(sst, empCode);
 	}
 
 	@Override
-	public List<FilemanagerVo> selectDel() {
+	public List<FilemanagerVo> selectDel(String empCode) {
 		// TODO Auto-generated method stub
-		return dao.selectDel(sst);
+		return dao.selectDel(sst, empCode);
 	}
 
 	@Override
@@ -87,6 +88,13 @@ public class FilemanagerServiceImpl implements FilemanagerService {
 		return dao.edit(sst, vo);
 	}
 
+	@Override
+	public int addCloud(FilemanagerVo vo) {
+		// TODO Auto-generated method stub
+		return dao.addCloud(sst, vo);
+	}
+
+	
 	
 
 
