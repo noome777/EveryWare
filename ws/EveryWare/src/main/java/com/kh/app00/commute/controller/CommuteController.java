@@ -97,7 +97,8 @@ public class CommuteController {
         // 사원의 해당 월 근무 시간 조회
         int workDays = service.selectWorkDays(vo);
         int workTimeAll = service.seletWorkTimeAll(vo);
-        double workTimeAvg = (double) service.selectWorkTimeAvg(vo);
+        double workTimeAvgDouble = service.selectWorkTimeAvg(vo);
+        String workTimeAvg = String.format("%.2f", workTimeAvgDouble);
         int workToday = service.selectWorkToday(vo);
 
         model.addAttribute("workDays", workDays);
