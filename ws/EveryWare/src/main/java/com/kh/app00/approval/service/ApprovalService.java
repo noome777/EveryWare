@@ -46,19 +46,23 @@ public interface ApprovalService {
 	List<ApprovalRefVo> selectRefVoList(String docCode);
 	//결재타입 갯수 구하기
 	List<ApprovalListVo> selectTypeCountList(String docCode);
+	//반려 메세지
+	DocCommentVo selectUnApprComment(String docCode);
+	//결재 수정,삭제 여부 판단
+	ApprovalListVo selectSeq(String docCode);
+	//문서 수정
+	int updateApprovalDoc(ApprovalDocVo docVo);
+	//문서 삭제
+	int updateDocDelete(ApprovalDocVo vo);
 	//문서 승인
 	int updateApprove(ApprovalListVo vo);
 	//문서 반려
 	int updateUnApprove(ApprovalListVo apprVo);
-	//반려 메세지
-	DocCommentVo selectUnApprComment(String docCode);
-	
-	
 	
 	//문서 갯수 조회
-	int selectTotalCnt();
+	int selectProgressTotalCnt(ApprovalDocVo vo);
 	//문서 목록 조회
-	List<ApprovalDocVo> selectDocList(PageVo pv);
+	List<ApprovalDocVo> selectProgressDocList(ApprovalDocVo vo, PageVo pv);
 	//결재 예정 리스트 개수 구하기
 	int selectExpectCount(ApprovalDocVo vo);
 	//결재 예정 문서 목록 조회
@@ -112,6 +116,15 @@ public interface ApprovalService {
 	int selectAllDocTotalCnt(ApprovalDocVo vo);
 	//전체 문서 목록 조회
 	List<ApprovalDocVo> selectAllDocList(ApprovalDocVo vo, PageVo pv);
+	//삭제 문서 갯수 조회
+	int selectApprDeleteDocTotalCnt(ApprovalDocVo vo);
+	//삭제 문서 목록 조회
+	List<ApprovalDocVo> selectApprDeleteDocList(ApprovalDocVo vo, PageVo pv);
+	
+	
+	
+	
+	
 	
 
 	

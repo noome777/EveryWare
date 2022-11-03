@@ -116,7 +116,25 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	public DocCommentVo selectUnApprComment(SqlSessionTemplate sst, String docCode) {
 		return sst.selectOne("approvalMapper.selectUnApprComment", docCode);
 	}
-	
+	//결재 수정,삭제 여부 판단
+	@Override
+	public ApprovalListVo selectSeq(SqlSessionTemplate sst, String docCode) {
+		return sst.selectOne("approvalMapper.selectSeq", docCode);
+	}
+	//문서 수정
+	@Override
+	public int updateDoc(SqlSessionTemplate sst, ApprovalDocVo docVo) {
+		return sst.update("approvalMapper.updateDoc", docVo);
+	}
+	@Override
+	public int updateDocData(SqlSessionTemplate sst, List<DocDataVo> docDataList) {
+		return sst.update("approvalMapper.updateDocData", docDataList);
+	}
+	//문서 삭제
+	@Override
+	public int updateDocDelete(SqlSessionTemplate sst, ApprovalDocVo vo) {
+		return sst.update("approvalMapper.updateDocDelete", vo);
+	}
 	//문서 승인
 	@Override
 	public int updateApprove(SqlSessionTemplate sst, ApprovalListVo vo) {
@@ -148,36 +166,18 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		return sst.update("approvalMapper.updateDocApprDate", apprVo);
 	}
 	
-	
-	//게시글 갯수 조회
+	//진행 - 전체 문서 갯수 조회
 	@Override
-	public int selectCountAll(SqlSessionTemplate sst) {
-		return sst.selectOne("approvalMapper.selectCountAll");
+	public int selectProgressTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo) {
+		return sst.selectOne("approvalMapper.selectProgressTotalCnt", vo);
 	}
-
-	//게시글 목록 조회
+	//진행 - 전체 문서 목록 조회
 	@Override
-	public List<ApprovalDocVo> selectDocList(SqlSessionTemplate sst, PageVo pv) {
-		
+	public List<ApprovalDocVo> selectProgressDocList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv) {
 		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
-		
-		return sst.selectList("approvalMapper.selectDocList", null, rb);
+		return sst.selectList("approvalMapper.selectProgressDocList", vo, rb);
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	//결재 예정 리스트 개수 구하기
 	@Override
 	public int selectExpectCount(SqlSessionTemplate sst, ApprovalDocVo vo) {
@@ -327,6 +327,22 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
 		return sst.selectList("approvalMapper.selectAllDocList", vo, rb);
 	}
+	//삭제 문서 갯수 조회
+	@Override
+	public int selectApprDeleteDocTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo) {
+		return sst.selectOne("approvalMapper.selectApprDeleteDocTotalCnt", vo);
+	}
+	//삭제 문서 목록 조회
+	@Override
+	public List<ApprovalDocVo> selectApprDeleteDocList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv) {
+		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
+		return sst.selectList("approvalMapper.selectApprDeleteDocList", vo, rb);
+	}
+	
+	
+	
+	
 	
 
 	

@@ -102,7 +102,6 @@
 		INNER JOIN DOC_RETENTION_PERIOD P ON P.PERIOD_CODE = A.PERIOD_CODE
 		INNER JOIN DEPT D ON D.DEPT_CODE = E.DEPT_CODE
 		WHERE A.DOC_CODE = #{docCode}
-		AND A.DOC_STATUS = 'N'
 	</select>
 
 	<select id="selectDocDataList" resultType="DocDataVo">
@@ -146,6 +145,35 @@
 		AND COM_STATUS = 'C'
 	</select>
 	
+	<select id="selectSeq" resultType="ApprovalListVo">
+		SELECT APPR_SEQ, APPR_STATUS FROM APPROVAL_LIST
+		WHERE APPR_SEQ = 2
+		AND DOC_CODE = #{docCode}
+	</select>
+	
+	<update id="updateDoc">
+		UPDATE APPROVAL_DOC SET DOC_TITLE = #{docTitle}, PERIOD_CODE = #{periodCode}, DOC_UPDATED = SYSDATE
+		WHERE DOC_CODE = #{docCode}
+		AND DOC_STATUS = 'N'
+	</update>
+	
+	<update id="updateDocData">
+		<foreach collection="list" item="item" separator=";" open="DECLARE BEGIN" close="; END;">
+			MERGE INTO DOC_DATA D
+			USING DUAL
+			ON (D.FORM_DETAIL_CODE = #{item.formDetailCode} AND D.DOC_CODE = #{item.docCode})
+			WHEN MATCHED THEN 
+			UPDATE SET DOC_CONTENT = #{item.docContent}
+			WHEN NOT MATCHED THEN
+			INSERT (D.DOC_CODE, D.FORM_DETAIL_CODE, D.DOC_CONTENT)
+			VALUES (#{item.docCode}, #{item.formDetailCode}, #{item.docContent})
+		</foreach>
+	</update>
+	
+	<update id="updateDocDelete">
+		UPDATE APPROVAL_DOC SET DOC_STATUS = 'D', DOC_UPDATED = SYSDATE
+		WHERE DOC_CODE = #{docCode}
+	</update>
 	
 	<update id="updateApprove">
 		UPDATE APPROVAL_LIST SET APPR_STATUS = 'A', APPR_DATE = SYSDATE
@@ -184,21 +212,31 @@
 	</update>
 	
 	
-	
-	
-	<select id="selectCountAll" resultType="int">
-		SELECT COUNT(*) FROM APPROVAL_DOC WHERE DOC_STATUS = 'N'
+	<select id="selectProgressTotalCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM APPROVAL_DOC A
+		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
+		INNER JOIN DOC_FORM F ON F.FORM_CODE = A.DOC_FORM_CODE
+		WHERE E.DEPT_CODE = #{deptCode}
+		AND A.DOC_APPR_DATE IS NULL
+		AND A.DOC_STATUS = 'N'
+		<if test="docFormCode != null and docFormCode != 0">
+			AND A.DOC_FORM_CODE = #{docFormCode}
+		</if>
 	</select>
 	
-	<select id="selectDocList" resultType="ApprovalDocVo">
-		SELECT D.DOC_CODE, D.PERIOD_CODE, D.DOC_FORM_CODE, D.EMP_CODE, D.DOC_TITLE, TO_CHAR(D.DOC_ENROLL_DATE, 'YYYY.MM.DD') AS DOC_ENROLL_DATE, TO_CHAR(D.DOC_UPDATED, 'YYYY.MM.DD') AS DOC_UPDATED, D.DOC_STATUS, F.FORM_NAME, E.EMP_NAME
-		FROM APPROVAL_DOC D
-		INNER JOIN DOC_FORM F ON D.DOC_FORM_CODE = F.FORM_CODE
-		INNER JOIN EMP E ON E.EMP_CODE = D.EMP_CODE
-		WHERE D.DOC_STATUS = 'N'
-		ORDER BY D.DOC_CODE DESC
+	<select id="selectProgressDocList" resultType="ApprovalDocVo">
+		SELECT A.DOC_CODE, A.PERIOD_CODE, A.DOC_FORM_CODE, A.EMP_CODE, A.DOC_TITLE, TO_CHAR(A.DOC_ENROLL_DATE, 'YYYY.MM.DD') AS DOC_ENROLL_DATE, A.DOC_APPR_DATE, E.EMP_NAME, F.FORM_NAME
+		FROM APPROVAL_DOC A
+		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
+		INNER JOIN DOC_FORM F ON F.FORM_CODE = A.DOC_FORM_CODE
+		WHERE E.DEPT_CODE = #{deptCode}
+		AND A.DOC_APPR_DATE IS NULL
+		AND A.DOC_STATUS = 'N'
+		<if test="docFormCode != null and docFormCode != 0">
+			AND A.DOC_FORM_CODE = #{docFormCode}
+		</if>
 	</select>
-	
 	
 	<select id="selectExpectCount" resultType="int">
 		SELECT COUNT(*) FROM APPROVAL_DOC A
@@ -358,6 +396,15 @@
 	
 	<select id="selectCompletWriteDocList" resultType="ApprovalDocVo">
 		SELECT D.DOC_CODE, D.PERIOD_CODE, D.DOC_FORM_CODE, D.EMP_CODE, D.DOC_TITLE, TO_CHAR(D.DOC_ENROLL_DATE, 'YYYY.MM.DD') AS DOC_ENROLL_DATE, TO_CHAR(D.DOC_UPDATED, 'YYYY.MM.DD') AS DOC_UPDATED, D.DOC_STATUS, F.FORM_NAME, E.EMP_NAME
+		, ( SELECT 
+	        CASE
+	            WHEN  SB_AD.DOC_APPR_DATE IS NULL
+	                THEN '진행중'
+	            WHEN (SELECT COUNT(*) FROM APPROVAL_LIST WHERE DOC_CODE = D.DOC_CODE AND APPR_STATUS = 'C') > 0
+	                THEN '반려'
+	            ELSE '완료' END
+	        FROM APPROVAL_DOC SB_AD WHERE SB_AD.DOC_CODE = D.DOC_CODE
+	    ) AS STATUS
 		FROM APPROVAL_DOC D
 		INNER JOIN DOC_FORM F ON D.DOC_FORM_CODE = F.FORM_CODE
 		INNER JOIN EMP E ON E.EMP_CODE = D.EMP_CODE
@@ -384,6 +431,15 @@
 	
 	<select id="selectCompletApprDocList" resultType="ApprovalDocVo">
 		SELECT DISTINCT(A.DOC_CODE) AS DOC_CODE, A.DOC_FORM_CODE, A.DOC_TITLE, A.EMP_CODE, TO_CHAR(A.DOC_ENROLL_DATE, 'YYYY.MM.DD') AS DOC_ENROLL_DATE, E.EMP_NAME, F.FORM_NAME 
+		, ( SELECT 
+                CASE
+                    WHEN  SB_AD.DOC_APPR_DATE IS NULL
+                        THEN '진행중'
+                    WHEN (SELECT COUNT(*) FROM APPROVAL_LIST WHERE DOC_CODE = A.DOC_CODE AND APPR_STATUS = 'C') > 0
+                        THEN '반려'
+                    ELSE '완료' END
+                FROM APPROVAL_DOC SB_AD WHERE SB_AD.DOC_CODE = A.DOC_CODE
+            ) AS STATUS
 		FROM APPROVAL_DOC A
 		INNER JOIN DOC_FORM F ON A.DOC_FORM_CODE = F.FORM_CODE
 		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
@@ -413,6 +469,15 @@
 	
 	<select id="selectCompletRefDocList" resultType="ApprovalDocVo">
 		SELECT DISTINCT(A.DOC_CODE) AS DOC_CODE, A.DOC_FORM_CODE, A.DOC_TITLE, A.EMP_CODE, TO_CHAR(A.DOC_ENROLL_DATE, 'YYYY.MM.DD') AS DOC_ENROLL_DATE, E.EMP_NAME, F.FORM_NAME 
+		, ( SELECT 
+                CASE
+                    WHEN  SB_AD.DOC_APPR_DATE IS NULL
+                        THEN '진행중'
+                    WHEN (SELECT COUNT(*) FROM APPROVAL_LIST WHERE DOC_CODE = A.DOC_CODE AND APPR_STATUS = 'C') > 0
+                        THEN '반려'
+                    ELSE '완료' END
+                FROM APPROVAL_DOC SB_AD WHERE SB_AD.DOC_CODE = A.DOC_CODE
+            ) AS STATUS
 		FROM APPROVAL_DOC A
 		INNER JOIN DOC_FORM F ON A.DOC_FORM_CODE = F.FORM_CODE
 		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
@@ -443,6 +508,15 @@
 	
 	<select id="selectUnApprDocList" resultType="ApprovalDocVo">
 		SELECT DISTINCT(A.DOC_CODE) AS DOC_CODE, A.DOC_FORM_CODE, A.DOC_TITLE, A.EMP_CODE, TO_CHAR(A.DOC_ENROLL_DATE, 'YYYY.MM.DD') AS DOC_ENROLL_DATE, E.EMP_NAME, F.FORM_NAME 
+		, ( SELECT 
+                CASE
+                    WHEN  SB_AD.DOC_APPR_DATE IS NULL
+                        THEN '진행중'
+                    WHEN (SELECT COUNT(*) FROM APPROVAL_LIST WHERE DOC_CODE = A.DOC_CODE AND APPR_STATUS = 'C') > 0
+                        THEN '반려'
+                    ELSE '완료' END
+                FROM APPROVAL_DOC SB_AD WHERE SB_AD.DOC_CODE = A.DOC_CODE
+            ) AS STATUS
 		FROM APPROVAL_DOC A
 		INNER JOIN DOC_FORM F ON A.DOC_FORM_CODE = F.FORM_CODE
 		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
@@ -500,7 +574,16 @@
 	
 	<select id="selectAllDocList" resultType="ApprovalDocVo">
 		SELECT DISTINCT(A.DOC_CODE) AS DOC_CODE, A.DOC_FORM_CODE, A.DOC_TITLE, A.EMP_CODE, TO_CHAR(A.DOC_ENROLL_DATE, 'YYYY.MM.DD') AS DOC_ENROLL_DATE, E.EMP_NAME, F.FORM_NAME 
-		FROM APPROVAL_DOC A
+		, ( SELECT 
+	        	CASE
+		       		WHEN  SB_AD.DOC_APPR_DATE IS NULL
+		        		THEN '진행중'
+		        	WHEN (SELECT COUNT(*) FROM APPROVAL_LIST WHERE DOC_CODE = A.DOC_CODE AND APPR_STATUS = 'C') > 0
+		        		THEN '반려'
+		        	ELSE '완료' END
+        	FROM APPROVAL_DOC SB_AD WHERE SB_AD.DOC_CODE = A.DOC_CODE
+       	   ) AS STATUS
+        FROM APPROVAL_DOC A
 		INNER JOIN DOC_FORM F ON A.DOC_FORM_CODE = F.FORM_CODE
 		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
 		WHERE A.DOC_STATUS = 'N'
@@ -509,5 +592,26 @@
 		</if>
 		ORDER BY A.DOC_CODE DESC
 	</select>
+	
+	<select id="selectApprDeleteDocTotalCnt" resultType="int">
+		SELECT COUNT(*) FROM APPROVAL_DOC
+		WHERE DOC_STATUS = 'D'
+		<if test="docFormCode != null and docFormCode != 0">
+			AND DOC_FORM_CODE = #{docFormCode}
+		</if>
+	</select>
+	
+	<select id="selectApprDeleteDocList" resultType="ApprovalDocVo">
+		SELECT DISTINCT(A.DOC_CODE) AS DOC_CODE, A.DOC_FORM_CODE, A.DOC_TITLE, A.EMP_CODE, TO_CHAR(A.DOC_ENROLL_DATE, 'YYYY.MM.DD') AS DOC_ENROLL_DATE, E.EMP_NAME, F.FORM_NAME, A.DOC_STATUS
+        FROM APPROVAL_DOC A
+		INNER JOIN DOC_FORM F ON A.DOC_FORM_CODE = F.FORM_CODE
+		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
+		WHERE A.DOC_STATUS = 'D'
+		<if test="docFormCode != null and docFormCode != 0">
+			AND A.DOC_FORM_CODE = #{docFormCode}
+		</if>
+		ORDER BY A.DOC_CODE DESC
+	</select>
+	
 	
 </mapper>

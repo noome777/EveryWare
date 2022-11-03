@@ -43,7 +43,7 @@
                  
               <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/approval/progressAllList/1"><span class="ml-1 item-text">전체</span>
+                  <a class="nav-link pl-3" href="${root}/approval/progressAllList/1/0"><span class="ml-1 item-text">전체</span>
                   </a>
                 </li>
                 <li class="nav-item">
@@ -114,7 +114,7 @@
                     <a class="nav-link pl-3" href="${root}/approval/approvalAllList/1/0"><span class="ml-1">전체 문서 목록</span></a>
                   </li>                  
                   <li class="nav-item">
-                    <a class="nav-link pl-3" href="${root}/approval/deleteList/1"><span class="ml-1">삭제 문서 목록</span></a>
+                    <a class="nav-link pl-3" href="${root}/approval/approvalDeleteList/1/0"><span class="ml-1">삭제 문서 목록</span></a>
                   </li>
                 </ul>
               </li>

@@ -57,12 +57,17 @@ public interface ApprovalDao {
 	List<ApprovalRefVo> selectRefVoList(SqlSessionTemplate sst, String docCode);
 	//결재타입 갯수 구하기
 	List<ApprovalListVo> selectTypeCountList(SqlSessionTemplate sst, String docCode);
+	//결재 수정,삭제 여부 판단
+	ApprovalListVo selectSeq(SqlSessionTemplate sst, String docCode);
+	//문서 삭제
+	int updateDoc(SqlSessionTemplate sst, ApprovalDocVo docVo);
+	int updateDocData(SqlSessionTemplate sst, List<DocDataVo> docDataList);
+	//문서 삭제
+	int updateDocDelete(SqlSessionTemplate sst, ApprovalDocVo vo);
 	//문서 승인
 	int updateApprove(SqlSessionTemplate sst, ApprovalListVo vo);
 	//최종 결재권자 결재순서 가져오기
 	ApprovalListVo maxApprSeq(SqlSessionTemplate sst, ApprovalListVo vo);
-	
-	
 	//문서 반려
 	int updateUnApprove(SqlSessionTemplate sst, ApprovalListVo apprVo);
 	//문서 반려 코멘트
@@ -75,17 +80,13 @@ public interface ApprovalDao {
 	int updateDocApprDate(SqlSessionTemplate sst, ApprovalListVo apprVo);
 	
 	//문서 갯수 조회
-	int selectCountAll(SqlSessionTemplate sst);
+	int selectProgressTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo);
 	//문서 목록 조회
-	List<ApprovalDocVo> selectDocList(SqlSessionTemplate sst, PageVo pv);
-
-	
-	
+	List<ApprovalDocVo> selectProgressDocList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv);
 	//결재 예정 리스트 개수 구하기
 	int selectExpectCount(SqlSessionTemplate sst, ApprovalDocVo vo);
 	//결재 예정 문서 목록 조회
 	List<ApprovalDocVo> selectExpectDocList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv);
-
 	//결재 확인 문서 전체 갯수 조회
 	int selectRefListTotalCnt(SqlSessionTemplate sst,  ApprovalDocVo vo);
 	//결재 확인 문서 목록 조회
@@ -134,6 +135,14 @@ public interface ApprovalDao {
 	int selectAllDocTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo);
 	//전체 문서 목록 조회
 	List<ApprovalDocVo> selectAllDocList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv);
+	//삭제 문서 갯수 조회
+	int selectApprDeleteDocTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo);
+	//삭제 문서 목록 조회
+	List<ApprovalDocVo> selectApprDeleteDocList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv);
+	
+	
+	
+	
 	
 
 	

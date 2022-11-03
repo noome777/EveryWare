@@ -46,26 +46,6 @@ public class ApprovalController {
 		this.service = service;
 	}
 	
-	
-	@GetMapping("progressAllList/{pno}")
-	public String list(Model model, @PathVariable int pno) {
-		
-		int totalCount = service.selectTotalCnt();
-		PageVo pv = Pagination.getPageVo(totalCount, pno, 3, 15);
-		
-		//list 조회
-		List<ApprovalDocVo> docList = service.selectDocList(pv);
-		
-		//문서종류 불러오기
-		List<DocFormVo> formList = service.selectFormList();
-		
-		
-		model.addAttribute("formList", formList);
-		model.addAttribute("docList", docList);
-		model.addAttribute("pv", pv);
-		return "approval/progressAllList";
-	}
-	
 	//문서작성 화면
 	@GetMapping("write/{formCode}")
 	public String write(Model model, @PathVariable int formCode, HttpSession session) {
@@ -138,7 +118,9 @@ public class ApprovalController {
 	
 	//문서 상세 불러오기
 	@GetMapping("approvalDocDetail/{docCode}")
-	public String docDetail(@PathVariable String docCode, Model model) {
+	public String docDetail(@PathVariable String docCode, Model model, HttpSession session) {
+		
+		EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
 		
 		ApprovalDocVo apprDocVo = service.selectDocDetail(docCode);
 		List<DocDataVo> docDataVoList = service.selectDocDataList(docCode);
@@ -147,6 +129,7 @@ public class ApprovalController {
 //		List<ApprovalFileVo> approvalFileList = service.selectFileVoList(docCode);
 		List<ApprovalListVo> apprTypeCountList = service.selectTypeCountList(docCode);
 		DocCommentVo unApprComment = service.selectUnApprComment(docCode);
+		ApprovalListVo seqStatus = service.selectSeq(docCode);
 		
 		model.addAttribute("apprDocVo", apprDocVo);
 		model.addAttribute("docDataVoList", docDataVoList);
@@ -154,8 +137,63 @@ public class ApprovalController {
 		model.addAttribute("approvalRefVoList", approvalRefVoList);
 		model.addAttribute("apprTypeCountList", apprTypeCountList);
 		model.addAttribute("unApprComment", unApprComment);
+		model.addAttribute("seqStatus", seqStatus);
+		model.addAttribute("loginMember", loginMember);
 		
 		return "approval/approvalDocDetail";
+	}
+	
+	//문서 수정 화면
+	@GetMapping("approvalDocEdit/{docCode}/{formCode}")
+	public String approvalDocEdit(@PathVariable String docCode, @PathVariable int formCode, Model model, HttpSession session) {
+		
+		List<DocPeriodVo> periodList = service.selectPeriodList();
+		ApprovalDocVo apprDocVo = service.selectDocDetail(docCode);
+		List<DocDataVo> docDataVoList = service.selectDocDataList(docCode);
+		List<ApprovalListVo> approverVoList = service.selectApproverList(docCode);
+		List<ApprovalRefVo> approvalRefVoList = service.selectRefVoList(docCode);
+//			List<ApprovalFileVo> approvalFileList = service.selectFileVoList(docCode);
+		List<ApprovalListVo> apprTypeCountList = service.selectTypeCountList(docCode);
+		List<DocFormMapperVo> formMappingList = service.formSelect(formCode);
+		
+		model.addAttribute("apprDocVo", apprDocVo);
+		model.addAttribute("docDataVoList", docDataVoList);
+		model.addAttribute("approverVoList", approverVoList);
+		model.addAttribute("approvalRefVoList", approvalRefVoList);
+		model.addAttribute("apprTypeCountList", apprTypeCountList);
+		model.addAttribute("periodList", periodList);
+		model.addAttribute("formMappingList", formMappingList);
+		
+		return "approval/approvalDocEdit";
+	}
+	
+	//문서 수정
+	@PostMapping("approvalDocEdit")
+	@ResponseBody
+	public String approvalDocEdit(@RequestBody ApprovalDocVo docVo, HttpSession session) {
+		
+		int result = service.updateApprovalDoc(docVo);
+		
+		if(result == 1) {
+			return "작성 성공";
+		} else {
+			return "작성 실패";
+		}
+		
+	}
+	
+	//문서 삭제
+	@PostMapping("approvalDocDelete")
+	@ResponseBody
+	public String approvalDocDelete(@RequestBody ApprovalDocVo vo) {
+		
+		int deleteResult = service.updateDocDelete(vo); 
+		
+		if(deleteResult == 1) {
+			return "삭제 완료";
+		} else {
+			return "삭제 실패";
+		}
 	}
 	
 	//문서 승인
@@ -182,6 +220,31 @@ public class ApprovalController {
 		return "반려 완료";
 	}
 	
+	//진행 - 전체 > 작성자가 같은 부서인 사람
+	@GetMapping("progressAllList/{pno}/{docFormCode}")
+	public String list(Model model, @PathVariable int pno, @PathVariable String docFormCode, HttpSession session) {
+		
+		EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
+		ApprovalDocVo vo = new ApprovalDocVo();
+		vo.setDeptCode(loginMember.getDeptCode());
+		vo.setDocFormCode(docFormCode);
+		
+		int totalCount = service.selectProgressTotalCnt(vo);
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 3, 15);
+		
+		//list 조회
+		List<ApprovalDocVo> docList = service.selectProgressDocList(vo, pv);
+		
+		//문서종류 불러오기
+		List<DocFormVo> formList = service.selectFormList();
+		
+		
+		model.addAttribute("formList", formList);
+		model.addAttribute("docList", docList);
+		model.addAttribute("pv", pv);
+		model.addAttribute("selectedFormCode", vo.getDocFormCode());
+		return "approval/progressAllList";
+	}
 	
 	//진행 - 예정목록 
 	@GetMapping("progressExpectedList/{pno}/{docFormCode}")
@@ -502,12 +565,24 @@ public class ApprovalController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
+	@GetMapping("approvalDeleteList/{pno}/{docFormCode}") 
+	public String approvalDeleteList(Model model, HttpSession session, @PathVariable int pno, @PathVariable String docFormCode) {
+	  
+		ApprovalDocVo vo = new ApprovalDocVo(); vo.setDocFormCode(docFormCode);
+		  
+		int totalCount = service.selectApprDeleteDocTotalCnt(vo); 
+		PageVo pv =Pagination.getPageVo(totalCount, pno, 3, 15);
+		  
+		List<DocFormVo> formList = service.selectFormList();
+		List<ApprovalDocVo> docList = service.selectApprDeleteDocList(vo, pv);
+		  
+		model.addAttribute("formList", formList); 
+		model.addAttribute("docList",docList); model.addAttribute("pv", pv);
+		model.addAttribute("selectedFormCode", vo.getDocFormCode());
+		  
+		return "approval/approvalDeleteList"; 
+	  }
+	 
 	
 	
 	

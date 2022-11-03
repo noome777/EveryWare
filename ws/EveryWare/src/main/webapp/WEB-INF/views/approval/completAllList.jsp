@@ -56,14 +56,7 @@
 	                  <td>${d.docTitle}</td>
 	                  <td>${d.empName}</td>
 	                  <td>${d.docEnrollDate}</td>
-	                  <%-- <c:choose>
-	                  	<c:when test="">
-		                  <td>진행중</td>
-	                  	</c:when>
-	                  	<c:when test="">
-		                  <td>완료</td>
-	                  	</c:when>
-	                  </c:choose> --%>
+	                  <td>${d.status}</td>
 	                </tr>
               	</c:forEach>
               </tbody>
