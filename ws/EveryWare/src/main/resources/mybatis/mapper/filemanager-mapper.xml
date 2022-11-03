@@ -45,7 +45,7 @@
 	    , FILE_CONTENT
 	FROM FILECLOUD
     WHERE FILE_DELDATE IS NULL
-    AND F.EMP_CODE = #{empCode}
+    AND EMP_CODE = #{empCode}
 	ORDER BY FILE_CODE DESC
 	</select>
 	
@@ -68,7 +68,7 @@
 	FROM FILECLOUD
     WHERE FILE_BOOKMARK = '1'
     AND FILE_DELDATE IS NULL
-    AND F.EMP_CODE = #{empCode}
+    AND EMP_CODE = #{empCode}
 	ORDER BY FILE_CODE DESC
 	</select>
 	
@@ -90,7 +90,7 @@
 	    , FILE_CONTENT
 	FROM FILECLOUD
     WHERE FILE_DELDATE IS NOT NULL
-    AND F.EMP_CODE = #{empCode}
+    AND EMP_CODE = #{empCode}
     ORDER BY FILE_DELDATE DESC
 	</select>
 	
@@ -146,7 +146,7 @@
 	FROM FILECLOUD F
     JOIN EMP E
         ON F.EMP_CODE = E.EMP_CODE
-		WHERE FILE_CODE = #{fileCode}
+		WHERE F.FILE_CODE = #{fileCode}
 	</select>
 	
 	<insert id="addCopy">
