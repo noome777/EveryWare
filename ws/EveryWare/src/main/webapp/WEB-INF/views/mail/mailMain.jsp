@@ -112,10 +112,9 @@
 							</tr>
 							<tbody>
 								<c:forEach items="${mList}" var="m">
+									<c:set var = "mailId" value="${m.mailReceiver}"/>
+										${fn:split(mailId,'@')[0]}
 								<input type="hidden" id="mailReceiver" class="mailReceiver" value="${m.mailReceiver}"/>
-									<c:set var ="string1" value = "${m.mailReceiver}"/>
-   										 <c:set var = "length" value = "${fn:length(string1)}"/>
-    										<c:set var = "string2" value = "${fn:substring(string1, length -1, length)}" />
 									<c:if test="${m.mailDelete eq null && loginMember.empId eq m.mailReceiver}">
 										<tr>
 											<td><input type="checkbox" name="RowCheck"
