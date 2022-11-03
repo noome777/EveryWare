@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.app00.calendar.service.CalendarService;
 import com.kh.app00.calendar.vo.CalendarVo;
+import com.kh.app00.emp.vo.EmpVo;
 
 @Controller
 @RequestMapping("calendar")
@@ -34,11 +35,19 @@ public class CalendarController {
 	}
 	
 	@GetMapping("personal/select")
-	public ModelAndView getPerCalendarList(ModelAndView mv, HttpServletRequest request) {
+	public ModelAndView getPerCalendarList(ModelAndView mv, HttpServletRequest request, HttpSession session) {
+		// 로그인 여부 체크
+        if (session.getAttribute("loginMember") == null) {
+            session.setAttribute("alertMsg", "로그인 후 접근 가능합니다 !");
+        }
+        
+        // 로그인 유저의 정보 vo에 저장
+        EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
+        
 		String viewpage = "calendar/per-calendar";
 		List<CalendarVo> calendar = null;
 		try {
-			calendar = service.getPerCalendar();
+			calendar = service.getPerCalendar(loginMember.getEmpCode());
 			request.setAttribute("calendarList", calendar);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -49,11 +58,19 @@ public class CalendarController {
 	
 	
 	@GetMapping("department/select")
-	public ModelAndView getDepartCalendarList(ModelAndView mv, HttpServletRequest request) {
+	public ModelAndView getDepartCalendarList(ModelAndView mv, HttpServletRequest request, HttpSession session) {
+		// 로그인 여부 체크
+        if (session.getAttribute("loginMember") == null) {
+            session.setAttribute("alertMsg", "로그인 후 접근 가능합니다 !");
+        }
+        
+        // 로그인 유저의 정보 vo에 저장
+        EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
+        
 		String viewpage = "calendar/department-calendar";
 		List<CalendarVo> calendar = null;
 		try {
-			calendar = service.getDepartCalendar();
+			calendar = service.getDepartCalendar(loginMember.getEmpCode());
 			request.setAttribute("calendarList", calendar);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -65,9 +82,11 @@ public class CalendarController {
 	
 	@PostMapping("personal/insert")
 	public String insert(CalendarVo vo, HttpSession session) {
-
-		System.out.println(vo);
-		
+		// 로그인 유저의 정보 vo에 저장
+        EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
+        
+        vo.setEmpCode(loginMember.getEmpCode());
+        
 		int result = service.insertOne(vo); 
 		
 		System.out.println(result);
@@ -83,9 +102,11 @@ public class CalendarController {
 	
 	@PostMapping("department/insert")
 	public String insert(CalendarVo vo, HttpSession session, Model model) {
-
-		System.out.println(vo);
-		
+		// 로그인 유저의 정보 vo에 저장
+        EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
+        
+        vo.setEmpCode(loginMember.getEmpCode());
+        
 		int result = service.insertOne(vo); 
 		
 		System.out.println(result);

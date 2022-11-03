@@ -22,13 +22,13 @@ public class CalendarServiceImpl implements CalendarService {
 	}
 
 	@Override
-	public List<CalendarVo> getPerCalendar() {
-		return dao.getPerCalendar(sst);
+	public List<CalendarVo> getPerCalendar(String empCode) {
+		return dao.getPerCalendar(sst, empCode);
 	}
 
 	@Override
-	public List<CalendarVo> getDepartCalendar() {
-		return dao.getDepartCalendar(sst);
+	public List<CalendarVo> getDepartCalendar(String empCode) {
+		return dao.getDepartCalendar(sst, empCode);
 	}
 
 	@Override
