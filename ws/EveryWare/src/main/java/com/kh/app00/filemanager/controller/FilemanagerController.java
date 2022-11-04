@@ -310,6 +310,11 @@ public class FilemanagerController {
         // 2. 복사
         Files.copy(file.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
  
+        
+        // 로그인 유저의 정보 vo에 저장
+        EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
+        
+        vo.setEmpCode(loginMember.getEmpCode());
         // DB 전달하기
 		int result = service.addCopy(vo);
 		
