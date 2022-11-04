@@ -21,6 +21,7 @@
 		<typeAlias alias="ApprovalTypeVo" type="com.kh.app00.approval.vo.ApprovalTypeVo"/>
 		<typeAlias alias="ApprovalListVo" type="com.kh.app00.approval.vo.ApprovalListVo"/>
 		<typeAlias alias="ApprovalRefVo" type="com.kh.app00.approval.vo.ApprovalRefVo"/>
+		<typeAlias alias="ApprovalFileVo" type="com.kh.app00.approval.vo.ApprovalFileVo"/>
 
 		
 		
