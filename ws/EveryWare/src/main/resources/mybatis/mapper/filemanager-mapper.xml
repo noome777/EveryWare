@@ -163,7 +163,38 @@
 		WHERE FILE_CODE = #{fileCode}
 	</update>
 	
-	<insert id="addCloud">
+	<update id="addCloud">
+	UPDATE 
+    FILECLOUD F
+	SET 
+    FILE_RANGE =   (
+                                SELECT E.DEPT_CODE 
+                                FROM EMP E
+                                WHERE F.EMP_CODE= E.EMP_CODE
+                            )
+	WHERE FILE_CODE = #{fileCode}
+	</update>
 	
-	</insert>
+	<select id="selectCloud" resultType="filemanagerVo">
+	SELECT 
+	    FILE_CODE
+	    , EMP_CODE
+	    , FILE_TITLE
+	    , FILE_NAME
+	    , FILE_ORIGINNAME
+	    , FILE_URL
+	    , FILE_ENROLLDATE
+	    , FILE_CNT
+	    , FILE_BOOKMARK
+	    , FILE_DELDATE
+	    , FILE_RANGE
+	    , FILE_TYPE
+	    , FILE_SIZE
+	    , FILE_CONTENT
+	FROM FILECLOUD
+    WHERE FILE_DELDATE IS NULL
+    AND FILE_RANGE = #{deptCode}
+	ORDER BY FILE_CODE DESC
+	</select>
+	
 </mapper>

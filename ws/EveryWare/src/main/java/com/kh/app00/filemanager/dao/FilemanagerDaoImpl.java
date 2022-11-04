@@ -81,4 +81,10 @@ public class FilemanagerDaoImpl implements FilemanagerDao {
 		return sst.insert("filemanagerMapper.addCloud", vo);
 	}
 
+	@Override
+	public List<FilemanagerVo> selectCloud(SqlSessionTemplate sst, String deptCode) {
+		// TODO Auto-generated method stub
+		return sst.selectList("filemanagerMapper.selectCloud", deptCode);
+	}
+
 }

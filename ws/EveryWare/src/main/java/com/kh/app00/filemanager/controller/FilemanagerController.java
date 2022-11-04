@@ -110,6 +110,14 @@ public class FilemanagerController {
             session.setAttribute("alertMsg", "로그인 후 접근 가능합니다 !");
             return "redirect:/emp/login";
         }
+        
+        // 로그인 유저의 정보 vo에 저장
+        EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
+		
+		
+		List<FilemanagerVo> flist = service.selectCloud(loginMember.getDeptCode());
+		model.addAttribute("flist", flist);
+        
 		return "filemanager/cloud-fileManager";
 	}
 	

@@ -94,6 +94,12 @@ public class FilemanagerServiceImpl implements FilemanagerService {
 		return dao.addCloud(sst, vo);
 	}
 
+	@Override
+	public List<FilemanagerVo> selectCloud(String deptCode) {
+		// TODO Auto-generated method stub
+		return dao.selectCloud(sst, deptCode);
+	}
+
 	
 	
 
