@@ -103,7 +103,7 @@
                           </div>
                         </td>
                         <td data-toggle="modal" data-target="#verticalModal">
-                          <p class="mb-0 text-muted"><strong>김춘배</strong></p>
+                          <p class="mb-0 text-muted"><strong>EX) 김예시</strong></p>
                         </td>
                         <td>
                           <p class="mb-0 text-muted">Accumsan Consulting</p>

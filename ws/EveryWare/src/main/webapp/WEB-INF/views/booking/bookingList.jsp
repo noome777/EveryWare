@@ -124,12 +124,12 @@
                             <label class="custom-control-label" for="all2"></label>
                           </div>
                         </th>
-                        <th>이미지</th>
-                        <th>자원명</th>
-                        <th>예약 시간</th>
-                        <th>상태</th>
-                        <th>반납</th>
-                      </tr>
+	                        <th>이미지</th>
+	                        <th>자원명</th>
+	                        <th>예약 시간</th>
+	                        <th>상태</th>
+	                        <th>반납</th>
+                      		</tr>
                     </thead>
                     
                     <tbody>
@@ -147,7 +147,7 @@
                           </div>
                         </td>
                         <td>
-                          <p class="mb-0 text-muted"><strong>비품1</strong></p>
+                          <p class="mb-0 text-muted"><strong>EX) 비품1</strong></p>
                           <small class="mb-0 text-muted">A1234</small>
                         </td>
                         <td>
