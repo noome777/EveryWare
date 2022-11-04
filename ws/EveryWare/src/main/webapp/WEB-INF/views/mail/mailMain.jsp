@@ -90,6 +90,7 @@
 						onclick="deleteValue();" class="btn btn-primary"/>
 					<button type="button" id="leadBtn" class="btn btn-primary">읽음</button>
 					<button type="button" id="noleadBtn" class="btn btn-primary">안읽음</button>
+						<input type="button" id="cancelBtn" class="btn btn-primary" value="내게 쓰기" onclick="history.back(-1)">
 				</div>
 				<!-- <div class="input-group w-50" >
 		<span class="input-group-text" id="basic-addon1">
@@ -112,10 +113,11 @@
 							</tr>
 							<tbody>
 								<c:forEach items="${mList}" var="m">
-									<c:set var = "mailId" value="${m.mailReceiver}"/>
-										${fn:split(mailId,'@')[0]}
+										
 								<input type="hidden" id="mailReceiver" class="mailReceiver" value="${m.mailReceiver}"/>
-									<c:if test="${m.mailDelete eq null && loginMember.empId eq m.mailReceiver}">
+										<c:set var = "mailId" value="${m.mailReceiver}"/>
+										<c:set var = "mailSend" value="${m.mailSender}"/>
+									<c:if test="${m.mailDelete eq null && loginMember.empId eq fn:split(mailId,'@')[0] || loginMember.empId eq fn:split(mailSend,'@')[0]}">
 										<tr>
 											<td><input type="checkbox" name="RowCheck"
 												class="RowCheck" value="${m.mailCode}"></td>

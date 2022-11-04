@@ -22,7 +22,7 @@
 		<%@ include file="/WEB-INF/views/mail/sidemenu-content.jsp"%>
 		<main role="main" class="main-content">
 			<div class="buttonSet">
-				<button type="button" id="sendBtn" class="btn btn-primary">답장</button>
+				<button type="button" id="sendBtn" class="btn btn-primary" onclick="location.href='${root}/mail/reply'">답장</button>
 				<button type="button" id="cancelBtn" class="btn btn-primary">삭제</button>
 			</div>
 

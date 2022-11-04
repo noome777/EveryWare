@@ -54,5 +54,23 @@ public class MailServiceImpl implements MailService{
 	public int back(String mailCode) {
 		return dao.back(sst,mailCode);
 	}
+
+
+	@Override
+	public List<MailVo> selectSendlist() {
+		return dao.selectSendlist(sst);
+	}
+
+
+	@Override
+	public List<MailVo> selectRelist() {
+		return dao.selectRelist(sst);
+	}
+
+
+	@Override
+	public int reply(MailVo mvo) {
+		return dao.replyMail(sst, mvo);
+	}
 	
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.app00.emp.vo.EmpVo;
 import com.kh.app00.mail.service.MailService;
 import com.kh.app00.mail.vo.MailVo;
+import com.kh.app00.notice.vo.NoticeVo;
 
 @Controller
 @RequestMapping("mail")
@@ -123,20 +125,82 @@ public class MailController {
 		
 	}	
 	
-	
 	@GetMapping("reply")
 	public String mailReply() {
 		return "mail/mailReply";
 	}
 	
+	@PostMapping("reply")
+	public String reply(MailVo mvo, Model model, HttpSession session, EmpVo evo, HttpServletRequest req ) {
+		
+		EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
+		String no = loginMember.getEmpCode();
+
+		mvo.setEmpCode(no);
+		
+		int result = ms.reply(mvo);
+		
+		
+		MultipartFile[] fArr = mvo.getF();
+
+		if (!fArr[0].isEmpty()) { // 클라이언트 로부터 전달받은 파일 있음
+
+			for (int i = 0; i < fArr.length; ++i) {
+				MultipartFile f = fArr[i];
+
+				// 원본파일명
+				String originName = f.getOriginalFilename();
+				String ext = originName.substring(originName.lastIndexOf("."));
+
+				// 변경된 파일명
+				long now = System.currentTimeMillis();
+				int randomNum = (int) (Math.random() * 90000 + 10000);
+				String changeFileName = now + "_" + randomNum;
+
+				// 2. 저장할 경로파일 객체 생성
+				String rootPath = req.getServletContext().getRealPath("/resources/upload/");
+				File targetFile = new File(rootPath + changeFileName + ext);
+
+				// 3. 저장
+				try {
+					f.transferTo(targetFile);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		if (result == 1) {
+			session.setAttribute("alertMsg", "답장 성공!");
+			return "redirect:/mail/mailMain";
+		} else {
+			model.addAttribute("msg", "답장 작성 실패...");
+			return "error/errorPage";
+		}
+		
+		
+		
+	}
 	
 	@GetMapping("receive")
-	public String mailReceive() {
+	public String mailReceive(Model model) {
+		
+		List<MailVo> receiveList = ms.selectRelist();
+		
+		model.addAttribute("receiveList", receiveList);
+		
+		
 		return "mail/mailReceive";
 	}
 	
 	@GetMapping("send")
-	public String mailSend() {
+	public String mailSend(Model model) {
+		
+		List<MailVo> sendList = ms.selectSendlist();
+		
+		model.addAttribute("sendList", sendList);
+		
+		
 		return "mail/mailSend";
 	}
 	
@@ -203,4 +267,12 @@ public class MailController {
 		return "mail/mailDetail";
 	}
 	
+	
+
+
+	@GetMapping("mailMe")
+	public String maiMe() {
+		return "mail/mailMe";
 	}
+
+}

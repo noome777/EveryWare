@@ -79,4 +79,60 @@
 		WHERE MAIL_CODE = #{mailCode}
 	</update>
 	
+	<select id="selectSendlist" resultType="MailVo">
+		SELECT
+		MAIL.MAIL_CODE
+		,MAIL.EMP_CODE
+		,MAIL.MAIL_SENDER 
+		,MAIL.MAIL_TITLE
+		,MAIL.MAIL_CONTENT
+		,MAIL.MAIL_SENDDATE
+		,MAIL.MAIL_RECEIVER
+		,MAIL.MAIL_DELETE 
+		FROM MAIL
+		JOIN EMP
+		ON MAIL.EMP_CODE = EMP.EMP_CODE
+		WHERE MAIL_DELETE IS NULL
+		ORDER BY MAIL_CODE DESC
+	</select>
+	
+	<select id="selectRelist" resultType="MailVo">
+		SELECT
+		MAIL.MAIL_CODE
+		,MAIL.EMP_CODE
+		,MAIL.MAIL_SENDER 
+		,MAIL.MAIL_TITLE
+		,MAIL.MAIL_CONTENT
+		,MAIL.MAIL_SENDDATE
+		,MAIL.MAIL_RECEIVER
+		,MAIL.MAIL_DELETE 
+		FROM MAIL
+		JOIN EMP
+		ON MAIL.EMP_CODE = EMP.EMP_CODE
+		WHERE MAIL_DELETE IS NULL
+		ORDER BY MAIL_CODE DESC
+	</select>		
+	
+	<insert id="replyMail">
+		INSERT INTO MAIL 
+		(
+		MAIL_CODE
+		, EMP_CODE
+		, MAIL_SENDER
+		, MAIL_TITLE
+		, MAIL_CONTENT
+		, MAIL_SENDDATE
+		, MAIL_RECEIVER
+		)
+		VALUES 
+		(
+		SEQ_MAIL_CODE.NEXTVAL
+		 ,#{empCode}
+		 ,#{mailSender}
+		 ,#{mailTitle}
+		 ,#{mailContent}
+		 ,SYSDATE
+		 ,#{mailReceiver}
+		 )
+	</insert>
 </mapper>

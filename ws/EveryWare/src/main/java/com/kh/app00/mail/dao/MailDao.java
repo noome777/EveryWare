@@ -26,6 +26,16 @@ public interface MailDao {
 
 	//복원
 	int back(SqlSessionTemplate sst, String mailCode);
+
+	
+	//보낸 메일함 조회
+	List<MailVo> selectSendlist(SqlSessionTemplate sst);
+
+	//받은 메일함 조회
+	List<MailVo> selectRelist(SqlSessionTemplate sst);
+
+	//답장 작성
+	int replyMail(SqlSessionTemplate sst, MailVo mvo);
 	
 
 }
