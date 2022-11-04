@@ -2,6 +2,10 @@ package com.kh.app00.approval.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import com.kh.app00.approval.doc.vo.DocCommentVo;
 import com.kh.app00.approval.doc.vo.DocDataVo;
 import com.kh.app00.approval.doc.vo.DocFormDetailTemplateVo;
@@ -9,6 +13,7 @@ import com.kh.app00.approval.doc.vo.DocFormMapperVo;
 import com.kh.app00.approval.doc.vo.DocFormVo;
 import com.kh.app00.approval.doc.vo.DocPeriodVo;
 import com.kh.app00.approval.vo.ApprovalDocVo;
+import com.kh.app00.approval.vo.ApprovalFileVo;
 import com.kh.app00.approval.vo.ApprovalListVo;
 import com.kh.app00.approval.vo.ApprovalRefVo;
 import com.kh.app00.approval.vo.ApprovalTypeVo;
@@ -34,7 +39,7 @@ public interface ApprovalService {
 	List<EmpVo> selectDeptEmp(int deptCode);
 
 	//결재문서 작성
-	int insertApprovalDoc(ApprovalDocVo docVo);
+	int insertApprovalDoc(ApprovalDocVo docVo, MultipartFile[] files, HttpServletRequest req);
 	
 	//작성된 문서 상세정보 불러오기
 	ApprovalDocVo selectDocDetail(String docCode);
@@ -44,6 +49,8 @@ public interface ApprovalService {
 	List<ApprovalListVo> selectApproverList(String docCode);
 	//작성된 문서 참조인 불러오기
 	List<ApprovalRefVo> selectRefVoList(String docCode);
+	//작성된 파일 불러오기
+	List<ApprovalFileVo> selectFileVoList(String docCode);
 	//결재타입 갯수 구하기
 	List<ApprovalListVo> selectTypeCountList(String docCode);
 	//반려 메세지
@@ -80,6 +87,10 @@ public interface ApprovalService {
 	//결재 진행 문서 목록 조회
 	List<ApprovalDocVo> selectProgressList(ApprovalDocVo vo, PageVo pv);
 	
+	//문서함 - 전체 문서 갯수
+	int selectCompletAllTotalCnt(ApprovalDocVo vo);
+	//문서함 - 전체 문서 목록 조회
+	List<ApprovalDocVo> selectCompletAllList(ApprovalDocVo vo, PageVo pv);
 	//문서함 - 기안 문서 전체 갯수
 	int selectCompletWriteTotalCnt(ApprovalDocVo vo);
 	//문서함 - 기안 문서 목록 조회
@@ -120,6 +131,8 @@ public interface ApprovalService {
 	int selectApprDeleteDocTotalCnt(ApprovalDocVo vo);
 	//삭제 문서 목록 조회
 	List<ApprovalDocVo> selectApprDeleteDocList(ApprovalDocVo vo, PageVo pv);
+	
+	
 	
 	
 	

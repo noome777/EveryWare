@@ -106,6 +106,11 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	public List<ApprovalRefVo> selectRefVoList(SqlSessionTemplate sst, String docCode) {
 		return sst.selectList("approvalMapper.selectRefVoList", docCode);
 	}
+	//작성된 파일 불러오기
+	@Override
+	public List<ApprovalFileVo> selectFileVoList(SqlSessionTemplate sst, String docCode) {
+		return sst.selectList("approvalMapper.selectFileVoList", docCode);
+	}
 	//결재타입 갯수 구하기
 	@Override
 	public List<ApprovalListVo> selectTypeCountList(SqlSessionTemplate sst, String docCode) {
@@ -229,6 +234,19 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
 		return sst.selectList("approvalMapper.selectProgressList", vo, rb);
 	}
+	
+	//문서함 - 전체 문서 갯수
+	@Override
+	public int selectCompletAllTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo) {
+		return sst.selectOne("approvalMapper.selectCompletAllTotalCnt", vo);
+	}
+	//문서함 - 전체 문서 목록 조회
+	@Override
+	public List<ApprovalDocVo> selectCompletAllList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv) {
+		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
+		return sst.selectList("approvalMapper.selectCompletAllList", vo, rb);
+	}
 	//문서함 - 기안 문서 전체 갯수
 	@Override
 	public int selectCompletWriteTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo) {
@@ -339,6 +357,8 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
 		return sst.selectList("approvalMapper.selectApprDeleteDocList", vo, rb);
 	}
+	
+	
 	
 	
 	

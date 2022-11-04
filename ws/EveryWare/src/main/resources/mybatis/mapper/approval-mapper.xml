@@ -78,7 +78,7 @@
 	<insert id="insertApprovalFile">
 		<foreach collection="list" item="item" index="index" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" ">
 			INTO APPROVAL_FILE(FILE_CODE, DOC_CODE, ORIGIN_NAME, UPLOAD_NAME)
-			VALUES(1, 1, 'D', 'D')
+			VALUES(SEQ_APPROVAL_FILE_CODE.NEXTVAL , #{item.docCode}, #{item.originName}, #{item.uploadName})
 		</foreach>
 	</insert>
 	
@@ -128,6 +128,12 @@
 		FROM APPROVAL_REF R
 		INNER JOIN EMP E ON E.EMP_CODE = R.REF_EMP_CODE
 		WHERE R.DOC_CODE = #{docCode}
+	</select>
+	
+	<select id="selectFileVoList" resultType="ApprovalFileVo">
+		SELECT FILE_CODE, DOC_CODE, ORIGIN_NAME, UPLOAD_NAME FROM APPROVAL_FILE
+		WHERE DOC_CODE = #{docCode}
+		ORDER BY FILE_CODE ASC
 	</select>
 	
 	<select id="selectTypeCountList" resultType="ApprovalListVo">
@@ -236,6 +242,7 @@
 		<if test="docFormCode != null and docFormCode != 0">
 			AND A.DOC_FORM_CODE = #{docFormCode}
 		</if>
+		ORDER BY A.DOC_CODE DESC
 	</select>
 	
 	<select id="selectExpectCount" resultType="int">
@@ -383,6 +390,41 @@
 			AND T1.DOC_FORM_CODE = #{docFormCode}
 		</if>
 		ORDER BY T1.DOC_CODE DESC
+	</select>
+	
+	<select id="selectCompletAllTotalCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM APPROVAL_DOC A
+		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
+		INNER JOIN DOC_FORM F ON F.FORM_CODE = A.DOC_FORM_CODE
+		WHERE E.DEPT_CODE = #{deptCode}
+		AND A.DOC_APPR_DATE IS NOT NULL
+		AND A.DOC_STATUS = 'N'
+		<if test="docFormCode != null and docFormCode != 0">
+			AND A.DOC_FORM_CODE = #{docFormCode}
+		</if>
+	</select>
+	
+	<select id="selectCompletAllList" resultType="ApprovalDocVo">
+		SELECT A.DOC_CODE, A.PERIOD_CODE, A.DOC_FORM_CODE, A.EMP_CODE, A.DOC_TITLE, TO_CHAR(A.DOC_ENROLL_DATE, 'YYYY.MM.DD') AS DOC_ENROLL_DATE, A.DOC_APPR_DATE, E.EMP_NAME, F.FORM_NAME
+		, ( SELECT 
+		        CASE
+		            WHEN  SB_AD.DOC_APPR_DATE IS NULL
+		                THEN '진행중'
+		            WHEN (SELECT COUNT(*) FROM APPROVAL_LIST WHERE DOC_CODE = A.DOC_CODE AND APPR_STATUS = 'C') > 0
+		                THEN '반려'
+		            ELSE '완료' END
+		        FROM APPROVAL_DOC SB_AD WHERE SB_AD.DOC_CODE = A.DOC_CODE
+		    ) AS STATUS
+		FROM APPROVAL_DOC A
+		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
+		INNER JOIN DOC_FORM F ON F.FORM_CODE = A.DOC_FORM_CODE
+		WHERE E.DEPT_CODE = 2
+		AND A.DOC_APPR_DATE IS NOT NULL
+		<if test="docFormCode != null and docFormCode != 0">
+			AND A.DOC_FORM_CODE = #{docFormCode}
+		</if>
+		ORDER BY A.DOC_CODE DESC
 	</select>
 	
 	<select id="selectCompletWriteTotalCnt" resultType="int">

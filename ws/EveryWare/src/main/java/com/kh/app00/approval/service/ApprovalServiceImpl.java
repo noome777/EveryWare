@@ -1,11 +1,15 @@
 package com.kh.app00.approval.service;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.app00.approval.dao.ApprovalDao;
 import com.kh.app00.approval.doc.vo.DocCommentVo;
@@ -19,7 +23,9 @@ import com.kh.app00.approval.vo.ApprovalFileVo;
 import com.kh.app00.approval.vo.ApprovalListVo;
 import com.kh.app00.approval.vo.ApprovalRefVo;
 import com.kh.app00.approval.vo.ApprovalTypeVo;
+import com.kh.app00.common.FileUploader;
 import com.kh.app00.common.PageVo;
+import com.kh.app00.common.Path;
 import com.kh.app00.emp.vo.EmpVo;
 import com.kh.app00.organization.vo.DeptVo;
 
@@ -40,37 +46,31 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public List<DocFormVo> selectFormList() {
 		return dao.selectFormList(sst);
 	}
-
 	//보존연한
 	@Override
 	public List<DocPeriodVo> selectPeriodList() {
 		return dao.selectPeriodList(sst);
 	}
-
 	//양식항목
 	@Override
 	public List<DocFormMapperVo> formSelect(int formCode) {
 		return dao.formSelect(sst, formCode);
 	}
-	
 	//결재타입
 	@Override
 	public List<ApprovalTypeVo> selectTypeList() {
 		return dao.selectTypeList(sst);
 	}
-	
 	//부서정보
 	@Override
 	public List<DeptVo> selectDeptList() {
 		return dao.selectDeptList(sst);
 	}
-
 	//임직원 정보
 	@Override
 	public List<EmpVo> selectEmpList() {
 		return dao.selectEmpList(sst);
 	}
-
 	//부서별 임직원 정보
 	@Override
 	public List<EmpVo> selectDeptEmp(int deptCode) {
@@ -80,7 +80,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 	//결재문서 작성
 	@Override
 	@Transactional(rollbackFor = {Exception.class})
-	public int insertApprovalDoc(ApprovalDocVo docVo) {
+	public int insertApprovalDoc(ApprovalDocVo docVo, MultipartFile[] files, HttpServletRequest req) {
 		
 		int approvalDocResult = dao.insertApprovalDoc(sst, docVo);
 		String constructedDocCode = docVo.getDocCode();
@@ -88,34 +88,42 @@ public class ApprovalServiceImpl implements ApprovalService {
 		List<DocDataVo> docDataList = docVo.getDocDataList();
 		List<ApprovalListVo> approverList = docVo.getApproverList();
 		List<ApprovalRefVo> approvalRefList = docVo.getApprovalRefList();
-		List<ApprovalFileVo> approvalFileList = docVo.getApprovalFileList();
 		
-		if(docDataList.size() != 0) {
+		if(docDataList.size() > 0) {
 			for(DocDataVo vo : docDataList) {
 				vo.setDocCode(constructedDocCode);
 			}
 			int docDataResult = dao.insertDocData(sst, docDataList);
 		}
-		if(approverList.size() != 0) {
+		if(approverList.size() > 0) {
 			for(ApprovalListVo vo : approverList) {
 				vo.setDocCode(constructedDocCode);
 			}
 			int approverListResult = dao.insertApproverList(sst, approverList);
 		}
-		if(approvalRefList.size() != 0) {
+		if(approvalRefList.size() > 0) {
 			for(ApprovalRefVo vo : approvalRefList) {
 				vo.setDocCode(constructedDocCode);
 			}
 			int approvalRefResult = dao.insertApprovalRef(sst, approvalRefList);
 		}
-//		if(approvalFileList.size() != 0 && approvalFileList != null) {
-//			
-//			for(ApprovalFileVo vo : approvalFileList) {
-//				vo.setDocCode(constructedDocCode);
-//			}
-//			System.out.println(approvalFileList);
-//			int approvalFileResult = dao.insertApprovalFile(sst, approvalFileList);
-//		}
+		if(files.length > 0) {
+			List<ApprovalFileVo> approvalFileList = new ArrayList<ApprovalFileVo>();
+			for(int i=0; i<files.length; i++) {
+				
+				ApprovalFileVo vo = new ApprovalFileVo();
+				vo.setDocCode(constructedDocCode);
+				vo.setFile(files[i]);
+				vo.setOriginName(files[i].getOriginalFilename());
+				
+				String savePath = req.getServletContext().getRealPath(Path.APPROVAL_PATH);
+				String changeName = FileUploader.fileUpload(vo.getFile(), savePath);
+				
+				vo.setUploadName(changeName);
+				approvalFileList.add(vo);
+			}
+			int approvalFileResult = dao.insertApprovalFile(sst, approvalFileList);
+		}
 		
 		return approvalDocResult;
 	}
@@ -139,6 +147,11 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public List<ApprovalRefVo> selectRefVoList(String docCode) {
 		return dao.selectRefVoList(sst, docCode);
+	}
+	//작성된 파일 가져오기
+	@Override
+	public List<ApprovalFileVo> selectFileVoList(String docCode) {
+		return dao.selectFileVoList(sst, docCode);
 	}
 	//결재타입 갯수 구하기
 	@Override
@@ -261,6 +274,17 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public List<ApprovalDocVo> selectProgressList(ApprovalDocVo vo, PageVo pv) {
 		return dao.selectProgressList(sst, vo, pv);
 	}
+	
+	//문서함 - 전체 문서 갯수
+	@Override
+	public int selectCompletAllTotalCnt(ApprovalDocVo vo) {
+		return dao.selectCompletAllTotalCnt(sst, vo);
+	}
+	//문서함 - 전체 문서 목록 조회
+	@Override
+	public List<ApprovalDocVo> selectCompletAllList(ApprovalDocVo vo, PageVo pv) {
+		return dao.selectCompletAllList(sst, vo, pv);
+	}
 	//문서함 - 기안 문서 전체 갯수
 	@Override
 	public int selectCompletWriteTotalCnt(ApprovalDocVo vo) {
@@ -369,6 +393,10 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public List<ApprovalDocVo> selectApprDeleteDocList(ApprovalDocVo vo, PageVo pv) {
 		return dao.selectApprDeleteDocList(sst, vo, pv);
 	}
+
+	
+
+	
 
 	
 
