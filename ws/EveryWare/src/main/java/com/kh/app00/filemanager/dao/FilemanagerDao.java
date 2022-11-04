@@ -17,7 +17,8 @@ public interface FilemanagerDao {
 	List<FilemanagerVo> selectStar(SqlSessionTemplate sst, String empCode);
 	//삭제된 파일 조회
 	List<FilemanagerVo> selectDel(SqlSessionTemplate sst, String empCode);
-	
+	//공유된 파일 조회
+	List<FilemanagerVo> selectCloud(SqlSessionTemplate sst, String deptCode);
 	//즐겨찾기 추가
 	int addStar(SqlSessionTemplate sst, String fileCode);
 	
@@ -41,5 +42,6 @@ public interface FilemanagerDao {
 	
 	//공유하기 추가
 	int addCloud(SqlSessionTemplate sst, FilemanagerVo vo);
+
 
 }

@@ -14,7 +14,8 @@ public interface FilemanagerService {
 	List<FilemanagerVo> selectStar(String empCode);
 	//삭제된 파일 조회
 	List<FilemanagerVo> selectDel(String empCode);
-	
+	//공유된 파일 조회
+	List<FilemanagerVo> selectCloud(String deptCode);
 	
 	//즐겨찾기 추가
 	int addStar(String fileCode);
@@ -39,6 +40,7 @@ public interface FilemanagerService {
 	
 	//공유하기 추가
 	int addCloud(FilemanagerVo vo);
+
 
 
 }
