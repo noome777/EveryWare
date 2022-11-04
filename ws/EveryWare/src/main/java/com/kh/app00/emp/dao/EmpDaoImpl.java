@@ -44,6 +44,19 @@ public class EmpDaoImpl implements EmpDao {
         return sst.update("empMapper.updateNewPwd", vo);
     }
 
+    
+    //임직원 정보수정
+	@Override
+	public int updateEmp(SqlSessionTemplate sst, EmpVo empVo) {
+		return sst.update("empMapper.updateEmp",empVo);
+	}
+
+	//임직원 정보 업데이트 후 정보 가져오기
+	@Override
+	public EmpVo selectEmpByEmpCode(SqlSessionTemplate sst, String empCode) {
+		return sst.selectOne("empMapper.selectEmpByEmpCode",empCode);
+	}
+
    
 
 

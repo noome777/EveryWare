@@ -325,10 +325,22 @@ public class OrganizationServiceImpl implements OrganizationService {
 	@Override
 	public int updateEmp(EmpVo empVo) {
 		
-		if(empVo.getEmpPwd().length()>3) {
-			String replacedPwd = spaceRemover.removeSpace(empVo.getEmpPwd());
+		if(empVo.getEmpPwd()!=null || empVo.getEmpPwd()!="") {
+			String replacedPwd = SpaceRemover.removeSpace(empVo.getEmpPwd());
 			empVo.setEmpPwd(replacedPwd);
 			empVo.encodePwd(pwdEnc);
+		}
+		
+		if(empVo.getEmpTel().length()!=11) {
+			return -2;
+		} else if (empVo.getEmpPhone().length()!=11) {
+			return -3;
+		} else if (empVo.getEmpEMail().length()>30) {
+			return -4;
+		} else if (empVo.getEmpAddress1().length()>50) {
+			return -5;
+		} else if (empVo.getEmpAddress2().length()>50) {
+			return -6;
 		}
 		
 		int result =  organizationDao.updateEmp(sqlSessionTemplate, empVo);

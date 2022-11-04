@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.kh.app00.emp.service.EmpService;
 import com.kh.app00.emp.vo.EmpVo;
+import com.kh.app00.common.FileUploader;
 
 @Controller
 @RequestMapping("emp")
@@ -212,9 +214,58 @@ public class EmpController {
     	 return "/emp/myPage";
      }
      
-     @PostMapping("myPage")
-     public String saveMyPage() {
-    	return ""; 
+     @PostMapping("edit")
+     public String saveMyPage(EmpVo empVo, HttpSession session, HttpServletRequest request) {
+    	 
+    	 
+    	 EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
+ 		 empVo.setEmpCode(loginMember.getEmpCode());
+ 		 
+ 		 System.out.println(empVo);
+ 		 System.out.println(empVo.getProfile());
+ 		 System.out.println(empVo.getSignFile());
+ 		 System.out.println(loginMember.getEmpCode());
+    	 
+ 		if(!empVo.getProfile().isEmpty() && empVo.getProfile()!=null) {
+			//파일 있음
+			//파일 업로드 후 저장된 파일명 얻기
+			String saveProfilePath = request.getServletContext().getRealPath("/resources/upload/profile/");
+			String changedProfileName = FileUploader.fileUpload(empVo.getProfile(),saveProfilePath);
+			empVo.setEmpProfileName(changedProfileName);
+		}
+ 		
+ 		if(!empVo.getSignFile().isEmpty() && empVo.getSignFile()!=null) {
+			String saveFilePath = request.getServletContext().getRealPath("/resources/upload/signFile/");
+			String changedSignFileName = FileUploader.fileUpload(empVo.getSignFile(),saveFilePath);
+			empVo.setEmpFileName(changedSignFileName);
+		}
+ 		
+ 		System.out.println(empVo);
+ 		
+    	 int result = service.updateEmp(empVo);
+    	 
+    	 if(result==1) {
+ 			EmpVo loginMeber = service.selectEmpByEmpCode(empVo.getEmpCode());
+ 			session.setAttribute("loginMember", loginMeber);
+ 			session.setAttribute("alertMsg", "임직원 수정에 성공하였습니다.");
+ 		}else if(result==-1){
+ 			session.setAttribute("alertMsg", "임직원 수정에 실패하였습니다.");
+ 		} else if(result==-2) {
+ 			session.setAttribute("errorMsg","임직원 수정에 실패하였습니다. 사내전화는 숫자로 11글자를 맞춰서 기입해주세요.");
+ 		} else if(result==-3) {
+ 			session.setAttribute("errorMsg","임직원 수정에 실패하였습니다. 개인전화는 숫자로 11글자를 맞춰서 기입해주세요.");
+ 		} else if(result==-4) {
+ 			session.setAttribute("errorMsg", "임직원 수정에 실패하였습니다. 이메일은 30글자 이하로 기입해주시길 바랍니다.");
+ 		} else if(result==-5) {
+ 			session.setAttribute("errorMsg", "임직원 수정에 실패하였습니다. 주소에는 각각 50글자 이하로 작성해주시길 바랍니다.");
+ 		} else if(result==-6) {
+ 			session.setAttribute("errorMsg", "임직원 수정에 실패하였습니다. 주소에는 각각 50글자 이하로 작성해주시길 바랍니다.");
+ 		} else {
+ 			session.setAttribute("errorMsg", "ErrorCode : " + result);
+ 		}
+    	 
+    	 System.out.println(result);
+    	return "redirect:/emp/myPage"; 
      }
     
     

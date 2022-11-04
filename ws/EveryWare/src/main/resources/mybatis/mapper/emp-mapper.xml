@@ -3,11 +3,38 @@
 <mapper namespace="empMapper">
 
 	<select id="selectOneById" resultType="EmpVo">
-		SELECT 
-		*
-		FROM EMP
-		WHERE EMP_ID = #{empId}
-		AND EMP_STATUS = 'N'
+		SELECT
+			E.EMP_CODE
+			, E.EMP_NAME
+			, E.EMP_ID
+			, E.EMP_PWD
+			, E.EMP_E_MAIL 
+			, E.EMP_TEL 
+			, E.EMP_PHONE
+			, TO_CHAR(E.EMP_JOIN_DATE,'YYYY-MM-DD') AS EMP_JOIN_DATE
+			, TO_CHAR(E.EMP_PROMOTION_DATE,'YYYY-MM-DD')AS EMP_PROMOTION_DATE
+			, E.EMP_FILE_NAME
+			, E.EMP_PROFILE_NAME
+			, E.EMP_ADDRESS1
+			, E.EMP_ADDRESS2
+			, C.COM_NAME AS COM_NAME
+			, D.DEPT_NAME AS DEPT_NAME
+			, R.RANK_NAME AS RANK_NAME
+			, J.JOB_NAME AS JOB_NAME
+			, T.RIGHT_NAME AS RIGHT_NAME
+		 FROM EMP E
+		 JOIN COM C
+  		ON E.COM_CODE = C.COM_CODE
+  		JOIN  DEPT D
+  		ON E.DEPT_CODE = D.DEPT_CODE
+  		JOIN RANK R
+  		ON E.RANK_CODE = R.RANK_CODE
+  		JOIN JOB J
+  		ON E.EMP_JOB_CODE = J.JOB_CODE
+  		JOIN RIGHT T
+  		ON E.RIGHT_CODE = T.RIGHT_CODE
+		WHERE E.EMP_ID = #{empId}
+		AND E.EMP_STATUS = 'N'
 	</select>
 	
 	<select id="selectIdInfo" resultType="EmpVo">
@@ -41,6 +68,56 @@
 		UPDATE EMP SET EMP_PWD = #{empPwd}
 		WHERE EMP_ID = #{empId}
 	</update>
+	
+	<update id="updateEmp">
+		UPDATE EMP
+		 SET 
+		 	EMP_TEL = #{empTel}
+			, EMP_PHONE = #{empPhone}
+			, EMP_E_MAIL = #{empEMail}
+			, EMP_ADDRESS1 = #{empAddress1}
+			, EMP_ADDRESS2 = #{empAddress2}
+			, EMP_PROFILE_NAME = #{empProfileName}
+			, EMP_FILE_NAME = #{empFileName}
+			<if test="empPwd != null and empPwd != '' ">
+				, EMP_PWD = #{empPwd}
+			</if>
+		WHERE EMP_CODE = #{empCode}
+	</update>
+	
+	<select id="selectEmpByEmpCode">
+		SELECT
+		E.EMP_CODE
+			, E.EMP_NAME
+			, E.EMP_ID
+			, E.EMP_PWD
+			, E.EMP_E_MAIL 
+			, E.EMP_TEL 
+			, E.EMP_PHONE
+			, TO_CHAR(E.EMP_JOIN_DATE,'YYYY-MM-DD') AS EMP_JOIN_DATE
+			, TO_CHAR(E.EMP_PROMOTION_DATE,'YYYY-MM-DD')AS EMP_PROMOTION_DATE
+			, E.EMP_FILE_NAME
+			, E.EMP_PROFILE_NAME
+			, E.EMP_ADDRESS1
+			, E.EMP_ADDRESS2
+			, C.COM_NAME AS COM_NAME
+			, D.DEPT_NAME AS DEPT_NAME
+			, R.RANK_NAME AS RANK_NAME
+			, J.JOB_NAME AS JOB_NAME
+			, T.RIGHT_NAME AS RIGHT_NAME
+		 FROM EMP E
+		 JOIN COM C
+  		ON E.COM_CODE = C.COM_CODE
+  		JOIN  DEPT D
+  		ON E.DEPT_CODE = D.DEPT_CODE
+  		JOIN RANK R
+  		ON E.RANK_CODE = R.RANK_CODE
+  		JOIN JOB J
+  		ON E.EMP_JOB_CODE = J.JOB_CODE
+  		JOIN RIGHT T
+  		ON E.RIGHT_CODE = T.RIGHT_CODE
+		WHERE E.EMP_CODE = #{empCode}
+	</select>
 
 
 </mapper>

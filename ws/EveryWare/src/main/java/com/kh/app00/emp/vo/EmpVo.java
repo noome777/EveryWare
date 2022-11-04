@@ -32,6 +32,7 @@ public class EmpVo {
     private String empFileName;
     
     private MultipartFile profile;
+    private MultipartFile signFile;
     
     
     private String deptName;
