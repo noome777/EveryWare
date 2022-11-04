@@ -39,4 +39,19 @@ public class MailDaoImpl implements MailDao {
 	public int back(SqlSessionTemplate sst, String mailCode) {
 		return sst.update("mailMapper.backMail", mailCode);
 	}
+
+	@Override
+	public List<MailVo> selectSendlist(SqlSessionTemplate sst) {
+		return sst.selectList("mailMapper.selectSendlist");
+	}
+
+	@Override
+	public List<MailVo> selectRelist(SqlSessionTemplate sst) {
+		return sst.selectList("mailMapper.selectRelist");
+	}
+
+	@Override
+	public int replyMail(SqlSessionTemplate sst, MailVo mvo) {
+		return sst.insert("mailMapper.replyMail", mvo);
+	}
 }

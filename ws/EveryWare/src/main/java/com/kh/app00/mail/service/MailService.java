@@ -23,5 +23,14 @@ public interface MailService {
 	
 	//복원
 	int back(String mailCode);
+	
+	//보낸 메일함 조회
+	List<MailVo> selectSendlist();
+	
+	//받은 메일함
+	List<MailVo> selectRelist();
+	
+	//메일 답장
+	int reply(MailVo mvo);
 
 }

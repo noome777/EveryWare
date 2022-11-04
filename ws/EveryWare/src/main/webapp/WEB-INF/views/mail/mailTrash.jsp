@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,6 +29,29 @@
 
 .buttonSet {
 	margin-bottom: 20px;
+}
+#sender {
+	text-align: center;
+}
+
+#title {
+	text-align: center;
+}
+
+#senddate {
+	text-align: center;
+}
+
+#msender {
+	text-align: center;
+}
+
+#mtitle {
+	text-align: center;
+}
+
+#mSenddate {
+	text-align: center;
 }
 </style>
 </head>
@@ -73,13 +100,15 @@
 						<tr>
 							<th><input type="checkbox" name="allCheckbox"
 									id="allCheckbox"></th>
-							<th>발신자</th>
-							<th>제목</th>
-							<th>작성일</th>
+							<th id="sender">발신자</th>
+							<th id="title">제목</th>
+							<th id="senddate">작성일</th>
 						</tr>
 						<tbody>
 							<c:forEach items="${trashList}" var="t">
-									<c:if test="${t.mailDelete ne null}">
+							<input type="hidden" id="mailReceiver" class="mailReceiver" value="${t.mailReceiver}"/>
+										<c:set var = "mailRecev" value="${t.mailReceiver}"/>
+									<c:if test="${t.mailDelete ne null && loginMember.empId eq fn:split(mailRecev,'@')[0]}">
 										<tr>
 											<td><input type="checkbox" name="trashCheck"
 												class="trashCheck" value="${t.mailCode}"></td>

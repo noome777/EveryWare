@@ -43,7 +43,8 @@
 			enctype="multipart/form-data">
 		<div class="buttonSet">
 			<button type="submit" id="sendBtn" class="btn btn-primary">보내기</button>
-			<button type="submit" id="cancelBtn" class="btn btn-primary">취소</button>
+			<input type="button" id="cancelBtn" class="btn btn-primary" value="취소" onclick="history.back(-1)">
+			
 		</div>
 
 		<hr>

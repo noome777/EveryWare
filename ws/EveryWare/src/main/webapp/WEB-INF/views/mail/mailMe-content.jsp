@@ -37,31 +37,20 @@
 </head>
 <body>
 	<main role="main" class="main-content">
-		<h2 id="mailall">답장 보내기</h2>
+		<h2 id="mailall">내게 쓰기</h2>
 		<br>
-		<form action="/app00/mail/reply" method="post"
+		<form action="/app00/mail/write" method="post"
 			enctype="multipart/form-data">
 		<div class="buttonSet">
 			<button type="submit" id="sendBtn" class="btn btn-primary">보내기</button>
-			<input type="button" id="cancelBtn" class="btn btn-primary" value="취소" onclick="history.back(-1)">
+			<button type="button" id="sendBtn" class="btn btn-primary" onclick="location.href='${root}/mail/mailMain'">취소</button>
+			
 		</div>
 
 		<hr>
 
 		<table>
-			<tr class="recipient">
-				
-			<tr class="sender">
-				<th scope="row"><br> <span class="raw_label" id="receivename">
-						받는 사람 </span></th>
-				<td colspan="2">
-					<div class="inputrecipe" style="padding-top: 20px;">
-						<div>
-							<input type="text" class="form-control" name="mailReceiver"
-								id="mailReceiver">
-						</div>
-					</div>
-				</td>
+			
 			<tr class="title">
 				<th scope="row"><br> <span class="raw_label" id="title2">
 						제목 </span></th>
