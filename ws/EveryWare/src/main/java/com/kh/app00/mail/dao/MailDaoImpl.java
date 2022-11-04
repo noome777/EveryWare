@@ -54,4 +54,14 @@ public class MailDaoImpl implements MailDao {
 	public int replyMail(SqlSessionTemplate sst, MailVo mvo) {
 		return sst.insert("mailMapper.replyMail", mvo);
 	}
+
+	@Override
+	public int selfWrite(SqlSessionTemplate sst, MailVo mvo) {
+		return sst.insert("mailMapper.selfMail", mvo);
+	}
+
+	@Override
+	public List<MailVo> selectSelflist(SqlSessionTemplate sst) {
+		return sst.selectList("mailMapper.selectSelflist");
+	}
 }

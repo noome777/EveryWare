@@ -32,5 +32,11 @@ public interface MailService {
 	
 	//메일 답장
 	int reply(MailVo mvo);
+	
+	//내게 쓰기
+	int selfWrite(MailVo mvo);
+	
+	//내게 쓴 메일함
+	List<MailVo> selectSelflist();
 
 }

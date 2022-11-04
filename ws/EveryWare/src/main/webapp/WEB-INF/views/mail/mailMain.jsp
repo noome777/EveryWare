@@ -87,10 +87,10 @@
 				<br>
 				<div class="buttonSet">
 					<input type="button" value="삭제" id="deleteBtn"
-						onclick="deleteValue();" class="btn btn-primary"/>
+						onclick="deleteValue();" class="btn btn-danger"/>
 					<button type="button" id="leadBtn" class="btn btn-primary">읽음</button>
 					<button type="button" id="noleadBtn" class="btn btn-primary">안읽음</button>
-						<input type="button" id="cancelBtn" class="btn btn-primary" value="내게 쓰기" onclick="history.back(-1)">
+						<input type="button" id="cancelBtn" class="btn btn-primary" value="내게 쓰기" onclick="location.href='${root}/mail/mailMe'">
 				</div>
 				<!-- <div class="input-group w-50" >
 		<span class="input-group-text" id="basic-addon1">

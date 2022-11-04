@@ -50,7 +50,8 @@
 		<hr>
 
 		<table>
-			
+				<input type="text" class="form-control" name="mailSender" id="mailSender" value="${loginMember.empId}@everyware.com" hidden>
+				<input type="text" class="form-control" name="mailReceiver" id="mailReceiver" value="${loginMember.empId}@everyware.com" hidden>
 			<tr class="title">
 				<th scope="row"><br> <span class="raw_label" id="title2">
 						제목 </span></th>

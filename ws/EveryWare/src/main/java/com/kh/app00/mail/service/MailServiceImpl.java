@@ -72,5 +72,17 @@ public class MailServiceImpl implements MailService{
 	public int reply(MailVo mvo) {
 		return dao.replyMail(sst, mvo);
 	}
+
+
+	@Override
+	public int selfWrite(MailVo mvo) {
+		return dao.selfWrite(sst,mvo);
+	}
+
+
+	@Override
+	public List<MailVo> selectSelflist() {
+		return dao.selectSelflist(sst);
+	}
 	
 }

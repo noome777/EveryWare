@@ -135,4 +135,44 @@
 		 ,#{mailReceiver}
 		 )
 	</insert>
+	
+	<insert id="selfMail">
+		INSERT INTO MAIL 
+		(
+		MAIL_CODE
+		, EMP_CODE
+		, MAIL_SENDER
+		, MAIL_TITLE
+		, MAIL_CONTENT
+		, MAIL_SENDDATE
+		, MAIL_RECEIVER
+		)
+		VALUES 
+		(
+		SEQ_MAIL_CODE.NEXTVAL
+		 ,#{empCode}
+		 ,#{mailSender}
+		 ,#{mailTitle}
+		 ,#{mailContent}
+		 ,SYSDATE
+		 ,#{mailReceiver}
+		 )
+	</insert>
+	
+	<select id="selectSelflist" resultType="MailVo">
+		SELECT
+		MAIL.MAIL_CODE
+		,MAIL.EMP_CODE
+		,MAIL.MAIL_SENDER 
+		,MAIL.MAIL_TITLE
+		,MAIL.MAIL_CONTENT
+		,MAIL.MAIL_SENDDATE
+		,MAIL.MAIL_RECEIVER
+		,MAIL.MAIL_DELETE 
+		FROM MAIL
+		JOIN EMP
+		ON MAIL.EMP_CODE = EMP.EMP_CODE
+		WHERE MAIL_DELETE IS NULL
+		ORDER BY MAIL_CODE DESC
+	</select>
 </mapper>

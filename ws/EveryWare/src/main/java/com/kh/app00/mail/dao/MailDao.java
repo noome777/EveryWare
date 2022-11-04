@@ -36,6 +36,12 @@ public interface MailDao {
 
 	//답장 작성
 	int replyMail(SqlSessionTemplate sst, MailVo mvo);
+
+	//내게 쓰기
+	int selfWrite(SqlSessionTemplate sst, MailVo mvo);
+
+	//내게 쓴 메일함 조회
+	List<MailVo> selectSelflist(SqlSessionTemplate sst);
 	
 
 }
