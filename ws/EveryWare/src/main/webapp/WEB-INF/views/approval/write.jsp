@@ -558,35 +558,17 @@
 
 
 
-    // $("input[type='file']").on('change',function(){ 
-    //   var fileList = "";
-    //   let target = $('#customFile');
+    $("input[type='file']").on('change',function(){ 
 
-    //   var formData = new FormData();
-    //   for(var i=0; i<$('#customFile')[0].files.length; i++){  
-    //     formData.append("files", $('#customFile')[0].files[i]);
-    //     fileList += event.target.files[i].name + '<br>';
-    //   } 
-    //   console.log(fileList);
-    //   console.log(formData); 
-    //   $.ajax({
-    //     url : '${root}/approval/write',
-    //     type : 'POST',
-    //     data : formData,
-    //     processData : false,
-    //     // enctype: 'multipart/form-data',
-    //     contentType : false,
-    //     success : function(data) {
-    //       alert(data);
-    //       $('#file-name').html(fileList);
-    //       //x버튼 추가
-    //     },
-    //     error : (error) => {
-    //       console.log(JSON.stringify(error));
-    //     }   
-    //   })
+      var fileList = "";
 
-    // });
+      for(var i=0; i<$('#customFile')[0].files.length; i++){  
+        fileList += event.target.files[i].name + '<br>';
+      } 
+      
+      $('#file-name').append(fileList);
+
+    });
     
     //진행중
     function insert () {
@@ -651,6 +633,8 @@
       
       if(approverList.length < 1){
         alert('결재자를 추가해주세요');
+      } else if($('[name=docTitle]').val() == ""){  
+        alert('제목을 입력해주세요')
       } else {
         
         let param = {
@@ -660,22 +644,48 @@
           docDataList : docDataList,
           approverList : approverList,
           approvalRefList : approvalRefList
-          // approvalFileList : '서버에 업로드된 경로 리스트'
         }
+        var formData = new FormData();
+        for(var i=0; i<$('#customFile')[0].files.length; i++){  
+          formData.append("file", $('#customFile')[0].files[i]);
+          console.log($('#customFile')[0].files[i]);
+          // list += event.target.files[i].name + '<br>';
+        } 
+        formData.append('appr', new Blob([JSON.stringify(param)], {type : "application/json"}));
         console.log(param);
+        console.log(formData); 
+        
         $.ajax({
           url : "${root}/approval/write" ,
           method : "POST" ,
-          data : JSON.stringify(param),
-          contentType: "application/json; charset=utf-8",
+          data : formData,
+          enctype: 'multipart/form-data',
+          contentType : false,
+          processData : false,
+          cache : false,
           success : function(data){
             alert('작성 성공');
-            location.href='${root}/approval/progressAllList/1';
+            location.href='${root}/approval/progressAllList/1/0';
           } , 
           error : (error) => {
             console.log(JSON.stringify(error));
           }
         })
+
+
+        // $.ajax({
+        //   url : "${root}/approval/write" ,
+        //   method : "POST" ,
+        //   data : JSON.stringify(param),
+        //   contentType: "application/json; charset=utf-8",
+        //   success : function(data){
+        //     alert('작성 성공');
+        //     location.href='${root}/approval/progressAllList/1/0';
+        //   } , 
+        //   error : (error) => {
+        //     console.log(JSON.stringify(error));
+        //   }
+        // })
 
       }
     }

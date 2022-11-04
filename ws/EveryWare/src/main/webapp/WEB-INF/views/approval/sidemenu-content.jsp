@@ -70,7 +70,7 @@
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="forms">
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/approval/completAllList/1"><span class="ml-1 item-text">전체</span></a>
+                  <a class="nav-link pl-3" href="${root}/approval/completAllList/1/0"><span class="ml-1 item-text">전체</span></a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link pl-3" href="${root}/approval/completWriteList/1/0"><span class="ml-1 item-text">기안</span></a>
@@ -97,6 +97,7 @@
             </li>
           </ul>
 
+          <c:if test="${loginMember.rightCode eq 1 || loginMember.rightCode eq 3}">
             <p class="text-muted nav-heading mt-4 mb-1">
               <span>admin</span>
             </p>
@@ -119,5 +120,6 @@
                 </ul>
               </li>
             </ul>
+          </c:if>
         </nav>
       </aside>

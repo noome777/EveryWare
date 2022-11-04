@@ -55,6 +55,8 @@ public interface ApprovalDao {
 	List<ApprovalListVo> selectApproverList(SqlSessionTemplate sst, String docCode);
 	//작성된 문서 참조인 불러오기
 	List<ApprovalRefVo> selectRefVoList(SqlSessionTemplate sst, String docCode);
+	//작성된 파일 불러오기
+	List<ApprovalFileVo> selectFileVoList(SqlSessionTemplate sst, String docCode);
 	//결재타입 갯수 구하기
 	List<ApprovalListVo> selectTypeCountList(SqlSessionTemplate sst, String docCode);
 	//결재 수정,삭제 여부 판단
@@ -99,6 +101,11 @@ public interface ApprovalDao {
 	int selectProgressListTotalCnt(SqlSessionTemplate sst,  ApprovalDocVo vo);
 	//결재 진행 문서 목록 조회
 	List<ApprovalDocVo> selectProgressList(SqlSessionTemplate sst,  ApprovalDocVo vo, PageVo pv);
+
+	//문서함 - 전체 문서 갯수
+	int selectCompletAllTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo);
+	//문서함 - 전체 문서 목록 조회
+	List<ApprovalDocVo> selectCompletAllList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv);
 	//문서함 - 기안 문서 전체 갯수
 	int selectCompletWriteTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo);
 	//문서함 - 기안 문서 목록 조회
@@ -139,6 +146,7 @@ public interface ApprovalDao {
 	int selectApprDeleteDocTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo);
 	//삭제 문서 목록 조회
 	List<ApprovalDocVo> selectApprDeleteDocList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv);
+	
 	
 	
 	

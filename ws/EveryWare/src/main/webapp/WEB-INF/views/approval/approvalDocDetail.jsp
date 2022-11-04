@@ -207,7 +207,9 @@
     
           <hr>
           <div>
-            구매 견적서.xlsx
+          	<c:forEach items="${approvalFileList}" var="f">
+	            <a href="${root}/approval/fileDownload/${f.fileCode}">${f.originName}</a>
+          	</c:forEach>
           </div>
         </div>
       </div>

@@ -32,6 +32,5 @@ public class ApprovalDocVo {
 	private List<DocDataVo> docDataList;
 	private List<ApprovalListVo> approverList;
 	private List<ApprovalRefVo> approvalRefList;
-	private List<ApprovalFileVo> approvalFileList;
 	
 }
