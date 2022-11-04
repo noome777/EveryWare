@@ -22,6 +22,12 @@ public interface EmpService {
     //임시비밀번호를 새로운 비밀번호로 변경
     int updateNewPwd(EmpVo vo);
 
+    //임직원 정보 업데이트
+	int updateEmp(EmpVo empVo);
+
+	//임직원 정보 업데이트 후 정보 가져오기
+	EmpVo selectEmpByEmpCode(String empCode);
+
    
 
    

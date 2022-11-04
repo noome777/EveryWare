@@ -24,6 +24,12 @@ public interface EmpDao {
     //임시비밀번호를 새로운 비밀번호로 변경
     int updateNewPwd(SqlSessionTemplate sst, EmpVo vo);
 
+    //임직원 정보수정
+	int updateEmp(SqlSessionTemplate sst, EmpVo empVo);
+
+	//임직원 정보 업데이트 후 정보 가져오기
+	EmpVo selectEmpByEmpCode(SqlSessionTemplate sst, String empCode);
+
    
 
 
