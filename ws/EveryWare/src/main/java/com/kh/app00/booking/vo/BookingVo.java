@@ -8,6 +8,7 @@ public class BookingVo {
 	private String bkNo;
 	private String bkWriter;
 	private String bkTargetNo;
+	private String bkTargetName;
 	private String bkStartDate;
 	private String bkStartTime;
 	private String bkEndDate;

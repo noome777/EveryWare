@@ -38,13 +38,6 @@ public class BookingController {
 	
 	
 	
-	//예약 추가
-	
-	//예약 상세
-	
-	//예약 삭제
-	
-
 	
 	
 
