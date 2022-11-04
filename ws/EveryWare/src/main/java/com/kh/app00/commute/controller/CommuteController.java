@@ -141,6 +141,7 @@ public class CommuteController {
             model.addAttribute("commuteCnt", commuteCnt);
         }
 
+        
         return "commute/commuteMain";
     }
 
