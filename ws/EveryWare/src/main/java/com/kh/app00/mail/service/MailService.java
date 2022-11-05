@@ -3,6 +3,7 @@ package com.kh.app00.mail.service;
 import java.util.List;
 
 import com.kh.app00.mail.vo.MailVo;
+import com.kh.app00.notice.vo.NoticeVo;
 
 public interface MailService {
 	
@@ -38,5 +39,10 @@ public interface MailService {
 	
 	//내게 쓴 메일함
 	List<MailVo> selectSelflist();
+	
+	//메일 상세조회
+	MailVo selectOne(String mailCode);
+	
+	
 
 }

@@ -108,7 +108,8 @@
 							<c:forEach items="${trashList}" var="t">
 							<input type="hidden" id="mailReceiver" class="mailReceiver" value="${t.mailReceiver}"/>
 										<c:set var = "mailRecev" value="${t.mailReceiver}"/>
-									<c:if test="${t.mailDelete ne null && loginMember.empId eq fn:split(mailRecev,'@')[0]}">
+										<c:set var = "mailS" value="${t.mailSender}"/>
+									<c:if test="${t.mailDelete ne null && loginMember.empId eq fn:split(mailRecev,'@')[0] || loginMember.empId eq fn:split(mailS,'@')[0]}">
 										<tr>
 											<td><input type="checkbox" name="trashCheck"
 												class="trashCheck" value="${t.mailCode}"></td>

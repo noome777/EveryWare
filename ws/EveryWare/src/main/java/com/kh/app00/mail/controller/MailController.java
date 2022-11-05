@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.app00.emp.vo.EmpVo;
 import com.kh.app00.mail.service.MailService;
 import com.kh.app00.mail.vo.MailVo;
+import com.kh.app00.notice.vo.NoticeVo;
 
 @Controller
 @RequestMapping("mail")
@@ -123,8 +125,11 @@ public class MailController {
 		
 	}	
 	
-	@GetMapping("reply")
-	public String mailReply() {
+	@GetMapping("reply/{mailCode}")
+	public String mailReply(@PathVariable String mailCode, Model model) {
+		MailVo mvo = ms.selectOne(mailCode);
+		model.addAttribute("mvo",mvo);
+		
 		return "mail/mailReply";
 	}
 	
@@ -256,10 +261,16 @@ public class MailController {
 		
 	}	
 	
-	@GetMapping("detail")
-	public String mailDetail() {
+	@GetMapping("mailDetail/{mailCode}")
+	public String mailDetail(@PathVariable String mailCode, Model model) {
+
+		MailVo mvo = ms.selectOne(mailCode);
+
+		model.addAttribute("mvo", mvo);
 		return "mail/mailDetail";
+
 	}
+	
 	
 	
 

@@ -54,6 +54,7 @@
 #mSenddate {
 	text-align: center;
 }
+
 </style>
 </head>
 <body>
@@ -65,7 +66,7 @@
 
 			<h2 id="mailall">전체 메일함</h2>
 			<br>
-				<div class="form-group row justify-content-center" style="margin-right:700px;">
+				<div class="form-group row " style="margin-left:3px;" >
 			<div class="w100" style="padding-right:10px">
 				<select class="form-control form-control-sm" name="searchType" id="searchType">
 					<option value="title">제목</option>
@@ -86,11 +87,9 @@
 
 				<br>
 				<div class="buttonSet">
-					<input type="button" value="삭제" id="deleteBtn"
-						onclick="deleteValue();" class="btn btn-danger"/>
 					<button type="button" id="leadBtn" class="btn btn-primary">읽음</button>
 					<button type="button" id="noleadBtn" class="btn btn-primary">안읽음</button>
-						<input type="button" id="cancelBtn" class="btn btn-primary" value="내게 쓰기" onclick="location.href='${root}/mail/mailMe'">
+					<input type="button" value="삭제" id="deleteBtn" onclick="deleteValue();" class="btn btn-danger" style="float:right;" />
 				</div>
 				<!-- <div class="input-group w-50" >
 		<span class="input-group-text" id="basic-addon1">
@@ -117,10 +116,10 @@
 								<input type="hidden" id="mailReceiver" class="mailReceiver" value="${m.mailReceiver}"/>
 										<c:set var = "mailId" value="${m.mailReceiver}"/>
 										<c:set var = "mailSend" value="${m.mailSender}"/>
-									<c:if test="${m.mailDelete eq null && loginMember.empId eq fn:split(mailId,'@')[0] || loginMember.empId eq fn:split(mailSend,'@')[0]}">
-										<tr>
+									<c:if test="${m.mailDelete eq null && loginMember.empId eq fn:split(mailId,'@')[0] || loginMember.empId eq fn:split(mailSend,'@')[0] && loginMember.empId eq fn:split(mailId,'@')[0]}">
+										<tr onclick="location.href='${root}/mail/mailDetail/${m.mailCode}'">
 											<td><input type="checkbox" name="RowCheck"
-												class="RowCheck" value="${m.mailCode}"></td>
+												class="RowCheck" value="${m.mailCode}" onclick="event.stopPropagation()"></td>
 											<td id="msender">${m.mailSender}</td>
 											<td id="mtitle">${m.mailTitle}</td>
 											<td id="mSenddate">${m.mailSenddate}</td>

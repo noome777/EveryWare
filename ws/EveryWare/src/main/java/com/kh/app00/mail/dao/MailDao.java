@@ -42,6 +42,11 @@ public interface MailDao {
 
 	//내게 쓴 메일함 조회
 	List<MailVo> selectSelflist(SqlSessionTemplate sst);
+
+	//메일 상세 조회	
+	MailVo selectMail(SqlSessionTemplate sst, String mailCode);
+
+
 	
 
 }

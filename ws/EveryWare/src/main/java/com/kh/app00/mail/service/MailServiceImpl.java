@@ -84,5 +84,11 @@ public class MailServiceImpl implements MailService{
 	public List<MailVo> selectSelflist() {
 		return dao.selectSelflist(sst);
 	}
+
+
+	@Override
+	public MailVo selectOne(String mailCode) {
+		return dao.selectMail(sst, mailCode);
+	}
 	
 }

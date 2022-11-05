@@ -1,6 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+ <!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>메일홈</title>
+<style>
+	#buttonTwo{
+		margin-left:105px;
+		margin-top: -48px;
+	}
+</style>
+</head>
+ 
 <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
         <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
           <i class="fe fe-x"><span class="sr-only"></span></i>
@@ -18,13 +30,11 @@
               </svg>
             </a>
           </div>
-          
-          <div class="btn-box w-100 mt-4 mb-1">
-            <button type="button" class="btn mb-2 btn-primary btn-lg btn-block" onclick="location.href='${root}/mail/write'">
-              <i class="fe fe-file-plus fe-12 mr-2"></i><span class="small">메일 작성하기</span>
-            </button>
-          </div>
-          
+          <div class="btn-box w-100 mt-4 mb-1" >
+            <input type="button" class="btn mb-2 btn-primary btn-lg btn-block" onclick="location.href='${root}/mail/write'" style="width:100px;height:40px;font-size: 15px" value="메일 작성">
+            <input type="button" class="btn mb-2 btn-primary btn-lg btn-block" id="buttonTwo" onclick="location.href='${root}/mail/mailMe'" style="width:100px;height:40px;font-size: 15px" value="내게 쓰기">
+              <!-- <span class="small" style="font-size: 10px;text-align:center">메일 작성하기</span> -->
+          	</div>
           <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item dropdown">
                <a class="nav-link" onclick="location.href='${root}/mail/mailMain'">
@@ -83,3 +93,4 @@
             </ul>
         </nav>
       </aside>
+      </html>

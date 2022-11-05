@@ -64,4 +64,11 @@ public class MailDaoImpl implements MailDao {
 	public List<MailVo> selectSelflist(SqlSessionTemplate sst) {
 		return sst.selectList("mailMapper.selectSelflist");
 	}
+	
+	@Override
+	public MailVo selectMail(SqlSessionTemplate sst, String mailCode) {
+		return sst.selectOne("mailMapper.selectMail", mailCode);
+	}
+
+	
 }

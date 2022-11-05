@@ -65,7 +65,7 @@
 
 			<h2 id="mailall">보낸 메일함</h2>
 			<br>
-				<div class="form-group row justify-content-center" style="margin-right:700px;">
+				<div class="form-group row " style="margin-left: 3px;">
 			<div class="w100" style="padding-right:10px">
 				<select class="form-control form-control-sm" name="searchType" id="searchType">
 					<option value="title">제목</option>
@@ -87,7 +87,7 @@
 				<br>
 				<div class="buttonSet">
 					<input type="button" value="삭제" id="deleteBtn"
-						onclick="deleteValue();" class="btn btn-primary"/>
+						onclick="deleteValue();" class="btn btn-danger"/>
 				</div>
 				<!-- <div class="input-group w-50" >
 		<span class="input-group-text" id="basic-addon1">
@@ -113,8 +113,9 @@
 										
 								<input type="hidden" id="mailSender" class="mailSender" value="${s.mailSender}"/>
 										<c:set var = "mailSend" value="${s.mailSender}"/>
-									<c:if test="${s.mailDelete eq null && loginMember.empId eq fn:split(mailSend,'@')[0]}">
-										<tr>
+										<c:set var = "mailReci" value="${s.mailReceiver}"/>
+									<c:if test="${s.mailDelete eq null && loginMember.empId eq fn:split(mailSend,'@')[0] && loginMember.empId ne fn:split(mailReci,'@')[0]}">
+										<tr onclick="location.href='${root}/mail/mailDetail/${s.mailCode}'">
 											<td><input type="checkbox" name="RowCheck"
 												class="RowCheck" value="${s.mailCode}"></td>
 											<td id="msender">${s.mailReceiver}</td>

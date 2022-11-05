@@ -65,7 +65,7 @@
 
 			<h2 id="mailall">받은 메일함</h2>
 			<br>
-				<div class="form-group row justify-content-center" style="margin-right:700px;">
+				<div class="form-group row " style="margin-left: 3px;">
 			<div class="w100" style="padding-right:10px">
 				<select class="form-control form-control-sm" name="searchType" id="searchType">
 					<option value="title">제목</option>
@@ -86,10 +86,9 @@
 
 				<br>
 				<div class="buttonSet">
-					<input type="button" value="삭제" id="deleteBtn"
-						onclick="deleteValue();" class="btn btn-primary"/>
 					<button type="button" id="leadBtn" class="btn btn-primary">읽음</button>
 					<button type="button" id="noleadBtn" class="btn btn-primary">안읽음</button>
+					<input type="button" value="삭제" id="deleteBtn" onclick="deleteValue();" class="btn btn-danger" style="float:right;" />
 				</div>
 				<!-- <div class="input-group w-50" >
 		<span class="input-group-text" id="basic-addon1">
@@ -116,9 +115,9 @@
 								<input type="hidden" id="mailReceiver" class="mailReceiver" value="${r.mailReceiver}"/>
 										<c:set var = "mailId" value="${r.mailReceiver}"/>
 									<c:if test="${r.mailDelete eq null && loginMember.empId eq fn:split(mailId,'@')[0]}">
-										<tr>
+										<tr onclick="location.href='${root}/mail/mailDetail/${r.mailCode}'">
 											<td><input type="checkbox" name="RowCheck"
-												class="RowCheck" value="${r.mailCode}"></td>
+												class="RowCheck" value="${r.mailCode}" onclick="event.stopPropagation()"></td>
 											<td id="msender">${r.mailSender}</td>
 											<td id="mtitle">${r.mailTitle}</td>
 											<td id="mSenddate">${r.mailSenddate}</td>
