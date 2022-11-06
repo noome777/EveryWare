@@ -14,6 +14,7 @@ public class MailVo {
 	private String mailContent;
 	private String mailSenddate;
 	private String mailReceiver;
+	private String mailViews;
 	private String mailDelete;
 	
 	private MultipartFile[] f;

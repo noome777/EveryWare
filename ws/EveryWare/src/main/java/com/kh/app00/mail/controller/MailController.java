@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.app00.common.PageVo;
+import com.kh.app00.common.Pagination;
 import com.kh.app00.emp.vo.EmpVo;
 import com.kh.app00.mail.service.MailService;
 import com.kh.app00.mail.vo.MailVo;
@@ -33,14 +35,16 @@ public class MailController {
 		this.ms = ms;
 	}
 
-	@GetMapping("mailMain")
-	public String mailMain(Model model) {
+	@GetMapping("mailMain/{pno}")
+	public String mailMain(Model model,@PathVariable int pno) {
 		
+		int totalCount = ms.selectTotalCnt();
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
 		
-		List<MailVo> mList = ms.selectList();
+		List<MailVo> mList = ms.selectList(pv);
 		
 		model.addAttribute("mList", mList);
-		
+		model.addAttribute("pv",pv);
 		
 		return "mail/mailMain";
 	}
@@ -92,7 +96,7 @@ public class MailController {
 		
 		if (result == 1) {
 			session.setAttribute("alertMsg", "메일 작성 성공!");
-			return "redirect:/mail/mailMain";
+			return "redirect:/mail/mailMain/1";
 		} else {
 			model.addAttribute("msg", "메일 작성 실패...");
 			return "error/errorPage";
@@ -124,6 +128,66 @@ public class MailController {
 		return "ok";
 		
 	}	
+	
+	@PostMapping("mailRead")
+	@ResponseBody
+	public String mailRead(
+			HttpServletRequest req, 
+			HttpSession session,
+			Model model) {
+		
+		
+		String [] ajaxMsg = req.getParameterValues("readArr");
+		int size = ajaxMsg.length;
+		
+		System.out.println("controller : " + Arrays.toString(ajaxMsg));
+		
+		for(int i = 0; i<size; i++) {
+			ms.read(ajaxMsg[i]);
+		}
+		
+//		return "redirect:/mail/mailMain";
+		return "ok";
+		
+	}	
+	
+	@PostMapping("mailNoread")
+	@ResponseBody
+	public String mailNoread(
+			HttpServletRequest req, 
+			HttpSession session,
+			Model model) {
+		
+		
+		String [] ajaxMsg = req.getParameterValues("noreadArr");
+		int size = ajaxMsg.length;
+		
+		
+		for(int i = 0; i<size; i++) {
+			ms.noread(ajaxMsg[i]);
+		}
+		
+//		return "redirect:/mail/mailMain";
+		return "ok";
+		
+	}	
+	
+	@GetMapping("mailDelete/{mailCode}")
+	public String delete(@PathVariable String mailCode, HttpSession session, Model model) {
+
+		int result = ms.deleteOne(mailCode);
+
+		if (result == 1) {
+			// 삭제성공 => 알람 , 리스트
+			session.setAttribute("alertMsg", "게시글 삭제 성공!");
+			return "redirect:/mail/mailMain";
+		} else {
+			// 삭제실패 => 메세지 , 에러페이지
+			model.addAttribute("msg", "게시글 삭제 실패 ...");
+			return "error/errorPage";
+		}
+
+	}
 	
 	@GetMapping("reply/{mailCode}")
 	public String mailReply(@PathVariable String mailCode, Model model) {
@@ -185,35 +249,47 @@ public class MailController {
 		
 	}
 	
-	@GetMapping("receive")
-	public String mailReceive(Model model) {
+	@GetMapping("receive/{pno}")
+	public String mailReceive(Model model,@PathVariable int pno) {
+		
+		int totalCount = ms.selectTotalCnt();
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
 		
 		List<MailVo> receiveList = ms.selectRelist();
 		
 		model.addAttribute("receiveList", receiveList);
+		model.addAttribute("pv",pv);
 		
 		
 		return "mail/mailReceive";
 	}
 	
-	@GetMapping("send")
-	public String mailSend(Model model) {
+	@GetMapping("send/{pno}")
+	public String mailSend(Model model, @PathVariable int pno) {
+		
+		int totalCount = ms.selectTotalCnt();
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
 		
 		List<MailVo> sendList = ms.selectSendlist();
 		
 		model.addAttribute("sendList", sendList);
+		model.addAttribute("pv",pv);
 		
 		
 		return "mail/mailSend";
 	}
 	
 	
-	@GetMapping("trash")
-	public String mailTrash(Model model) {
+	@GetMapping("trash/{pno}")
+	public String mailTrash(Model model,@PathVariable int pno) {
+		
+		int totalCount = ms.selectDeleteCnt();
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
 		
 		List<MailVo> trashList = ms.selectTrashlist();
 		
 		model.addAttribute("trashList", trashList);
+		model.addAttribute("pv",pv);
 		
 		return "mail/mailTrash";
 	}
@@ -267,6 +343,7 @@ public class MailController {
 		MailVo mvo = ms.selectOne(mailCode);
 
 		model.addAttribute("mvo", mvo);
+		
 		return "mail/mailDetail";
 
 	}
@@ -332,12 +409,16 @@ public class MailController {
 		
 	}
 	
-	@GetMapping("self")
-	public String mailSelf(Model model) {
+	@GetMapping("self/{pno}")
+	public String mailSelf(Model model,@PathVariable int pno) {
+		
+		int totalCount = ms.selectTotalCnt();
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
 		
 		List<MailVo> selfList = ms.selectSelflist();
 		
 		model.addAttribute("selfList", selfList);
+		model.addAttribute("pv",pv);
 		
 		return "mail/mailSelf";
 	}

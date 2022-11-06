@@ -11,6 +11,7 @@
 		,MAIL.MAIL_CONTENT
 		,MAIL.MAIL_SENDDATE
 		,MAIL.MAIL_RECEIVER
+		,MAIL.MAIL_VIEWS
 		,MAIL.MAIL_DELETE 
 		FROM MAIL
 		JOIN EMP
@@ -58,6 +59,7 @@
 		,MAIL.MAIL_CONTENT
 		,MAIL.MAIL_SENDDATE
 		,MAIL.MAIL_RECEIVER
+		,MAIL.MAIL_VIEWS
 		,MAIL.MAIL_DELETE 
 		FROM MAIL
 		JOIN EMP
@@ -88,6 +90,7 @@
 		,MAIL.MAIL_CONTENT
 		,MAIL.MAIL_SENDDATE
 		,MAIL.MAIL_RECEIVER
+		,MAIL.MAIL_VIEWS
 		,MAIL.MAIL_DELETE 
 		FROM MAIL
 		JOIN EMP
@@ -105,6 +108,7 @@
 		,MAIL.MAIL_CONTENT
 		,MAIL.MAIL_SENDDATE
 		,MAIL.MAIL_RECEIVER
+		,MAIL.MAIL_VIEWS
 		,MAIL.MAIL_DELETE 
 		FROM MAIL
 		JOIN EMP
@@ -168,6 +172,7 @@
 		,MAIL.MAIL_CONTENT
 		,MAIL.MAIL_SENDDATE
 		,MAIL.MAIL_RECEIVER
+		,MAIL.MAIL_VIEWS
 		,MAIL.MAIL_DELETE 
 		FROM MAIL
 		JOIN EMP
@@ -185,6 +190,7 @@
 		,MAIL.MAIL_CONTENT
 		,MAIL.MAIL_SENDDATE
 		,MAIL.MAIL_RECEIVER
+		,MAIL.MAIL_VIEWS
 		,MAIL.MAIL_DELETE 
 		FROM MAIL
 		JOIN EMP
@@ -192,4 +198,43 @@
 		WHERE MAIL_CODE = #{mailCode}
 		ORDER BY MAIL_CODE DESC
 	</select>
+	
+	<update id="deleteOne">
+		UPDATE MAIL
+		SET
+		MAIL_DELETE = SYSDATE
+		WHERE MAIL_CODE = #{mailCode}
+	</update>
+	
+	<select id="selectCountAll" resultType="int">
+		SELECT COUNT (*)
+		FROM MAIL
+		WHERE MAIL_DELETE IS NULL
+	</select>
+	
+	<select id="selectDeleteAll" resultType="int">
+		SELECT COUNT (*)
+		FROM MAIL
+		WHERE MAIL_DELETE IS NOT NULL
+	</select>
+	
+	<update id="increaseViews">
+		UPDATE MAIL
+		SET MAIL_VIEWS = MAIL_VIEWS + 1
+		WHERE MAIL_CODE = #{mailCode}
+	</update>
+	
+	<update id="readMail">
+		UPDATE MAIL
+		SET
+		MAIL_VIEWS = 1
+		WHERE MAIL_CODE = #{mailCode}
+	</update>
+	
+	<update id="noReadmail">
+		UPDATE MAIL
+		SET
+		MAIL_VIEWS = 0
+		WHERE MAIL_CODE = #{mailCode}
+	</update>
 </mapper>

@@ -30,10 +30,10 @@
 			<input type="hidden" id="mailReceiver" class="mailReceiver" value="${mvo.mailReceiver}"/>
 			<c:set var = "mailSend" value="${mvo.mailSender}"/>
 			<c:set var = "mailReci" value="${mvo.mailReceiver}"/>
-			<c:if test="${loginMember.empId eq fn:split(mailSend,'@')[0]  && loginMember.empId eq fn:split(mailReci,'@')[0]}">
+			<c:if test="${loginMember.empId ne fn:split(mailSend,'@')[0]  && loginMember.empId eq fn:split(mailReci,'@')[0]}">
 				<button type="button" id="sendBtn" class="btn btn-primary" onclick="location.href='${root}/mail/reply/${mvo.mailCode}'">답장</button>
 				</c:if>
-				<button type="button" id="cancelBtn" class="btn btn-primary">삭제</button>
+				<input type="button" value="삭제" id="deleteBtn" class="btn btn-danger"  onclick="location.href='${root}/mail/mailDelete/${mvo.mailCode}'"/>
 			</div>
 			<div class="card shadow">
 				<div class="card-body">

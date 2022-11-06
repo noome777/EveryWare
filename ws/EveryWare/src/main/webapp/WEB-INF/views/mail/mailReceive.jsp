@@ -114,7 +114,8 @@
 										
 								<input type="hidden" id="mailReceiver" class="mailReceiver" value="${r.mailReceiver}"/>
 										<c:set var = "mailId" value="${r.mailReceiver}"/>
-									<c:if test="${r.mailDelete eq null && loginMember.empId eq fn:split(mailId,'@')[0]}">
+										<c:set var = "mailSend" value="${r.mailSender}"/>
+									<c:if test="${r.mailDelete eq null && loginMember.empId ne fn:split(mailSend,'@')[0] && loginMember.empId eq fn:split(mailId,'@')[0]}">
 										<tr onclick="location.href='${root}/mail/mailDetail/${r.mailCode}'">
 											<td><input type="checkbox" name="RowCheck"
 												class="RowCheck" value="${r.mailCode}" onclick="event.stopPropagation()"></td>
@@ -131,14 +132,21 @@
 
 
 						<nav aria-label="Page navigation example">
-							<ul class="pagination justify-content-center mb-0">
-								<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-								<li class="page-item"><a class="page-link" href="#">1</a></li>
-								<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
-								<li class="page-item"><a class="page-link" href="#">Next</a></li>
-							</ul>
-						</nav>
+						<ul class="pagination justify-content-center mb-0">
+							<c:if test="${pv.startPage ne 1}">
+								<li class="page-item"><a class="page-link" href="/app00/mail/receive/${pv.startPage - 1}">Previous</a></li>
+							</c:if>
+
+							<c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
+								<li class="page-item"><a class="page-link"
+									href="/app00/mail/receive/${i}">${i}</a></li>
+							</c:forEach>
+
+							<c:if test="${pv.endPage ne pv.maxPage}">
+								<li class="page-item"><a class="page-link" href="/app00/mail/receive/${pv.endPage + 1}">Next</a></li>
+							</c:if>
+						</ul>
+					</nav>
 					</div>
 				</div>
 			</div>

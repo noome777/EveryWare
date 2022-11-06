@@ -86,9 +86,8 @@
 
 				<br>
 				<div class="buttonSet">
-					<button type="button" id="leadBtn" class="btn btn-primary">읽음</button>
-					<button type="button" id="noleadBtn" class="btn btn-primary">안읽음</button>
-					<input type="button" value="삭제" id="deleteBtn" onclick="deleteValue();" class="btn btn-danger" style="float:right;" />
+					<input type="button" value="삭제" id="deleteBtn"
+						onclick="deleteValue();" class="btn btn-danger"/>
 				</div>
 				<!-- <div class="input-group w-50" >
 		<span class="input-group-text" id="basic-addon1">
@@ -117,7 +116,7 @@
 									<c:if test="${s.mailDelete eq null && loginMember.empId eq fn:split(mailSend,'@')[0] && loginMember.empId eq fn:split(mailReceive,'@')[0]}">
 										<tr onclick="location.href='${root}/mail/mailDetail/${s.mailCode}'">
 											<td><input type="checkbox" name="RowCheck"
-												class="RowCheck" value="${s.mailCode}"></td>
+												class="RowCheck" value="${s.mailCode}"  onclick="event.stopPropagation()"></td>
 											<td id="mtitle">${s.mailTitle}</td>
 											<td id="mSenddate">${s.mailSenddate}</td>
 											
@@ -130,14 +129,21 @@
 
 
 						<nav aria-label="Page navigation example">
-							<ul class="pagination justify-content-center mb-0">
-								<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-								<li class="page-item"><a class="page-link" href="#">1</a></li>
-								<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
-								<li class="page-item"><a class="page-link" href="#">Next</a></li>
-							</ul>
-						</nav>
+						<ul class="pagination justify-content-center mb-0">
+							<c:if test="${pv.startPage ne 1}">
+								<li class="page-item"><a class="page-link" href="/app00/mail/self/${pv.startPage - 1}">Previous</a></li>
+							</c:if>
+
+							<c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
+								<li class="page-item"><a class="page-link"
+									href="/app00/mail/self/${i}">${i}</a></li>
+							</c:forEach>
+
+							<c:if test="${pv.endPage ne pv.maxPage}">
+								<li class="page-item"><a class="page-link" href="/app00/mail/self/${pv.endPage + 1}">Next</a></li>
+							</c:if>
+						</ul>
+					</nav>
 					</div>
 				</div>
 			</div>
