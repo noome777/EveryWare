@@ -48,6 +48,7 @@ public class EmpDaoImpl implements EmpDao {
     //임직원 정보수정
 	@Override
 	public int updateEmp(SqlSessionTemplate sst, EmpVo empVo) {
+		System.out.println("지금 비밀번호 : " + empVo.getEmpPwd());
 		return sst.update("empMapper.updateEmp",empVo);
 	}
 

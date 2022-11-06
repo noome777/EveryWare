@@ -62,17 +62,14 @@
 				aria-haspopup="true" aria-expanded="false"> <span
 					class="avatar avatar-sm mt-2"> 
 
-          <!-- c:if 추가 예정
           <c:choose>
           	<c:when test="${not empty loginMember.empProfileName}">
-          		 	<img src="${root}/resources/upload/profile/${loginMember.empProfileName}" alt="프로필 이미지"
-					class="avatar-img rounded-circle">  -->
-		<!-- </c:when>
-          	<c:otherwise> -->
-					<img src="${root}/resources/img/guest.png" alt="프로필 이미지 미등록"
-						class="avatar-img rounded-circle">
-		<!--  	</c:otherwise>
-		 </c:choose> -->
+          		 	<img src="${root}/resources/upload/profile/${loginMember.empProfileName}" alt="프로필 이미지" class="avatar-img rounded-circle"> 
+		        </c:when>
+          	<c:otherwise> 
+				  	<img src="${root}/resources/img/guest.png" alt="프로필 이미지 미등록" class="avatar-img rounded-circle">
+		       	</c:otherwise>
+		      </c:choose> 
 
 				</span>
 			</a>

@@ -83,10 +83,13 @@ public class EmpServiceImpl implements EmpService {
 	@Override
 	public int updateEmp(EmpVo empVo) {
 			
-		if(empVo.getEmpPwd()!=null || empVo.getEmpPwd()!="") {
+		if(empVo.getEmpPwd().length()>=5) {
 			String replacedPwd = SpaceRemover.removeSpace(empVo.getEmpPwd());
 			empVo.setEmpPwd(replacedPwd);
 			empVo.encodePwd(pwdEnc);
+			
+		} else if (!empVo.getEmpPwd().isEmpty() && empVo.getEmpPwd().length()<5) {
+			return -7;
 		}
 		
 		if(empVo.getEmpTel().length()!=11) {

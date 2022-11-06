@@ -174,7 +174,7 @@
 												<img id="loginEmp-profile" class="profile-img avatar-img rounded-circle" alt="프로필 사진" src="${root}/resources/img/guest.png" class="avatar-img rounded-circle" onclick="openModal();">
 											</c:when>
 											<c:otherwise>
-												<img id="loginEmp-profile" class="profile-img avatar-img rounded-circle" alt="프로필 사진" src="${root}/resources/img/upload/profile/${loginMember.empProfileName}" class="avatar-img rounded-circle" onclick="openModal();">
+												<img id="loginEmp-profile" class="profile-img avatar-img rounded-circle" alt="프로필 사진" src="${root}/resources/upload/profile/${loginMember.empProfileName}" class="avatar-img rounded-circle" onclick="openModal();">
 											</c:otherwise>
 										</c:choose>
 										</div>
@@ -219,7 +219,7 @@
 											<strong>비밀번호</strong>
 										</div>
 										<div class="rowValue">
-											<input type="password" class="no-style-input" name="empPwd" placeholder="${loginMember.empEMail.legth()}" >
+											<input type="password" class="no-style-input" name="empPwd">
 										</div>
 										<div class="rowName">
 											<strong>직위</strong>
@@ -315,7 +315,7 @@
 									<img id="profile-preview" class="profile-img" alt="프로필 사진" src="${root}/resources/img/guest.png"class="avatar-img rounded-circle preview-img" onclick="openModal();">
 								</c:when>
 								<c:otherwise>
-									<img id="profile-preview" class="profile-img" alt="프로필 사진" src="${root}/resources/img/upload/profile/${loginMember.empProfileName}" class="avatar-img rounded-circle preview-img" onclick="openModal();">
+									<img id="profile-preview" class="profile-img" alt="프로필 사진" src="${root}/resources/upload/profile/${loginMember.empProfileName}" class="avatar-img rounded-circle preview-img" onclick="openModal();">
 								</c:otherwise>
 							</c:choose>
 						</label>
@@ -350,7 +350,7 @@
 									<img id="sign-img" alt="프로필 사진" src="${root}/resources/img/question-mark.png"class="avatar-img rounded-circle sign-img">
 								</c:when>
 								<c:otherwise>
-									<img id="sign-img" alt="프로필 사진" src="${root}/resources/img/upload/signFile/${loginMember.empFileName}"  class="avatar-img rounded-circle sign-img">
+									<img id="sign-img" alt="프로필 사진" src="${root}/resources/upload/signFile/${loginMember.empFileName}"  class="avatar-img rounded-circle sign-img">
 								</c:otherwise>
 							</c:choose>
 						</label>
