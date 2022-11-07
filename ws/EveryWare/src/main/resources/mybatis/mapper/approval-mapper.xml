@@ -47,8 +47,8 @@
 	</select>	
 	
 	<insert id="insertApprovalDoc">
-		INSERT INTO APPROVAL_DOC(DOC_CODE, PERIOD_CODE, DOC_FORM_CODE, EMP_CODE, DOC_TITLE, DOC_ENROLL_DATE)
-		VALUES(SEQ_APPROVAL_DOC_CODE.NEXTVAL, #{periodCode}, #{docFormCode}, #{empCode}, #{docTitle}, SYSDATE)
+		INSERT INTO APPROVAL_DOC(DOC_CODE, PERIOD_CODE, DOC_FORM_CODE, EMP_CODE, DOC_TITLE, DOC_ENROLL_DATE, DOC_STATUS)
+		VALUES(SEQ_APPROVAL_DOC_CODE.NEXTVAL, #{periodCode}, #{docFormCode}, #{empCode}, #{docTitle}, SYSDATE, #{docStatus})
 		<selectKey keyProperty="docCode" order="AFTER" resultType="java.lang.String">
 			SELECT SEQ_APPROVAL_DOC_CODE.CURRVAL FROM DUAL
 		</selectKey>
@@ -63,8 +63,8 @@
 	
 	<insert id="insertApproverList">
 		<foreach collection="list" item="item" index="index" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" ">
-			INTO APPROVAL_LIST(DOC_CODE, APPR_TYPE_CODE, APPR_EMP_CODE, APPR_SEQ, APPR_STATUS)
-			VALUES(#{item.docCode}, #{item.apprTypeCode}, #{item.apprEmpCode}, #{item.apprSeq}, #{item.apprStatus})
+			INTO APPROVAL_LIST(DOC_CODE, APPR_TYPE_CODE, APPR_EMP_CODE, APPR_SEQ, APPR_STATUS <if test="item.apprSeq == 1">, APPR_DATE</if>) 
+			VALUES(#{item.docCode}, #{item.apprTypeCode}, #{item.apprEmpCode}, #{item.apprSeq}, #{item.apprStatus} <if test="item.apprSeq == 1">, SYSDATE</if>)
 		</foreach>
 	</insert>
 	
@@ -76,17 +76,15 @@
 	</insert>
 	
 	<insert id="insertApprovalFile">
-		<foreach collection="list" item="item" index="index" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" ">
-			INTO APPROVAL_FILE(FILE_CODE, DOC_CODE, ORIGIN_NAME, UPLOAD_NAME)
-			VALUES(SEQ_APPROVAL_FILE_CODE.NEXTVAL , #{item.docCode}, #{item.originName}, #{item.uploadName})
-		</foreach>
+		INSERT INTO APPROVAL_FILE(FILE_CODE, DOC_CODE, ORIGIN_NAME, UPLOAD_NAME)
+		SELECT SEQ_APPROVAL_FILE_CODE.NEXTVAL, A.* FROM(
+			<foreach collection="list" item="item" separator="UNION ALL">
+				SELECT #{item.docCode} AS DOC_CODE,
+					   #{item.originName} AS ORIGIN_NAME,
+					   #{item.uploadName} AS UPLOAD_NAME
+			    FROM DUAL
+			</foreach>) A
 	</insert>
-	
-	
-	
-	
-	
-	
 		
 	<select id="selectFormDetailList" resultType="DocFormDetailTemplateVo">
 		SELECT FORM_DETAIL_CODE, FORM_DETAIL_NAME, FORM_DETAIL_TYPE FROM DOC_FORM_DETAIL_TEMPLATE
@@ -157,10 +155,21 @@
 		AND DOC_CODE = #{docCode}
 	</select>
 	
+	<select id="selectFileVo" resultType="ApprovalFileVo">
+		SELECT FILE_CODE, DOC_CODE, ORIGIN_NAME, UPLOAD_NAME 
+		FROM APPROVAL_FILE
+		WHERE FILE_CODE = #{fileCode}
+	</select>
+	
 	<update id="updateDoc">
-		UPDATE APPROVAL_DOC SET DOC_TITLE = #{docTitle}, PERIOD_CODE = #{periodCode}, DOC_UPDATED = SYSDATE
+		UPDATE APPROVAL_DOC SET DOC_TITLE = #{docTitle}, PERIOD_CODE = #{periodCode}
+		<if test='docStatus.equals("N")'>
+		 	, DOC_UPDATED = SYSDATE
+		 </if>
+		<if test='docStatus.equals("T")'>
+			, DOC_STATUS = 'N', DOC_ENROLL_DATE = SYSDATE
+		</if>
 		WHERE DOC_CODE = #{docCode}
-		AND DOC_STATUS = 'N'
 	</update>
 	
 	<update id="updateDocData">
@@ -175,6 +184,18 @@
 			VALUES (#{item.docCode}, #{item.formDetailCode}, #{item.docContent})
 		</foreach>
 	</update>
+	
+	<delete id="deleteApprover">
+		DELETE FROM APPROVAL_LIST WHERE DOC_CODE = #{docCode}
+	</delete>
+	
+	<delete id="deleteRef">
+		DELETE FROM APPROVAL_REF WHERE DOC_CODE = #{docCode}
+	</delete>
+	
+	<delete id="deleteFile">
+		DELETE FROM APPROVAL_FILE WHERE DOC_CODE = #{docCode}
+	</delete>
 	
 	<update id="updateDocDelete">
 		UPDATE APPROVAL_DOC SET DOC_STATUS = 'D', DOC_UPDATED = SYSDATE
@@ -572,6 +593,27 @@
 		</if>
 		ORDER BY A.DOC_CODE DESC
 	</select>
+	
+	<select id="selectStorageTotalCnt" resultType="int">
+		SELECT COUNT(*) FROM APPROVAL_DOC
+		WHERE DOC_STATUS = 'T'
+		AND EMP_CODE = #{empCode}
+		<if test="docFormCode != null and docFormCode != 0">
+			AND DOC_FORM_CODE = #{docFormCode}
+		</if>
+	</select>
+	
+	<select id="selectStorageList" resultType="ApprovalDocVo">
+		SELECT A.DOC_CODE, A.DOC_TITLE, F.FORM_NAME FROM APPROVAL_DOC A
+		INNER JOIN DOC_FORM F ON A.DOC_FORM_CODE = F.FORM_CODE
+		WHERE DOC_STATUS = 'T'
+		AND EMP_CODE = #{empCode}
+		<if test="docFormCode != null and docFormCode != 0">
+			AND A.DOC_FORM_CODE = #{docFormCode}
+		</if>
+		ORDER BY DOC_CODE DESC
+	</select>
+	
 	
 	<select id="selectDocFormList" resultType="DocFormVo">
 		SELECT FORM_CODE, FORM_NAME, FORM_INTRO, FORM_USE_YN FROM DOC_FORM

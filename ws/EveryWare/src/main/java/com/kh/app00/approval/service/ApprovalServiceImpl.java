@@ -107,7 +107,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 			}
 			int approvalRefResult = dao.insertApprovalRef(sst, approvalRefList);
 		}
-		if(files.length > 0) {
+		if(files != null) {
 			List<ApprovalFileVo> approvalFileList = new ArrayList<ApprovalFileVo>();
 			for(int i=0; i<files.length; i++) {
 				
@@ -168,25 +168,68 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public ApprovalListVo selectSeq(String docCode) {
 		return dao.selectSeq(sst, docCode);
 	}
+	//첨부파일 다운로드
+	@Override
+	public ApprovalFileVo selectFileVo(String fileCode) {
+		return dao.selectFileVo(sst, fileCode);
+	}
 	//문서 수정
 	@Override
 	@Transactional(rollbackFor = {Exception.class})
-	public int updateApprovalDoc(ApprovalDocVo docVo) {
+	public int updateApprovalDoc(ApprovalDocVo docVo, MultipartFile[] files, HttpServletRequest req) {
 		
 		String docCode = docVo.getDocCode();
 		List<DocDataVo> docDataList = docVo.getDocDataList();
+		List<ApprovalListVo> approverList = docVo.getApproverList();
+		List<ApprovalRefVo> approvalRefList = docVo.getApprovalRefList();
 
 		int updateDoc;
 		if(docVo.getDocTitle() != null) {
 			updateDoc = dao.updateDoc(sst, docVo);
 		}
 		
-		int updateDocData;
+		//결재자
+		if(approverList.size() > 0) {
+			int deleteApprover = dao.deleteApprover(sst, docCode);
+			for(ApprovalListVo vo : approverList) {
+				vo.setDocCode(docCode);
+			}
+			int approverListResult = dao.insertApproverList(sst, approverList);
+		}
+		//참조인
+		if(approvalRefList.size() > 0) {
+			int deleteRef = dao.deleteRef(sst, docCode);
+			for(ApprovalRefVo vo : approvalRefList) {
+				vo.setDocCode(docCode);
+			}
+			int approvalRefResult = dao.insertApprovalRef(sst, approvalRefList);
+		}
+		
 		if(docDataList.size() > 0) {
 			for(DocDataVo vo : docDataList) {
 				vo.setDocCode(docCode);
 			}
-			updateDocData = dao.updateDocData(sst, docDataList);
+			int updateDocData = dao.updateDocData(sst, docDataList);
+		}
+		
+		if(files != null) {
+			int deleteFile = dao.deleteFile(sst, docCode);
+			
+			List<ApprovalFileVo> approvalFileList = new ArrayList<ApprovalFileVo>();
+			for(int i=0; i<files.length; i++) {
+				
+				ApprovalFileVo vo = new ApprovalFileVo();
+				vo.setDocCode(docCode);
+				vo.setFile(files[i]);
+				vo.setOriginName(files[i].getOriginalFilename());
+				
+				String savePath = req.getServletContext().getRealPath(Path.APPROVAL_PATH);
+				String changeName = FileUploader.fileUpload(vo.getFile(), savePath);
+				
+				vo.setUploadName(changeName);
+				approvalFileList.add(vo);
+			}
+			int approvalFileResult = dao.insertApprovalFile(sst, approvalFileList);
 		}
 		
 		return 1;
@@ -325,8 +368,16 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public List<ApprovalDocVo> selectUnApprDocList(ApprovalDocVo vo, PageVo pv) {
 		return dao.selectUnApprDocList(sst, vo, pv);
 	}
-
-	
+	//임시저장 문서 전체 갯수
+	@Override
+	public int selectStorageTotalCnt(ApprovalDocVo vo) {
+		return dao.selectStorageTotalCnt(sst, vo);
+	}
+	//임시저장 문서 목록 조회
+	@Override
+	public List<ApprovalDocVo> selectStorageList(ApprovalDocVo vo, PageVo pv) {
+		return dao.selectStorageList(sst, vo, pv);
+	}
 	
 	
 	
@@ -393,6 +444,10 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public List<ApprovalDocVo> selectApprDeleteDocList(ApprovalDocVo vo, PageVo pv) {
 		return dao.selectApprDeleteDocList(sst, vo, pv);
 	}
+
+	
+
+	
 
 	
 

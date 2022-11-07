@@ -121,6 +121,11 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	public DocCommentVo selectUnApprComment(SqlSessionTemplate sst, String docCode) {
 		return sst.selectOne("approvalMapper.selectUnApprComment", docCode);
 	}
+	//첨부파일 다운로드
+	@Override
+	public ApprovalFileVo selectFileVo(SqlSessionTemplate sst, String fileCode) {
+		return sst.selectOne("approvalMapper.selectFileVo", fileCode);
+	}
 	//결재 수정,삭제 여부 판단
 	@Override
 	public ApprovalListVo selectSeq(SqlSessionTemplate sst, String docCode) {
@@ -131,9 +136,24 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	public int updateDoc(SqlSessionTemplate sst, ApprovalDocVo docVo) {
 		return sst.update("approvalMapper.updateDoc", docVo);
 	}
+	//기존 결재자 삭제
+	@Override
+	public int deleteApprover(SqlSessionTemplate sst, String docCode) {
+		return sst.delete("approvalMapper.deleteApprover", docCode);
+	}
+	//기존 참조인 삭제
+	@Override
+	public int deleteRef(SqlSessionTemplate sst, String docCode) {
+		return sst.delete("approvalMapper.deleteRef", docCode);
+	}
 	@Override
 	public int updateDocData(SqlSessionTemplate sst, List<DocDataVo> docDataList) {
 		return sst.update("approvalMapper.updateDocData", docDataList);
+	}
+	//기존 파일 삭제
+	@Override
+	public int deleteFile(SqlSessionTemplate sst, String docCode) {
+		return sst.delete("approvalMapper.deleteFile", docCode);
 	}
 	//문서 삭제
 	@Override
@@ -295,6 +315,19 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
 		return sst.selectList("approvalMapper.selectUnApprDocList", vo, rb);
 	}
+	//임시저장 문서 전체 갯수
+	@Override
+	public int selectStorageTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo) {
+		return sst.selectOne("approvalMapper.selectStorageTotalCnt", vo);
+	}
+	//임시저장 문서 목록 조회
+	@Override
+	public List<ApprovalDocVo> selectStorageList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv) {
+		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
+		return sst.selectList("approvalMapper.selectStorageList", vo, rb);
+	}
+	
 	
 	//문서 양식 목록 조회
 	@Override
@@ -306,11 +339,6 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	public DocFormVo selectDocForm(SqlSessionTemplate sst, int formCode) {
 		return sst.selectOne("approvalMapper.selectDocForm", formCode);
 	}
-
-	
-
-
-	
 	//문서 상세항목 불러오기
 	@Override
 	public List<DocFormDetailTemplateVo> selectFormDetailList(SqlSessionTemplate sst) {
@@ -357,6 +385,11 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
 		return sst.selectList("approvalMapper.selectApprDeleteDocList", vo, rb);
 	}
+	
+	
+	
+	
+	
 	
 	
 	

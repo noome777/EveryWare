@@ -79,7 +79,6 @@
   	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     <%@ include file="/WEB-INF/views/approval/sidemenu-content.jsp" %>
  	<main role="main" class="main-content">
-	<!-- 문서종류, 문서번호, 작성부서, 작성자, 보안등급, 보존연한, 기안일시, 완료일시   결재라인, 참조, 내용, 즐겨찾기, 첨부한 파일, 의견남기기 -->
 
 		<div class="card shadow mb-4">
       <div class="card-body">
@@ -144,10 +143,12 @@
 			          		<td class="font-weight-bold text-dark" style="width: 160px;">반려<br>${a.apprDate}</td></td> 
 	          			</c:when>
 	          			<c:otherwise>
-	          				<td class="appr-mark-td" style="width: 100px;">
-		                      <button status="${a.apprStatus}" apprSeq="${a.apprSeq}" apprEmpCode="${a.apprEmpCode}" type="button" class="btn mb-2 btn-outline-info d-none appr-btn">승인</button> 
-		                      <button status="${a.apprStatus}" apprSeq="${a.apprSeq}" apprEmpCode="${a.apprEmpCode}" type="button" class="btn mb-2 btn-outline-secondary d-none un-appr-btn" data-toggle="modal" data-target="#unApprModal">반려</button> 
-		                    </td>
+                    <c:if test="${apprDocVo.docStatus eq 'N'}">
+                      <td class="appr-mark-td" style="width: 100px;">
+                        <button status="${a.apprStatus}" apprSeq="${a.apprSeq}" apprEmpCode="${a.apprEmpCode}" type="button" class="btn mb-2 btn-outline-info d-none appr-btn">승인</button> 
+                        <button status="${a.apprStatus}" apprSeq="${a.apprSeq}" apprEmpCode="${a.apprEmpCode}" type="button" class="btn mb-2 btn-outline-secondary d-none un-appr-btn" data-toggle="modal" data-target="#unApprModal">반려</button> 
+                      </td>
+                    </c:if>
 	          			</c:otherwise>
 	          		</c:choose>
           		</c:if>
@@ -208,44 +209,45 @@
           <hr>
           <div>
           	<c:forEach items="${approvalFileList}" var="f">
-	            <a href="${root}/approval/fileDownload/${f.fileCode}">${f.originName}</a>
+	            <div>${f.originName}&nbsp;&nbsp;<a href="${root}/approval/fileDownload/${f.fileCode}" class="fe fe-download"></a></div>
           	</c:forEach>
           </div>
         </div>
       </div>
      </div>	
 	
-     <div class="card shadow mb-4">
-        <div class="card-body">
-          <c:if test="${not empty unApprComment}">
-          
-
-          <h6 class="mb-4">반려 메세지</h6>
-          <span>${unApprComment.writerName}</span> &nbsp;&nbsp; <span>${unApprComment.comEnrollDate}</span>
-          <div class="d-flex">
-            <div class="form-group mt-3 mb-5 ml-3" id="appr-comment">
-              ${unApprComment.comContent}
+     <c:if test="${not empty unApprComment}">
+        <div class="card shadow mb-4">
+          <div class="card-body">
+            <h6 class="mb-4">반려 메세지</h6>
+            <span>${unApprComment.writerName}</span> &nbsp;&nbsp; <span>${unApprComment.comEnrollDate}</span>
+            <div class="d-flex">
+              <div class="form-group mt-3 mb-5 ml-3" id="appr-comment">
+                ${unApprComment.comContent}
+              </div>
+              <div class="form-group mb-5 mt-3 ml-3  w-25 align-items-center"></div>
             </div>
-            <div class="form-group mb-5 mt-3 ml-3  w-25 align-items-center"></div>
-          </div>
-          </c:if>
-
-          <h6>의견 남기기</h6>
-          <div class="form-group mb-3" id="appr-comment">
-            <textarea class="form-control" id="example-textarea" ></textarea>
-            <button class="btn mb-2 btn-outline-info">등록</button>
           </div>
         </div>
-      </div>
+      </c:if>
 	
 	  <c:if test="${apprDocVo.docStatus eq 'N'}">
 	  <c:if test="${(seqStatus.apprStatus eq 'W' && apprDocVo.empCode eq loginMember.empCode) || loginMember.rightCode eq 1 || loginMember.rightCode eq 3}">
       <div class="text-center">
-        <button class="btn mb-2 btn-secondary" onclick="location.href='${root}/approval/approvalDocEdit/${apprDocVo.docCode}/${apprDocVo.docFormCode}'"> 수정하기</button>
+        <button class="btn mb-2 btn-secondary" onclick="location.href='${root}/approval/approvalDocEdit/${apprDocVo.docCode}/${apprDocVo.docFormCode}'"> 수정하기 </button>
         <button id="delete-btn" class="btn mb-2 btn-secondary"> 삭제하기</button>
       </div>
 	  </c:if>	
 	  </c:if>
+
+    <c:if test="${apprDocVo.docStatus eq 'T'}">
+      <c:if test="${apprDocVo.empCode eq loginMember.empCode}">
+        <div class="text-center">
+          <button class="btn mb-2 btn-secondary" onclick="location.href='${root}/approval/approvalDocEdit/${apprDocVo.docCode}/${apprDocVo.docFormCode}'"> 작성하기</button>
+          <button id="delete-btn" class="btn mb-2 btn-secondary"> 삭제하기</button>
+        </div>
+      </c:if>	
+    </c:if>
 	
 	
       <div class="modal fade" id="unApprModal" tabindex="-1" role="dialog" aria-labelledby="varyModalLabel" aria-hidden="true">
