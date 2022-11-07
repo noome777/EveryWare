@@ -63,6 +63,7 @@
                   <button type="button" class="btn btn-secondary"><span class="fe fe-trash fe-12 mr-2"></span>Delete</button>
                    
                   <!-- Modal boutton-->
+                  <form action="${root}/booking/write" method="POST"> 
                   <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
@@ -72,14 +73,19 @@
                              <span aria-hidden="true">&times;</span>
                            </button>
                         </div>
-                        
+                      
                       <div class="modal-body">
-                       <!-- 카테고리 선택 -->
-                        <label for="example-select"><b>* 자원 이름</b></label>
-                        <select class="form-control" id="example-select">
-                          <option>비품1</option>
-                          <option>비품2</option>
-                          <option>비품3</option>
+                       
+                        <label for="custom-select">종류</label>
+                        <select class="custom-select" id="custom-select" name="bkType">
+                          <option value="비품">비품</option>
+                          <option value="회의실">회의실</option>
+                        </select>
+                        <label for="custom-multiselect">비품명</label>
+                        <select class="custom-select" multiple id="custom-multiselect" name="bkTargetNo">
+                          <option value="1">빔프로젝트</option>
+                          <option value="2">커피머신</option>
+                          <option value="3">박스테이프</option>
                         </select>
                  
 	                 	  <!-- 예약일자 -->       
@@ -88,21 +94,22 @@
 	                      
 		                 	  <div class="input-group">
 		                 	  	<label class="booking-label" >예약 시작</label>
-		                        <input class="form-control booking-box" id="example-date" type="date" name="date">
-		                        <input class="form-control booking-box" id="example-time" type="time" name="time">
+		                        <input class="form-control booking-box" id="example-date" type="date" name="bkStart">
+		                        <input class="form-control booking-box" id="example-time" type="time" name="startTime">
 		                      </div>
 		                      <div class="input-group">
-		                      <label class="booking-label">예약 종료</label>
-		                      	<input class="form-control booking-box" id="example-date"  type="date" name="date">
-		                        <input class="form-control booking-box" id="example-time" type="time" name="time">
+		                      <label class="booking-label" >예약 종료</label>
+		                      	<input class="form-control booking-box" id="example-date"  type="date" name="bkEnd">
+		                        <input class="form-control booking-box" id="example-time" type="time" name="endTime">
 		                       </div>
-	                      </div>
-                       </div>
+	                       </div>
+                        </div>
                        
                          <div class="modal-footer">
                            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">닫기</button>
-                           <button type="button" class="btn mb-2 btn-primary">저장</button>
+                           <button type="submit" class="btn mb-2 btn-primary">저장</button>
                          </div>
+                       </form>
                          
                        </div>
                      </div>
@@ -113,76 +120,48 @@
               
               <!-- table -->
               <div class="card shadow">
-                <div class="card-body">
+                <div class="card-body tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                
+                <!-- 예약중/반납완료 -->
+                <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
+                   <li class="nav-item">
+                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">예약중</a>
+                   </li>
+                   <li class="nav-item">
+                     <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">반납완료</a>
+                   </li>
+                </ul>
+                
                   <table class="table table-borderless table-hover">
                   
                     <thead>
-                      <tr>
-                        <th>
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="all2">
-                            <label class="custom-control-label" for="all2"></label>
-                          </div>
-                        </th>
+                      	<tr>
 	                        <th>이미지</th>
 	                        <th>자원명</th>
 	                        <th>예약 시간</th>
 	                        <th>상태</th>
 	                        <th>반납</th>
-                      		</tr>
+                      	</tr>
                     </thead>
                     
                     <tbody>
-                    <!-- 예시 -->
-                      <tr>
-                        <td>
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="2474">
-                            <label class="custom-control-label" for="2474"></label>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="avatar avatar-sm">
-                            <img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
-                          </div>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted"><strong>EX) 비품1</strong></p>
-                          <small class="mb-0 text-muted">A1234</small>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted">2020/10/10 15:00 ~ 2020/10/20 18:00</p>
-                        </td>
-                        <td>
-                          <span class="badge badge-primary">예약중</span>
-                        </td>
-                        <td>
-                          <button class="returnBtn" onclick="javascript:btn()"><span class="badge badge-primary">반납하기</span></button>
-                        </td> 
-                      </tr>
-                      <!-- /예시 -->
-                      
+                    
                     <c:forEach items="${bList}" var="list">
                     <c:if test="${not empty loginMember}">
+                    
                       <tr>
-                        <td>
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="2474">
-                            <label class="custom-control-label" for="2474"></label>
-                          </div>
-                        </td>
+                        
                         <td>
                           <div class="avatar avatar-sm">
                             <img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
                           </div>
                         </td>
                         <td>
-                          <p class="mb-0 text-muted"><strong>비품이름</strong></p>
-                          <small class="mb-0 text-muted">${list.bkTargetNo}</small>
+                          <p class="mb-0 text-muted"><strong>${list.bkTargetNo}</strong></p>
+                          <small class="mb-0 text-muted">${list.bkType}</small>
                         </td>
                         <td>
-                          <p class="mb-0 text-muted">${list.bkStartDate} ${list.bkStartTime} 부터
-                          <br> ${list.bkEndDate} ${list.bkEndTime} 까지 </p>
+                          <p class="mb-0 text-muted"> ${list.bkStart}부터 <br> ${list.bkEnd} 까지 </p>
                         </td>
                         <td>
                           <span class="badge badge-primary">예약중</span>
@@ -199,6 +178,9 @@
                   </table>
                 </div>
               </div>
+              
+              
+
               
               <!-- 페이징 -->
               <nav aria-label="Table Paging" class="my-3">

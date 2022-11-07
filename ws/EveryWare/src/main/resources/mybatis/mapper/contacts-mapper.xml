@@ -27,7 +27,7 @@
 			CON_NO
 			, CON_WRITER
 			, CON_NAME
-			,  CON_EMAIL
+			, CON_EMAIL
 			, CON_TEL
 			, CON_COMPANY
 			, CON_MEMO
@@ -48,7 +48,7 @@
 	<select id="selectOne" resultType="ContactsVo">
 		SELECT 
 			C.CON_NO             
-            ,C. CON_WRITER   
+            , C.CON_WRITER   
             , C.CON_NAME      
             , C.CON_EMAIL        
             , C.CON_TEL           

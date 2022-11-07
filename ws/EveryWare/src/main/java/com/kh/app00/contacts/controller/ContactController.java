@@ -34,8 +34,6 @@ public class ContactController {
 	@GetMapping("contactList")
 	public String contactList(Model model , HttpServletRequest req) {
 		
-		//String no = ((EmpVo)req.getSession().getAttribute("loginMember")).getEmpCode();
-		
 		List<ContactsVo> cList = service.selectList();
 		
 		model.addAttribute("cList" , cList);
@@ -66,6 +64,7 @@ public class ContactController {
 	public String write(ContactsVo vo , Model model , HttpSession session) {
 		
 		EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
+		
 		String name = loginMember.getEmpName();
 		
 		vo.setConWriter(name);
