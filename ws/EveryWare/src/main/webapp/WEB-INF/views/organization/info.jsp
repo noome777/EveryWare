@@ -102,11 +102,39 @@
 																														<c:forEach items="${deptMap['6']}" var="dl6" >
 																															<c:if test="${dl6.highDeptCode eq dl5.deptCode}">
 																																<li class="nav-item emp-info-bar non-click padding-left-50px">
-																																	<a class="nav-link" data-toggle="pill" href="#${dl6.deptName}"></a>${dl6.deptName}</a>
+																																	<a class="nav-link" data-toggle="pill" href="#${dl6.deptName}">${dl6.deptName}</a>
 																																		<c:forEach items="${deptMap['7']}" var="dl7" >
 																																			<c:if test="${dl7.highDeptCode eq dl6.deptCode}">
 																																				<li class="nav-item emp-info-bar non-click padding-left-60px">
 																																					<a class="nav-link" data-toggle="pill" href="#${dl7.deptName}">${dl7.deptName}</a>
+																																						<c:forEach items="${deptMap['8']}" var="dl8" >
+																																							<c:if test="${dl8.highDeptCode eq dl7.deptCode}">
+																																								<li class="nav-item emp-info-bar non-click padding-left-70px">
+																																									<a class="nav-link" data-toggle="pill" href="#${dl8.deptName}">${dl8.deptName}</a>
+																																									<c:forEach items="${deptMap['9']}" var="dl9" >
+																																										<c:if test="${dl9.highDeptCode eq dl8.deptCode}">
+																																											<li class="nav-item emp-info-bar non-click padding-left-80px">
+																																												<a class="nav-link" data-toggle="pill" href="#${dl9.deptName}">${dl9.deptName}</a>
+																																												<c:forEach items="${deptMap['10']}" var="dl10" >
+																																													<c:if test="${dl10.highDeptCode eq dl9.deptCode}">
+																																														<li class="nav-item emp-info-bar non-click padding-left-90px">
+																																															<a class="nav-link" data-toggle="pill" href="#${dl10.deptName}">${dl10.deptName}</a>
+																																															<c:forEach items="${deptMap['11']}" var="dl11" >
+																																																<c:if test="${dl11.highDeptCode eq dl10.deptCode}">
+																																																	<li class="nav-item emp-info-bar non-click padding-left-100px">
+																																																		<a class="nav-link" data-toggle="pill" href="#${dl11.deptName}">${dl11.deptName}</a>
+																																																	</li>
+																																																</c:if>
+																																															</c:forEach>
+																																														</li>
+																																													</c:if>
+																																												</c:forEach>
+																																											</li>
+																																										</c:if>
+																																									</c:forEach>
+																																								</li>
+																																							</c:if>
+																																						</c:forEach>
 																																				</li>
 																																			</c:if>
 																																		</c:forEach>
@@ -138,7 +166,9 @@
 
 							<!--프로필 11 -->
 							<div class="tab-pane container active flex-wrap" id="all" >
-								<div id="profile-title"><h4>전체보기</h4></div>
+								<div id="profile-title">
+									<h4>전체보기</h4>
+								</div>
 								<div id="profile-area" class="or-scroll-bar">
 									<c:forEach items="${empList}" var="el">
 										<div class="profile shadow">
@@ -159,7 +189,13 @@
 							</div>
 						<c:forEach items="${deptList}" var="dl">
 							<div class="tab-pane container fade flex-wrap" id="${dl.deptName}" >
-								<div id="profile-title"><h4>${dl.deptName}</h4></div>
+								<div id="profile-title">
+									<h4>${dl.deptName}</h4>
+									<c:if test="${dl.deptDepth ne 1}">
+										<small class="text-muted">${dl.path}</small>
+									</c:if>
+
+								</div>
 								<div id="profile-area" class="or-scroll-bar">
 									
 									<c:forEach items="${empList}" var="el">

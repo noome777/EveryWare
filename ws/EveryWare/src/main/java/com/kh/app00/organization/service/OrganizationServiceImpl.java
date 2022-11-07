@@ -355,6 +355,13 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 
 
+	//부서관리 - 부서 가져오기
+	@Override
+	public List<DeptVo> selectDeptListForChart() {
+		return organizationDao.selectDeptListForChart(sqlSessionTemplate);
+	}
+
+
 
 
 

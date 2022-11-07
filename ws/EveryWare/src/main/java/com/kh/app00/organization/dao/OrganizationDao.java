@@ -110,6 +110,9 @@ public interface OrganizationDao {
 	//임직원 관리 - 임직원정보 수정
 	int updateEmp(SqlSessionTemplate sqlSessionTemplate, EmpVo empVo);
 
+	//부서관리 - 부서 가져오기
+	List<DeptVo> selectDeptListForChart(SqlSessionTemplate sqlSessionTemplate);
+
 
 
 

@@ -109,6 +109,9 @@ public interface OrganizationService {
 	//임직원정보 수정
 	int updateEmp(EmpVo empVo);
 
+	//부서관리 - 부서 가져오기
+	List<DeptVo> selectDeptListForChart();
+
 
 
 }

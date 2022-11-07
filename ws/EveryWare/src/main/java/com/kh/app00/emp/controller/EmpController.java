@@ -220,11 +220,6 @@ public class EmpController {
     	 
     	 EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
  		 empVo.setEmpCode(loginMember.getEmpCode());
- 		 
- 		 System.out.println(empVo);
- 		 System.out.println(empVo.getProfile());
- 		 System.out.println(empVo.getSignFile());
- 		 System.out.println(loginMember.getEmpCode());
     	 
  		if(!empVo.getProfile().isEmpty() && empVo.getProfile()!=null) {
 			//파일 있음
@@ -240,9 +235,10 @@ public class EmpController {
 			empVo.setEmpFileName(changedSignFileName);
 		}
  		
- 		System.out.println(empVo);
  		
     	 int result = service.updateEmp(empVo);
+    	 
+    	 System.out.println("결과 : " + result);
     	 
     	 if(result==1) {
  			EmpVo loginMeber = service.selectEmpByEmpCode(empVo.getEmpCode());
@@ -260,6 +256,8 @@ public class EmpController {
  			session.setAttribute("errorMsg", "임직원 수정에 실패하였습니다. 주소에는 각각 50글자 이하로 작성해주시길 바랍니다.");
  		} else if(result==-6) {
  			session.setAttribute("errorMsg", "임직원 수정에 실패하였습니다. 주소에는 각각 50글자 이하로 작성해주시길 바랍니다.");
+ 		} else if(result==-7) {
+ 			session.setAttribute("errorMsg", "임직원 수정에 실패하였습니다. 비밀번호는 5글자 이상으로 작성하여 주시길 바랍니다.");
  		} else {
  			session.setAttribute("errorMsg", "ErrorCode : " + result);
  		}

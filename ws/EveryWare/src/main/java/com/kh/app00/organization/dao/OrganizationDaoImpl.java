@@ -213,6 +213,12 @@ public class OrganizationDaoImpl implements OrganizationDao {
 		return sqlSessionTemplate.update("organizationMapper.updateEmp",empVo);
 	}
 
+	//부서관리 - 부서 가져오기 (id==deptCode)
+	@Override
+	public List<DeptVo> selectDeptListForChart(SqlSessionTemplate sqlSessionTemplate) {
+		return sqlSessionTemplate.selectList("organizationMapper.selectDeptListForChart");
+	}
+
 	
 
 	
