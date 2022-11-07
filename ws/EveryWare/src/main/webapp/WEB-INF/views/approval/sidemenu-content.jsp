@@ -90,7 +90,7 @@
 
           <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item dropdown">
-              <a href="${root}/approval/storage" aria-expanded="false" class="nav-link">
+              <a href="${root}/approval/storage/1/0" aria-expanded="false" class="nav-link">
                 <i class="fe fe-edit fe-16"></i>
                 <span class="ml-3 item-text">임시저장</span>
               </a>

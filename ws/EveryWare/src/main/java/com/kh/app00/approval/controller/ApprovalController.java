@@ -1,11 +1,18 @@
 package com.kh.app00.approval.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +40,7 @@ import com.kh.app00.approval.vo.ApprovalRefVo;
 import com.kh.app00.approval.vo.ApprovalTypeVo;
 import com.kh.app00.common.PageVo;
 import com.kh.app00.common.Pagination;
+import com.kh.app00.common.Path;
 import com.kh.app00.emp.vo.EmpVo;
 import com.kh.app00.organization.vo.DeptVo;
 
@@ -90,15 +98,14 @@ public class ApprovalController {
 	//결재문서 작성
 	@PostMapping("write")
 	@ResponseBody
-//	public String write(@RequestBody ApprovalDocVo docVo, HttpSession session) {
-	public String write(@RequestPart(name = "appr") ApprovalDocVo docVo, @RequestPart(name = "file") MultipartFile[] files, HttpSession session, HttpServletRequest req) {
+	public String write(@RequestPart(name = "appr") ApprovalDocVo docVo, @RequestPart(name = "file", required = false) MultipartFile[] files, HttpSession session, HttpServletRequest req) {
 		EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
 		docVo.setEmpCode(loginMember.getEmpCode());
 		
 		int result = service.insertApprovalDoc(docVo, files, req);
 		
 		if(result == 1) {
-			return "작성 성공";
+			return "작성 성공";	
 		} else {
 			return "작성 실패";
 		}
@@ -132,6 +139,28 @@ public class ApprovalController {
 		return "approval/approvalDocDetail";
 	}
 	
+	//첨부파일 다운로드
+	@GetMapping("fileDownload/{fileCode}")
+	public ResponseEntity<ByteArrayResource> fileDownload(@PathVariable String fileCode, HttpServletRequest req) throws IOException {
+		
+		ApprovalFileVo vo = service.selectFileVo(fileCode);
+		
+		String rootPath = req.getServletContext().getRealPath(Path.APPROVAL_PATH);
+		File target = new File(rootPath + vo.getUploadName());
+		
+		byte[] data = FileUtils.readFileToByteArray(target);
+		ByteArrayResource res = new ByteArrayResource(data);
+		
+		return ResponseEntity
+				.ok()
+				.contentType(MediaType.APPLICATION_OCTET_STREAM)
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + vo.getOriginName())
+				.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
+				.header(HttpHeaders.CONTENT_LENGTH, target.length() + "")
+				.body(res);
+	}
+	
+	
 	//문서 수정 화면
 	@GetMapping("approvalDocEdit/{docCode}/{formCode}")
 	public String approvalDocEdit(@PathVariable String docCode, @PathVariable int formCode, Model model, HttpSession session) {
@@ -141,9 +170,12 @@ public class ApprovalController {
 		List<DocDataVo> docDataVoList = service.selectDocDataList(docCode);
 		List<ApprovalListVo> approverVoList = service.selectApproverList(docCode);
 		List<ApprovalRefVo> approvalRefVoList = service.selectRefVoList(docCode);
-//			List<ApprovalFileVo> approvalFileList = service.selectFileVoList(docCode);
+		List<ApprovalFileVo> approvalFileList = service.selectFileVoList(docCode);
 		List<ApprovalListVo> apprTypeCountList = service.selectTypeCountList(docCode);
 		List<DocFormMapperVo> formMappingList = service.formSelect(formCode);
+		List<ApprovalTypeVo> approvalTypeList = service.selectTypeList();
+		List<DeptVo> deptList = service.selectDeptList();
+		List<EmpVo> empList = service.selectEmpList();
 		
 		model.addAttribute("apprDocVo", apprDocVo);
 		model.addAttribute("docDataVoList", docDataVoList);
@@ -152,6 +184,10 @@ public class ApprovalController {
 		model.addAttribute("apprTypeCountList", apprTypeCountList);
 		model.addAttribute("periodList", periodList);
 		model.addAttribute("formMappingList", formMappingList);
+		model.addAttribute("approvalFileList", approvalFileList);
+		model.addAttribute("approvalTypeList", approvalTypeList);
+		model.addAttribute("deptList", deptList);
+		model.addAttribute("empList", empList);
 		
 		return "approval/approvalDocEdit";
 	}
@@ -159,9 +195,10 @@ public class ApprovalController {
 	//문서 수정
 	@PostMapping("approvalDocEdit")
 	@ResponseBody
-	public String approvalDocEdit(@RequestBody ApprovalDocVo docVo, HttpSession session) {
+	public String approvalDocEdit(@RequestPart(name = "appr") ApprovalDocVo docVo, @RequestPart(name = "file", required = false) MultipartFile[] files, HttpSession session, HttpServletRequest req) {
 		
-		int result = service.updateApprovalDoc(docVo);
+		int result = service.updateApprovalDoc(docVo, files, req);
+		
 		if(result == 1) {
 			return "작성 성공";
 		} else {
@@ -204,7 +241,11 @@ public class ApprovalController {
 		
 		int result = service.updateUnApprove(apprVo);
 		
-		return "반려 완료";
+		if(result == 1) {
+			return "반려 완료";
+		} else {
+			return "반려 실패";
+		}
 	}
 	
 	//진행 > 전체
@@ -221,7 +262,7 @@ public class ApprovalController {
 		
 		List<ApprovalDocVo> docList = service.selectProgressDocList(vo, pv);
 		List<DocFormVo> formList = service.selectFormList();
-		
+		System.out.println(docList);
 		model.addAttribute("formList", formList);
 		model.addAttribute("docList", docList);
 		model.addAttribute("pv", pv);
@@ -438,8 +479,25 @@ public class ApprovalController {
 	}
 	
 	//임시 저장
-	@GetMapping("storage")
-	public String storage() {
+	@GetMapping("storage/{pno}/{docFormCode}")
+	public String storage(Model model, HttpSession session, @PathVariable int pno, @PathVariable String docFormCode) {
+		
+		EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
+		ApprovalDocVo vo = new ApprovalDocVo();
+		vo.setEmpCode(loginMember.getEmpCode());
+		vo.setDocFormCode(docFormCode);
+		
+		int totalCount = service.selectStorageTotalCnt(vo);
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 3, 15);
+		
+		List<DocFormVo> formList = service.selectFormList();
+		List<ApprovalDocVo> docList = service.selectStorageList(vo, pv);
+		
+		model.addAttribute("formList", formList);
+		model.addAttribute("docList", docList);
+		model.addAttribute("pv", pv);
+		model.addAttribute("selectedFormCode", vo.getDocFormCode());
+		
 		return "approval/storage";
 	}
 	

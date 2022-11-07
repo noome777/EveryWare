@@ -59,11 +59,19 @@ public interface ApprovalDao {
 	List<ApprovalFileVo> selectFileVoList(SqlSessionTemplate sst, String docCode);
 	//결재타입 갯수 구하기
 	List<ApprovalListVo> selectTypeCountList(SqlSessionTemplate sst, String docCode);
+	//첨부파일 다운로드
+	ApprovalFileVo selectFileVo(SqlSessionTemplate sst, String fileCode);
 	//결재 수정,삭제 여부 판단
 	ApprovalListVo selectSeq(SqlSessionTemplate sst, String docCode);
-	//문서 삭제
+	//문서 수정
 	int updateDoc(SqlSessionTemplate sst, ApprovalDocVo docVo);
 	int updateDocData(SqlSessionTemplate sst, List<DocDataVo> docDataList);
+	//기존 결재자 삭제
+	int deleteApprover(SqlSessionTemplate sst, String docCode);
+	//기존 참조인 삭제
+	int deleteRef(SqlSessionTemplate sst, String docCode);
+	//기존 파일 삭제
+	int deleteFile(SqlSessionTemplate sst, String docCode);
 	//문서 삭제
 	int updateDocDelete(SqlSessionTemplate sst, ApprovalDocVo vo);
 	//문서 승인
@@ -122,6 +130,10 @@ public interface ApprovalDao {
 	int selectUnApprTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo);
 	//문서함 - 반려 문서 목록 조회
 	List<ApprovalDocVo> selectUnApprDocList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv);
+	//임시저장 문서 전체 갯수
+	int selectStorageTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo);
+	//임시저장 문서 목록 조회
+	List<ApprovalDocVo> selectStorageList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv);
 	
 	//문서 양식 목록 조회
 	List<DocFormVo> selectDocFormList(SqlSessionTemplate sst);
@@ -146,6 +158,10 @@ public interface ApprovalDao {
 	int selectApprDeleteDocTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo);
 	//삭제 문서 목록 조회
 	List<ApprovalDocVo> selectApprDeleteDocList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv);
+	
+	
+	
+	
 	
 	
 	

@@ -57,8 +57,10 @@ public interface ApprovalService {
 	DocCommentVo selectUnApprComment(String docCode);
 	//결재 수정,삭제 여부 판단
 	ApprovalListVo selectSeq(String docCode);
+	//첨부파일 다운로드
+	ApprovalFileVo selectFileVo(String fileCode);
 	//문서 수정
-	int updateApprovalDoc(ApprovalDocVo docVo);
+	int updateApprovalDoc(ApprovalDocVo docVo, MultipartFile[] files, HttpServletRequest req);
 	//문서 삭제
 	int updateDocDelete(ApprovalDocVo vo);
 	//문서 승인
@@ -107,16 +109,16 @@ public interface ApprovalService {
 	int selectUnApprTotalCnt(ApprovalDocVo vo);
 	//문서함 - 반려 문서 목록 조회
 	List<ApprovalDocVo> selectUnApprDocList(ApprovalDocVo vo, PageVo pv);
+	//임시저장 문서 갯수 조회
+	int selectStorageTotalCnt(ApprovalDocVo vo);
+	//임시저장 문서 목록 조회
+	List<ApprovalDocVo> selectStorageList(ApprovalDocVo vo, PageVo pv);
 
 	
 	//문서 양식 목록 조회
 	List<DocFormVo> selectDocFormList();
 	//문서 양식 상세 조회
 	DocFormVo selectDocForm(int formCode);
-	
-	
-	
-	
 	//문서 양식상세 항목 불러오기
 	List<DocFormDetailTemplateVo> selectFormDetailList();
 	//문서양식 insert
@@ -131,6 +133,7 @@ public interface ApprovalService {
 	int selectApprDeleteDocTotalCnt(ApprovalDocVo vo);
 	//삭제 문서 목록 조회
 	List<ApprovalDocVo> selectApprDeleteDocList(ApprovalDocVo vo, PageVo pv);
+	
 	
 	
 	

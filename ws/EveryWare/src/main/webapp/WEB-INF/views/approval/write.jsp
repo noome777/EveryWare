@@ -51,6 +51,10 @@
   table td{
     width: 10px;
   }
+  .del-file:hover{
+    background-color: rgb(177, 226, 249);
+  }
+  
 </style>
 </head>
 <body>
@@ -159,7 +163,8 @@
         </div> <!-- .card -->
 
       <div class="text-center">
-        <input type="submit" class="btn mb-2 btn-secondary" value="작성하기" onclick="insert();">
+        <input type="submit" class="btn mb-2 btn-secondary" value="임시저장" id="storage" onclick="insert();">
+        <input type="submit" class="btn mb-2 btn-secondary" value="작성하기" id="write" onclick="insert();">
       </div>
     </c:if>
 
@@ -555,28 +560,44 @@
 
 
     })
-
-
-
-    $("input[type='file']").on('change',function(){ 
-
+    
+      
+    
+    function fileInit() {
       var fileList = "";
-
+      $('#file-name div').remove();
+      
       for(var i=0; i<$('#customFile')[0].files.length; i++){  
-        fileList += event.target.files[i].name + '<br>';
+        fileList += '<div class="file-name-div" id="' + i + '">' + $('#customFile')[0].files[i].name + '&nbsp;&nbsp;<i class="fe fe-x-square del-file" id="'+ i +'"></i></div>';
       } 
       
       $('#file-name').append(fileList);
+    }
 
-    });
+    $("input[type='file']").on('change',fileInit);
     
-    //진행중
-    function insert () {
+    $($('#file-name')).on('click', $('.del-file') ,function (e) {
+      let id = e.target.id;
+
+      $('.file-name-div[id='+ id +']').remove();
+      const dataTransfer = new DataTransfer();
+
+      let files = $('#customFile')[0].files;
+      let fileArray = Array.from(files);
+      fileArray.splice(id, 1);
+
+      fileArray.forEach(file => {
+        dataTransfer.items.add(file);
+      });
+
+      $('#customFile')[0].files = dataTransfer.files;
+      fileInit();
+    });
+
+    $('input[type=submit]').on('click', function () {
       let writer = $('.writer-name')[0].innerHTML;
       let writerCode = $('.writer-name').attr('id');
       
-
-      //항목 별 작성 내용, 항목 code
       let docDataList = [];
       $('[name=docContent]').each(function() {
         let object = {
@@ -586,8 +607,6 @@
         docDataList.push(object);
       })
 
-      
-      //결재타입 -> 결재타입코드, 결재자코드, 결재순서 (진행상태 - default insert)
       let checkedVal = [];
       $('#modal-appr-type input[type=checkbox]:checked').each(function (i) {
         var checked = $(this).val();
@@ -616,11 +635,8 @@
           approverList.push(approverObject);
           }
         })
-
       })
       
-      
-      //참조인 -> 사원코드
       let approvalRefList = [];
       $('.ref-select-box option').each(function (i) {
         let object = {
@@ -630,30 +646,34 @@
       })
       console.log(approvalRefList);
       
+      let docStatus = "";
+      if($(this).attr('id') == 'write'){
+        docStatus = "N";
+      } else {
+        docStatus = "T";
+      }
       
       if(approverList.length < 1){
         alert('결재자를 추가해주세요');
       } else if($('[name=docTitle]').val() == ""){  
         alert('제목을 입력해주세요')
       } else {
-        
+
         let param = {
           periodCode : $('#custom-select').val(),
           docFormCode : $('#formSelect').val(),
           docTitle : $('[name=docTitle]').val(),
           docDataList : docDataList,
           approverList : approverList,
-          approvalRefList : approvalRefList
+          approvalRefList : approvalRefList,
+          docStatus : docStatus
         }
         var formData = new FormData();
         for(var i=0; i<$('#customFile')[0].files.length; i++){  
           formData.append("file", $('#customFile')[0].files[i]);
           console.log($('#customFile')[0].files[i]);
-          // list += event.target.files[i].name + '<br>';
         } 
         formData.append('appr', new Blob([JSON.stringify(param)], {type : "application/json"}));
-        console.log(param);
-        console.log(formData); 
         
         $.ajax({
           url : "${root}/approval/write" ,
@@ -664,31 +684,19 @@
           processData : false,
           cache : false,
           success : function(data){
-            alert('작성 성공');
+            if(docStatus == "N"){
+              alert('작성 완료');
+            } else {
+              alert('임시저장 완료');
+            }
             location.href='${root}/approval/progressAllList/1/0';
           } , 
           error : (error) => {
             console.log(JSON.stringify(error));
           }
         })
-
-
-        // $.ajax({
-        //   url : "${root}/approval/write" ,
-        //   method : "POST" ,
-        //   data : JSON.stringify(param),
-        //   contentType: "application/json; charset=utf-8",
-        //   success : function(data){
-        //     alert('작성 성공');
-        //     location.href='${root}/approval/progressAllList/1/0';
-        //   } , 
-        //   error : (error) => {
-        //     console.log(JSON.stringify(error));
-        //   }
-        // })
-
       }
-    }
+    })
 
 	</script>
 
