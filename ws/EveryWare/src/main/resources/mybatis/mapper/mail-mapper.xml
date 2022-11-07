@@ -11,14 +11,49 @@
 		,MAIL.MAIL_CONTENT
 		,MAIL.MAIL_SENDDATE
 		,MAIL.MAIL_RECEIVER
+		,MAIL.MAIL_VIEWS
 		,MAIL.MAIL_DELETE 
 		FROM MAIL
 		JOIN EMP
 		ON MAIL.EMP_CODE = EMP.EMP_CODE
 		WHERE MAIL_DELETE IS NULL
 		ORDER BY MAIL_CODE DESC
-	</select>		
+		
+	</select>	
 	
+	<select id="selectSearchList" resultType="MailVo">
+		SELECT
+		MAIL.MAIL_CODE
+		,MAIL.EMP_CODE
+		,MAIL.MAIL_SENDER 
+		,MAIL.MAIL_TITLE
+		,MAIL.MAIL_CONTENT
+		,MAIL.MAIL_SENDDATE
+		,MAIL.MAIL_RECEIVER
+		,MAIL.MAIL_VIEWS
+		,MAIL.MAIL_DELETE 
+		FROM MAIL
+		JOIN EMP
+		ON MAIL.EMP_CODE = EMP.EMP_CODE
+		WHERE MAIL_DELETE IS NULL
+		ORDER BY MAIL_CODE DESC
+		<choose>
+			<when test="type != null and type.equals('title')">
+			AND MAIL_TITLE LIKE CONCAT ('%', #{keyword}, '%')
+			</when>
+			<when test="type!=null and type.equals('send_id')">
+			AND MAIL_SENDER LIKE CONCAT = #{keyword}
+			</when>
+		</choose>
+		
+	</select>	
+		
+	<select id="selectCountAll" resultType="int">
+		SELECT COUNT (*)
+		FROM MAIL
+		WHERE MAIL_DELETE IS NULL
+	</select>	
+		
 	<insert id="insertMail">
 		INSERT INTO MAIL 
 		(
@@ -58,6 +93,7 @@
 		,MAIL.MAIL_CONTENT
 		,MAIL.MAIL_SENDDATE
 		,MAIL.MAIL_RECEIVER
+		,MAIL.MAIL_VIEWS
 		,MAIL.MAIL_DELETE 
 		FROM MAIL
 		JOIN EMP
@@ -88,6 +124,7 @@
 		,MAIL.MAIL_CONTENT
 		,MAIL.MAIL_SENDDATE
 		,MAIL.MAIL_RECEIVER
+		,MAIL.MAIL_VIEWS
 		,MAIL.MAIL_DELETE 
 		FROM MAIL
 		JOIN EMP
@@ -105,6 +142,7 @@
 		,MAIL.MAIL_CONTENT
 		,MAIL.MAIL_SENDDATE
 		,MAIL.MAIL_RECEIVER
+		,MAIL.MAIL_VIEWS
 		,MAIL.MAIL_DELETE 
 		FROM MAIL
 		JOIN EMP
@@ -135,4 +173,98 @@
 		 ,#{mailReceiver}
 		 )
 	</insert>
+	
+	<insert id="selfMail">
+		INSERT INTO MAIL 
+		(
+		MAIL_CODE
+		, EMP_CODE
+		, MAIL_SENDER
+		, MAIL_TITLE
+		, MAIL_CONTENT
+		, MAIL_SENDDATE
+		, MAIL_RECEIVER
+		)
+		VALUES 
+		(
+		SEQ_MAIL_CODE.NEXTVAL
+		 ,#{empCode}
+		 ,#{mailSender}
+		 ,#{mailTitle}
+		 ,#{mailContent}
+		 ,SYSDATE
+		 ,#{mailReceiver}
+		 )
+	</insert>
+	
+	<select id="selectSelflist" resultType="MailVo">
+		SELECT
+		MAIL.MAIL_CODE
+		,MAIL.EMP_CODE
+		,MAIL.MAIL_SENDER 
+		,MAIL.MAIL_TITLE
+		,MAIL.MAIL_CONTENT
+		,MAIL.MAIL_SENDDATE
+		,MAIL.MAIL_RECEIVER
+		,MAIL.MAIL_VIEWS
+		,MAIL.MAIL_DELETE 
+		FROM MAIL
+		JOIN EMP
+		ON MAIL.EMP_CODE = EMP.EMP_CODE
+		WHERE MAIL_DELETE IS NULL
+		ORDER BY MAIL_CODE DESC
+	</select>
+	
+	<select id="selectMail" resultType="MailVo">
+		SELECT
+		MAIL.MAIL_CODE
+		,MAIL.EMP_CODE
+		,MAIL.MAIL_SENDER 
+		,MAIL.MAIL_TITLE
+		,MAIL.MAIL_CONTENT
+		,MAIL.MAIL_SENDDATE
+		,MAIL.MAIL_RECEIVER
+		,MAIL.MAIL_VIEWS
+		,MAIL.MAIL_DELETE 
+		FROM MAIL
+		JOIN EMP
+		ON MAIL.EMP_CODE = EMP.EMP_CODE
+		WHERE MAIL_CODE = #{mailCode}
+		ORDER BY MAIL_CODE DESC
+	</select>
+	
+	<update id="deleteOne">
+		UPDATE MAIL
+		SET
+		MAIL_DELETE = SYSDATE
+		WHERE MAIL_CODE = #{mailCode}
+	</update>
+	
+	
+	
+	<select id="selectDeleteAll" resultType="int">
+		SELECT COUNT (*)
+		FROM MAIL
+		WHERE MAIL_DELETE IS NOT NULL
+	</select>
+	
+	<update id="increaseViews">
+		UPDATE MAIL
+		SET MAIL_VIEWS = MAIL_VIEWS + 1
+		WHERE MAIL_CODE = #{mailCode}
+	</update>
+	
+	<update id="readMail">
+		UPDATE MAIL
+		SET
+		MAIL_VIEWS = 1
+		WHERE MAIL_CODE = #{mailCode}
+	</update>
+	
+	<update id="noReadmail">
+		UPDATE MAIL
+		SET
+		MAIL_VIEWS = 0
+		WHERE MAIL_CODE = #{mailCode}
+	</update>
 </mapper>

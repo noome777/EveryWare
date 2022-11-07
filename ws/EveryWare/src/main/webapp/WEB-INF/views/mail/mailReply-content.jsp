@@ -49,6 +49,7 @@
 		<hr>
 
 		<table>
+		<input type="text" class="form-control" name="mailSender" id="mailSender" value="${loginMember.empId}@everyware.com" hidden>
 			<tr class="recipient">
 				
 			<tr class="sender">
@@ -58,7 +59,7 @@
 					<div class="inputrecipe" style="padding-top: 20px;">
 						<div>
 							<input type="text" class="form-control" name="mailReceiver"
-								id="mailReceiver">
+								id="mailReceiver" value="${mvo.mailSender}">
 						</div>
 					</div>
 				</td>

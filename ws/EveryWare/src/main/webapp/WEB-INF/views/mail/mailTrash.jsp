@@ -108,10 +108,11 @@
 							<c:forEach items="${trashList}" var="t">
 							<input type="hidden" id="mailReceiver" class="mailReceiver" value="${t.mailReceiver}"/>
 										<c:set var = "mailRecev" value="${t.mailReceiver}"/>
-									<c:if test="${t.mailDelete ne null && loginMember.empId eq fn:split(mailRecev,'@')[0]}">
-										<tr>
+										<c:set var = "mailS" value="${t.mailSender}"/>
+									<c:if test="${t.mailDelete ne null && loginMember.empId eq fn:split(mailRecev,'@')[0] || loginMember.empId eq fn:split(mailS,'@')[0]}">
+										<tr >
 											<td><input type="checkbox" name="trashCheck"
-												class="trashCheck" value="${t.mailCode}"></td>
+												class="trashCheck" value="${t.mailCode}" onclick="event.stopPropagation()"></td>
 											<td id="msender">${t.mailSender}</td>
 											<td id="mtitle">${t.mailTitle}</td>
 											<td id="mSenddate">${t.mailSenddate}</td>
@@ -122,14 +123,20 @@
 					</table>
 					<nav aria-label="Page navigation example">
 						<ul class="pagination justify-content-center mb-0">
-							<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-							<li class="page-item"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item"><a class="page-link" href="#">Next</a></li>
+							<c:if test="${pv.startPage ne 1}">
+								<li class="page-item"><a class="page-link" href="/app00/mail/trash/${pv.startPage - 1}">Previous</a></li>
+							</c:if>
+
+							<c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
+								<li class="page-item"><a class="page-link"
+									href="/app00/mail/trash/${i}">${i}</a></li>
+							</c:forEach>
+
+							<c:if test="${pv.endPage ne pv.maxPage}">
+								<li class="page-item"><a class="page-link" href="/app00/mail/trash/${pv.endPage + 1}">Next</a></li>
+							</c:if>
 						</ul>
 					</nav>
-
 				</div>
 			</div>
 		</div>

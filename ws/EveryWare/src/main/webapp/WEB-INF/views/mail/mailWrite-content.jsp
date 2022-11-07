@@ -50,16 +50,7 @@
 		<hr>
 
 		<table>
-			<tr class="recipient">
-				<th scope="row"><span class="raw_label"> 보내는 사람 </span></th>
-				<td colspan="2">
-					<div class="inputrecipe">
-						<div>
-							<input type="text" class="form-control" name="mailSender"
-								id="mailSender">
-						</div>
-					</div>
-				</td>
+			<input type="text" class="form-control" name="mailSender" id="mailSender" value="${loginMember.empId}@everyware.com" hidden>
 			<tr class="sender">
 				<th scope="row"><br> <span class="raw_label" id="sendname">
 						받는 사람 </span></th>

@@ -32,7 +32,8 @@
 }
 
 #sender {
-	text-align: center;
+	
+	
 }
 
 #title {
@@ -44,7 +45,7 @@
 }
 
 #msender {
-	text-align: center;
+	margin-right:10px;
 }
 
 #mtitle {
@@ -65,7 +66,7 @@
 
 			<h2 id="mailall">보낸 메일함</h2>
 			<br>
-				<div class="form-group row justify-content-center" style="margin-right:700px;">
+				<div class="form-group row " style="margin-left: 3px;">
 			<div class="w100" style="padding-right:10px">
 				<select class="form-control form-control-sm" name="searchType" id="searchType">
 					<option value="title">제목</option>
@@ -87,7 +88,7 @@
 				<br>
 				<div class="buttonSet">
 					<input type="button" value="삭제" id="deleteBtn"
-						onclick="deleteValue();" class="btn btn-primary"/>
+						onclick="deleteValue();" class="btn btn-danger"/>
 				</div>
 				<!-- <div class="input-group w-50" >
 		<span class="input-group-text" id="basic-addon1">
@@ -104,7 +105,7 @@
 							<tr>
 								<th><input type="checkbox" name="allCheckbox"
 									id="allCheckbox"></th>
-								<th id="sender">받는사람</th>
+								<th id="sender" >받는사람</th>
 								<th id="title">제목</th>
 								<th id="senddate">작성일</th>
 							</tr>
@@ -113,13 +114,14 @@
 										
 								<input type="hidden" id="mailSender" class="mailSender" value="${s.mailSender}"/>
 										<c:set var = "mailSend" value="${s.mailSender}"/>
-									<c:if test="${s.mailDelete eq null && loginMember.empId eq fn:split(mailSend,'@')[0]}">
-										<tr>
+										<c:set var = "mailReci" value="${s.mailReceiver}"/>
+									<c:if test="${s.mailDelete eq null && loginMember.empId eq fn:split(mailSend,'@')[0] && loginMember.empId ne fn:split(mailReci,'@')[0]}">
+										<tr onclick="location.href='${root}/mail/mailDetail/${s.mailCode}'">
 											<td><input type="checkbox" name="RowCheck"
-												class="RowCheck" value="${s.mailCode}"></td>
-											<td id="msender">${s.mailReceiver}</td>
+												class="RowCheck" value="${s.mailCode}" onclick="event.stopPropagation()"></td>
+											<td id="msender"onclick="event.stopPropagation()">${fn:split(mailReci,'@')[0]}</td>
 											<td id="mtitle">${s.mailTitle}</td>
-											<td id="mSenddate">${s.mailSenddate}</td>
+											<td id="mSenddate" onclick="event.stopPropagation()">${s.mailSenddate}</td>
 											
 										</tr>
 									</c:if>
@@ -130,14 +132,21 @@
 
 
 						<nav aria-label="Page navigation example">
-							<ul class="pagination justify-content-center mb-0">
-								<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-								<li class="page-item"><a class="page-link" href="#">1</a></li>
-								<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
-								<li class="page-item"><a class="page-link" href="#">Next</a></li>
-							</ul>
-						</nav>
+						<ul class="pagination justify-content-center mb-0">
+							<c:if test="${pv.startPage ne 1}">
+								<li class="page-item"><a class="page-link" href="/app00/mail/send/${pv.startPage - 1}">Previous</a></li>
+							</c:if>
+
+							<c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
+								<li class="page-item"><a class="page-link"
+									href="/app00/mail/send/${i}">${i}</a></li>
+							</c:forEach>
+
+							<c:if test="${pv.endPage ne pv.maxPage}">
+								<li class="page-item"><a class="page-link" href="/app00/mail/send/${pv.endPage + 1}">Next</a></li>
+							</c:if>
+						</ul>
+					</nav>
 					</div>
 				</div>
 			</div>

@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
+import com.kh.app00.common.PageVo;
 import com.kh.app00.mail.dao.MailDao;
 import com.kh.app00.mail.vo.MailVo;
 
@@ -21,8 +22,8 @@ public class MailServiceImpl implements MailService{
 
 
 	@Override
-	public List<MailVo> selectList() {
-		return dao.selectList(sst);
+	public List<MailVo> selectList(PageVo pv) {
+		return dao.selectList(sst,pv);
 	}
 
 
@@ -71,6 +72,65 @@ public class MailServiceImpl implements MailService{
 	@Override
 	public int reply(MailVo mvo) {
 		return dao.replyMail(sst, mvo);
+	}
+
+
+	@Override
+	public int selfWrite(MailVo mvo) {
+		return dao.selfWrite(sst,mvo);
+	}
+
+
+	@Override
+	public List<MailVo> selectSelflist() {
+		return dao.selectSelflist(sst);
+	}
+
+
+	@Override
+	public MailVo selectOne(String mailCode) {
+		int result = dao.increaseViews(sst,mailCode);
+		if(result == 1) {
+		return dao.selectMail(sst, mailCode);
+		}else {
+			return null;
+		}
+	}
+
+
+	@Override
+	public int deleteOne(String mailCode) {
+		return dao.deleteOne(sst, mailCode);
+	}
+
+
+	@Override
+	public int selectTotalCnt() {
+		return dao.selectCountAll(sst);
+	}
+
+
+	@Override
+	public int selectDeleteCnt() {
+		return dao.selectDeleteCnt(sst);
+	}
+
+
+	@Override
+	public int read(String mailCode) {
+		return dao.readMail(sst,mailCode);
+	}
+
+
+	@Override
+	public int noread(String mailCode) {
+		return dao.noreadMail(sst,mailCode);
+	}
+
+
+	@Override
+	public List<MailVo> selectSearchList(MailVo mailVo) {
+		return dao.selectSearchList(sst,mailVo);
 	}
 	
 }
