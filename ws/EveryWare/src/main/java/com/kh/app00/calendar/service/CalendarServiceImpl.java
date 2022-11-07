@@ -20,17 +20,20 @@ public class CalendarServiceImpl implements CalendarService {
 		this.dao = dao;
 		this.sst = sst;
 	}
-
+	
+	//개인일정 조회
 	@Override
 	public List<CalendarVo> getPerCalendar(String empCode) {
 		return dao.getPerCalendar(sst, empCode);
 	}
-
+	
+	//부서일정 조회
 	@Override
-	public List<CalendarVo> getDepartCalendar(String empCode) {
-		return dao.getDepartCalendar(sst, empCode);
+	public List<CalendarVo> getDepartCalendar(String deptCode) {
+		return dao.getDepartCalendar(sst, deptCode);
 	}
-
+	
+	//일정 작성
 	@Override
 	public int insertOne(CalendarVo vo) {
 
@@ -40,31 +43,10 @@ public class CalendarServiceImpl implements CalendarService {
 			result = -2; // 알람 보내기
 		}
 
-		// 일정에 끝나는 시간을 안적으면 종일로 바꾸기
-		if ((vo.getEndTime().length() == 0) || (vo.getStartTime().length() == 0)) {
-			vo.setCalAllday("TRUE");
-			vo.setStartTime(null);
-			vo.setEndTime(null);
-
-		}
-
-		if (vo.getStartTime() != null) {
-			vo.setCalStart(vo.getCalStart() + " " + vo.getStartTime().substring(0, 5));
-		} else {
-			vo.setCalAllday("TRUE");
-		}
-
-		if (vo.getEndTime() != null) {
-			vo.setCalEnd(vo.getCalEnd() + " " + vo.getEndTime().substring(0, 5));
-			vo.setCalAllday("FALSE");
-		} else {
-			vo.setCalAllday("TRUE");
-		}
-
 		if (vo.getCalAllday() == null) {
 			vo.setCalAllday("FALSE");
 		} else if (vo.getCalAllday().equals("on")) {
-			vo.setCalAllday("TRUE");
+			vo.setCalAllday("TRUE ");
 		}
 
 		System.out.println(vo);
@@ -72,7 +54,8 @@ public class CalendarServiceImpl implements CalendarService {
 		result = dao.insertOne(sst, vo);
 		return result;
 	}
-
+	
+	//일정 삭제
 	@Override
 	public int deleteOne(String no) {
 		// TODO Auto-generated method stub

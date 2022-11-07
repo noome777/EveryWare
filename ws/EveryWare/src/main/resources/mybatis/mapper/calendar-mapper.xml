@@ -11,11 +11,25 @@
 	</select>
 
 	<select id="selectDepartAll" resultType="CalendarVo">
-		SELECT *
-		FROM CALENDAR
-		WHERE CAL_TYPE = 'WORK'
-		AND CAL_DEL = 'N'
-		AND EMP_CODE = #{empCode}
+		SELECT 
+		    C.CAL_CODE
+		    ,C.EMP_CODE
+		    ,C.CAL_TITLE
+		    ,C.CAL_TYPE
+		    ,C.CAL_START
+		    ,C.CAL_END
+		    ,C.CAL_ALLDAY
+		    ,C.CAL_HOLIDAY
+		    ,C.CAL_ENROLLDATE
+		    ,C.CAL_DEL
+		    ,E.EMP_CODE
+		    ,E.DEPT_CODE
+		FROM CALENDAR C
+		JOIN EMP E
+		ON C.EMP_CODE = E.EMP_CODE
+		WHERE C.CAL_TYPE = 'WORK'
+		AND C.CAL_DEL = 'N'
+		AND E.DEPT_CODE= #{deptCode}
 	</select>
 
 	<insert id="insertOne">
