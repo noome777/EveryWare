@@ -2,6 +2,8 @@ package com.kh.app00.calendar.vo;
 
 import lombok.Data;
 
+//lombok
+
 @Data
 public class CalendarVo {
 

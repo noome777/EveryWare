@@ -34,6 +34,14 @@ public class CalendarController {
 		this.service = service;
 	}
 	
+	
+	/**
+	 * 개인일정 조회
+	 * @param mv
+	 * @param request
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("personal/select")
 	public ModelAndView getPerCalendarList(ModelAndView mv, HttpServletRequest request, HttpSession session) {
 		// 로그인 여부 체크
@@ -56,21 +64,26 @@ public class CalendarController {
 		return mv;
 	}
 	
-	
+	/**
+	 * 부서일정 조회
+	 * @param mv
+	 * @param request
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("department/select")
 	public ModelAndView getDepartCalendarList(ModelAndView mv, HttpServletRequest request, HttpSession session) {
 		// 로그인 여부 체크
-        if (session.getAttribute("loginMember") == null) {
-            session.setAttribute("alertMsg", "로그인 후 접근 가능합니다 !");
-        }
         
         // 로그인 유저의 정보 vo에 저장
         EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
         
+        System.out.println(loginMember);
+        
 		String viewpage = "calendar/department-calendar";
 		List<CalendarVo> calendar = null;
 		try {
-			calendar = service.getDepartCalendar(loginMember.getEmpCode());
+			calendar = service.getDepartCalendar(loginMember.getDeptCode());
 			request.setAttribute("calendarList", calendar);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -80,6 +93,12 @@ public class CalendarController {
 	}
 	   
 	
+	/**
+	 * 개인일정 작성
+	 * @param vo
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("personal/insert")
 	public String insert(CalendarVo vo, HttpSession session) {
 		// 로그인 유저의 정보 vo에 저장
@@ -100,6 +119,13 @@ public class CalendarController {
 
 	}
 	
+	/**
+	 * 부서일정 작성
+	 * @param vo
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@PostMapping("department/insert")
 	public String insert(CalendarVo vo, HttpSession session, Model model) {
 		// 로그인 유저의 정보 vo에 저장
@@ -120,6 +146,11 @@ public class CalendarController {
 
 	}
 
+	/**
+	 * 일정 삭제기능
+	 * @param param
+	 * @return
+	 */
 	@ResponseBody
 	@PostMapping("delete")
 	 public List<Map<String, Object>> deleteOne(@RequestBody List<Map<String, Object>> param) {
@@ -132,14 +163,6 @@ public class CalendarController {
         
         int result = service.deleteOne(no);
         
-        
-        
 		return param;
-	}
-	
-	
-	@GetMapping("sample")
-	public String sample() {
-		return "calendar/sample";
 	}
 }

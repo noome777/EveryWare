@@ -97,7 +97,7 @@
 															</div>
 														</div>
 														<input type="text" class="form-control drgpicker"
-															name="calStart" id="drgpicker-start" value="10/15/2022">
+															name="calStart" id="drgpicker-start" value="11/14/2022">
 													</div>
 												</div>
 												<div class="form-group col-md-6">
@@ -123,7 +123,7 @@
 															</div>
 														</div>
 														<input type="text" class="form-control drgpicker"
-															name="calEnd" id="drgpicker-end" value="10/17/2022">
+															name="calEnd" id="drgpicker-end" value="11/15/2022">
 													</div>
 												</div>
 												<div class="form-group col-md-6">
@@ -143,7 +143,7 @@
 									<div class="modal-footer d-flex justify-content-between">
 										<div class="custom-control custom-switch">
 											<input type="checkbox" class="custom-control-input"
-												name="calAllday" id="RepeatSwitch" checked> <label
+												name="calAllday" id="RepeatSwitch"> <label
 												class="custom-control-label" for="RepeatSwitch">종일</label>
 										</div>
 										<input type="submit" class="btn mb-2 btn-primary" value="저장">

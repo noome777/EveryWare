@@ -4,6 +4,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
+//lombok
+
 @Data
 public class FilemanagerVo {
 

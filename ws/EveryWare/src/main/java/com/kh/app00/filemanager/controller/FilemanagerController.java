@@ -43,7 +43,12 @@ public class FilemanagerController {
 		this.service = service;
 	}
 
-	//메인 파일함 조회(화면)
+	/**
+	 * 메인 파일함 조회(화면)
+	 * @param model
+	 * @param session
+	 * @return filemanager/fileManager.jsp
+	 */
 	@GetMapping("select")
 	public String select(Model model, HttpSession session) {
 
@@ -65,7 +70,13 @@ public class FilemanagerController {
 		return "filemanager/fileManager";
 	}
 	
-	//최근 업로드 파일함(화면)
+	
+	/**
+	 * 최근 업로드 파일함(화면)
+	 * @param model
+	 * @param session
+	 * @return filemanager/recent-fileManager.jsp
+	 */
 	@GetMapping("recent")
 	public String recent(Model model, HttpSession session) {
 		// 로그인 여부 체크
@@ -84,7 +95,12 @@ public class FilemanagerController {
 		return "filemanager/recent-fileManager";
 	}
 	
-	//즐겨찾기 파일함(화면)
+	/**
+	 * 즐겨찾기 파일함(화면)
+	 * @param model
+	 * @param session
+	 * @return filemanager/star-fileManager.jsp
+	 */
 	@GetMapping("star")
 	public String star(Model model, HttpSession session) {
 		// 로그인 여부 체크
@@ -102,7 +118,12 @@ public class FilemanagerController {
 		return "filemanager/star-fileManager";
 	}
 	
-	//공유 파일함(화면)
+	/**
+	 * 공유 파일함(화면)
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("cloud")
 	public String cloud(Model model, HttpSession session) {
 		// 로그인 여부 체크
@@ -121,7 +142,12 @@ public class FilemanagerController {
 		return "filemanager/cloud-fileManager";
 	}
 	
-	//휴지통(화면)
+	/**
+	 * 휴지통(화면)
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("trash")
 	public String trash(Model model, HttpSession session) {
 		// 로그인 여부 체크
@@ -139,7 +165,11 @@ public class FilemanagerController {
 		return "filemanager/trash-fileManager";
 	}
 		
-	//파일 추가(화면)
+	/**
+	 * 파일 추가(화면)
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("insert")
 	public String insert(HttpSession session) {
 		// 로그인 여부 체크
@@ -152,7 +182,13 @@ public class FilemanagerController {
 	}
 	
 	
-	//파일추가(기능)
+	/**
+	 * 파일추가(기능)
+	 * @param vo
+	 * @param session
+	 * @param req
+	 * @return
+	 */
 	@PostMapping("addfile")
 	public String addFile(FilemanagerVo vo,HttpSession session, HttpServletRequest req) {
 		
@@ -198,7 +234,12 @@ public class FilemanagerController {
 		return "redirect:/filemanager/select";
 	}
 	
-	//즐겨찾기 기능 추가
+	/**
+	 * 즐겨찾기 기능 추가
+	 * @param fileCode
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("addStar/{fileCode}")
 	public String addStar(@PathVariable String fileCode,HttpSession session) {
 		
@@ -213,7 +254,12 @@ public class FilemanagerController {
 		return "redirect:/filemanager/select"; 
 	}
 	
-	//삭제 기능 추가
+	/**
+	 * 삭제 기능 추가
+	 * @param fileCode
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("addDel/{fileCode}")
 	public String addDel(@PathVariable String fileCode,HttpSession session) {
 			
@@ -229,7 +275,12 @@ public class FilemanagerController {
 		return "redirect:/filemanager/select"; 
 	}
 	
-	//휴지통 복원기능 추가
+	/**
+	 * 휴지통 복원기능 추가
+	 * @param fileCode
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("restore/{fileCode}")
 	public String restore(@PathVariable String fileCode,HttpSession session) {
 			
@@ -245,6 +296,13 @@ public class FilemanagerController {
 		return "redirect:/filemanager/select"; 
 	}
 	
+	/**
+	 * 파일 다운로드 구현
+	 * @param fileCode
+	 * @param req
+	 * @return
+	 * @throws IOException
+	 */
 	//스프링에서 권장하는 다운로드 방식()
 	//ResponseEntity : 응답정보들이 모여있는 객체
 	@GetMapping("download/{fileCode}")
@@ -271,6 +329,12 @@ public class FilemanagerController {
 			.body(res);
 	}
 	
+	/**
+	 * 파일정보 조회
+	 * @param num
+	 * @param model
+	 * @return
+	 */
 	@PostMapping("detail")
 	@ResponseBody
 	public FilemanagerVo detail(@RequestParam String num, Model model) {
@@ -281,7 +345,13 @@ public class FilemanagerController {
 		return voinfo; 
 	}
 	
-	//복사기능 추가
+	/**
+	 * 복사기능
+	 * @param fileCode
+	 * @param session
+	 * @return
+	 * @throws IOException
+	 */
 	@GetMapping("addCopy/{fileCode}")
 	public String addCopy(@PathVariable String fileCode,HttpSession session) throws IOException {
 			
@@ -327,7 +397,13 @@ public class FilemanagerController {
 		return "redirect:/filemanager/select"; 
 	}
 	
-	//수정 화면 추가
+	/**
+	 * 수정화면
+	 * @param fileCode
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("edit/{fileCode}")
 	public String edit(@PathVariable String fileCode, HttpSession session,Model model){
 		// 로그인 여부 체크
@@ -351,7 +427,14 @@ public class FilemanagerController {
 		return "filemanager/edit-fileManager"; 
 	}
 	
-	//수정기능 추가
+	/**
+	 * 수정기능
+	 * @param fileCode
+	 * @param vo
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("edit/{fileCode}")
 	public String edit(@PathVariable String fileCode, FilemanagerVo vo, Model model, HttpSession session){
 
@@ -368,7 +451,12 @@ public class FilemanagerController {
 	}
 	
 	
-	//공유하기 기능추가
+	/**
+	 * 공유하기 기능
+	 * @param fileCode
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("addCloud/{fileCode}")
 	public String addCloud(@PathVariable String fileCode,HttpSession session) {
 			
