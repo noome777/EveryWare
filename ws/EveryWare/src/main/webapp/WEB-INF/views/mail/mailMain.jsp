@@ -58,6 +58,8 @@
 .noRead {
 	border: none;
 	color: #0000CC;
+	text-align:center;
+	
 }
 
 .noRead:hover {
@@ -67,7 +69,10 @@
 .read {
 	border: none;
 	color: black;
+	text-align:center;
 }
+
+
 
 .read:hover {
 	text-decoration: underline;
@@ -82,29 +87,26 @@
 		<div class="main-content">
 
 			<h2 id="mailall">전체 메일함</h2>
-			<br>
+			<br>	
+			<form name="search-form">
 			<div class="form-group row " style="margin-left: 3px;">
 				<div class="w100" style="padding-right: 10px">
-					<select class="form-control form-control-sm" name="searchType"
-						id="searchType">
+					<select class="form-control form-control-sm" name="type"
+						id="condition">
 						<option value="title">제목</option>
-						<option value="reg_id">발신자</option>
+						<option value="send_id">발신자</option>
 					</select>
 				</div>
-
 				<div class="w300" style="padding-right: 10px">
 					<input type="text" class="form-control form-control-sm"
 						name="keyword" id="keyword">
-
 				</div>
-
 				<div>
-					<button class="btn btn-sm btn-primary" name="btnSearch"
+					<button class="btn btn-sm btn-primary" name="btnSearch" onclick="getSearchList();"
 						id="btnSearch">검색</button>
 				</div>
-
-			</div>
-
+			</div>	
+		</form>
 			<br>
 			<div class="buttonSet">
 				<input type="button" value="읽음" id="readBtn" onclick="readValue();"
@@ -148,7 +150,7 @@
 										<td><input type="checkbox" name="RowCheck"
 											class="RowCheck" value="${m.mailCode}"
 											onclick="event.stopPropagation()"></td>
-										<td id="msender" onclick="event.stopPropagation()">${m.mailSender}</td>
+										<td id="msender" onclick="event.stopPropagation()">${fn:split(mailSend,'@')[0]}</td>
 										<c:if test="${m.mailViews == 0}">
 											<td id="mtitle"><input class="noRead"
 												value="${m.mailTitle}" /></td>
@@ -158,15 +160,14 @@
 												value="${m.mailTitle}" /></td>
 										</c:if>
 										<td id="mSenddate" onclick="event.stopPropagation()">${m.mailSenddate}</td>
-
+										
 									</tr>
 								</c:if>
 							</c:forEach>
 						</tbody>
 					</table>
 
-
-
+						
 					<nav aria-label="Page navigation example">
 						<ul class="pagination justify-content-center mb-0">
 							<c:if test="${pv.startPage ne 1}">
@@ -190,6 +191,8 @@
 			</div>
 		</div>
 	</div>
+	
+		
 	<script>
 		
 		//전체선택
@@ -200,14 +203,33 @@
 				$("input[type=checkbox]").prop("checked", false);
 			}
 		});
-
+	
+		function getSearchList(){
+			$.ajax({
+				type: 'GET',
+				url : "${root}/mail/mailSearch/${pno}",
+				data : $("form[name=search-form]").serialize(),
+				success : function(result){
+					//테이블 초기화
+					$('#maillist > tbody').empty();
+					if(result.length>=1){
+						result.forEach(function(item){
+							str='<tr>'
+							str += "<td>"+item.RowCheck+"</td>";
+							str+="<td>"+item.msender+"</td>";
+							str+="<td><a href = '${root}/mail/mailDetail/${m.mailCode}" + item.RowCheck + "'>" + item.mtitle + "</a></td>";
+							str+="<td>"+item.mSenddate+"</td>";
+							str+="</tr>"
+							$('#maillist').append(str);
+		        		})				 
+					}
+				}
+			})
+		}
+		
 		function readValue() {
 
-			// 체크된 애들 번호를 전달하기
-
-			//1. 체크박스 전부 가져오기
-			//2. 1에서 가져온 요소의 숫자 가져오기
-			//3. 2 에서 가져온 숫자들을 배열 형태로 만들기
+			
 			let readArr = [];
 
 			$('input:checkbox[name=RowCheck]').each(function(index) {
@@ -247,11 +269,7 @@
 		
 		function noreadValue() {
 
-			// 체크된 애들 번호를 전달하기
-
-			//1. 체크박스 전부 가져오기
-			//2. 1에서 가져온 요소의 숫자 가져오기
-			//3. 2 에서 가져온 숫자들을 배열 형태로 만들기
+			
 			let noreadArr = [];
 
 			$('input:checkbox[name=RowCheck]').each(function(index) {
@@ -292,11 +310,7 @@
 
 		function deleteValue() {
 
-			// 체크된 애들 번호를 전달하기
-
-			//1. 체크박스 전부 가져오기
-			//2. 1에서 가져온 요소의 숫자 가져오기
-			//3. 2 에서 가져온 숫자들을 배열 형태로 만들기
+			
 			let checkArr = [];
 
 			$('input:checkbox[name=RowCheck]').each(function(index) {

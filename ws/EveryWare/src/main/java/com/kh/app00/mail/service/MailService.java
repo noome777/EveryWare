@@ -57,6 +57,9 @@ public interface MailService {
 	
 	//안읽음 처리
 	int noread(String mailCode);
+	
+	//검색 처리
+	List<MailVo> selectSearchList(MailVo mailVo);
 
 	
 	

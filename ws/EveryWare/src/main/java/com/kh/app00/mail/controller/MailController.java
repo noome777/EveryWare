@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,7 +23,6 @@ import com.kh.app00.common.Pagination;
 import com.kh.app00.emp.vo.EmpVo;
 import com.kh.app00.mail.service.MailService;
 import com.kh.app00.mail.vo.MailVo;
-import com.kh.app00.notice.vo.NoticeVo;
 
 @Controller
 @RequestMapping("mail")
@@ -36,7 +36,8 @@ public class MailController {
 	}
 
 	@GetMapping("mailMain/{pno}")
-	public String mailMain(Model model,@PathVariable int pno) {
+	public String mailMain(Model model,@PathVariable int pno ) throws Exception {
+		
 		
 		int totalCount = ms.selectTotalCnt();
 		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
@@ -48,6 +49,28 @@ public class MailController {
 		
 		return "mail/mailMain";
 	}
+	
+	@GetMapping("mailSearch/{pno}")
+	public String mailSearch(Model model,@PathVariable int pno
+			,@RequestParam("type")String type
+			,@RequestParam("keyward") String keyword
+	) throws Exception {
+		
+		MailVo mailVo = new MailVo();
+		mailVo.setType(type);
+		mailVo.setKeyword(keyword);
+		
+		int totalCount = ms.selectTotalCnt();
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
+		
+		List<MailVo> mList = ms.selectSearchList(mailVo);
+		
+		model.addAttribute("mList", mList);
+		model.addAttribute("pv",pv);
+		
+		return "mail/mailMain";
+	}
+	
 	
 	@GetMapping("write")
 	public String mailWrite() {

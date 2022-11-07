@@ -106,5 +106,10 @@ public class MailDaoImpl implements MailDao {
 		return sst.update("mailMapper.noReadmail", mailCode);
 	}
 
+	@Override
+	public List<MailVo> selectSearchList(SqlSessionTemplate sst, MailVo mailVo) {
+		return sst.selectList("mailMapper.selectSearchList", mailVo);
+	}
+
 	
 }

@@ -32,7 +32,8 @@
 }
 
 #sender {
-	text-align: center;
+	
+	
 }
 
 #title {
@@ -44,7 +45,7 @@
 }
 
 #msender {
-	text-align: center;
+	margin-right:10px;
 }
 
 #mtitle {
@@ -104,7 +105,7 @@
 							<tr>
 								<th><input type="checkbox" name="allCheckbox"
 									id="allCheckbox"></th>
-								<th id="sender">받는사람</th>
+								<th id="sender" >받는사람</th>
 								<th id="title">제목</th>
 								<th id="senddate">작성일</th>
 							</tr>
@@ -118,9 +119,9 @@
 										<tr onclick="location.href='${root}/mail/mailDetail/${s.mailCode}'">
 											<td><input type="checkbox" name="RowCheck"
 												class="RowCheck" value="${s.mailCode}" onclick="event.stopPropagation()"></td>
-											<td id="msender">${s.mailReceiver}</td>
+											<td id="msender"onclick="event.stopPropagation()">${fn:split(mailReci,'@')[0]}</td>
 											<td id="mtitle">${s.mailTitle}</td>
-											<td id="mSenddate">${s.mailSenddate}</td>
+											<td id="mSenddate" onclick="event.stopPropagation()">${s.mailSenddate}</td>
 											
 										</tr>
 									</c:if>

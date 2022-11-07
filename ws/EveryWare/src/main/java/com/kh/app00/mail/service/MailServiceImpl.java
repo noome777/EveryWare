@@ -126,5 +126,11 @@ public class MailServiceImpl implements MailService{
 	public int noread(String mailCode) {
 		return dao.noreadMail(sst,mailCode);
 	}
+
+
+	@Override
+	public List<MailVo> selectSearchList(MailVo mailVo) {
+		return dao.selectSearchList(sst,mailVo);
+	}
 	
 }

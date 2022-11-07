@@ -18,8 +18,42 @@
 		ON MAIL.EMP_CODE = EMP.EMP_CODE
 		WHERE MAIL_DELETE IS NULL
 		ORDER BY MAIL_CODE DESC
-	</select>		
+		
+	</select>	
 	
+	<select id="selectSearchList" resultType="MailVo">
+		SELECT
+		MAIL.MAIL_CODE
+		,MAIL.EMP_CODE
+		,MAIL.MAIL_SENDER 
+		,MAIL.MAIL_TITLE
+		,MAIL.MAIL_CONTENT
+		,MAIL.MAIL_SENDDATE
+		,MAIL.MAIL_RECEIVER
+		,MAIL.MAIL_VIEWS
+		,MAIL.MAIL_DELETE 
+		FROM MAIL
+		JOIN EMP
+		ON MAIL.EMP_CODE = EMP.EMP_CODE
+		WHERE MAIL_DELETE IS NULL
+		ORDER BY MAIL_CODE DESC
+		<choose>
+			<when test="type != null and type.equals('title')">
+			AND MAIL_TITLE LIKE CONCAT ('%', #{keyword}, '%')
+			</when>
+			<when test="type!=null and type.equals('send_id')">
+			AND MAIL_SENDER LIKE CONCAT = #{keyword}
+			</when>
+		</choose>
+		
+	</select>	
+		
+	<select id="selectCountAll" resultType="int">
+		SELECT COUNT (*)
+		FROM MAIL
+		WHERE MAIL_DELETE IS NULL
+	</select>	
+		
 	<insert id="insertMail">
 		INSERT INTO MAIL 
 		(
@@ -206,11 +240,7 @@
 		WHERE MAIL_CODE = #{mailCode}
 	</update>
 	
-	<select id="selectCountAll" resultType="int">
-		SELECT COUNT (*)
-		FROM MAIL
-		WHERE MAIL_DELETE IS NULL
-	</select>
+	
 	
 	<select id="selectDeleteAll" resultType="int">
 		SELECT COUNT (*)
