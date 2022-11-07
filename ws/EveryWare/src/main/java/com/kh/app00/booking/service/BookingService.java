@@ -9,4 +9,7 @@ public interface BookingService {
 	//예약 목록
 	List<BookingVo> selectList();
 
+	//예약 작성
+	int write(BookingVo vo);
+
 }

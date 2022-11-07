@@ -6,14 +6,41 @@
 	<select id="selectList" resultType="BookingVo">
 		SELECT 
             BK_NO
-            , BK_WRITER
-            , BK_TARGETNO
-            , BK_STARTDATE
-            , BK_STARTTIME
-            , BK_ENDDATE
-            , BK_ENDTIME
-		FROM BOOKING
+			, T.TARGET_NAME AS BK_TARGET_NO
+			, BK_WRITER
+			, BK_TYPE
+			, BK_START
+			, BK_END
+			, BK_STATUS
+		FROM 
+        BOOKING B
+        JOIN
+        TARGET T
+        ON BK_TARGET_NO = T.TARGET_NO WHERE BK_STATUS = 'N'
 	</select>
+	
+	<insert id="insertOne">
+		INSERT INTO BOOKING
+		(	
+			BK_NO
+              , BK_WRITER
+              , BK_TYPE
+              , BK_TARGET_NO
+              , BK_START
+              , BK_END
+              , BK_STATUS
+		)
+		VALUES
+		(
+			SEQ_BOOKING_NO.NEXTVAL
+			, #{bkWriter}
+			, #{bkType}
+			, #{bkTargetNo}
+			, TO_DATE(#{bkStart}, 'YYYY/MM/DD HH:MI')
+			, TO_DATE(#{bkEnd}, 'YYYY/MM/DD HH:MI')
+			, 'N'
+		)
+	</insert>
 	
 	
 	

@@ -92,35 +92,6 @@
                     
                     <tbody>
                     
-                    <!-- 김춘배 -->
-                      <tr>
-                        <td>
-			              <i class="fe fe-24 fe-check-circle small text-muted"></i>
-                        </td>
-                        <td>
-                          <div class="avatar avatar-sm">
-                            <img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
-                          </div>
-                        </td>
-                        <td data-toggle="modal" data-target="#verticalModal">
-                          <p class="mb-0 text-muted"><strong>EX) 김예시</strong></p>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted">Accumsan Consulting</p>
-                          <small class="mb-0 text-muted">meow10@gmail.com</small>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted">(02)421-0798</p>
-                        </td>
-                        <td>
-                        <div class="btn-group" role="group" aria-label="Basic example"> 
-                        <button type="button" class="btn mb-2 btn-primary btn-sm">Edit</button>
-                        <button type="button" class="btn mb-2 btn-secondary btn-sm">Delete</button>
-                        </div>
-                        </td>
-                      </tr>
-                      <!-- /김춘배 -->
-                      
                     <c:forEach items="${cList}" var="list">
                     <c:if test="${ list.conWriter eq loginMember.empName }">
                       <tr>

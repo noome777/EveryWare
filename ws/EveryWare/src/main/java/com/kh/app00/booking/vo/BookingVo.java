@@ -6,13 +6,13 @@ import lombok.Data;
 public class BookingVo {
 
 	private String bkNo;
-	private String bkWriter;
 	private String bkTargetNo;
-	private String bkTargetName;
-	private String bkStartDate;
-	private String bkStartTime;
-	private String bkEndDate;
-	private String bkEndTime;
-	
+	private String bkWriter;
+	private String bkType;
+	private String bkStart;
+	private String StartTime;
+	private String bkEnd;
+	private String endTime;
+	private String bkStatus;
 	
 }

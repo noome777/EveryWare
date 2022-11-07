@@ -11,4 +11,7 @@ public interface BookingDao {
 	//예약 목록
 	List<BookingVo> selectList(SqlSessionTemplate sst);
 
+	//예약 작성
+	int write(SqlSessionTemplate sst, BookingVo vo);
+
 }

@@ -15,6 +15,12 @@ public class BookingDaoImpl implements BookingDao{
 	public List<BookingVo> selectList(SqlSessionTemplate sst) {
 		return sst.selectList("bookingMapper.selectList");
 	}
+
+	//예약 작성
+	@Override
+	public int write(SqlSessionTemplate sst, BookingVo vo) {
+		return sst.insert("bookingMapper.insertOne", vo);
+	}
 	
 	
 	
