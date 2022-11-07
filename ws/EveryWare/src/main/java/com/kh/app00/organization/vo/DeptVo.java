@@ -12,5 +12,8 @@ public class DeptVo {
 	private String deptHeadCode;
 	private String deptStatus;
 	private String deptDepth;
+	
+	private String path;
+	private String empCount;
 
 }

@@ -92,6 +92,36 @@ public class OrganizationController {
 		}
 	}
 	
+	@GetMapping("chart")
+	public String openChart(HttpSession session,Model model) {
+		
+		List<DeptVo> deptList = organizationService.selectDeptList();
+		
+		/*
+		 * HashMap 통해서 key : level, value : DeptVo를 담은 list 전달 (level별로 묶음)
+		 */
+		
+		HashMap<String, ArrayList<DeptVo>> deptMap = new HashMap<String, ArrayList<DeptVo>>();
+		
+		for(DeptVo vo : deptList) {
+			String depth = vo.getDeptDepth();
+			ArrayList<DeptVo> list = deptMap.getOrDefault(depth, new ArrayList<DeptVo>());
+			list.add(vo);
+			deptMap.put(depth, list);
+		}
+		
+		if(deptList!=null) {
+			model.addAttribute("deptMap",deptMap);
+			model.addAttribute("deptList",deptList);
+			return "organization/chart";
+		} else {
+			session.setAttribute("errorMsg", "부서정보 불러오기에 실패하였습니다.");
+			return "redirect:/";
+		}
+		
+		
+	}
+	
 	// 임직원 관리 리스트
 	@GetMapping("management/emp/{pno}")
 	public String manageEmp(Model model, @PathVariable int pno) {
@@ -675,39 +705,32 @@ public class OrganizationController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	//조직도
-	@GetMapping("management/chart")
-	public String manageChart(HttpSession session,Model model) {
+	//부서관리
+	@GetMapping("management/dept")
+	public String manageDept() {
 		
-		List<DeptVo> deptList = organizationService.selectDeptList();
-		/*
-		 * HashMap 통해서 key : level, value : DeptVo를 담은 list 전달 (level별로 묶음)
-		 */
+		return "organization/deptManager";
 		
-		if(deptList==null) {
-			session.setAttribute("errorMsg", "조직도를 불러오는데 실패하였습니다. 다시 한 번 시도해보시길 바랍니다.");
-			return "redirect:/organization/management/info";
+	}
+	
+	@PostMapping("management/getDept") 
+	@ResponseBody
+	public String getDept() {
+		List<DeptVo> deptList = organizationService.selectDeptListForChart();
+		
+		Gson gson =  new Gson();
+		
+		if(deptList!=null) {
+			String jsonStr = gson.toJson(deptList);
+			System.out.println("성공!" + jsonStr);
+			return jsonStr;
+			
+		} else {
+			String errorMsg = "부서정보 불러오기에 실패하였습니다.";
+			System.out.println(errorMsg);
+			String jsonStr = gson.toJson(errorMsg);
+			return jsonStr;
 		}
-		
-		HashMap<String, ArrayList<DeptVo>> deptMap = new HashMap<String, ArrayList<DeptVo>>();
-		
-		for(DeptVo vo : deptList) {
-			String depth = vo.getDeptDepth();
-			ArrayList<DeptVo> list = deptMap.getOrDefault(depth, new ArrayList<DeptVo>());
-			list.add(vo);
-			deptMap.put(depth, list);
-		}
-		
-		model.addAttribute("deptMap",deptMap);
-		return "organization/chartManager";
-		
-		
 	}
 	
 	

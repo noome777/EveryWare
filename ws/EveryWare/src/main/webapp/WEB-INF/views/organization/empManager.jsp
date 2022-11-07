@@ -1233,7 +1233,7 @@ $(document).ready(function() {
 
         var roadAddr = data.roadAddress;
 
-        addrSpace.val(data.address);
+        addrSpace.val(roadAddr);
 
 
 

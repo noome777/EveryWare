@@ -267,7 +267,7 @@
 											<strong>자택주소1</strong>
 										</div>
 										<div class="rowValue">
-											<input type="text" class="no-style-input" name="empAddress1" value="${loginMember.empAddress1}" placeholder="${loginMember.empAddress1}" >
+											<input id="find-addr" type="text" class="no-style-input" name="empAddress1" value="${loginMember.empAddress1}" placeholder="${loginMember.empAddress1}" data-id="${empList.empCode}" >
 										</div>
 										<div class="rowName">
 											<strong>자택주소2</strong>
@@ -449,8 +449,28 @@
 
 
 	  <!--자택주소-->
-	  <script>
+	  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
-	  </script>
+		<script>
+
+		$(document).ready(function() {
+
+			$('#find-addr').click(function() {
+
+				const findAddr = $(this);
+
+				new daum.Postcode({
+
+				oncomplete : function(data) {
+
+					var roadAddr = data.roadAddress;
+
+					findAddr.val(roadAddr);
+
+				}
+				}).open();
+			})
+		});
+		</script>
 </body>
 </html>
