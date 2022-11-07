@@ -90,8 +90,8 @@
 			<br>	
 			<div class="form-group row " style="margin-left: 3px;">
 				<div class="w100" style="padding-right: 10px">
-					<select class="form-control form-control-sm" name="searchType" id="searchType"
-						>
+					<select class="form-control form-control-sm" name="type"
+						id="condition">
 						<option value="title">제목</option>
 						<option value="send_id">발신자</option>
 					</select>
@@ -204,7 +204,7 @@
 	
 		$(document).on('click', '#btnSearch', function(e){
 			e.preventDefault();
-			var url = "${root}/mail/mailSearch/${pno}";
+			var url = "${pageContext.request.contextPath}/mail/mailSearch/${pno}";
 			url = url + "?searchType=" + $('#searchType').val();
 			url = url + "&keyword=" + $('#keyword').val();
 			location.href = url;

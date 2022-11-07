@@ -36,22 +36,28 @@
 		JOIN EMP
 		ON MAIL.EMP_CODE = EMP.EMP_CODE
 		WHERE MAIL_DELETE IS NULL
+		<if test="searchType=='title' and keyword != null and keyword != '' ">
+				AND MAIL.MAIL_TITLE like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType=='send_id' and keyword != null and keyword != '' ">
+				AND MAIL.MAIL_SENDER like CONCAT('%', #{keyword}, '%')
+			</if>	
 		ORDER BY MAIL_CODE DESC
-		<choose>
-			<when test="type != null and type.equals('title')">
-			AND MAIL_TITLE LIKE CONCAT ('%', #{keyword}, '%')
-			</when>
-			<when test="type!=null and type.equals('send_id')">
-			AND MAIL_SENDER LIKE CONCAT = #{keyword}
-			</when>
-		</choose>
 		
+			
 	</select>	
 		
 	<select id="selectCountAll" resultType="int">
 		SELECT COUNT (*)
 		FROM MAIL
 		WHERE MAIL_DELETE IS NULL
+			<if test="searchType=='title' and keyword != null and keyword != '' ">
+				AND MAIL.MAIL_TITLE like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType=='send_id' and keyword != null and keyword != '' ">
+				AND MAIL.MAIL_SENDER like CONCAT('%', #{keyword}, '%')
+			</if>	
+			
 	</select>	
 		
 	<insert id="insertMail">

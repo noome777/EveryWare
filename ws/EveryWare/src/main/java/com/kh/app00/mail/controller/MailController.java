@@ -52,12 +52,12 @@ public class MailController {
 	
 	@GetMapping("mailSearch/{pno}")
 	public String mailSearch(Model model,@PathVariable int pno
-			,@RequestParam("type")String type
-			,@RequestParam("keyward") String keyword
+			,@RequestParam(required = false, defaultValue = "title")String searchType
+			,@RequestParam(required=false) String keyword
 	) throws Exception {
 		
 		MailVo mailVo = new MailVo();
-		mailVo.setType(type);
+		mailVo.setSearchType(searchType);
 		mailVo.setKeyword(keyword);
 		
 		int totalCount = ms.selectTotalCnt();
@@ -65,10 +65,13 @@ public class MailController {
 		
 		List<MailVo> mList = ms.selectSearchList(mailVo);
 		
+		System.out.println(mailVo);
+		
 		model.addAttribute("mList", mList);
 		model.addAttribute("pv",pv);
 		
-		return "mail/mailMain";
+		System.out.println(mList);
+		return "mail/mailSearch";
 	}
 	
 	
