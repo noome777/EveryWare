@@ -39,7 +39,8 @@
 	id="lightTheme">
 <link rel="stylesheet" href="${root}/resources/css/app-dark.css"
 	id="darkTheme" disabled>
-</head>
+</head>  
+
 <body class="vertical  light  ">
 	<div class="wrapper">
 		<main role="main" class="main-content">
