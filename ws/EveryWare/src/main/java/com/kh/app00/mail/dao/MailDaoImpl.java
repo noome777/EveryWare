@@ -107,8 +107,17 @@ public class MailDaoImpl implements MailDao {
 	}
 
 	@Override
-	public List<MailVo> selectSearchList(SqlSessionTemplate sst, MailVo mailVo) {
-		return sst.selectList("mailMapper.selectSearchList", mailVo);
+	public List<MailVo> selectSearchList(SqlSessionTemplate sst, MailVo mailVo, PageVo pv2) {
+		
+		int offset = (pv2.getCurrentPage()-1) * pv2.getBoardLimit();
+        RowBounds rb = new RowBounds(offset , pv2.getBoardLimit());
+		
+		return sst.selectList("mailMapper.selectSearchList", mailVo, rb);
+	}
+
+	@Override
+	public int selectSearchTotalCnt(SqlSessionTemplate sst, MailVo mvo) {
+		return sst.selectOne("mailMapper.selectSearchTotalCnt",mvo);
 	}
 
 	

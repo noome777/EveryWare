@@ -21,28 +21,35 @@
 		
 	</select>	
 	
+	<!-- 동적쿼리 없이 그냥 쿼리문 여러개 만들기 -->
+	<!-- 조건별 쿼리문 전부 만들기 -->
+	<!-- 실행 -->
+	
 	<select id="selectSearchList" resultType="MailVo">
-		SELECT
-		MAIL.MAIL_CODE
-		,MAIL.EMP_CODE
-		,MAIL.MAIL_SENDER 
-		,MAIL.MAIL_TITLE
-		,MAIL.MAIL_CONTENT
-		,MAIL.MAIL_SENDDATE
-		,MAIL.MAIL_RECEIVER
-		,MAIL.MAIL_VIEWS
-		,MAIL.MAIL_DELETE 
-		FROM MAIL
+		 SELECT
+		* FROM MAIL
 		JOIN EMP
 		ON MAIL.EMP_CODE = EMP.EMP_CODE
 		WHERE MAIL_DELETE IS NULL
 		<if test="searchType=='title' and keyword != null and keyword != '' ">
-				AND MAIL.MAIL_TITLE like CONCAT('%', #{keyword}, '%')
-			</if>
-			<if test="searchType=='send_id' and keyword != null and keyword != '' ">
-				AND MAIL.MAIL_SENDER like CONCAT('%', #{keyword}, '%')
-			</if>	
+			AND MAIL_TITLE LIKE CONCAT('%', #{keyword}, '%')
+		</if>
+       <if test="searchType=='send_id' and keyword != null and keyword != '' ">
+			AND MAIL_SENDER LIKE CONCAT('%', #{keyword}, '%')
+		</if>
+		<if test="searchType=='all' and keyword != null and keyword != '' ">
+			AND MAIL_SENDER LIKE CONCAT('%', #{keyword}, '%')
+			OR MAIL_TILTE LIKE CONCAT('%',#{keyword},'%')
+		</if>
 		ORDER BY MAIL_CODE DESC
+		
+			
+	</select>	
+	
+	<select id="selectSearchTotalCnt" resultType="int">
+		SELECT COUNT (*)
+		FROM MAIL
+		WHERE MAIL_DELETE IS NULL
 		
 			
 	</select>	
@@ -51,14 +58,11 @@
 		SELECT COUNT (*)
 		FROM MAIL
 		WHERE MAIL_DELETE IS NULL
-			<if test="searchType=='title' and keyword != null and keyword != '' ">
-				AND MAIL.MAIL_TITLE like CONCAT('%', #{keyword}, '%')
-			</if>
-			<if test="searchType=='send_id' and keyword != null and keyword != '' ">
-				AND MAIL.MAIL_SENDER like CONCAT('%', #{keyword}, '%')
-			</if>	
+			
 			
 	</select>	
+	
+		
 		
 	<insert id="insertMail">
 		INSERT INTO MAIL 

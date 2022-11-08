@@ -88,12 +88,14 @@
 
 			<h2 id="mailall">전체 메일함</h2>
 			<br>	
+			<form action="${root}/mail/mailSearch/${pno}" method="get" name="ms" onsubmit="return Checkform">
 			<div class="form-group row " style="margin-left: 3px;">
 				<div class="w100" style="padding-right: 10px">
 					<select class="form-control form-control-sm" name="searchType" id="searchType"
 						>
 						<option value="title">제목</option>
 						<option value="send_id">발신자</option>
+						<option value="all">전체</option>
 					</select>
 				</div>
 				<div class="w300" style="padding-right: 10px">
@@ -101,10 +103,11 @@
 						name="keyword" id="keyword" >
 				</div>
 				<div>
-					<button class="btn btn-sm btn-primary" name="btnSearch" 
-						id="btnSearch">검색</button>
+					<input  type="submit" class="btn btn-sm btn-primary" name="search" 
+						id="search" value="검색">
 				</div>
 			</div>	
+			</form>
 			<br>
 			<div class="buttonSet">
 				<input type="button" value="읽음" id="readBtn" onclick="readValue();"
@@ -202,15 +205,14 @@
 			}
 		});
 	
-		$(document).on('click', '#btnSearch', function(e){
-			e.preventDefault();
-			var url = "${root}/mail/mailSearch/${pno}";
-			url = url + "?searchType=" + $('#searchType').val();
-			url = url + "&keyword=" + $('#keyword').val();
-			location.href = url;
-			console.log(url);
-
-		});	
+		function Checkform() {
+		    if( ms.keyword.value == "" ) {
+		      ms.keyword.focus();
+		      alert("내용을 입력해주세요.");
+		      
+		      return false;
+		    }
+		}
 		
 		function readValue() {
 
