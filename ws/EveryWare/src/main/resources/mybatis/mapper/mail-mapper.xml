@@ -32,14 +32,14 @@
 		ON MAIL.EMP_CODE = EMP.EMP_CODE
 		WHERE MAIL_DELETE IS NULL
 		<if test="searchType=='title' and keyword != null and keyword != '' ">
-			AND MAIL_TITLE LIKE CONCAT('%', #{keyword}, '%')
+			AND MAIL_TITLE LIKE '%' || #{keyword} || '%'
 		</if>
        <if test="searchType=='send_id' and keyword != null and keyword != '' ">
-			AND MAIL_SENDER LIKE CONCAT('%', #{keyword}, '%')
+			AND MAIL_SENDER LIKE '%' || #{keyword} || '%'
 		</if>
 		<if test="searchType=='all' and keyword != null and keyword != '' ">
-			AND MAIL_SENDER LIKE CONCAT('%', #{keyword}, '%')
-			OR MAIL_TILTE LIKE CONCAT('%',#{keyword},'%')
+			AND MAIL_SENDER LIKE '%' || #{keyword} || '%'
+			OR MAIL_TITLE LIKE '%' || #{keyword} ||'%'
 		</if>
 		ORDER BY MAIL_CODE DESC
 		

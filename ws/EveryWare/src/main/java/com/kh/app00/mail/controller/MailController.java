@@ -87,6 +87,9 @@ public class MailController {
 		return "mail/mailMain";
 	}
 	
+	
+	
+	
 	@GetMapping("write")
 	public String mailWrite() {
 		return "mail/mailWrite";
@@ -293,7 +296,7 @@ public class MailController {
 		int totalCount = ms.selectTotalCnt();
 		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
 		
-		List<MailVo> receiveList = ms.selectRelist();
+		List<MailVo> receiveList = ms.selectRelist(pv);
 		
 		model.addAttribute("receiveList", receiveList);
 		model.addAttribute("pv",pv);
@@ -301,6 +304,8 @@ public class MailController {
 		
 		return "mail/mailReceive";
 	}
+	
+	
 	
 	@GetMapping("send/{pno}")
 	public String mailSend(Model model, @PathVariable int pno) {

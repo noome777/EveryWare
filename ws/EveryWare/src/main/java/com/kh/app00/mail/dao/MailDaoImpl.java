@@ -52,8 +52,12 @@ public class MailDaoImpl implements MailDao {
 	}
 
 	@Override
-	public List<MailVo> selectRelist(SqlSessionTemplate sst) {
-		return sst.selectList("mailMapper.selectRelist");
+	public List<MailVo> selectRelist(SqlSessionTemplate sst, PageVo pv) {
+		
+		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+		RowBounds rb = new RowBounds(offset , pv.getBoardLimit());
+		
+		return sst.selectList("mailMapper.selectRelist", null, rb);
 	}
 
 	@Override

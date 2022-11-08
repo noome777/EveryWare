@@ -33,7 +33,7 @@ public interface MailDao {
 	List<MailVo> selectSendlist(SqlSessionTemplate sst);
 
 	//받은 메일함 조회
-	List<MailVo> selectRelist(SqlSessionTemplate sst);
+	List<MailVo> selectRelist(SqlSessionTemplate sst,PageVo pv);
 
 	//답장 작성
 	int replyMail(SqlSessionTemplate sst, MailVo mvo);

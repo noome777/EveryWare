@@ -88,7 +88,7 @@
 
 			<h2 id="mailall">전체 메일함</h2>
 			<br>	
-			<form action="${root}/mail/mailSearch/${pno}" method="get" name="ms" onsubmit="return Checkform">
+			<form action="${root}/mail/mailSearch/${pno}" method="get" name="mailAll" onsubmit="return Checkform">
 			<div class="form-group row " style="margin-left: 3px;">
 				<div class="w100" style="padding-right: 10px">
 					<select class="form-control form-control-sm" name="searchType" id="searchType"
@@ -206,8 +206,8 @@
 		});
 	
 		function Checkform() {
-		    if( ms.keyword.value == "" ) {
-		      ms.keyword.focus();
+		    if( mailAll.keyword.value == "" ) {
+		    	mailAll.keyword.focus();
 		      alert("내용을 입력해주세요.");
 		      
 		      return false;

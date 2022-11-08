@@ -32,7 +32,7 @@ public interface MailService {
 	List<MailVo> selectSendlist();
 	
 	//받은 메일함
-	List<MailVo> selectRelist();
+	List<MailVo> selectRelist(PageVo pv);
 	
 	//메일 답장
 	int reply(MailVo mvo);

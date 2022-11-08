@@ -64,8 +64,8 @@ public class MailServiceImpl implements MailService{
 
 
 	@Override
-	public List<MailVo> selectRelist() {
-		return dao.selectRelist(sst);
+	public List<MailVo> selectRelist(PageVo pv) {
+		return dao.selectRelist(sst,pv);
 	}
 
 
