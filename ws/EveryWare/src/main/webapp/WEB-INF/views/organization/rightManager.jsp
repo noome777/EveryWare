@@ -134,6 +134,10 @@
   margin-right: 20px;
 }
 
+th, td {
+  text-align: center !important;
+}
+
 
 </style>
 
@@ -167,7 +171,6 @@
                     <thead>
                       <tr>
                       	<th></th>
-                      	<th></th>
                         <th>프로필</th>
                         <th>이름(사번)</th>
                         <th>ID</th>
@@ -180,7 +183,6 @@
                     <tbody>
                     <c:forEach items="${adminList}" var="adminList">
                       <tr>
-                      	<td></td>
                         <td></td>
                         <td>
                           <div class="avatar avatar-sm">
@@ -396,8 +398,6 @@
 	      });
 
         const rightValue = $('#rightSelector').val();
-
-        console.log(rightValue);
 	      
         var confirm = window.confirm("정말로 관리자에 추가하시겠습니까?");
 

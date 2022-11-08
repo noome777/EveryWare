@@ -362,6 +362,20 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 
 
+	//부서관리 - 부서 검색
+	@Override
+	public List<DeptVo> selectDeptListByWord(String word) {
+		return organizationDao.selectDeptListByWord(sqlSessionTemplate, word);
+	}
+
+
+	//부서관리 - 부서 추가
+	@Override
+	public int InsertDept(Map<String, List<String>> insertTarget) {
+		return organizationDao.insertDept(sqlSessionTemplate, insertTarget);
+	}
+
+
 
 
 

@@ -65,21 +65,22 @@
 	
 	<select id="selectDeptList" resultType="DeptVo">
 		SELECT A.DEPT_CODE
-     , A.DEPT_NAME
-     , A.DEPT_DEPTH
-     , A.HIGH_DEPT_CODE
-     , (CASE 
-           WHEN A.HIGH_DEPT_CODE = null THEN A.DEPT_NAME
-           WHEN A.HIGH_DEPT_CODE = B.DEPT_CODE THEN B.DEPT_NAME
-        END) AS HIGH_DEPT_NAME
-     , A.DEPT_STATUS
-     , REGEXP_REPLACE(SYS_CONNECT_BY_PATH(A.DEPT_NAME, ' -> '), '^\s+\-\>\s+', '') as "PATH"
-  FROM DEPT A
-  LEFT OUTER JOIN DEPT B
-  ON A.HIGH_DEPT_CODE = B.DEPT_CODE
-  WHERE A.DEPT_STATUS = 'N'
-  START WITH A.DEPT_CODE = 1
-CONNECT BY PRIOR A.DEPT_CODE = A.HIGH_DEPT_CODE
+	     , A.DEPT_NAME
+	     , A.DEPT_DEPTH
+	     , A.HIGH_DEPT_CODE
+	     , (CASE 
+	           WHEN A.HIGH_DEPT_CODE = null THEN A.DEPT_NAME
+	           WHEN A.HIGH_DEPT_CODE = B.DEPT_CODE THEN B.DEPT_NAME
+	        END) AS HIGH_DEPT_NAME
+	     , A.DEPT_STATUS
+	     , REGEXP_REPLACE(SYS_CONNECT_BY_PATH(A.DEPT_NAME, ' -> '), '^\s+\-\>\s+', '') as "PATH"
+	     , (SELECT COUNT(*)FROM EMP WHERE DEPT_CODE = A.DEPT_CODE) AS EMP_COUNT
+	  FROM DEPT A
+	  LEFT OUTER JOIN DEPT B
+	  ON A.HIGH_DEPT_CODE = B.DEPT_CODE
+	  WHERE A.DEPT_STATUS = 'N'
+	  START WITH A.DEPT_CODE = 1
+	  CONNECT BY PRIOR A.DEPT_CODE = A.HIGH_DEPT_CODE
 	</select>
 	
 	<select id="selectCountAll" resultType="int">
@@ -478,6 +479,42 @@ CONNECT BY PRIOR A.DEPT_CODE = A.HIGH_DEPT_CODE
 			FROM DEPT
 	</select>
 	
+	
+	<select id="selectDeptListByWord" resultType="DeptVo">
+		SELECT A.DEPT_CODE
+		     , A.DEPT_NAME
+		     , A.DEPT_CODE
+		     , (CASE 
+		           WHEN A.HIGH_DEPT_CODE = 0 THEN '-'
+		           WHEN A.HIGH_DEPT_CODE = B.DEPT_CODE THEN B.DEPT_NAME
+	       		END) AS HIGH_DEPT_NAME
+		     , (SELECT COUNT(*) FROM EMP WHERE DEPT_CODE = A.DEPT_CODE)
+		     AS EMP_COUNT
+		     , A.DEPT_DEPTH
+		  FROM DEPT A
+		  LEFT OUTER JOIN DEPT B
+		  ON A.HIGH_DEPT_CODE = B.DEPT_CODE
+		  WHERE A.DEPT_STATUS = 'N'
+		  AND A.DEPT_NAME LIKE '%' || #{word} || '%'
+		  ORDER BY A.DEPT_DEPTH ASC, B.DEPT_DEPTH ASC
+	</select>
+	
+	<insert id="insertDept" parameterType="java.util.Map">
+		<foreach collection="highDepList"  index="index" open="DECLARE BEGIN" close="; END;"  separator=";"> 
+			INSERT INTO DEPT (
+				DEPT_CODE
+				, DEPT_NAME
+				, HIGH_DEPT_CODE
+				, DEPT_DEPTH
+				)
+			VALUES (
+				SEQ_DEPT_NO.NEXTVAL
+				, #{addDeptList[${index}]}
+				, #{highDeptList[${index}]}
+				, #{deptDepthList[${index}]}+1
+				)
+		 </foreach>
+	</insert>
 	
 </mapper>
 

@@ -112,6 +112,12 @@ public interface OrganizationService {
 	//부서관리 - 부서 가져오기
 	List<DeptVo> selectDeptListForChart();
 
+	//부서관리 - 부서 검색
+	List<DeptVo> selectDeptListByWord(String word);
+
+	//부서관리 - 부서 추가
+	int InsertDept(Map<String, List<String>> insertTarget);
+
 
 
 }
