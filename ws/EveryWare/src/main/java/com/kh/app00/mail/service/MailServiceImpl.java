@@ -129,8 +129,14 @@ public class MailServiceImpl implements MailService{
 
 
 	@Override
-	public List<MailVo> selectSearchList(MailVo mailVo) {
-		return dao.selectSearchList(sst,mailVo);
+	public List<MailVo> selectSearchList(MailVo mailVo, PageVo pv2) {
+		return dao.selectSearchList(sst,mailVo, pv2);
+	}
+
+
+	@Override
+	public int selectSearchTotalCnt(MailVo mvo) {
+		return dao.selectSearchTotalCnt(sst,mvo);
 	}
 	
 }

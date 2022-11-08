@@ -59,7 +59,10 @@ public interface MailService {
 	int noread(String mailCode);
 	
 	//검색 처리
-	List<MailVo> selectSearchList(MailVo mailVo);
+	List<MailVo> selectSearchList(MailVo mailVo, PageVo pv2);
+	
+	//리스트 카운트
+	int selectSearchTotalCnt(MailVo mvo);
 
 	
 	

@@ -18,8 +18,9 @@ public class MailVo {
 	private String mailDelete;
 	
 	//검색 필터
-	private String type;
+	private String searchType;
 	private String keyword;
+	private String search;
 	
 	private MultipartFile[] f;
 }

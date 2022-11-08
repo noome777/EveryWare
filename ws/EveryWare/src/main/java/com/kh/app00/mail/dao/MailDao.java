@@ -66,7 +66,10 @@ public interface MailDao {
 	int noreadMail(SqlSessionTemplate sst, String mailCode);
 
 	//검색 처리
-	List<MailVo> selectSearchList(SqlSessionTemplate sst, MailVo mailVo);
+	List<MailVo> selectSearchList(SqlSessionTemplate sst, MailVo mailVo, PageVo pv2);
+
+	//검색 갯수
+	int selectSearchTotalCnt(SqlSessionTemplate sst, MailVo mvo);
 
 
 	

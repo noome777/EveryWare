@@ -52,25 +52,40 @@ public class MailController {
 	
 	@GetMapping("mailSearch/{pno}")
 	public String mailSearch(Model model,@PathVariable int pno
-			,@RequestParam("type")String type
-			,@RequestParam("keyward") String keyword
-	) throws Exception {
+			,String mailTitle, MailVo mvo, String mailSender, EmpVo evo, HttpSession session  
+			,String searchType, String keyword, String search
+	) {
 		
-		MailVo mailVo = new MailVo();
-		mailVo.setType(type);
-		mailVo.setKeyword(keyword);
+		// 파라미터로 값 3개 (서치타입 , 키워드 , 서치) 받기
+	
+		// 3개 잘 전달되었나 출력해보기
+		
+		
+		if(searchType != "" && keyword != "" && search != "" ) {
+			
+			int totalCount = ms.selectSearchTotalCnt(mvo);
+			PageVo pv2 = Pagination.getPageVo(totalCount, pno, 5, 10);
+			
+			List<MailVo> searchList = ms.selectSearchList(mvo, pv2);
+			
+			model.addAttribute("mList", searchList);
+			model.addAttribute("pv",pv2);
+			
+			
+		}else if(searchType != "" || keyword == "" || search != ""){
 		
 		int totalCount = ms.selectTotalCnt();
 		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
 		
-		List<MailVo> mList = ms.selectSearchList(mailVo);
+		List<MailVo> mList = ms.selectList(pv);
 		
 		model.addAttribute("mList", mList);
 		model.addAttribute("pv",pv);
 		
+		
+	}
 		return "mail/mailMain";
 	}
-	
 	
 	@GetMapping("write")
 	public String mailWrite() {
