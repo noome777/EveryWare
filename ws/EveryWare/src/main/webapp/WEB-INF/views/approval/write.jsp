@@ -329,6 +329,9 @@
           
         });
 			
+      $('textarea[detailCode=1]').css("height", '400px');
+    
+
 		});
 
     //부서별 임직원 불러오기 - 결재라인

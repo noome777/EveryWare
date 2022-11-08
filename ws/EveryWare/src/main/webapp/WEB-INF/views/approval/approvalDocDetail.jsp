@@ -137,7 +137,14 @@
           		<c:if test="${c.apprTypeCode eq a.apprTypeCode}">
 	          		<c:choose>
 	          			<c:when test="${a.apprStatus eq 'A'}">
-			          		<td  style="width: 160px;"><img class="appr-mark" src="${root}/resources/img/appr-mark.png" alt="승인"> <br>${a.apprDate}</td>
+	          				<c:choose>
+	          					<c:when test="${not empty loginMember.empFileName}">
+					          		<td  style="width: 160px;"><img class="appr-mark" src="${root}/resources/upload/signFile/${loginMember.empFileName}" alt="승인"> <br>${a.apprDate}</td>
+	          					</c:when>
+	          					<c:otherwise>
+	          						<td  style="width: 160px;"><img class="appr-mark" src="${root}/resources/img/appr-mark.png" alt="승인"> <br>${a.apprDate}</td>
+	          					</c:otherwise>
+	          				</c:choose>
 	          			</c:when>
               		    <c:when test="${a.apprStatus eq 'C'}">
 			          		<td class="font-weight-bold text-dark" style="width: 160px;">반려<br>${a.apprDate}</td></td> 

@@ -327,6 +327,11 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
 		return sst.selectList("approvalMapper.selectStorageList", vo, rb);
 	}
+	//임시저장 문서 삭제
+	@Override
+	public int deleteStorage(SqlSessionTemplate sst, ApprovalDocVo vo) {
+		return sst.update("approvalMapper.deleteStorage", vo);
+	}
 	
 	
 	//문서 양식 목록 조회
@@ -385,6 +390,7 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
 		return sst.selectList("approvalMapper.selectApprDeleteDocList", vo, rb);
 	}
+	
 	
 	
 	
