@@ -127,6 +127,7 @@ padding: 10px;
   margin : 0px 10px 5px 10px;
 }
 
+
 .profile-wrap {
   margin: 10px;
   display: flex;
@@ -813,7 +814,7 @@ padding: 10px;
     </div>
 
     
-    <!--체크박스 전부체크-->
+  <!--체크박스 전부체크-->
   <script>
     $(document).ready(function() {
     	

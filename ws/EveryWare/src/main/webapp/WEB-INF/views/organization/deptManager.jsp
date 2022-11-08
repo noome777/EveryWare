@@ -127,13 +127,42 @@
 		width: 30%;
 	}
 
-	.btn-area {
+	#option-area {
 		height: 100%;
-		width: 23.3%;
+		width: 70%;
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
+		justify-content: flex-start;
+		align-items: center;
+		padding-left: 10px;
+	}
+
+	#check-num-area {
+		width: 15%;
+		height: 100%;
+		display: flex;
+		flex-direction: row;
 		justify-content: center;
-		align-items: flex-start;
+		align-items: center;
+	}
+
+	#option-btn-area {
+		width: 85%;
+		height: 100%;
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+		align-items: center;
+	}
+
+	#option-btn-area > button {
+		margin-left: 20px;
+		border: none;
+		color: gray;
+		border-radius: 5px;
+		width: 90px;
+		height: 30px;
+		background-color: white;
 	}
 
 	.center-flex {
@@ -141,6 +170,7 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		
 	}
 
 	.center-flex-row {
@@ -157,11 +187,26 @@
 	}
 
 	#search-bar {
-		width: 170px;
+		width: 100%;
 		height: 34px;
 		margin-right: 10px;
 		text-align: center;
 		border-radius: 8px;
+	}
+
+	th, td {
+		text-align: center !important;
+	}
+
+	.tdInput {
+		border: none;
+		border-radius: 5px;
+		text-align: center;
+		color: gray;
+	}
+
+	input[type="text"] {
+		color: gray;
 	}
 
 	</style>
@@ -226,16 +271,60 @@
 												<input type="text" id="search-bar" class="style-none" placeholder="부서 검색" name="word"> 
 											</div>
 											<div id="search-icon-wrap">
-												<img id="search-icon" src="${root}/resources/img/search.png" onclick=" return checkBlank();">
+												<input type="image" id="search-icon" src="${root}/resources/img/search.png" onclick=" return searchDept();">
 											</div>
 										</div>
-										<div class="btn-area">qq</div>
-										<div class="btn-area">ww</div>
-										<div class="btn-area">ee</div>
+										<div id="option-area">
+											<div id="checkNum-area">
+											</div>
+											<div id="option-btn-area">
+
+												<button id="addDeptBtn" class="shadow fade" onclick="openAddModal();">
+													<strong>
+														<small>부서추가</small>
+													</strong>
+												</button>
+												<button id="editDeptBtn" class="shadow fade">
+													<strong>
+														<small>부서수정</small>
+													</strong>
+												</button>
+												<button id="deleteDeptBtn" class="shadow fade">
+													<strong>
+														<small>부서삭제</small>
+													</strong>
+												</button>
+											</div>
+										</div>
 
 									</div>
 
-									<div id="dept-result-area">qwee</div>
+									<div id="dept-result-area">
+
+										<div id="table-padding">
+
+											<table class="table table-borderless table-hover">
+												<thead>
+												  <tr>
+													<th></th>
+													<th>부서코드</th>
+													<th>부서이름</th>
+													<th>상위부서</th>
+													<th>임직원수</th>
+												  </tr>
+												</thead>
+												<tbody id="target">
+													
+												  <tr>
+													<td colspan="5"></td>
+												  </tr>
+												</tbody>
+											  </table>
+
+										</div>
+
+
+									</div>
 								</div>
 									
 
@@ -248,6 +337,42 @@
 			</div>
 		</main>
 		</div>
+
+
+		 <!-- 관리자 추가 모달 -->
+		 <div class="modal fade" id="add-dept-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title" >부서 추가</h5>
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				<div id="add-dept-area" class="modal-body">
+					<table class="table table-borderless table-hover">
+					<thead>
+					  <tr>
+						<th></th>
+						<th>상위부서</th>
+						<th>추가부서명</th>
+					  </tr>
+					</thead>
+					<tbody id="add-target">
+					  <tr>
+						<td colspan="3"></td>
+					  </tr>
+					</tbody>
+				  </table>
+				</div>
+				
+				<div class="modal-footer">
+				  <button type="button" class="btn mb-2 btn-primary" onclick="addDept();">추가</button>
+				  <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal" onclick="cleanAddModal();">취소</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
 
 
 		
@@ -305,6 +430,208 @@
 		
 
 		</script>
+
+	<!-- 체크박스 체크 시 버튼 활성화 -->
+	<script>
+    
+		function readCheckNum() {
+			const checkNum = $("input:checkbox[name='check']:checked").length;
+			const checkNumArea = $("#checkNum-area");
+			const editDeptBtn = $("#editDeptBtn");
+			const deleteDeptBtn = $("#deleteDeptBtn");
+			const addDeptBtn = $("#addDeptBtn");
+			
+			checkNumArea.removeClass("fade");
+			editDeptBtn.removeClass("fade");
+			deleteDeptBtn.removeClass("fade");
+			addDeptBtn.removeClass("fade");
+			checkNumArea.html("<small>"+"체크 : "+checkNum+"</small>");
+		   
+	
+			var total = $("input[name=check]").length;
+			var checked = $("input[name=check]:checked").length;
+			if(checked==0) {
+			  checkNumArea.html("");
+			  editDeptBtn.addClass("fade");
+			  deleteDeptBtn.addClass("fade");
+			  addDeptBtn.addClass("fade");
+			}
+		}
+	  </script>
+
+
+	<!--부서 검색-->
+
+	<script>
+
+		function searchDept() {
+
+			cleanArea();
+			
+			let word = $('#search-bar').val();
+
+			if(word.trim() === "") {
+				alert("검색창에 글자를 입력하여 주시길 바랍니다.");
+				return false;
+			}
+
+			word = word.trim();
+
+			console.log(word);
+
+		$.ajax({
+		
+		url : "${root}/organization/management/dept/search",
+		type : "POST",
+		traditional : true,
+		dataType : "JSON",
+		data : {
+			word : word
+		},
+		success : function(jsonStr) {
+			console.log(jsonStr);
+
+			const resultLength = jsonStr.length;
+
+			for (let i=0; i<resultLength; ++i) {
+			var result = jsonStr.pop();
+
+			$('#target').prepend(
+				'<tr>' + '<td><input type="checkbox" name="check" value="' + result['deptName']  +'" onchange="readCheckNum();" ></td>' + 
+				'<td>' + result['deptCode'] + '</td>' +
+				'<td>' + result['deptName'] + '</td>' +
+				'<td>' + result['highDeptName'] + '</td>' +
+				'<td>' + result['empCount'] + "명" + '</td>' +
+				'</tr>'
+			);
+			}
+		},
+		error : function(fail) {
+			alert(fail);
+		}
+		});
+			
+		}
+	</script>
+
+
+	<script>
+
+		function cleanArea() {
+
+			var tbodyLength = $('#target tr').length;
+
+			for(let i=0; i<tbodyLength; ++i) {
+			$('#target > tr').eq(i).empty();
+			}
+
+		}
+
+	</script>
+
+
+	<script>
+
+		function openAddModal() {
+
+			const checkBoxArr = [];
+			const highDeptArr = [];
+			$('input:checkbox:checked').each(function(){
+				checkBoxArr.push($(this).val());
+				highDeptArr.push($('input[type="checkbox"]:checked').parent().next().text());
+			});
+
+			console.log(highDeptArr);
+
+			for(var i = 0; i < checkBoxArr.length; ++i) {
+				
+				$('#add-target').prepend(
+
+					'<tr>' +
+						'<td>' +
+							'<input type="hidden" class="add-high-dept" depth-data="" value="">'	+					
+						'</td>'+
+						'<td>' + 
+							checkBoxArr[i] + 
+						'</td>' +
+						'<td>' + 
+							'<input type="text" name="deptName" class="tdInput add-dept-input" placeholder="부서명">' +
+						'</td>' + 
+					'</tr>'
+				)
+			}
+
+			$('#add-dept-modal').modal();
+			
+		}
+	
+	</script>
+
+	<script>
+
+		function cleanAddModal() {
+
+			var tbodyLength = $('#add-target tr').length;
+
+			for(let i=0; i<tbodyLength; ++i) {
+				$('#add-target > tr').eq(i).empty();
+			}
+		}
+
+	</script>
+
+
+	<script>
+
+		function addDept() {
+
+			const highDeptArr = [];
+			const addDeptArr = [];
+			
+
+			for(let i=0; i<$('.add-high-dept').length; ++i) {
+				highDeptArr.push($(".add-high-dept").eq(i).text());
+				addDeptArr.push($(".add-dept-input").eq(i).val());
+			}
+			
+			$.ajax({
+					url:"${root}/organization/management/dept/add",
+					type:"POST",
+					traditional : true,
+					dataType : "json",
+					async : false,
+					cache: false,
+					data : {
+						highDeptArr : highDeptArr,
+						addDeptArr : addDeptArr
+					},
+					success: function(data) {
+						
+						console.log("성공!");
+
+					},
+					error:function (data) {
+						alert("에러 + " + data);
+					}
+			});
+			}
+			
+
+	
+	</script>
+
+
+
+	<script>
+	function openEditModal() {
+		$('#edit-dept-modal').modal();
+	}
+	
+	function openDeleteModal() {
+		$('#delete-dept-modal').modal();
+	}
+	
+	</script>
 
 
 		

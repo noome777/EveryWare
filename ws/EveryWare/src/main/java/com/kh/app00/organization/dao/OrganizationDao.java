@@ -113,6 +113,12 @@ public interface OrganizationDao {
 	//부서관리 - 부서 가져오기
 	List<DeptVo> selectDeptListForChart(SqlSessionTemplate sqlSessionTemplate);
 
+	//부서관리 - 부서 검색
+	List<DeptVo> selectDeptListByWord(SqlSessionTemplate sqlSessionTemplate, String word);
+
+	//부서관리 - 부서 추가
+	int insertDept(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> insertTarget);
+
 
 
 

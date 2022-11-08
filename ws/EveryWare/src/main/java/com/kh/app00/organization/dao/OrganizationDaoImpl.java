@@ -219,6 +219,19 @@ public class OrganizationDaoImpl implements OrganizationDao {
 		return sqlSessionTemplate.selectList("organizationMapper.selectDeptListForChart");
 	}
 
+	//부서관리 - 부서검색
+	@Override
+	public List<DeptVo> selectDeptListByWord(SqlSessionTemplate sqlSessionTemplate, String word) {
+		return sqlSessionTemplate.selectList("organizationMapper.selectDeptListByWord", word);
+	}
+
+	
+	//부서관리 - 부서추가
+	@Override
+	public int insertDept(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> insertTarget) {
+		return sqlSessionTemplate.insert("organizationMapper.insertDept",insertTarget);
+	}
+
 	
 
 	
