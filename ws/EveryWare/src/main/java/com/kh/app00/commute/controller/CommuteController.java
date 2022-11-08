@@ -309,7 +309,6 @@ public class CommuteController {
     @GetMapping("overwork/{pno}")
     public String overwork(OverworkVo vo, Model model, HttpSession session,
             @PathVariable int pno, String overDate) {
-        System.out.println(overDate);
 
         // 사원 정보 vo에 저장
         // 로그인 유저의 정보 vo에 저장
@@ -353,7 +352,6 @@ public class CommuteController {
             model.addAttribute("voList", voList);
             model.addAttribute("pv", pv);
             model.addAttribute("listCount", listCount);
-
         }
 
         return "commute/overwork";
@@ -450,7 +448,6 @@ public class CommuteController {
     public String sendApproval(String num, String approval, OverworkVo vo, Model model) {
 
         // 결재 상태 바꾸는 게시글 setting 해주기
-
         approval = approval.substring(approval.length() - 1, approval.length());
 
         vo.setOverCode(num);
