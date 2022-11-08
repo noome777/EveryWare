@@ -134,12 +134,13 @@ public interface ApprovalDao {
 	int selectStorageTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo);
 	//임시저장 문서 목록 조회
 	List<ApprovalDocVo> selectStorageList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv);
+	//임시저장 문서 삭제
+	int deleteStorage(SqlSessionTemplate sst, ApprovalDocVo vo);
 	
 	//문서 양식 목록 조회
 	List<DocFormVo> selectDocFormList(SqlSessionTemplate sst);
 	//문서 양식 상세 조회
 	DocFormVo selectDocForm(SqlSessionTemplate sst, int formCode);
-
 
 	//문서 양식상세 항목 불러오기
 	List<DocFormDetailTemplateVo> selectFormDetailList(SqlSessionTemplate sst);
@@ -158,6 +159,7 @@ public interface ApprovalDao {
 	int selectApprDeleteDocTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo);
 	//삭제 문서 목록 조회
 	List<ApprovalDocVo> selectApprDeleteDocList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv);
+	
 	
 	
 	

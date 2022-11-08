@@ -244,8 +244,10 @@
 		FROM APPROVAL_DOC A
 		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
 		INNER JOIN DOC_FORM F ON F.FORM_CODE = A.DOC_FORM_CODE
-		WHERE E.DEPT_CODE = #{deptCode}
-		AND A.DOC_APPR_DATE IS NULL
+		<if test="empCode != 1">
+			WHERE E.DEPT_CODE = #{deptCode}
+		</if>
+		AND A.DOC_APPR_DATE IS NULL 
 		AND A.DOC_STATUS = 'N'
 		<if test="docFormCode != null and docFormCode != 0">
 			AND A.DOC_FORM_CODE = #{docFormCode}
@@ -257,7 +259,9 @@
 		FROM APPROVAL_DOC A
 		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
 		INNER JOIN DOC_FORM F ON F.FORM_CODE = A.DOC_FORM_CODE
-		WHERE E.DEPT_CODE = #{deptCode}
+		<if test="empCode != 1">
+			WHERE E.DEPT_CODE = #{deptCode}
+		</if>
 		AND A.DOC_APPR_DATE IS NULL
 		AND A.DOC_STATUS = 'N'
 		<if test="docFormCode != null and docFormCode != 0">
@@ -269,9 +273,7 @@
 	<select id="selectExpectCount" resultType="int">
 		SELECT COUNT(*) FROM APPROVAL_DOC A
 		INNER JOIN APPROVAL_LIST L ON L.DOC_CODE = A.DOC_CODE
-		WHERE L.APPR_STATUS = ANY (SELECT L.APPR_STATUS
-		                         FROM APPROVAL_LIST L
-		                         WHERE L.APPR_STATUS = 'W')
+		WHERE A.DOC_APPR_DATE IS NULL
 		AND L.APPR_EMP_CODE = #{empCode}
 		AND A.DOC_STATUS = 'N'
 		<if test="docFormCode != null and docFormCode != 0">
@@ -285,9 +287,7 @@
 		INNER JOIN DOC_FORM F ON A.DOC_FORM_CODE = F.FORM_CODE
 		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
 		INNER JOIN APPROVAL_LIST L ON L.DOC_CODE = A.DOC_CODE
-		WHERE L.APPR_STATUS = ANY (SELECT L.APPR_STATUS
-		                         FROM APPROVAL_LIST L
-		                         WHERE L.APPR_STATUS = 'W')
+		WHERE A.DOC_APPR_DATE IS NULL
 		AND L.APPR_EMP_CODE = #{empCode}
 		AND A.DOC_STATUS = 'N'
 		<if test="docFormCode != null and docFormCode != 0">
@@ -418,8 +418,10 @@
 		FROM APPROVAL_DOC A
 		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
 		INNER JOIN DOC_FORM F ON F.FORM_CODE = A.DOC_FORM_CODE
-		WHERE E.DEPT_CODE = #{deptCode}
-		AND A.DOC_APPR_DATE IS NOT NULL
+		WHERE A.DOC_APPR_DATE IS NOT NULL
+		<if test="empCode != 1">
+			AND E.DEPT_CODE = #{deptCode}
+		</if>
 		AND A.DOC_STATUS = 'N'
 		<if test="docFormCode != null and docFormCode != 0">
 			AND A.DOC_FORM_CODE = #{docFormCode}
@@ -440,11 +442,14 @@
 		FROM APPROVAL_DOC A
 		INNER JOIN EMP E ON E.EMP_CODE = A.EMP_CODE
 		INNER JOIN DOC_FORM F ON F.FORM_CODE = A.DOC_FORM_CODE
-		WHERE E.DEPT_CODE = 2
-		AND A.DOC_APPR_DATE IS NOT NULL
+		WHERE A.DOC_APPR_DATE IS NOT NULL
+		<if test="empCode != 1">
+			AND E.DEPT_CODE = 2
+		</if>
 		<if test="docFormCode != null and docFormCode != 0">
 			AND A.DOC_FORM_CODE = #{docFormCode}
 		</if>
+		AND A.DOC_STATUS = 'N'
 		ORDER BY A.DOC_CODE DESC
 	</select>
 	
@@ -614,6 +619,11 @@
 		ORDER BY DOC_CODE DESC
 	</select>
 	
+	<update id="deleteStorage">
+		UPDATE APPROVAL_DOC SET DOC_STATUS = 'D'
+		WHERE DOC_STATUS = 'T'
+		AND EMP_CODE = #{empCode}
+	</update>
 	
 	<select id="selectDocFormList" resultType="DocFormVo">
 		SELECT FORM_CODE, FORM_NAME, FORM_INTRO, FORM_USE_YN FROM DOC_FORM

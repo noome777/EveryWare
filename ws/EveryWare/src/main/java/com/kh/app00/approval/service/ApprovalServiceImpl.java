@@ -378,8 +378,11 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public List<ApprovalDocVo> selectStorageList(ApprovalDocVo vo, PageVo pv) {
 		return dao.selectStorageList(sst, vo, pv);
 	}
-	
-	
+	//임시저장 문서 삭제
+	@Override
+	public int deleteStorage(ApprovalDocVo vo) {
+		return dao.deleteStorage(sst, vo);
+	}
 	
 	
 	//문서 양식 목록 조회
@@ -444,6 +447,8 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public List<ApprovalDocVo> selectApprDeleteDocList(ApprovalDocVo vo, PageVo pv) {
 		return dao.selectApprDeleteDocList(sst, vo, pv);
 	}
+
+	
 
 	
 

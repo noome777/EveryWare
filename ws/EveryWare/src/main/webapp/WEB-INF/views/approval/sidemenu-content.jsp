@@ -15,11 +15,11 @@
       }
     </style>
 <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
-    
+    <c:set var="apprWaitCount" value="${sessionScope.apprWaitCount}" />
+    <c:set var="apprProgCount" value="${sessionScope.apprProgCount}" />
+    <c:set var="apprRefCount" value="${sessionScope.apprRefCount}" />
+    <c:set var="apprExpectCount" value="${sessionScope.apprExpectCount}" />
   <nav>
-        <!-- <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
-          <i class="fe fe-x"><span class="sr-only"></span></i>
-        </a> -->
         <ul class="vertnav navbar navbar-light">
           <!-- nav bar -->
           <div class="w-100 mb-4 d-flex">
@@ -40,24 +40,43 @@
                 <i class="fe fe-edit-3 fe-16"></i>
                 <span class="ml-3 item-text ">진행 중인 문서</span>
               </a>
-                 
               <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/approval/progressAllList/1/0"><span class="ml-1 item-text">전체</span>
+                  <a class="nav-link pl-3 d-flex align-items-center justify-content-between" href="${root}/approval/progressAllList/1/0"><span class="ml-1 item-text">전체 </span>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/approval/progressList/1/0"><span class="ml-1 item-text">진행</span></a>
+                  <a class="nav-link pl-3 d-flex align-items-center justify-content-between" href="${root}/approval/progressList/1/0"><span class="ml-1 item-text">진행</span>
+                  	<c:if test="${apprProgCount  > 0}">
+                 	     <span class="mr-4">${apprProgCount}</span>
+                    </c:if>
+                  </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/approval/progressWaitList/1/0"><span class="ml-1 item-text">대기</span></a>
+                    <a class="nav-link pl-3 d-flex align-items-center justify-content-between" href="${root}/approval/progressWaitList/1/0"><span class="ml-1 item-text">대기</span>
+                    <c:if test="${apprWaitCount > 0}">
+                      <span class="mr-4">${apprWaitCount}</span>
+                    </c:if>
+                    </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/approval/progressRefList/1/0"><span class="ml-1 item-text">확인</span></a>
+                  <a class="nav-link pl-3" d-flex align-items-center justify-content-between href="${root}/approval/progressRefList/1/0"><span class="ml-1 item-text">확인</span>
+                  	<c:if test="${refCount > 0}">
+                 	     <span class="mr-4">${refCount}</span>
+                    </c:if>
+                  </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/approval/progressExpectedList/1/0"><span class="ml-1 item-text">예정</span></a>
+                    <a class="nav-link pl-3 d-flex align-items-center justify-content-between" href="${root}/approval/progressExpectedList/1/0"><span class="ml-1 item-text">예정</span>
+                      <c:if test="${apprExpectCount > 0}">
+                 	     <span class="mr-4">${apprExpectCount}</span>
+                    </c:if>
+                    </a>
                 </li>
+                
+                
+                
+                
               </ul>
             </li>
           </ul>

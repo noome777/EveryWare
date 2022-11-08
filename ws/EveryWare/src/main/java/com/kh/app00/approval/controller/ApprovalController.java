@@ -254,6 +254,12 @@ public class ApprovalController {
 		
 		EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
 		ApprovalDocVo vo = new ApprovalDocVo();
+		vo.setEmpCode(loginMember.getEmpCode());
+		int apprExpectCount = service.selectExpectCount(vo);
+		int apprRefCount = service.selectRefListTotalCnt(vo);
+		int apprWaitCount = service.selectWaitListTotalCnt(vo);
+		int apprProgCount = service.selectProgressListTotalCnt(vo);
+		
 		vo.setDeptCode(loginMember.getDeptCode());
 		vo.setDocFormCode(docFormCode);
 		
@@ -262,7 +268,11 @@ public class ApprovalController {
 		
 		List<ApprovalDocVo> docList = service.selectProgressDocList(vo, pv);
 		List<DocFormVo> formList = service.selectFormList();
-		System.out.println(docList);
+		
+		session.setAttribute("apprProgCount", apprProgCount);
+		session.setAttribute("apprRefCount", apprRefCount);
+		session.setAttribute("apprExpectCount", apprExpectCount);
+		session.setAttribute("apprWaitCount", apprWaitCount);
 		model.addAttribute("formList", formList);
 		model.addAttribute("docList", docList);
 		model.addAttribute("pv", pv);
@@ -371,6 +381,7 @@ public class ApprovalController {
 		ApprovalDocVo vo = new ApprovalDocVo();
 		vo.setDeptCode(loginMember.getDeptCode());
 		vo.setDocFormCode(docFormCode);
+		vo.setEmpCode(loginMember.getEmpCode());
 		
 		int totalCount = service.selectCompletAllTotalCnt(vo);
 		PageVo pv = Pagination.getPageVo(totalCount, pno, 3, 15);
@@ -501,6 +512,23 @@ public class ApprovalController {
 		return "approval/storage";
 	}
 	
+	@PostMapping("storageDelete")
+	@ResponseBody
+	public String storageDelete(HttpSession session) {
+		
+		EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
+		ApprovalDocVo vo = new ApprovalDocVo();
+		vo.setEmpCode(loginMember.getEmpCode());
+		
+		int deleteStorage = service.deleteStorage(vo);
+		
+		if(deleteStorage > 0) {
+			return "삭제 완료";
+		} else {
+			return "삭제 실패";
+		}
+	}
+	
 	//양식 관리 화면
 	@GetMapping("formManager")
 	public String formManager(Model model) {
@@ -615,9 +643,5 @@ public class ApprovalController {
 		return "approval/approvalDeleteList"; 
 	  }
 	 
-	
-	
-	
-	
 	
 }

@@ -68,7 +68,7 @@
       </div>
     </div>
     <div class="form-group mb-3">
-      <span>전체 삭제</span>
+      <span id="delete-all">전체 삭제</span>
     </div>
   </main>
 
@@ -76,6 +76,26 @@
     $('#custom-select').on('change', function () {
       let docFormCode = $('#custom-select option:selected').val();
       location.href='${root}/approval/storage/1/' + docFormCode;
+    })
+
+    $('#delete-all').on('click', function () {
+
+      if($('tbody tr').length > 0){
+        if(confirm('임시저장된 문서를 전체 삭제 하시겠습니까?')){
+          $.ajax({
+            url : '${root}/approval/storageDelete',
+            method : 'POST',
+            success : function () {
+              alert('전체삭제 완료');
+            },
+            error :  (error) => {
+              console.log(JSON.stringify(error))
+            }  
+          })
+        }
+      } else {
+        alert('삭제 할 문서가 존재하지 않습니다.');
+      }
     })
   </script>
 </body>

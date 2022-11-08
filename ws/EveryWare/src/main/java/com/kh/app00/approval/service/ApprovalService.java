@@ -113,7 +113,8 @@ public interface ApprovalService {
 	int selectStorageTotalCnt(ApprovalDocVo vo);
 	//임시저장 문서 목록 조회
 	List<ApprovalDocVo> selectStorageList(ApprovalDocVo vo, PageVo pv);
-
+	//임시저장 문서 삭제
+	int deleteStorage(ApprovalDocVo vo);
 	
 	//문서 양식 목록 조회
 	List<DocFormVo> selectDocFormList();
@@ -133,6 +134,7 @@ public interface ApprovalService {
 	int selectApprDeleteDocTotalCnt(ApprovalDocVo vo);
 	//삭제 문서 목록 조회
 	List<ApprovalDocVo> selectApprDeleteDocList(ApprovalDocVo vo, PageVo pv);
+	
 	
 	
 	
