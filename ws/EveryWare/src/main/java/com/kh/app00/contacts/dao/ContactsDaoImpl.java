@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.app00.common.PageVo;
 import com.kh.app00.contacts.vo.ContactsVo;
 
 @Repository
@@ -15,8 +17,12 @@ public class ContactsDaoImpl implements ContactsDao{
 	
 	//주소록 목록
 	@Override
-	public List<ContactsVo> selectList(SqlSessionTemplate sst) {
-		return sst.selectList("contactsMapper.selectList");
+	public List<ContactsVo> selectList(SqlSessionTemplate sst, PageVo pv) {
+		
+		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+		RowBounds rb = new RowBounds(offset , pv.getBoardLimit());
+		
+		return sst.selectList("contactsMapper.selectList", null , rb);
 	}
 
 	//주소록 삭제
@@ -41,6 +47,12 @@ public class ContactsDaoImpl implements ContactsDao{
 	@Override
 	public int updateOne(SqlSessionTemplate sst, ContactsVo vo) {
 		return sst.update("contactsMapper.updateOne", vo);
+	}
+
+	//주소록 게시글 갯수 조회
+	@Override
+	public int selectCountAll(SqlSessionTemplate sst) {
+		return sst.selectOne("contactsMapper.selectCountAll");
 	}
 
 	

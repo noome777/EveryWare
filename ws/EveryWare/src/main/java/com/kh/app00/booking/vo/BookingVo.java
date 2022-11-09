@@ -10,7 +10,7 @@ public class BookingVo {
 	private String bkWriter;
 	private String bkType;
 	private String bkStart;
-	private String StartTime;
+	private String startTime;
 	private String bkEnd;
 	private String endTime;
 	private String bkStatus;

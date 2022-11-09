@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.app00.common.PageVo;
 import com.kh.app00.contacts.dao.ContactsDao;
 import com.kh.app00.contacts.vo.ContactsVo;
 
@@ -24,8 +25,8 @@ public class ContactsServiceImpl implements ContactsService{
 
 	//주소록 목록
 	@Override
-	public List<ContactsVo> selectList() {
-		return dao.selectList(sst);
+	public List<ContactsVo> selectList(PageVo pv) {
+		return dao.selectList(sst, pv);
 	}
 
 	//주소록 삭제
@@ -50,6 +51,12 @@ public class ContactsServiceImpl implements ContactsService{
 	@Override
 	public int edit(ContactsVo vo) {
 		return dao.updateOne(sst , vo);
+	}
+
+	//주소록 게시글 갯수 조회
+	@Override
+	public int selectTotalCnt() {
+		return dao.selectCountAll(sst);
 	}
 
 }

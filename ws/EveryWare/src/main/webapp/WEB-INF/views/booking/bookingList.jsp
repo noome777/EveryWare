@@ -26,6 +26,9 @@
 .booking-label{
 	margin-top:20px;
 }
+.btn-secondary{
+	margin: 5px;
+}
 </style>
 </head>
 
@@ -48,19 +51,20 @@
                 </div>
                 
 	           <!-- 카테고리 -->
-		       <div class="form-group mb-3">
-		         <select class="custom-select" id="custom-select">
-		           <option selected>전체</option>
-		           <option value="1">비품</option>
-		           <option value="2">회의실</option>
-		         </select>
-		       </div>
+			       <div class="form-group mb-3">
+			         <select class="custom-select" id="custom-select">
+			           <option selected>전체</option>
+			           <option value="1">비품</option>
+			           <option value="2">회의실</option>
+			         </select>
+			       </div>
+			         <button type="submit" class="btn btn-secondary">Search</button>
 	       
                 <div class="col-auto">
                   
                   <!-- Button modal -->
                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#defaultModal"><span class="fe fe-filter fe-12 mr-2"></span> Create </button>
-                  <button type="button" class="btn btn-secondary"><span class="fe fe-trash fe-12 mr-2"></span>Delete</button>
+                  
                    
                   <!-- Modal boutton-->
                   <form action="${root}/booking/write" method="POST"> 
@@ -86,6 +90,7 @@
                           <option value="1">빔프로젝트</option>
                           <option value="2">커피머신</option>
                           <option value="3">박스테이프</option>
+                          <option value="4">미팅룸 1</option>
                         </select>
                  
 	                 	  <!-- 예약일자 -->       
@@ -147,7 +152,7 @@
                     <tbody>
                     
                     <c:forEach items="${bList}" var="list">
-                    <c:if test="${not empty loginMember}">
+                    <c:if test="${ list.bkWriter eq loginMember.empCode }">
                     
                       <tr>
                         
@@ -161,13 +166,13 @@
                           <small class="mb-0 text-muted">${list.bkType}</small>
                         </td>
                         <td>
-                          <p class="mb-0 text-muted"> ${list.bkStart}부터 <br> ${list.bkEnd} 까지 </p>
+                          <p class="mb-0 text-muted"> ${list.bkStart} ${list.startTime} 부터 <br> ${list.bkEnd} ${list.endTime} 까지 </p>
                         </td>
                         <td>
                           <span class="badge badge-primary">예약중</span>
                         </td>
                         <td>
-                          <button class="returnBtn" onclick="javascript:btn()"><span class="badge badge-primary">반납하기</span></button>
+                          <button class="returnBtn" onclick="location.href='${root}/booking/bookingList/${list.bkNo}';"><span class="badge badge-primary">반납하기</span></button>
                         </td> 
                       </tr>
                     </c:if>
@@ -199,9 +204,7 @@
       
     </div> <!-- .wrapper -->
     
-    <script>
-		function btn(){ alert('반납 처리 되었습니다.'); }
-	</script>
+    
 
 </body>
 </html>

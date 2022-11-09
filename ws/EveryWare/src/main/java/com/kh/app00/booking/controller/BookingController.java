@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -63,9 +64,22 @@ public class BookingController {
 		}
 	}
 	
-	
-	
 	//예약 삭제
+	@GetMapping("bookingList/{no}")
+	public String delete(@PathVariable String no , HttpSession session , Model model) {
+		
+		int result = service.delete(no);
+		
+		if(result == 1) {
+			//삭제성공
+			session.setAttribute("alertMsg", "반납 처리 되었습니다.");
+			return "redirect:/booking/bookingList";
+		}else {
+			//삭제실패
+			model.addAttribute("msg", "반납 실패하였습니다.");
+			return "booking/bookingList";
+		}
+	}
 	
 	//예약 수정
 	

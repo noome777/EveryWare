@@ -33,4 +33,10 @@ public class BookingServiceImpl implements BookingService{
 		return dao.write(sst, vo);
 	}
 
+	//예약 삭제
+	@Override
+	public int delete(String no) {
+		return dao.delete(sst, no);
+	}
+
 }

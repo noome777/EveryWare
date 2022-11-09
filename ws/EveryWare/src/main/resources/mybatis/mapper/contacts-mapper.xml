@@ -73,6 +73,10 @@
 			WHERE CON_NO = #{conNo}
 	</update>
 
+	<!-- 주소록 게시글 갯수 조회 -->
+	<select id="selectCountAll" resultType="int">
+		SELECT COUNT(*) FROM CONTACTS
+	</select>
  
  
 </mapper>
