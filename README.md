@@ -1,5 +1,7 @@
-![EveryWareLogo](https://user-images.githubusercontent.com/98254235/200833238-c3e4dfb4-cc11-4448-9203-010174b18a94.png)
+![크기변환 EveryWareLogo](https://user-images.githubusercontent.com/98254235/200834309-07d249d2-9f61-41be-9fa8-64a276023850.png)
 
 
-# EveryWare
+<br>
+
+# EveryWare - 그룹웨어 프로젝트
 
