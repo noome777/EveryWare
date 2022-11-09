@@ -87,7 +87,7 @@
 
 			<h2 id="mailall">받은 메일함</h2>
 			<br>
-			<form action="${root}/mail/mailSearchreceive/${pno}" method="get" name="ms" onsubmit="return Checkform">
+			<form action="${root}/mail/mailSearchreceive/${pno}" method="get" name="mr" onsubmit="return Checkform">
 			<div class="form-group row " style="margin-left: 3px;">
 				<div class="w100" style="padding-right: 10px">
 					<select class="form-control form-control-sm" name="searchType" id="searchType"
@@ -138,12 +138,7 @@
 						<tbody>
 							<c:forEach items="${receiveList}" var="r">
 
-								<input type="hidden" id="mailReceiver" class="mailReceiver"
-									value="${r.mailReceiver}" />
-								<c:set var="mailId" value="${r.mailReceiver}" />
 								<c:set var="mailSend" value="${r.mailSender}" />
-								<c:if
-									test="${r.mailDelete eq null && loginMember.empId ne fn:split(mailSend,'@')[0] && loginMember.empId eq fn:split(mailId,'@')[0]}">
 									<tr
 										onclick="location.href='${root}/mail/mailDetail/${r.mailCode}'">
 										<td><input type="checkbox" name="RowCheck"
@@ -161,7 +156,6 @@
 										<td id="mSenddate" onclick="event.stopPropagation()">${r.mailSenddate}</td>
 
 									</tr>
-								</c:if>
 							</c:forEach>
 						</tbody>
 					</table>
@@ -201,8 +195,8 @@
 		});
 		
 		function Checkform() {
-		    if( ms.keyword.value == "" ) {
-		      ms.keyword.focus();
+		    if( mr.keyword.value == "" ) {
+		      mr.keyword.focus();
 		      alert("내용을 입력해주세요.");
 		      
 		      return false;

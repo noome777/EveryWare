@@ -46,7 +46,6 @@ public class NoticeController {
 		model.addAttribute("nList", nList);
 		model.addAttribute("pv", pv);
 		
-		System.out.println(nList);
 		
 		return "notice/noticeMain";
 

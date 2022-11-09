@@ -39,10 +39,10 @@
 	<main role="main" class="main-content">
 		<h2 id="mailall">메일 쓰기</h2>
 		<br>
-		<form action="/app00/mail/write" method="post"
+		<form action="" method="post"
 			enctype="multipart/form-data">
 		<div class="buttonSet">
-			<button type="submit" id="sendBtn" class="btn btn-primary">보내기</button>
+			<input type="submit" id="sendBtn" class="btn btn-primary" value="작성하기">
 			<input type="button" id="cancelBtn" class="btn btn-primary" value="취소" onclick="history.back(-1)">
 			
 		</div>

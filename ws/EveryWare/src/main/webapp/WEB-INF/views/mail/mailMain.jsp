@@ -139,13 +139,7 @@
 						</tr>
 						<tbody>
 							<c:forEach items="${mList}" var="m">
-
-								<input type="hidden" id="mailReceiver" class="mailReceiver"
-									value="${m.mailReceiver}" />
-								<c:set var="mailId" value="${m.mailReceiver}" />
 								<c:set var="mailSend" value="${m.mailSender}" />
-								<c:if
-									test="${m.mailDelete eq null && loginMember.empId eq fn:split(mailId,'@')[0] && loginMember.empId ne fn:split(mailSend,'@')[0] && loginMember.empId eq fn:split(mailId,'@')[0]}">
 									<tr class="tdtable1 tr"
 										onclick="location.href='${root}/mail/mailDetail/${m.mailCode}'">
 										<td><input type="checkbox" name="RowCheck"
@@ -163,7 +157,6 @@
 										<td id="mSenddate" onclick="event.stopPropagation()">${m.mailSenddate}</td>
 										
 									</tr>
-								</c:if>
 							</c:forEach>
 						</tbody>
 					</table>

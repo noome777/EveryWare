@@ -110,10 +110,8 @@
 							<tbody>
 								<c:forEach items="${selfList}" var="s">
 										
-								<input type="hidden" id="mailSender" class="mailSender" value="${s.mailSender}"/>
 										<c:set var = "mailSend" value="${s.mailSender}"/>
 										<c:set var = "mailReceive" value="${s.mailReceiver}"/>
-									<c:if test="${s.mailDelete eq null && loginMember.empId eq fn:split(mailSend,'@')[0] && loginMember.empId eq fn:split(mailReceive,'@')[0]}">
 										<tr onclick="location.href='${root}/mail/mailDetail/${s.mailCode}'">
 											<td><input type="checkbox" name="RowCheck"
 												class="RowCheck" value="${s.mailCode}"  onclick="event.stopPropagation()"></td>
@@ -121,7 +119,6 @@
 											<td id="mSenddate">${s.mailSenddate}</td>
 											
 										</tr>
-									</c:if>
 								</c:forEach>
 							</tbody>
 						</table>

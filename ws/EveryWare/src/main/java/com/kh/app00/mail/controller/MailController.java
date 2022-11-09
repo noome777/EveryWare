@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -36,13 +37,18 @@ public class MailController {
 	}
 
 	@GetMapping("mailMain/{pno}")
-	public String mailMain(Model model,@PathVariable int pno ) throws Exception {
+	public String mailMain(Model model,@PathVariable int pno,EmpVo evo,HttpSession session,MailVo mvo )  {
+		
+		EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
+		String id = loginMember.getEmpId()+"@everyware.com";
+
+		mvo.setEmpCode(id);
 		
 		
 		int totalCount = ms.selectTotalCnt();
 		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
 		
-		List<MailVo> mList = ms.selectList(pv);
+		List<MailVo> mList = ms.selectList(id,pv);
 		
 		model.addAttribute("mList", mList);
 		model.addAttribute("pv",pv);
@@ -52,21 +58,62 @@ public class MailController {
 	
 	@GetMapping("mailSearch/{pno}")
 	public String mailSearch(Model model,@PathVariable int pno
-			,String mailTitle, MailVo mvo, String mailSender, EmpVo evo, HttpSession session  
-			,String searchType, String keyword, String search
+			, MailVo mvo,EmpVo evo, HttpSession session  
+			,String searchType, String keyword
 	) {
 		
-		// 파라미터로 값 3개 (서치타입 , 키워드 , 서치) 받기
+		EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
+		String id = loginMember.getEmpId()+"@everyware.com";
 	
-		// 3개 잘 전달되었나 출력해보기
+		mvo.setEmpCode(id);
+		mvo.setSearchType(searchType);
+		mvo.setKeyword(keyword);
+		
+		
+		if(keyword != "" ) {
+			
+			int totalCount = ms.selectSearchTotalCnt();
+			PageVo pv2 = Pagination.getPageVo(totalCount, pno, 5, 10);
+			
+			List<MailVo> searchList = ms.selectSearchList(id,searchType, keyword, pv2);
+			
+			model.addAttribute("mList", searchList);
+			model.addAttribute("pv",pv2);
+			
+			
+		}else if( keyword == "" ){
+		
+		int totalCount = ms.selectTotalCnt();
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
+		
+		List<MailVo> mList = ms.selectList(id,pv);
+		
+		model.addAttribute("mList", mList);
+		model.addAttribute("pv",pv);
+		
+		
+	}
+		return "mail/mailMain";
+	}
+	
+	@GetMapping("mailSearchreceive/{pno}")
+	public String mailSearchreceive(Model model,@PathVariable int pno
+			, MailVo mvo,EmpVo evo, HttpSession session  
+			,String searchType, String keyword, String search
+	) {
+		EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
+		String id = loginMember.getEmpId()+"@everyware.com";
+
+		mvo.setEmpCode(id);
+	
 		
 		
 		if(searchType != "" && keyword != "" && search != "" ) {
 			
-			int totalCount = ms.selectSearchTotalCnt(mvo);
+			int totalCount = ms.selectSearchTotalCnt();
 			PageVo pv2 = Pagination.getPageVo(totalCount, pno, 5, 10);
 			
-			List<MailVo> searchList = ms.selectSearchList(mvo, pv2);
+			List<MailVo> searchList = ms.selectSearchList(id, pv2);
 			
 			model.addAttribute("mList", searchList);
 			model.addAttribute("pv",pv2);
@@ -77,14 +124,14 @@ public class MailController {
 		int totalCount = ms.selectTotalCnt();
 		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
 		
-		List<MailVo> mList = ms.selectList(pv);
+		List<MailVo> receiveList = ms.selectList(id,pv);
 		
-		model.addAttribute("mList", mList);
+		model.addAttribute("receiveList", receiveList);
 		model.addAttribute("pv",pv);
 		
 		
 	}
-		return "mail/mailMain";
+		return "mail/mailReceive";
 	}
 	
 	
@@ -280,7 +327,7 @@ public class MailController {
 		
 		if (result == 1) {
 			session.setAttribute("alertMsg", "답장 성공!");
-			return "redirect:/mail/mailMain";
+			return "redirect:/mail/mailMain/1";
 		} else {
 			model.addAttribute("msg", "답장 작성 실패...");
 			return "error/errorPage";
@@ -289,14 +336,20 @@ public class MailController {
 		
 		
 	}
+
 	
 	@GetMapping("receive/{pno}")
-	public String mailReceive(Model model,@PathVariable int pno) {
+	public String mailReceive(Model model,@PathVariable int pno,EmpVo evo,HttpSession session,MailVo mvo ) {
+		
+		EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
+		String id = loginMember.getEmpId()+"@everyware.com";
+
+		mvo.setEmpCode(id);
 		
 		int totalCount = ms.selectTotalCnt();
 		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
 		
-		List<MailVo> receiveList = ms.selectRelist(pv);
+		List<MailVo> receiveList = ms.selectRelist(id,pv);
 		
 		model.addAttribute("receiveList", receiveList);
 		model.addAttribute("pv",pv);
@@ -308,12 +361,17 @@ public class MailController {
 	
 	
 	@GetMapping("send/{pno}")
-	public String mailSend(Model model, @PathVariable int pno) {
+	public String mailSend(Model model, @PathVariable int pno,EmpVo evo,HttpSession session,MailVo mvo ) {
+		
+		EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
+		String id = loginMember.getEmpId()+"@everyware.com";
+
+		mvo.setEmpCode(id);
 		
 		int totalCount = ms.selectTotalCnt();
 		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
 		
-		List<MailVo> sendList = ms.selectSendlist();
+		List<MailVo> sendList = ms.selectSendlist(id,pv);
 		
 		model.addAttribute("sendList", sendList);
 		model.addAttribute("pv",pv);
@@ -329,7 +387,7 @@ public class MailController {
 		int totalCount = ms.selectDeleteCnt();
 		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
 		
-		List<MailVo> trashList = ms.selectTrashlist();
+		List<MailVo> trashList = ms.selectTrashlist(pv);
 		
 		model.addAttribute("trashList", trashList);
 		model.addAttribute("pv",pv);
@@ -442,7 +500,7 @@ public class MailController {
 		
 		if (result == 1) {
 			session.setAttribute("alertMsg", "메일 작성 성공!");
-			return "redirect:/mail/mailMain";
+			return "redirect:/mail/mailSelf";
 		} else {
 			model.addAttribute("msg", "메일 작성 실패...");
 			return "error/errorPage";
@@ -458,7 +516,7 @@ public class MailController {
 		int totalCount = ms.selectTotalCnt();
 		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
 		
-		List<MailVo> selfList = ms.selectSelflist();
+		List<MailVo> selfList = ms.selectSelflist(pv);
 		
 		model.addAttribute("selfList", selfList);
 		model.addAttribute("pv",pv);

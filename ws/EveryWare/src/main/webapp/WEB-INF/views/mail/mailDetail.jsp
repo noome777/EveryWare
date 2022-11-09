@@ -20,6 +20,8 @@
 </style>
 </head>
 <body>
+<!-- <img alt="zzzzz" src="/app00/resources/upload/${vo.fileName}"> -->
+<!-- <a download href="/app00/resources/upload/1666785735243_25660.jpg"></a> -->
 	<div class="wrapper" style="background-color: white">
 
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
