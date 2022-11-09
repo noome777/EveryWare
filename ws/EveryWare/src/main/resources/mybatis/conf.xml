@@ -62,6 +62,8 @@
 		<!-- 예약 -->
 		<typeAlias alias="BookingVo" type="com.kh.app00.booking.vo.BookingVo"/>
 		
+		<!-- 알람 -->
+		<typeAlias alias="AlarmVo" type="com.kh.app00.alarm.vo.AlarmVo"/>
 	</typeAliases>
 	
 </configuration>
