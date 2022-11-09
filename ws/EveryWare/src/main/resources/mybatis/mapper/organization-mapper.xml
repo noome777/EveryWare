@@ -500,7 +500,7 @@
 	</select>
 	
 	<insert id="insertDept" parameterType="java.util.Map">
-		<foreach collection="highDepList"  index="index" open="DECLARE BEGIN" close="; END;"  separator=";"> 
+		<foreach collection="highDeptList"  index="index" open="DECLARE BEGIN" close="; END;"  separator=";"> 
 			INSERT INTO DEPT (
 				DEPT_CODE
 				, DEPT_NAME
@@ -511,10 +511,68 @@
 				SEQ_DEPT_NO.NEXTVAL
 				, #{addDeptList[${index}]}
 				, #{highDeptList[${index}]}
-				, #{deptDepthList[${index}]}+1
-				)
+				, (
+					SELECT DEPT_DEPTH 
+					FROM DEPT 
+					WHERE DEPT_CODE = #{highDeptList[${index}]}
+				)+1
+			)
 		 </foreach>
 	</insert>
+	
+	<select id="selectDeptListForEdit" resultType="DeptVo">
+		SELECT 
+			LPAD(' ' , 3*(LEVEL-1)) || A.DEPT_NAME AS DEPT_NAME
+			 , A.DEPT_CODE
+		     , A.DEPT_DEPTH
+		     , A.HIGH_DEPT_CODE
+		     , (CASE 
+	           WHEN A.HIGH_DEPT_CODE = null THEN A.DEPT_NAME
+	           WHEN A.HIGH_DEPT_CODE = B.DEPT_CODE THEN B.DEPT_NAME
+	          END) AS HIGH_DEPT_NAME
+  		FROM DEPT A
+		LEFT OUTER JOIN DEPT B
+		ON A.HIGH_DEPT_CODE = B.DEPT_CODE
+	    WHERE A.DEPT_STATUS = 'N'
+		START WITH A.DEPT_CODE = 1
+		CONNECT BY PRIOR A.DEPT_CODE = A.HIGH_DEPT_CODE
+	</select>
+	
+	<update id="updateDept" parameterType="java.util.Map">
+		<foreach collection="highDeptList" index="index" open="DECLARE BEGIN" close="; END;"  separator=";"> 
+				UPDATE DEPT
+				SET
+					HIGH_DEPT_CODE = #{highDeptList[${index}]}
+					, DEPT_DEPTH = (
+							SELECT DEPT_DEPTH 
+							FROM DEPT 
+							WHERE DEPT_CODE = #{highDeptList[${index}]}
+						)+1
+					, DEPT_NAME = #{editDeptList[${index}]}
+				WHERE 
+					DEPT_CODE = #{deptCodeList[${index}]}
+		 </foreach>
+	</update>
+	
+	<update id="updateRowDept" parameterType="java.util.Map">
+		<foreach collection="deptCodeList"  index="index" open="DECLARE BEGIN" close="; END;"  separator=";"> 
+				UPDATE DEPT
+				SET
+					HIGH_DEPT_CODE = HIGH_DEPT_CODE = (
+			                SELECT HIGH_DEPT_CODE
+			                FROM DEPT
+			                WHERE DEPT_CODE = #{deptCodeList[${index}]}
+			            )
+					, DEPT_DEPTH = (
+							SELECT DEPT_DEPTH 
+							FROM DEPT 
+							WHERE DEPT_CODE = #{deptCodeList[${index}]}
+						)
+				WHERE 
+					HIGH_DEPT_CODE = #{deptCodeList[${index}]}
+		 </foreach>
+	</update>
+	
 	
 </mapper>
 

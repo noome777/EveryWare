@@ -467,187 +467,197 @@ padding: 10px;
         
         <c:forEach items="${empList}" var="empList">
 	
-          <div class="modal fade" id="emp-profile-${empList.empCode}" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" >임직원 상세정보</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <form action="${root}/organization/management/emp/update/selectOne" method="post">
-                  
-                  <div class="modal-body profile-wrap"> 
-                    <div class="profile-img-wrap">
-                      <div class="avatar avatar-xl">
-                          <c:choose>
-                                    <c:when test="${empty empList.empProfileName}">
-                                      <img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle ${empList.empCode}-profile" >
-                                     </c:when>
-                                     <c:otherwise>
-                                        <img src="${root}/resources/upload/profile/${empList.empProfileName}" alt="..." class="avatar-img rounded-circle ${empList.empCode}-profile" >
-                                     </c:otherwise>
-                                   </c:choose>
-                       </div>
+      <div class="modal fade" id="emp-profile-${empList.empCode}" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" >임직원 상세정보</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            <form action="${root}/organization/management/emp/update/one" method="post">
+              
+              <div class="modal-body profile-wrap"> 
+                <div class="profile-img-wrap">
+                  <div class="avatar avatar-xl">
+                      <c:choose>
+                              	<c:when test="${empty empList.empProfileName}">
+                           	 		<img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle ${empList.empCode}-profile" >
+                           	  	</c:when>
+                           	  	<c:otherwise>
+                           	   		<img src="${root}/resources/upload/profile/${empList.empProfileName}" alt="..." class="avatar-img rounded-circle ${empList.empCode}-profile" >
+                           	  	</c:otherwise>
+                           	  </c:choose>
+                   </div>
+                </div>
+                <div class="profile-texts-wrap">
+                  <div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted ${empList.empCode}-name"><strong>이름</strong></p>
                     </div>
-                    <div class="profile-texts-wrap">
-                      <div class="flex-items">
-                        <div>
-                          <p class="mb-0 text-muted ${empList.empCode}-name"><strong>이름</strong></p>
-                        </div>
-                        <div>
-                          <p class="mb-0">${empList.empName}</p>
-                        </div>
-                      </div>
-                      <div class="flex-items">
-                        <div>
-                          <p class="mb-0 text-muted"><strong>사번</strong></p>
-                        </div>
-                        <div>
-                          <p class="mb-0">${empList.empCode}</p>
-                        </div>
-                      </div>
-                      <div class="flex-items">
-                        <div>
-                          <p class="mb-0 text-muted "><strong>아이디</strong></p>
-                        </div>
-                        <div>
-                          <p class="mb-0">${empList.empId}</p>
-                        </div>
-                      </div>
-                      <div class="flex-items">
-                        <div>
-                          <p class="mb-0 text-muted"><strong>비밀번호</strong></p>
-                        </div>
-                        <div>
-                          <input type="password" name="empPwd" class="mb-0 modal-birthday-area ${empList.empCode}-pwd hide-input" placeholder="*****">
-                        </div>
-                      </div>
-                      <div class="flex-items">
-                        <div>
-                          <p class="mb-0 text-muted"><strong>직위</strong></p>
-                        </div>
-                        <div>
-                          <p class="mb-0 modal-rank-area ${empList.empCode}-rank">${empList.rankName}</p>
-                        </div>
-                      </div>
-                      <div class="flex-items">
-                        <div>
-                          <p class="mb-0 text-muted"><strong>직무</strong></p>
-                        </div>
-                        <div>
-                          <p class="mb-0 modal-job-area ${empList.empCode}-job">${empList.jobName}</p>
-                        </div>
-                      </div>
-                      <div class="flex-items">
-                        <div>
-                          <p class="mb-0 text-muted"><strong>소속</strong></p>
-                        </div>
-                        <div>
-                          <p class="mb-0 modal-dept-area ${empList.empCode}-dept">${empList.deptName}</p>
-                        </div>
-                      </div>
-                      <div class="flex-items">
-                        <div>
-                          <p class="mb-0 text-muted"><strong>생년월일</strong></p>
-                        </div>
-                        <div>
-                          <input type="date" name="empBirthday" class="mb-0 modal-birthday-area ${empList.empCode}-birth hide-input" value="${empList.empBirthday}">
-                        </div>
-                      </div>
-                      <div class="flex-items">
-                        <div>
-                          <p class="mb-0 text-muted" ><strong>사내전화</strong></p>
-                        </div>
-                        <div>
-                          <input type="tel" name="empTel" class="mb-0 modal-phone-area ${empList.empCode}-tel hide-input" value="${empList.empTel}">
-                        </div>
-                      </div>
-                      <div class="flex-items">
-                        <div>
-                          <p class="mb-0 text-muted"><strong>휴대전화</strong></p>
-                        </div>
-                        <div>
-                          <input type="tel" name="empPhone" class="mb-0 modal-phone-area ${empList.empCode}-phone hide-input" value="${empList.empPhone}">
-                        </div>
-                      </div>
-                      <div class="flex-items">
-                        <div>
-                          <p class="mb-0 text-muted" ><strong>e-mail</strong></p>
-                        </div>
-                        <div>
-                          <input type="email" name="empEMail" class="mb-0 modal-phone-area ${empList.empCode}-email hide-input" value="${empList.empEMail}">
-                        </div>
-                      </div>
-                      <div class="flex-items">
-                        <div>
-                          <p class="mb-0 text-muted"><strong>자택주소1</strong></p>
-                        </div>
-                        <div>
-                          <input type="text" name="empAddress1"  class="hide-input ${empList.empCode}-addr1" value="${empList.empAddress1}" placeholder="${empList.empAddress1}">
-    
-                        </div>
-                      </div>
-                      <div class="flex-items">
-                        <div>
-                          <p class="mb-0 text-muted" ><strong>자택주소2</strong></p>
-                        </div>
-                        <div>
-                            <input type="text" name="empAddress2"  class="hide-input ${empList.empCode}-addr2" value="${empList.empAddress2}" placeholder="${empList.empAddress2}">
-                        </div>
-                      </div>
-                      <div class="flex-items">
-                        <div>
-                          <p class="mb-0 text-muted" ><strong>입사일</strong></p>
-                        </div>
-                        <div>
-                          <input type="date" name="empJoinDate" class="mb-0 modal-birthday-area ${empList.empCode}-jDate hide-input" value="${empList.empJoinDate}">
-                        </div>
-                      </div>
-                      <div class="flex-items">
-                        <div>
-                          <p class="mb-0 text-muted"><strong>진급일</strong></p>
-                        </div>
-                        <div>
-                          <p class="mb-0 ${empList.empCode}-pDate">${empList.empPromotionDate}</p>
-                        </div>
-                      </div>
-                      <div class="flex-items">
-                        <div>
-                          <p class="mb-0 text-muted"><strong>권한</strong></p>
-                        </div>
-                        <div>
-                          <p class="mb-0 ${empList.empCode}-right">${empList.rightName}</p>
-                        </div>
-                      </div>
-                      <div class="flex-items">
-                        <div>
-                          <p class="mb-0 text-muted" ><strong>재직상태</strong></p>
-                        </div>
-                        <div>
-                          <p class="mb-0 modal-right-area ${empList.empCode}-status">
-                              <c:if test="${empList.empStatus eq 'N'}">
-                                  일반
-                                </c:if>
-                                <c:if test="${empList.empStatus eq 'R'}">
-                                  휴직
-                                </c:if>
-                          </p>
-                        </div>
-                      </div>
+                    <div>
+                      <p class="mb-0">${empList.empName}</p>
                     </div>
                   </div>
-                  <div class="modal-footer">
-                    <input type="submit" class="btn mb-2 btn-primary" value="저장"></input>
-                    <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
+                  <div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted"><strong>사번</strong></p>
+                    </div>
+                    <div>
+                      <p class="mb-0">${empList.empCode}</p>
+                      <input type="hidden" name="empCode" value="${empList.empCode}">
+                    </div>
                   </div>
-                </form>
+                  <div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted "><strong>아이디</strong></p>
+                    </div>
+                    <div>
+                      <p class="mb-0">${empList.empId}</p>
+                    </div>
+                  </div>
+                  <div class="flex-items">
+
+                    <!--비밀번호 유효성 검사 (서비스/프론트)-->
+                    <div>
+                      <p class="mb-0 text-muted"><strong>비밀번호</strong></p>
+                    </div>
+                    <div>
+                      <input type="password" name="empPwd" class="mb-0 modal-birthday-area ${empList.empCode}-pwd hide-input" placeholder="*****">
+                    </div>
+                  </div>
+                  <div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted"><strong>직위</strong></p>
+                    </div>
+                    <div>
+                      <p class="mb-0 modal-rank-area ${empList.empCode}-rank">${empList.rankName}</p>
+                    </div>
+                  </div>
+                  <div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted"><strong>직무</strong></p>
+                    </div>
+                    <div>
+                      <p class="mb-0 modal-job-area ${empList.empCode}-job">${empList.jobName}</p>
+                    </div>
+                  </div>
+                  <div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted"><strong>소속</strong></p>
+                    </div>
+                    <div>
+                      <p class="mb-0 modal-dept-area ${empList.empCode}-dept">${empList.deptName}</p>
+                    </div>
+                  </div>
+                  <div class="flex-items">
+
+                    <!--특정날짜 유효성검사-->
+                    <div>
+                      <p class="mb-0 text-muted"><strong>생년월일</strong></p>
+                    </div>
+                    <div>
+                      <input type="date" name="empBirthday" class="mb-0 modal-birthday-area ${empList.empCode}-birth hide-input" value="${empList.empBirthday}">
+                    </div>
+                  </div>
+                  <div class="flex-items">
+                    <!--사내전화 유효성검사-->
+                    <div>
+                      <p class="mb-0 text-muted" ><strong>사내전화</strong></p>
+                    </div>
+                    <div>
+                      <input type="tel" name="empTel" class="mb-0 modal-phone-area ${empList.empCode}-tel hide-input" value="${empList.empTel}">
+                    </div>
+                  </div>
+                  <div class="flex-items">
+                    <!--휴대전화 유효성검사-->
+                    <div>
+                      <p class="mb-0 text-muted"><strong>휴대전화</strong></p>
+                    </div>
+                    <div>
+                      <input type="tel" name="empPhone" class="mb-0 modal-phone-area ${empList.empCode}-phone hide-input" value="${empList.empPhone}">
+                    </div>
+                  </div>
+                  <div class="flex-items">
+                    <!--email 유효성검사-->
+                    <div>
+                      <p class="mb-0 text-muted" ><strong>e-mail</strong></p>
+                    </div>
+                    <div>
+                      <input type="email" name="empEMail" class="mb-0 modal-phone-area ${empList.empCode}-email hide-input" value="${empList.empEMail}">
+                    </div>
+                  </div>
+                  <div class="flex-items">
+
+                    <!--도로명주소 api 확인-->
+                    <div>
+                      <p class="mb-0 text-muted"><strong>자택주소1</strong></p>
+                    </div>
+                    <div>
+                      <input type="text" name="empAddress1"  class="hide-input find-addr ${empList.empCode}-addr1" value="${empList.empAddress1}" placeholder="${empList.empAddress1}" data-id="${empList.empCode}">
+
+                    </div>
+                  </div>
+                  <div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted" ><strong>자택주소2</strong></p>
+                    </div>
+                    <div>
+                      	<input type="text" name="empAddress2"  class="hide-input ${empList.empCode}-addr2" value="${empList.empAddress2}" placeholder="${empList.empAddress2}">
+                    </div>
+                  </div>
+                  <div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted" ><strong>입사일</strong></p>
+                    </div>
+                    <div>
+                      <input type="date" name="empJoinDate" class="mb-0 modal-birthday-area ${empList.empCode}-jDate hide-input" value="${empList.empJoinDate}">
+                    </div>
+                  </div>
+                  <div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted"><strong>진급일</strong></p>
+                    </div>
+                    <div>
+                      <p class="mb-0 ${empList.empCode}-pDate">${empList.empPromotionDate}</p>
+                    </div>
+                  </div>
+                  <div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted"><strong>권한</strong></p>
+                    </div>
+                    <div>
+                      <p class="mb-0 ${empList.empCode}-right">${empList.rightName}</p>
+                    </div>
+                  </div>
+                  <div class="flex-items">
+                    <div>
+                      <p class="mb-0 text-muted" ><strong>재직상태</strong></p>
+                    </div>
+                    <div>
+                      <p class="mb-0 modal-right-area ${empList.empCode}-status">
+                     		 <c:if test="${empList.empStatus eq 'N'}">
+	                          	일반
+	                          </c:if>
+	                          <c:if test="${empList.empStatus eq 'R'}">
+	                          	휴직
+	                          </c:if>
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
+              <div class="modal-footer">
+                <input type="submit" class="btn mb-2 btn-primary" value="저장"></input>
+                <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">취소</button>
+              </div>
+      			</form>
             </div>
-          
-        </c:forEach>
+          </div>
+        </div>
+      
+    </c:forEach>
     
     <!-- 직위 변경 모달 -->
     <div class="modal fade" id="changeRank-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
@@ -1191,6 +1201,33 @@ padding: 10px;
            }
        });
 	}
+</script>
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+<script>
+
+$(document).ready(function() {
+
+  $('.find-addr').click(function() {
+
+    const id = $(this).attr("data-id");
+    var addrSpace = $("input[data-id="+ id + "]");
+
+    new daum.Postcode({
+
+      oncomplete : function(data) {
+
+        var roadAddr = data.roadAddress;
+
+        addrSpace.val(roadAddr);
+
+
+
+      }
+    }).open();
+  })
+});
 </script>
 
   

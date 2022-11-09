@@ -119,7 +119,15 @@ public interface OrganizationDao {
 	//부서관리 - 부서 추가
 	int insertDept(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> insertTarget);
 
+	//부서관리 - 부서 수정을 위한 부서 선택
+	List<DeptVo> selectDeptListForEdit(SqlSessionTemplate sqlSessionTemplate);
 
+	//부서관리 - 부서 수정
+	int updateDept(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> updateTarget);
+
+
+	//부서관리 - 하위부서들 수정
+	int updateRowDept(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> updateTarget);
 
 
 }

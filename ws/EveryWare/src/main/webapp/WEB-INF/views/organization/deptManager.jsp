@@ -203,10 +203,18 @@
 		border-radius: 5px;
 		text-align: center;
 		color: gray;
+		width: 140px;
 	}
 
-	input[type="text"] {
+	input[type="text"], select {
 		color: gray;
+	}
+
+	.highDept-selector {
+		width: 140px;
+		border : 1px solid gray;
+		border-radius: 5px;
+		margin-left: 5px;
 	}
 
 	</style>
@@ -261,7 +269,7 @@
 								
 							</div>
 
-							<div id="dept-setting" class="shadow or-scroll-bar">
+							<div id="dept-setting" class="shadow">
 
 								<div id="dept-setting-flex">
 									<div id="dept-setting-btns">
@@ -279,17 +287,17 @@
 											</div>
 											<div id="option-btn-area">
 
-												<button id="addDeptBtn" class="shadow fade" onclick="openAddModal();">
+												<button id="addDeptBtn" class="shadow fade" onclick="return openAddModal();">
 													<strong>
 														<small>부서추가</small>
 													</strong>
 												</button>
-												<button id="editDeptBtn" class="shadow fade">
+												<button id="editDeptBtn" class="shadow fade" onclick="return openEditModal();">
 													<strong>
 														<small>부서수정</small>
 													</strong>
 												</button>
-												<button id="deleteDeptBtn" class="shadow fade">
+												<button id="deleteDeptBtn" class="shadow fade" onclick="return deleteDept();">
 													<strong>
 														<small>부서삭제</small>
 													</strong>
@@ -299,7 +307,7 @@
 
 									</div>
 
-									<div id="dept-result-area">
+									<div id="dept-result-area" class="or-scroll-bar">
 
 										<div id="table-padding">
 
@@ -310,26 +318,22 @@
 													<th>부서코드</th>
 													<th>부서이름</th>
 													<th>상위부서</th>
+													<th>부서레벨</th>
 													<th>임직원수</th>
 												  </tr>
 												</thead>
 												<tbody id="target">
 													
 												  <tr>
-													<td colspan="5"></td>
+													<td colspan="6"></td>
 												  </tr>
 												</tbody>
+
 											  </table>
-
 										</div>
-
-
 									</div>
 								</div>
-									
-
 							</div>
-
 						</div>
 					</div>
 				</div>
@@ -339,7 +343,7 @@
 		</div>
 
 
-		 <!-- 관리자 추가 모달 -->
+		 <!-- 부서 추가 모달 -->
 		 <div class="modal fade" id="add-dept-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 			  <div class="modal-content">
@@ -367,12 +371,49 @@
 				</div>
 				
 				<div class="modal-footer">
-				  <button type="button" class="btn mb-2 btn-primary" onclick="addDept();">추가</button>
-				  <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal" onclick="cleanAddModal();">취소</button>
+				  <button type="button" class="btn mb-2 btn-primary" onclick="return addDept();">추가</button>
+				  <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal" onclick="return cleanAddModal();">취소</button>
 				</div>
 			  </div>
 			</div>
 		  </div>
+
+		  <!-- 부서 수정 모달 -->
+		 <div class="modal fade" id="edit-dept-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title" >부서 수정</h5>
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				<div id="edit-dept-area" class="modal-body">
+					<table class="table table-borderless table-hover">
+					<thead>
+					  <tr>
+						<th></th>
+						<th>선택부서</th>
+						<th>상위부서</th>
+						<th>부서명</th>
+					  </tr>
+					</thead>
+					<tbody id="edit-target">
+					  <tr>
+						<td colspan="4"></td>
+					  </tr>
+					</tbody>
+				  </table>
+				</div>
+				
+				<div class="modal-footer">
+				  <button type="button" class="btn mb-2 btn-primary" onclick="return editDept();">수정</button>
+				  <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal" onclick="return cleanEditModal();">취소</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
+
 
 
 		
@@ -426,6 +467,9 @@
 			$(document).ready(function(){
 				getJson();
 			});
+
+
+			
 
 		
 
@@ -497,10 +541,11 @@
 			var result = jsonStr.pop();
 
 			$('#target').prepend(
-				'<tr>' + '<td><input type="checkbox" name="check" value="' + result['deptName']  +'" onchange="readCheckNum();" ></td>' + 
+				'<tr>' + '<td><input type="checkbox" name="check" value="' + result['deptName']  +'" onchange="readCheckNum();" level="' + result['deptDepth'] +'"></td>' + 
 				'<td>' + result['deptCode'] + '</td>' +
 				'<td>' + result['deptName'] + '</td>' +
 				'<td>' + result['highDeptName'] + '</td>' +
+				'<td>' + result['deptDepth'] + '</td>' +
 				'<td>' + result['empCount'] + "명" + '</td>' +
 				'</tr>'
 			);
@@ -514,6 +559,7 @@
 		}
 	</script>
 
+	<!--검색 시 초기화-->
 
 	<script>
 
@@ -529,6 +575,7 @@
 
 	</script>
 
+	<!--부서추가 모달-->
 
 	<script>
 
@@ -536,25 +583,39 @@
 
 			const checkBoxArr = [];
 			const highDeptArr = [];
+
+			const highDeptCode= $('input[type="checkbox"]:checked').parent().next();
+
+			let boolean = true;
+			
 			$('input:checkbox:checked').each(function(){
 				checkBoxArr.push($(this).val());
-				highDeptArr.push($('input[type="checkbox"]:checked').parent().next().text());
+				
+				var level = $(this).attr("level");
+
+				if(level==11) {
+					alert("부서는 총 11단계까지 개설할 수 있습니다.");
+					boolean = false;
+				} 
 			});
 
-			console.log(highDeptArr);
+			if(boolean==false) return false;
 
+
+			
 			for(var i = 0; i < checkBoxArr.length; ++i) {
+
+				highDeptArr.push(highDeptCode.eq(i).text());
+
 				
 				$('#add-target').prepend(
 
 					'<tr>' +
-						'<td>' +
-							'<input type="hidden" class="add-high-dept" depth-data="" value="">'	+					
-						'</td>'+
+						'<td class="fade add-high-dept">' + highDeptArr[i] + '</td>' +
 						'<td>' + 
 							checkBoxArr[i] + 
 						'</td>' +
-						'<td>' + 
+						'<td>' +
 							'<input type="text" name="deptName" class="tdInput add-dept-input" placeholder="부서명">' +
 						'</td>' + 
 					'</tr>'
@@ -566,6 +627,8 @@
 		}
 	
 	</script>
+
+	<!--부서추가모달 클리어-->
 
 	<script>
 
@@ -580,6 +643,7 @@
 
 	</script>
 
+	<!--부서추가-->
 
 	<script>
 
@@ -593,7 +657,7 @@
 				highDeptArr.push($(".add-high-dept").eq(i).text());
 				addDeptArr.push($(".add-dept-input").eq(i).val());
 			}
-			
+
 			$.ajax({
 					url:"${root}/organization/management/dept/add",
 					type:"POST",
@@ -607,30 +671,168 @@
 					},
 					success: function(data) {
 						
-						console.log("성공!");
+						if(data=="성공!") {
+							alert("부서추가에 성공하였습니다.");
+							window.location.href = "${root}/organization/management/dept";
+						} else {
+							alert("부서를 추가하는 과정에서 에러가 발생하였습니다.");
+						}
 
 					},
 					error:function (data) {
 						alert("에러 + " + data);
 					}
 			});
-			}
+		}
 			
 
 	
 	</script>
 
-
+	<!--수정 모달-->
 
 	<script>
 	function openEditModal() {
+
+		const checkBoxArr = [];
+		const highDeptArr = [];
+
+		const highDeptCode= $('input[type="checkbox"]:checked').parent().next();
+
+		$('input:checkbox:checked').each(function(){
+			checkBoxArr.push($(this).val());
+		});
+
+		
+		$.ajax({
+			url:"${root}/organization/management/dept/selectList",
+			type:"POST",
+			traditional : true,
+			dataType : "json",
+			async : false,
+			cache: false,
+			success: function(data) {
+
+				console.log(data[10]);
+				
+				var option = "";
+				var blank="";
+
+				for(var i=0; i<data.length; ++i) { 
+
+					
+					var result = data[i]; 
+
+					for(var j=0; j<result['deptDepth']; ++j) {
+						blank = blank + "&nbsp;";
+					}
+
+					option = option + "<option value=" + result['deptCode'] + ">" + blank + result['deptName'] + "</option>";
+					blank="";
+				}
+
+						
+				
+				for(var i = 0; i < checkBoxArr.length; ++i) {
+
+					highDeptArr.push(highDeptCode.eq(i).text());
+
+					$('#edit-target').prepend(
+
+						'<tr>' + 
+							'<td class="edit-high-dept">' + highDeptArr[i] + '</td>' +
+							'<td>' + checkBoxArr[i] + '</td>' + 
+							'<td>' + 
+								'<select name="highDeptCode" class="highDept-selector">' +
+									option +
+								'</select>' +
+							'</td>' +
+							'<td>' + 
+								'<input type="text" name="deptName" class="tdInput edit-dept-input" placeholder="부서명">' +
+							'</td>' + 
+						'</tr>'
+					);
+
+				}
+			},
+			error:function (data) {
+				alert("에러 + " + data);
+			}
+		});
+
 		$('#edit-dept-modal').modal();
 	}
 	
-	function openDeleteModal() {
-		$('#delete-dept-modal').modal();
-	}
 	
+	</script>
+
+	<script>
+
+		function cleanEditModal() {
+
+			var tbodyLength = $('#edit-target tr').length;
+
+			for(let i=0; i<tbodyLength; ++i) {
+				$('#edit-target > tr').eq(i).empty();
+			}
+		}
+
+	</script>
+
+	<script>
+
+		function editDept() {
+
+			console.log("???");
+
+			const highDeptArr = [];
+			const deptArr = [];
+			const editDeptArr = [];
+			
+
+			for(let i=0; i<$('.edit-high-dept').length; ++i) {
+				highDeptArr.push($(".edit-high-dept").eq(i).text());
+				deptArr.push($(".highDept-selector").eq(i).val());
+				editDeptArr.push($(".edit-dept-input").eq(i).val());
+			}
+
+			
+			$.ajax({
+					url:"${root}/organization/management/dept/edit",
+					type:"POST",
+					traditional : true,
+					dataType : "json",
+					async : false,
+					cache: false,
+					data : {
+						highDeptArr : highDeptArr,
+						deptArr : deptArr,
+						editDeptArr : editDeptArr
+					},
+					success: function(data) {
+						
+						if(data=="성공!") {
+							alert("부서수정에 성공하였습니다.");
+							window.location.href = "${root}/organization/management/dept";
+						} else {
+							alert("부서를 수정하는 과정에서 에러가 발생하였습니다.");
+						}
+
+					},
+					error:function (data) {
+						alert("에러 + " + data);
+					}
+			});
+
+		}
+	</script>
+
+
+	<!--부서 삭제-->
+	<script>
+		function deleteDept() {
+
+		}
 	</script>
 
 
