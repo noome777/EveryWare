@@ -22,8 +22,8 @@ public class MailServiceImpl implements MailService{
 
 
 	@Override
-	public List<MailVo> selectList(PageVo pv) {
-		return dao.selectList(sst,pv);
+	public List<MailVo> selectList(String id,PageVo pv) {
+		return dao.selectList(sst,id,pv);
 	}
 
 
@@ -40,8 +40,8 @@ public class MailServiceImpl implements MailService{
 
 
 	@Override
-	public List<MailVo> selectTrashlist() {
-		return dao.selectTrashlist(sst);
+	public List<MailVo> selectTrashlist(PageVo pv) {
+		return dao.selectTrashlist(sst, pv);
 	}
 
 
@@ -58,14 +58,14 @@ public class MailServiceImpl implements MailService{
 
 
 	@Override
-	public List<MailVo> selectSendlist() {
-		return dao.selectSendlist(sst);
+	public List<MailVo> selectSendlist(String id,PageVo pv) {
+		return dao.selectSendlist(sst,id, pv);
 	}
 
 
 	@Override
-	public List<MailVo> selectRelist() {
-		return dao.selectRelist(sst);
+	public List<MailVo> selectRelist(String id,PageVo pv) {
+		return dao.selectRelist(sst,id,pv);
 	}
 
 
@@ -82,8 +82,8 @@ public class MailServiceImpl implements MailService{
 
 
 	@Override
-	public List<MailVo> selectSelflist() {
-		return dao.selectSelflist(sst);
+	public List<MailVo> selectSelflist(PageVo pv) {
+		return dao.selectSelflist(sst, pv);
 	}
 
 
@@ -129,14 +129,17 @@ public class MailServiceImpl implements MailService{
 
 
 	@Override
-	public List<MailVo> selectSearchList(MailVo mailVo, PageVo pv2) {
-		return dao.selectSearchList(sst,mailVo, pv2);
+	public List<MailVo> selectSearchList(String searchType, String keyword,String id,PageVo pv2) {
+		return dao.selectSearchList(sst,searchType, keyword,id,pv2);
 	}
 
 
 	@Override
-	public int selectSearchTotalCnt(MailVo mvo) {
-		return dao.selectSearchTotalCnt(sst,mvo);
+	public int selectSearchTotalCnt() {
+		return dao.selectSearchTotalCnt(sst);
 	}
+
+
+
 	
 }

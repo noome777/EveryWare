@@ -10,7 +10,7 @@ import com.kh.app00.mail.vo.MailVo;
 public interface MailDao {
 	
 	//전체 메일함 조회
-	List<MailVo> selectList(SqlSessionTemplate sst,PageVo pv);
+	List<MailVo> selectList(SqlSessionTemplate sst,String id,PageVo pv);
 	
 	
 	//메일 작성
@@ -20,7 +20,7 @@ public interface MailDao {
 	int deleteMail(SqlSessionTemplate sst, String mailCode);
 
 	//휴지통
-	List<MailVo> selectTrashlist(SqlSessionTemplate sst);
+	List<MailVo> selectTrashlist(SqlSessionTemplate sst,PageVo pv);
 
 	//휴지통 비우기
 	int clean(SqlSessionTemplate sst,String mailCode);
@@ -30,10 +30,10 @@ public interface MailDao {
 
 	
 	//보낸 메일함 조회
-	List<MailVo> selectSendlist(SqlSessionTemplate sst);
+	List<MailVo> selectSendlist(SqlSessionTemplate sst,String id, PageVo pv);
 
 	//받은 메일함 조회
-	List<MailVo> selectRelist(SqlSessionTemplate sst);
+	List<MailVo> selectRelist(SqlSessionTemplate sst,String id,PageVo pv);
 
 	//답장 작성
 	int replyMail(SqlSessionTemplate sst, MailVo mvo);
@@ -42,7 +42,7 @@ public interface MailDao {
 	int selfWrite(SqlSessionTemplate sst, MailVo mvo);
 
 	//내게 쓴 메일함 조회
-	List<MailVo> selectSelflist(SqlSessionTemplate sst);
+	List<MailVo> selectSelflist(SqlSessionTemplate sst, PageVo pv);
 
 	//메일 상세 조회	
 	MailVo selectMail(SqlSessionTemplate sst, String mailCode);
@@ -66,10 +66,12 @@ public interface MailDao {
 	int noreadMail(SqlSessionTemplate sst, String mailCode);
 
 	//검색 처리
-	List<MailVo> selectSearchList(SqlSessionTemplate sst, MailVo mailVo, PageVo pv2);
+	List<MailVo> selectSearchList(SqlSessionTemplate sst,String searchType, String keyword,String id, PageVo pv2);
 
 	//검색 갯수
-	int selectSearchTotalCnt(SqlSessionTemplate sst, MailVo mvo);
+	int selectSearchTotalCnt(SqlSessionTemplate sst);
+
+
 
 
 	

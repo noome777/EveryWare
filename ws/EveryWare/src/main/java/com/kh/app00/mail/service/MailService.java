@@ -8,7 +8,7 @@ import com.kh.app00.mail.vo.MailVo;
 public interface MailService {
 	
 	//전체 메일함 조회
-	List<MailVo> selectList(PageVo pv);
+	List<MailVo> selectList(String id, PageVo pv);
 	
 	//게시글 조회
 	int selectTotalCnt();
@@ -20,7 +20,7 @@ public interface MailService {
 	int delete(String mailCode);
 	
 	//휴지통
-	List<MailVo> selectTrashlist();
+	List<MailVo> selectTrashlist(PageVo pv);
 	
 	//휴지통 비우기
 	int clean(String mailCode);
@@ -29,10 +29,10 @@ public interface MailService {
 	int back(String mailCode);
 	
 	//보낸 메일함 조회
-	List<MailVo> selectSendlist();
+	List<MailVo> selectSendlist(String id,PageVo pv);
 	
 	//받은 메일함
-	List<MailVo> selectRelist();
+	List<MailVo> selectRelist(String id, PageVo pv);
 	
 	//메일 답장
 	int reply(MailVo mvo);
@@ -41,7 +41,7 @@ public interface MailService {
 	int selfWrite(MailVo mvo);
 	
 	//내게 쓴 메일함
-	List<MailVo> selectSelflist();
+	List<MailVo> selectSelflist(PageVo pv);
 	
 	//메일 상세조회
 	MailVo selectOne(String mailCode);
@@ -59,10 +59,12 @@ public interface MailService {
 	int noread(String mailCode);
 	
 	//검색 처리
-	List<MailVo> selectSearchList(MailVo mailVo, PageVo pv2);
+	List<MailVo> selectSearchList(String searchType, String keyword,String id,PageVo pv2);
 	
 	//리스트 카운트
-	int selectSearchTotalCnt(MailVo mvo);
+	int selectSearchTotalCnt();
+	
+	
 
 	
 	

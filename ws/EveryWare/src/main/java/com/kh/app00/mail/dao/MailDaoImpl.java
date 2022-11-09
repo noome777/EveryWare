@@ -13,12 +13,12 @@ import com.kh.app00.mail.vo.MailVo;
 public class MailDaoImpl implements MailDao {
 
 	@Override
-	public List<MailVo> selectList(SqlSessionTemplate sst,PageVo pv) {
+	public List<MailVo> selectList(SqlSessionTemplate sst,String id,PageVo pv) {
 		
 		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
 		RowBounds rb = new RowBounds(offset , pv.getBoardLimit());
 		
-		return sst.selectList("mailMapper.selectList",null, rb);
+		return sst.selectList("mailMapper.selectList",id, rb);
 	}
 
 	@Override
@@ -32,8 +32,12 @@ public class MailDaoImpl implements MailDao {
 	}
 
 	@Override
-	public List<MailVo> selectTrashlist(SqlSessionTemplate sst) {
-		return sst.selectList("mailMapper.selectTrashlist");
+	public List<MailVo> selectTrashlist(SqlSessionTemplate sst, PageVo pv) {
+		
+		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+		RowBounds rb = new RowBounds(offset , pv.getBoardLimit());
+		
+		return sst.selectList("mailMapper.selectTrashlist", null, rb);
 	}
 
 	@Override
@@ -47,13 +51,21 @@ public class MailDaoImpl implements MailDao {
 	}
 
 	@Override
-	public List<MailVo> selectSendlist(SqlSessionTemplate sst) {
-		return sst.selectList("mailMapper.selectSendlist");
+	public List<MailVo> selectSendlist(SqlSessionTemplate sst,String id, PageVo pv) {
+		
+		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+		RowBounds rb = new RowBounds(offset , pv.getBoardLimit());
+		
+		return sst.selectList("mailMapper.selectSendlist", id, rb);
 	}
 
 	@Override
-	public List<MailVo> selectRelist(SqlSessionTemplate sst) {
-		return sst.selectList("mailMapper.selectRelist");
+	public List<MailVo> selectRelist(SqlSessionTemplate sst, String id,PageVo pv) {
+		
+		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+		RowBounds rb = new RowBounds(offset , pv.getBoardLimit());
+		
+		return sst.selectList("mailMapper.selectRelist", id, rb);
 	}
 
 	@Override
@@ -67,8 +79,13 @@ public class MailDaoImpl implements MailDao {
 	}
 
 	@Override
-	public List<MailVo> selectSelflist(SqlSessionTemplate sst) {
-		return sst.selectList("mailMapper.selectSelflist");
+	public List<MailVo> selectSelflist(SqlSessionTemplate sst, PageVo pv) {
+		
+		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+		RowBounds rb = new RowBounds(offset , pv.getBoardLimit());
+		
+		
+		return sst.selectList("mailMapper.selectSelflist", null, rb);
 	}
 	
 	@Override
@@ -107,18 +124,19 @@ public class MailDaoImpl implements MailDao {
 	}
 
 	@Override
-	public List<MailVo> selectSearchList(SqlSessionTemplate sst, MailVo mailVo, PageVo pv2) {
+	public List<MailVo> selectSearchList(SqlSessionTemplate sst ,String searchType,String keyword, String id,PageVo pv2) {
 		
 		int offset = (pv2.getCurrentPage()-1) * pv2.getBoardLimit();
         RowBounds rb = new RowBounds(offset , pv2.getBoardLimit());
 		
-		return sst.selectList("mailMapper.selectSearchList", mailVo, rb);
+		return sst.selectList("mailMapper.selectSearchList",searchType, keyword,id , rb);
 	}
 
 	@Override
-	public int selectSearchTotalCnt(SqlSessionTemplate sst, MailVo mvo) {
-		return sst.selectOne("mailMapper.selectSearchTotalCnt",mvo);
+	public int selectSearchTotalCnt(SqlSessionTemplate sst) {
+		return sst.selectOne("mailMapper.selectSearchTotalCnt");
 	}
+
 
 	
 }

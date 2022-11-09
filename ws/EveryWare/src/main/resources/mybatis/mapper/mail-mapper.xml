@@ -17,6 +17,8 @@
 		JOIN EMP
 		ON MAIL.EMP_CODE = EMP.EMP_CODE
 		WHERE MAIL_DELETE IS NULL
+		AND MAIL_RECEIVER = #{id}
+		AND MAIL_SENDER != #{id}
 		ORDER BY MAIL_CODE DESC
 		
 	</select>	
@@ -32,15 +34,17 @@
 		ON MAIL.EMP_CODE = EMP.EMP_CODE
 		WHERE MAIL_DELETE IS NULL
 		<if test="searchType=='title' and keyword != null and keyword != '' ">
-			AND MAIL_TITLE LIKE CONCAT('%', #{keyword}, '%')
+			AND MAIL_TITLE LIKE '%' || #{keyword} || '%'
 		</if>
        <if test="searchType=='send_id' and keyword != null and keyword != '' ">
-			AND MAIL_SENDER LIKE CONCAT('%', #{keyword}, '%')
+			AND MAIL_SENDER LIKE '%' || #{keyword} || '%'
 		</if>
 		<if test="searchType=='all' and keyword != null and keyword != '' ">
-			AND MAIL_SENDER LIKE CONCAT('%', #{keyword}, '%')
-			OR MAIL_TILTE LIKE CONCAT('%',#{keyword},'%')
+			AND MAIL_SENDER LIKE '%' || #{keyword} || '%'
+			OR MAIL_TITLE LIKE '%' || #{keyword} ||'%'
 		</if>
+		AND MAIL_RECEIVER = #{id}
+		AND MAIL_SENDER != #{id}
 		ORDER BY MAIL_CODE DESC
 		
 			
@@ -140,7 +144,17 @@
 		JOIN EMP
 		ON MAIL.EMP_CODE = EMP.EMP_CODE
 		WHERE MAIL_DELETE IS NULL
+		AND MAIL_SENDER = #{id}
+		AND MAIL_RECEIVER != #{id}
 		ORDER BY MAIL_CODE DESC
+	</select>
+	
+	<select id="selectSendCnt" resultType="int">
+		SELECT COUNT (*)
+		FROM MAIL
+		WHERE MAIL_DELETE IS NULL
+		AND MAIL_RECEIVER = #{id}
+		AND MAIL_SENDER != #{id}
 	</select>
 	
 	<select id="selectRelist" resultType="MailVo">
@@ -158,6 +172,8 @@
 		JOIN EMP
 		ON MAIL.EMP_CODE = EMP.EMP_CODE
 		WHERE MAIL_DELETE IS NULL
+		AND MAIL_RECEIVER = #{id}
+		AND MAIL_SENDER != #{id}
 		ORDER BY MAIL_CODE DESC
 	</select>		
 	

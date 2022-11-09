@@ -87,28 +87,26 @@
 
 			<h2 id="mailall">받은 메일함</h2>
 			<br>
+			<form action="${root}/mail/mailSearchreceive/${pno}" method="get" name="mr" onsubmit="return Checkform">
 			<div class="form-group row " style="margin-left: 3px;">
 				<div class="w100" style="padding-right: 10px">
-					<select class="form-control form-control-sm" name="searchType"
-						id="searchType">
+					<select class="form-control form-control-sm" name="searchType" id="searchType"
+						>
 						<option value="title">제목</option>
-						<option value="reg_id">발신자</option>
+						<option value="send_id">발신자</option>
+						<option value="all">전체</option>
 					</select>
 				</div>
-
 				<div class="w300" style="padding-right: 10px">
 					<input type="text" class="form-control form-control-sm"
-						name="keyword" id="keyword">
-
+						name="keyword" id="keyword" >
 				</div>
-
 				<div>
-					<button class="btn btn-sm btn-primary" name="btnSearch"
-						id="btnSearch">검색</button>
+					<input  type="submit" class="btn btn-sm btn-primary" name="search" 
+						id="search" value="검색">
 				</div>
-
-			</div>
-
+			</div>	
+			</form>
 			<br>
 			<div class="buttonSet">
 				<input type="button" value="읽음" id="readBtn" onclick="readValue();"
@@ -140,12 +138,7 @@
 						<tbody>
 							<c:forEach items="${receiveList}" var="r">
 
-								<input type="hidden" id="mailReceiver" class="mailReceiver"
-									value="${r.mailReceiver}" />
-								<c:set var="mailId" value="${r.mailReceiver}" />
 								<c:set var="mailSend" value="${r.mailSender}" />
-								<c:if
-									test="${r.mailDelete eq null && loginMember.empId ne fn:split(mailSend,'@')[0] && loginMember.empId eq fn:split(mailId,'@')[0]}">
 									<tr
 										onclick="location.href='${root}/mail/mailDetail/${r.mailCode}'">
 										<td><input type="checkbox" name="RowCheck"
@@ -163,7 +156,6 @@
 										<td id="mSenddate" onclick="event.stopPropagation()">${r.mailSenddate}</td>
 
 									</tr>
-								</c:if>
 							</c:forEach>
 						</tbody>
 					</table>
@@ -202,6 +194,15 @@
 			}
 		});
 		
+		function Checkform() {
+		    if( mr.keyword.value == "" ) {
+		      mr.keyword.focus();
+		      alert("내용을 입력해주세요.");
+		      
+		      return false;
+		    }
+		}
+		
 		function readValue() {
 
 			// 체크된 애들 번호를 전달하기
@@ -234,7 +235,7 @@
 				success : function(rdata) {
 					if (rdata == 'ok') {
 						alert("읽음 처리되었습니다");
-						location.replace("${root}/mail/mailMain/${pno}");
+						location.replace("${root}/mail/receive/${pno}");
 					} else {
 						alert("읽기 실패");
 					}
@@ -278,7 +279,7 @@
 				success : function(ndata) {
 					if (ndata == 'ok') {
 						alert("안읽음 처리되었습니다");
-						location.replace("${root}/mail/mailMain/${pno}");
+						location.replace("${root}/mail/receive/${pno}");
 					} else {
 						alert("안읽음 실패");
 					}
@@ -323,7 +324,7 @@
 				success : function(cdata) {
 					if (cdata == 'ok') {
 						alert("삭제 성공");
-						location.replace("${root}/mail/mailMain");
+						location.replace("${root}/mail/receive/${pno}");
 					} else {
 						alert("삭제 실패");
 					}

@@ -113,7 +113,7 @@
 										<tr >
 											<td><input type="checkbox" name="trashCheck"
 												class="trashCheck" value="${t.mailCode}" onclick="event.stopPropagation()"></td>
-											<td id="msender">${t.mailSender}</td>
+											<td id="msender">${fn:split(mailS,'@')[0]}</td>
 											<td id="mtitle">${t.mailTitle}</td>
 											<td id="mSenddate">${t.mailSenddate}</td>
 										</tr>
@@ -185,7 +185,7 @@ function cleanValue() {
  					success : function(tdata) {
  						if (tdata == 'ok') {
  							alert("삭제 성공");
- 							location.replace("${root}/mail/trash");
+ 							location.replace("${root}/mail/trash/${pno}");
  						} else {
  							alert("삭제 실패");
  						}
@@ -228,7 +228,7 @@ function backValue() {
 				success : function(bdata) {
 					if (bdata == 'ok') {
 						alert("복원 성공");
-						location.replace("${root}/mail/trash");
+						location.replace("${root}/mail/trash/${pno}");
 					} else {
 						alert("복원 실패");
 					}

@@ -90,14 +90,6 @@
 					<input type="button" value="삭제" id="deleteBtn"
 						onclick="deleteValue();" class="btn btn-danger"/>
 				</div>
-				<!-- <div class="input-group w-50" >
-		<span class="input-group-text" id="basic-addon1">
-		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-  		<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
-		</svg>
-		</span>
-		<input type="text" class="form-control" aria-label="mailSearch" id="mailSearch" placeholder="메일검색"  aria-describedby="basic-addon1">
-		</div> -->
 				<div class="card shadow">
 					<div class="card-body" id="mailListForm">
 						<table class="table table-striped" id="maillist">
@@ -112,10 +104,8 @@
 							<tbody>
 								<c:forEach items="${sendList}" var="s">
 										
-								<input type="hidden" id="mailSender" class="mailSender" value="${s.mailSender}"/>
 										<c:set var = "mailSend" value="${s.mailSender}"/>
 										<c:set var = "mailReci" value="${s.mailReceiver}"/>
-									<c:if test="${s.mailDelete eq null && loginMember.empId eq fn:split(mailSend,'@')[0] && loginMember.empId ne fn:split(mailReci,'@')[0]}">
 										<tr onclick="location.href='${root}/mail/mailDetail/${s.mailCode}'">
 											<td><input type="checkbox" name="RowCheck"
 												class="RowCheck" value="${s.mailCode}" onclick="event.stopPropagation()"></td>
@@ -124,7 +114,6 @@
 											<td id="mSenddate" onclick="event.stopPropagation()">${s.mailSenddate}</td>
 											
 										</tr>
-									</c:if>
 								</c:forEach>
 							</tbody>
 						</table>
@@ -198,7 +187,7 @@
  					success : function(cdata) {
  						if (cdata == 'ok') {
  							alert("삭제 성공");
- 							location.replace("${root}/mail/mailMain");
+ 							location.replace("${root}/mail/mailSend");
  						} else {
  							alert("삭제 실패");
  						}
