@@ -183,12 +183,8 @@ public class ApprovalServiceImpl implements ApprovalService {
 		List<ApprovalListVo> approverList = docVo.getApproverList();
 		List<ApprovalRefVo> approvalRefList = docVo.getApprovalRefList();
 
-		int updateDoc;
-		if(docVo.getDocTitle() != null) {
-			updateDoc = dao.updateDoc(sst, docVo);
-		}
+		int	updateDoc = dao.updateDoc(sst, docVo);
 		
-		//결재자
 		if(approverList.size() > 0) {
 			int deleteApprover = dao.deleteApprover(sst, docCode);
 			for(ApprovalListVo vo : approverList) {
@@ -196,7 +192,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 			}
 			int approverListResult = dao.insertApproverList(sst, approverList);
 		}
-		//참조인
+		
 		if(approvalRefList.size() > 0) {
 			int deleteRef = dao.deleteRef(sst, docCode);
 			for(ApprovalRefVo vo : approvalRefList) {
@@ -232,7 +228,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 			int approvalFileResult = dao.insertApprovalFile(sst, approvalFileList);
 		}
 		
-		return 1;
+		return updateDoc;
 	}
 	//문서 삭제
 	@Override
@@ -255,7 +251,6 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	@Transactional(rollbackFor = {Exception.class})
 	public int updateUnApprove(ApprovalListVo apprVo) {
-		
 		//반려처리
 		int apprResult = dao.updateUnApprove(sst, apprVo);
 		//반려 메세지 insert
@@ -383,8 +378,6 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public int deleteStorage(ApprovalDocVo vo) {
 		return dao.deleteStorage(sst, vo);
 	}
-	
-	
 	//문서 양식 목록 조회
 	@Override
 	public List<DocFormVo> selectDocFormList() {
@@ -395,15 +388,11 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public DocFormVo selectDocForm(int formCode) {
 		return dao.selectDocForm(sst, formCode);
 	}
-	
-	
-	
 	//문서 양식상세 항목 불러오기
 	@Override
 	public List<DocFormDetailTemplateVo> selectFormDetailList() {
 		return dao.selectFormDetailList(sst);
 	}
-
 	//문서양식 insert
 	@Override
 	@Transactional(rollbackFor = {Exception.class})

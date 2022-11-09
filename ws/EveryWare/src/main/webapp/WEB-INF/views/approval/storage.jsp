@@ -16,6 +16,10 @@
   .pagination{
   	margin-top: 60px;
   }
+  #delete-all:hover{
+    color: rgb(72, 72, 243);
+    cursor: pointer;
+  }
 </style>
 </head>
 <body class="vertical  light  ">

@@ -2,7 +2,9 @@ package com.kh.app00.approval.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -55,7 +57,8 @@ public class ApprovalController {
 		this.service = service;
 	}
 	
-	//문서작성 화면
+	
+	//문서 작성 화면
 	@GetMapping("write/{formCode}")
 	public String write(Model model, @PathVariable int formCode, HttpSession session) {
 		
@@ -248,6 +251,36 @@ public class ApprovalController {
 		}
 	}
 	
+	//문서 갯수
+	@GetMapping("count")
+	@ResponseBody
+	public String count(HttpSession session) {
+		
+		EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
+		ApprovalDocVo vo = new ApprovalDocVo();
+		vo.setEmpCode(loginMember.getEmpCode());
+		
+		int apprExpectCount = service.selectExpectCount(vo);
+		int apprRefCount = service.selectRefListTotalCnt(vo);
+		int apprWaitCount = service.selectWaitListTotalCnt(vo);
+		int apprProgCount = service.selectProgressListTotalCnt(vo);
+		System.out.println(apprProgCount);
+		System.out.println(apprWaitCount);
+		System.out.println(apprRefCount);
+		System.out.println(apprExpectCount);
+		
+		
+		Map<String, Integer> count = new HashMap<String, Integer>();
+		count.put("apprExpectCount", apprExpectCount);
+		count.put("apprRefCount", apprRefCount);
+		count.put("apprWaitCount", apprWaitCount);
+		count.put("apprProgCount", apprProgCount);
+		
+		Gson gson = new Gson();
+		String jsonCount = gson.toJson(count);
+		
+		return jsonCount;
+	}
 	//진행 > 전체
 	@GetMapping("progressAllList/{pno}/{docFormCode}")
 	public String list(Model model, @PathVariable int pno, @PathVariable String docFormCode, HttpSession session) {
@@ -255,10 +288,10 @@ public class ApprovalController {
 		EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
 		ApprovalDocVo vo = new ApprovalDocVo();
 		vo.setEmpCode(loginMember.getEmpCode());
-		int apprExpectCount = service.selectExpectCount(vo);
-		int apprRefCount = service.selectRefListTotalCnt(vo);
-		int apprWaitCount = service.selectWaitListTotalCnt(vo);
-		int apprProgCount = service.selectProgressListTotalCnt(vo);
+//		int apprExpectCount = service.selectExpectCount(vo);
+//		int apprRefCount = service.selectRefListTotalCnt(vo);
+//		int apprWaitCount = service.selectWaitListTotalCnt(vo);
+//		int apprProgCount = service.selectProgressListTotalCnt(vo);
 		
 		vo.setDeptCode(loginMember.getDeptCode());
 		vo.setDocFormCode(docFormCode);
@@ -269,10 +302,10 @@ public class ApprovalController {
 		List<ApprovalDocVo> docList = service.selectProgressDocList(vo, pv);
 		List<DocFormVo> formList = service.selectFormList();
 		
-		session.setAttribute("apprProgCount", apprProgCount);
-		session.setAttribute("apprRefCount", apprRefCount);
-		session.setAttribute("apprExpectCount", apprExpectCount);
-		session.setAttribute("apprWaitCount", apprWaitCount);
+//		session.setAttribute("apprProgCount", apprProgCount);
+//		session.setAttribute("apprRefCount", apprRefCount);
+//		session.setAttribute("apprExpectCount", apprExpectCount);
+//		session.setAttribute("apprWaitCount", apprWaitCount);
 		model.addAttribute("formList", formList);
 		model.addAttribute("docList", docList);
 		model.addAttribute("pv", pv);
