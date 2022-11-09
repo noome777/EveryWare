@@ -39,12 +39,23 @@
                 <span class="ml-3 item-text">근태</span>
               </a>
             </li>
-            <li class="nav-item dropdown">
+            <!-- <li class="nav-item dropdown">
               <a href="${root}/approval/progressAllList/1/0" aria-expanded="false" class="nav-link">
                 <i class="fe fe-check-square fe-16"></i>
                 <span class="ml-3 item-text">전자결재</span>
               </a>
+            </li> -->
+            <li class="nav-item dropdown">
+              <a class="nav-link d-flex flex-row justify-content-between" id="approval" href="${root}/approval/progressAllList/1/0" aria-expanded="false" class="nav-link">
+                <div>
+                  <i class="fe fe-check-square fe-16"></i>  
+                  <span class="ml-3 item-text">전자결재</span>
+                </div>
+                <span id="apprNoti" class="justify-self-end"></span>
+              </a>
             </li>
+
+
             <li class="nav-item dropdown">
               <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
                 <i class="fe fe-calendar fe-16"></i>
@@ -77,7 +88,7 @@
               </a>
             </li>
             <li class="nav-item dropdown">
-              <a href="${root}/contacts/contactList" aria-expanded="false" class=" nav-link">
+              <a href="${root}/contacts/contactList/1" aria-expanded="false" class=" nav-link">
                 <i class="fe fe-book fe-16"></i>
                 <span class="ml-3 item-text">주소록</span>
               </a>
@@ -118,3 +129,29 @@
           </ul>
         </nav>
       </aside>
+
+      <script>
+        window.onload  = function () {
+          $.ajax({
+            url : "${root}/approval/count",
+            method : "GET",
+            dataType : 'json',
+            success : function (data) {
+              let prog = 0;
+              if(data.apprProgCount > 0){prog = parseInt(data.apprProgCount);}
+              let wait = 0;
+              if(data.apprWaitCount > 0){wait = parseInt(data.apprWaitCount);}
+              let ref = 0;
+              if(data.refCount > 0){ref = parseInt(data.refCount);}
+              let exp = 0;
+              if(data.apprExpectCount > 0){exp = parseInt(data.apprExpectCount);}
+
+              if(parseInt(prog + wait + ref + exp) > 1){
+                $('#apprNoti').addClass("dot dot-md bg-success");
+              } else if((prog + wait + ref + exp) < 1){
+                $('#apprNoti').removeClass("dot dot-md bg-success");
+              } 
+              }
+          });
+        }
+      </script>

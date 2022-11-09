@@ -35,7 +35,6 @@ public interface ApprovalDao {
 	List<EmpVo> selectEmpList(SqlSessionTemplate sst);
 	//부서별 임직원 불러오기
 	List<EmpVo> selectDeptEmp(SqlSessionTemplate sst, int deptCode);
-
 	//결재문서 작성
 	int insertApprovalDoc(SqlSessionTemplate sst, ApprovalDocVo docVo);
 	//문서실제데이터 insert
@@ -46,7 +45,6 @@ public interface ApprovalDao {
 	int insertApprovalRef(SqlSessionTemplate sst,List<ApprovalRefVo> approvalRefList);
 	//첨부파일 insert
 	int insertApprovalFile(SqlSessionTemplate sst,List<ApprovalFileVo> approvalFileList);
-	
 	//작성된 문서 상세정보 불러오기
 	ApprovalDocVo selectDocDetail(SqlSessionTemplate sst, String docCode);
 	//작성된 문서내용 불러오기
@@ -88,7 +86,6 @@ public interface ApprovalDao {
 	DocCommentVo selectUnApprComment(SqlSessionTemplate sst, String docCode);
 	//결재 완료일자 update
 	int updateDocApprDate(SqlSessionTemplate sst, ApprovalListVo apprVo);
-	
 	//문서 갯수 조회
 	int selectProgressTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo);
 	//문서 목록 조회
@@ -109,7 +106,6 @@ public interface ApprovalDao {
 	int selectProgressListTotalCnt(SqlSessionTemplate sst,  ApprovalDocVo vo);
 	//결재 진행 문서 목록 조회
 	List<ApprovalDocVo> selectProgressList(SqlSessionTemplate sst,  ApprovalDocVo vo, PageVo pv);
-
 	//문서함 - 전체 문서 갯수
 	int selectCompletAllTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo);
 	//문서함 - 전체 문서 목록 조회
@@ -136,12 +132,10 @@ public interface ApprovalDao {
 	List<ApprovalDocVo> selectStorageList(SqlSessionTemplate sst, ApprovalDocVo vo, PageVo pv);
 	//임시저장 문서 삭제
 	int deleteStorage(SqlSessionTemplate sst, ApprovalDocVo vo);
-	
 	//문서 양식 목록 조회
 	List<DocFormVo> selectDocFormList(SqlSessionTemplate sst);
 	//문서 양식 상세 조회
 	DocFormVo selectDocForm(SqlSessionTemplate sst, int formCode);
-
 	//문서 양식상세 항목 불러오기
 	List<DocFormDetailTemplateVo> selectFormDetailList(SqlSessionTemplate sst);
 	//문서양식 insert

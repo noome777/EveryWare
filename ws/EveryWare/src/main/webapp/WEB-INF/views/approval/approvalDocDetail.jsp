@@ -125,29 +125,29 @@
         <table id="approval-table" class="table table-bordered mb-0 shadow">
           <c:forEach items="${apprTypeCountList}" var="c">
           <tr class="appr-table-color appr-line">
-            <td rowspan="3" style="width: 160px;">${c.apprTypeName}</td>
+            <td rowspan="3" style="width: 140px;">${c.apprTypeName}</td>
             <c:forEach items="${approverVoList}" var="a">
             	<c:if test="${c.apprTypeCode eq a.apprTypeCode}">
-	            	<td style="width: 160px;">${a.rankName}</td>
+	            	<td style="width: 140px;">${a.rankName}</td>
             	</c:if>
             </c:forEach>
           </tr>
-          <tr style="height: 160px;" class="appr-length" class="appr-line">
+          <tr style="height: 130px;" class="appr-length" class="appr-line">
           	<c:forEach items="${approverVoList}" var="a">
           		<c:if test="${c.apprTypeCode eq a.apprTypeCode}">
 	          		<c:choose>
 	          			<c:when test="${a.apprStatus eq 'A'}">
 	          				<c:choose>
 	          					<c:when test="${not empty loginMember.empFileName}">
-					          		<td  style="width: 160px;"><img class="appr-mark" src="${root}/resources/upload/signFile/${loginMember.empFileName}" alt="승인"> <br>${a.apprDate}</td>
+					          		<td  style="width: 140px;"><img class="appr-mark" src="${root}/resources/upload/signFile/${loginMember.empFileName}" alt="승인"> <br>${a.apprDate}</td>
 	          					</c:when>
 	          					<c:otherwise>
-	          						<td  style="width: 160px;"><img class="appr-mark" src="${root}/resources/img/appr-mark.png" alt="승인"> <br>${a.apprDate}</td>
+	          						<td  style="width: 140px;"><img class="appr-mark" src="${root}/resources/img/appr-mark.png" alt="승인"> <br>${a.apprDate}</td>
 	          					</c:otherwise>
 	          				</c:choose>
 	          			</c:when>
               		    <c:when test="${a.apprStatus eq 'C'}">
-			          		<td class="font-weight-bold text-dark" style="width: 160px;">반려<br>${a.apprDate}</td></td> 
+			          		<td class="font-weight-bold text-dark" style="width: 140px;">반려<br>${a.apprDate}</td></td> 
 	          			</c:when>
 	          			<c:otherwise>
                     <c:if test="${apprDocVo.docStatus eq 'N'}">

@@ -59,7 +59,6 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	public List<EmpVo> selectDeptEmp(SqlSessionTemplate sst, int deptCode) {
 		return sst.selectList("approvalMapper.selectDeptEmpList", deptCode);
 	}
-
 	//결재문서 작성
 	@Override
 	public int insertApprovalDoc(SqlSessionTemplate sst, ApprovalDocVo docVo) {
@@ -85,7 +84,6 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	public int insertApprovalFile(SqlSessionTemplate sst, List<ApprovalFileVo> approvalFileList) {
 		return sst.insert("approvalMapper.insertApprovalFile", approvalFileList);
 	}
-
 	//작성된 문서 상세정보 불러오기
 	@Override
 	public ApprovalDocVo selectDocDetail(SqlSessionTemplate sst, String docCode) {
@@ -190,7 +188,6 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	public int updateDocApprDate(SqlSessionTemplate sst, ApprovalListVo apprVo) {
 		return sst.update("approvalMapper.updateDocApprDate", apprVo);
 	}
-	
 	//진행 - 전체 문서 갯수 조회
 	@Override
 	public int selectProgressTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo) {
@@ -217,7 +214,6 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		
 		return sst.selectList("approvalMapper.selectExpectDocList", vo, rb);
 	}
-
 	//결재 확인 문서 전체 갯수 조회
 	@Override
 	public int selectRefListTotalCnt(SqlSessionTemplate sst,  ApprovalDocVo vo) {
@@ -254,7 +250,6 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
 		return sst.selectList("approvalMapper.selectProgressList", vo, rb);
 	}
-	
 	//문서함 - 전체 문서 갯수
 	@Override
 	public int selectCompletAllTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo) {
@@ -332,8 +327,6 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	public int deleteStorage(SqlSessionTemplate sst, ApprovalDocVo vo) {
 		return sst.update("approvalMapper.deleteStorage", vo);
 	}
-	
-	
 	//문서 양식 목록 조회
 	@Override
 	public List<DocFormVo> selectDocFormList(SqlSessionTemplate sst) {
@@ -349,7 +342,6 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	public List<DocFormDetailTemplateVo> selectFormDetailList(SqlSessionTemplate sst) {
 		return sst.selectList("approvalMapper.selectFormDetailList");
 	}
-
 	//문서양식 insert
 	//docForm insert
 	@Override

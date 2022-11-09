@@ -42,35 +42,27 @@
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
                 <li class="nav-item">
-                  <a class="nav-link pl-3 d-flex align-items-center justify-content-between" href="${root}/approval/progressAllList/1/0"><span class="ml-1 item-text">전체 </span>
+                  <a class="nav-link pl-3 d-flex align-items-center justify-content-between" href="${root}/approval/progressAllList/1/0"><span class="ml-1 item-text">부서전체</span>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link pl-3 d-flex align-items-center justify-content-between" href="${root}/approval/progressList/1/0"><span class="ml-1 item-text">진행</span>
-                  	<c:if test="${apprProgCount  > 0}">
-                 	     <span class="mr-4">${apprProgCount}</span>
-                    </c:if>
+                 	     <span class="mr-4" id="apprProgCount"></span>
                   </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link pl-3 d-flex align-items-center justify-content-between" href="${root}/approval/progressWaitList/1/0"><span class="ml-1 item-text">대기</span>
-                    <c:if test="${apprWaitCount > 0}">
-                      <span class="mr-4">${apprWaitCount}</span>
-                    </c:if>
+                      <span class="mr-4" id="apprWaitCount"></span>
                     </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link pl-3" d-flex align-items-center justify-content-between href="${root}/approval/progressRefList/1/0"><span class="ml-1 item-text">확인</span>
-                  	<c:if test="${refCount > 0}">
-                 	     <span class="mr-4">${refCount}</span>
-                    </c:if>
+                 	     <span class="mr-4" id="refCount"></span>
                   </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link pl-3 d-flex align-items-center justify-content-between" href="${root}/approval/progressExpectedList/1/0"><span class="ml-1 item-text">예정</span>
-                      <c:if test="${apprExpectCount > 0}">
-                 	     <span class="mr-4">${apprExpectCount}</span>
-                    </c:if>
+                 	     <span class="mr-4" id="apprExpectCount"></span>
                     </a>
                 </li>
                 
@@ -89,7 +81,7 @@
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="forms">
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/approval/completAllList/1/0"><span class="ml-1 item-text">전체</span></a>
+                  <a class="nav-link pl-3" href="${root}/approval/completAllList/1/0"><span class="ml-1 item-text">부서전체</span></a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link pl-3" href="${root}/approval/completWriteList/1/0"><span class="ml-1 item-text">기안</span></a>
@@ -142,3 +134,19 @@
           </c:if>
         </nav>
       </aside>
+
+      <script>
+        window.onload  = function () {
+          $.ajax({
+            url : "${root}/approval/count",
+            method : "GET",
+            dataType : 'json',
+            success : function (data) {
+              if(data.apprProgCount > 0) $('#apprProgCount').append(data.apprProgCount);
+              if(data.apprWaitCount > 0) $('#apprWaitCount').append(data.apprWaitCount);
+              if(data.refCount > 0) $('#refCount').append(data.refCount);
+              if(data.apprExpectCount > 0) $('#apprExpectCount').append(data.apprExpectCount);
+            }
+          });
+        }
+      </script>

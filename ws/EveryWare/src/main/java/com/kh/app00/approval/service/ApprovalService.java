@@ -37,10 +37,8 @@ public interface ApprovalService {
 	List<EmpVo> selectEmpList();
 	//부서별 임직원 불러오기
 	List<EmpVo> selectDeptEmp(int deptCode);
-
 	//결재문서 작성
 	int insertApprovalDoc(ApprovalDocVo docVo, MultipartFile[] files, HttpServletRequest req);
-	
 	//작성된 문서 상세정보 불러오기
 	ApprovalDocVo selectDocDetail(String docCode);
 	//작성된 문서내용 불러오기
@@ -67,7 +65,6 @@ public interface ApprovalService {
 	int updateApprove(ApprovalListVo vo);
 	//문서 반려
 	int updateUnApprove(ApprovalListVo apprVo);
-	
 	//문서 갯수 조회
 	int selectProgressTotalCnt(ApprovalDocVo vo);
 	//문서 목록 조회
@@ -88,7 +85,6 @@ public interface ApprovalService {
 	int selectProgressListTotalCnt(ApprovalDocVo vo);
 	//결재 진행 문서 목록 조회
 	List<ApprovalDocVo> selectProgressList(ApprovalDocVo vo, PageVo pv);
-	
 	//문서함 - 전체 문서 갯수
 	int selectCompletAllTotalCnt(ApprovalDocVo vo);
 	//문서함 - 전체 문서 목록 조회
@@ -115,7 +111,6 @@ public interface ApprovalService {
 	List<ApprovalDocVo> selectStorageList(ApprovalDocVo vo, PageVo pv);
 	//임시저장 문서 삭제
 	int deleteStorage(ApprovalDocVo vo);
-	
 	//문서 양식 목록 조회
 	List<DocFormVo> selectDocFormList();
 	//문서 양식 상세 조회
