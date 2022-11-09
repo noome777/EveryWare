@@ -713,6 +713,7 @@ public class OrganizationController {
 		
 	}
 	
+	//부서관리 - 조직도
 	@PostMapping("management/getDept") 
 	@ResponseBody
 	public String getDept() {
@@ -732,61 +733,110 @@ public class OrganizationController {
 		}
 	}
 	
+	//부서관리 - 검색
 	@PostMapping("management/dept/search") 
 	@ResponseBody
 	public String searchDept(@RequestParam("word") String word) {
-		List<DeptVo> deptList = organizationService.selectDeptListByWord(word);
+		List<DeptVo> searchList = organizationService.selectDeptListByWord(word);
 		
 		Gson gson =  new Gson();
 		
-		if(deptList!=null) {
-			String jsonStr = gson.toJson(deptList);
-			System.out.println("성공!" + jsonStr);
-			
-			return jsonStr;
-			
+		if(searchList!=null) {
+			return gson.toJson(searchList);
 		} else {
-			String errorMsg = "부서정보 불러오기에 실패하였습니다.";
-			System.out.println(errorMsg);
-			String jsonStr = gson.toJson(errorMsg);
-			return jsonStr;
+			return gson.toJson("부서정보 불러오기에 실패하였습니다.");
 		}
 	}
 	
+	//부서관리 - 부서 추가
 	@PostMapping("management/dept/add") 
 	@ResponseBody
-	public String addDept(@RequestParam("highDeptArr") String[] highDeptArr, @RequestParam("addDeptArr") String[] addDeptArr, @RequestParam("deptDepthArr") String[] deptDepthArr) {
+	public String addDept(@RequestParam("highDeptArr") String[] highDeptArr, @RequestParam("addDeptArr") String[] addDeptArr) {
 		
 		List<String> highDeptList = new ArrayList<String>();
-			for (String highDeptName : highDeptArr) {
-				highDeptList.add(highDeptName);
+			for (String highDeptCode : highDeptArr) {
+				highDeptList.add(highDeptCode);
 			}
 		List<String> addDeptList = new ArrayList<String>();
 			for(String addDeptName : addDeptArr) {
 				addDeptList.add(addDeptName);
 			}
-		List<String> deptDepthList = new ArrayList<String>();
-			for(String deptDepth : deptDepthArr) {
-				deptDepthList.add(deptDepth+1);
-			}
+		
 		
 		Map<String, List<String>> insertTarget = new HashMap<String,List<String>>();
 		insertTarget.put("highDeptList",highDeptList);
 		insertTarget.put("addDeptList",addDeptList);
-		insertTarget.put("deptDepthList",deptDepthList);
 		
 		
-		int result = organizationService.InsertDept(insertTarget);
+		int result = organizationService.insertDept(insertTarget);
 		
 		Gson gson =  new Gson();
 		
-		if(result==0) {
+		System.out.println(result);
+		
+		if(result==-1) {
 			return gson.toJson("성공!");
 			
 		} else {
 			return gson.toJson("실패!");
 		}
 	}
+	
+	//부서관리 - 부서수정을 위한 리스트 셀렉트
+	@PostMapping("management/dept/selectList")
+	@ResponseBody
+	public String selectDeptListForEdit() {
+		
+		List<DeptVo> deptList = organizationService.selectDeptListForEdit();
+		
+		System.out.println(deptList.get(10).getDeptName());
+		
+		Gson gson =  new Gson();
+		
+		if(deptList!=null) {
+			return gson.toJson(deptList);
+		} else {
+			return gson.toJson("부서정보 불러오기에 실패하였습니다.");
+		}
+		
+	}
+	
+	//부서관리 - 부서 수정
+	@PostMapping("management/dept/edit")
+	@ResponseBody
+	public String updateDept(@RequestParam("highDeptArr") String[] highDeptArr, @RequestParam("editDeptArr") String[] editDeptArr, @RequestParam("deptArr") String[] deptArr) {
+		
+		List<String> highDeptList = new ArrayList<String>();
+		for (String highDeptCode : highDeptArr) {
+			highDeptList.add(highDeptCode);
+		}
+		List<String> editDeptList = new ArrayList<String>();
+		for(String editDeptName : editDeptArr) {
+			editDeptList.add(editDeptName);
+		}
+		List<String> deptCodeList = new ArrayList<String>();
+		for(String deptCode : deptArr) {
+			deptCodeList.add(deptCode);
+		}
+		
+		System.out.println(highDeptList);
+		System.out.println(editDeptList);
+		System.out.println(deptCodeList);
+	
+		Map<String, List<String>> updateTarget = new HashMap<String,List<String>>();
+		
+		int result = organizationService.updateDept(updateTarget);
+		
+		System.out.println(result);
+		Gson gson =  new Gson();
+		if(result==-1) {
+			return gson.toJson("성공!");
+			
+		} else {
+			return gson.toJson("실패!");
+		}
+	
+}
 	
 	
 }

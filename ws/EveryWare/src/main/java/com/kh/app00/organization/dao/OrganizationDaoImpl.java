@@ -232,7 +232,24 @@ public class OrganizationDaoImpl implements OrganizationDao {
 		return sqlSessionTemplate.insert("organizationMapper.insertDept",insertTarget);
 	}
 
-	
+	//부서관리 - 부서수정을 위한 부서 선택
+	@Override
+	public List<DeptVo> selectDeptListForEdit(SqlSessionTemplate sqlSessionTemplate) {
+		return sqlSessionTemplate.selectList("organizationMapper.selectDeptListForEdit");
+	}
+
+	//부서관리 - 부서수정
+	@Override
+	public int updateDept(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> updateTarget) {
+		return sqlSessionTemplate.update("organizationMapper.updateDept",updateTarget);
+	}
+
+	//부서관리 - 하위부서 수정
+	@Override
+	public int updateRowDept(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> updateTarget) {
+		return sqlSessionTemplate.update("organizationMapper.updateRowDept",updateTarget);
+	}
+
 
 	
 	

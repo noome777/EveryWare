@@ -1016,8 +1016,6 @@ padding: 10px;
 		            var targetEmp = checkBoxArr.pop();
 		            var targetJobArea = targetEmp+"-job";
 		            $('.'+targetJobArea).text(updatedJob);
-		            
-		            console.log(targetEmp + targetJobArea);
 		          }
     		  }
        	  },
@@ -1062,8 +1060,6 @@ padding: 10px;
   		            var targetEmp = checkBoxArr.pop();
   		            var targetDeptArea = targetEmp+"-dept";
   		            $('.'+targetDeptArea).text(updatedDept);
-  		            
-  		            console.log(targetEmp + targetDeptArea);
   		          }
       		  }
           },
@@ -1116,8 +1112,6 @@ padding: 10px;
   		            var targetEmp = checkBoxArr.pop();
   		            var targetStatusArea = targetEmp+"-status";
   		            $('.'+targetStatusArea).text(updatedStatus);
-  		            
-  		            console.log(targetEmp + targetStatusArea);
   		          }
       		  }
          },

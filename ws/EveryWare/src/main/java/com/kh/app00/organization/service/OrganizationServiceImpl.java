@@ -371,8 +371,26 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 	//부서관리 - 부서 추가
 	@Override
-	public int InsertDept(Map<String, List<String>> insertTarget) {
+	public int insertDept(Map<String, List<String>> insertTarget) {
 		return organizationDao.insertDept(sqlSessionTemplate, insertTarget);
+	}
+
+
+	//부서관리 - 부서 수정을 위한 부서선택
+	@Override
+	public List<DeptVo> selectDeptListForEdit() {
+		return organizationDao.selectDeptListForEdit(sqlSessionTemplate);
+	}
+
+
+	//부서관리 - 부서수정
+	@Override
+	public int updateDept(Map<String, List<String>> updateTarget) {
+		
+		return organizationDao.updateDept(sqlSessionTemplate, updateTarget);
+		
+		
+		
 	}
 
 

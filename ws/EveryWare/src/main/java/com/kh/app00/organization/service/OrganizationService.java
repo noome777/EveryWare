@@ -116,7 +116,13 @@ public interface OrganizationService {
 	List<DeptVo> selectDeptListByWord(String word);
 
 	//부서관리 - 부서 추가
-	int InsertDept(Map<String, List<String>> insertTarget);
+	int insertDept(Map<String, List<String>> insertTarget);
+
+	//부서관리 - 부서 수정을 위한 부서 셀렉트
+	List<DeptVo> selectDeptListForEdit();
+
+	//부서관리 - 부서 수정
+	int updateDept(Map<String, List<String>> updateTarget);
 
 
 
