@@ -1,12 +1,18 @@
 package com.kh.app00.notice.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.app00.common.PageVo;
 import com.kh.app00.common.Pagination;
 import com.kh.app00.emp.vo.EmpVo;
+import com.kh.app00.mail.vo.MailFileVo;
 import com.kh.app00.notice.service.NoticeService;
 import com.kh.app00.notice.vo.NoticeFileVo;
 import com.kh.app00.notice.vo.NoticeVo;
@@ -58,16 +65,16 @@ public class NoticeController {
 	}
 
 	@PostMapping("write")
-	public String write(NoticeVo vo, Model model, HttpSession session, EmpVo evo, HttpServletRequest req, NoticeFileVo fvo) {
+	public String write(NoticeVo vo, Model model, HttpSession session, EmpVo evo, HttpServletRequest req, NoticeFileVo nfvo) {
 
 		EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
 		String no = loginMember.getEmpCode();
 
-		evo.setDeptCode(no);
+		evo.setEmpCode(no);
 
 		int result = ns.write(vo);
 
-		MultipartFile[] fArr = fvo.getF();
+		MultipartFile[] fArr = nfvo.getF();
 
 		if (!fArr[0].isEmpty()) { // 클라이언트 로부터 전달받은 파일 있음
 
@@ -82,14 +89,21 @@ public class NoticeController {
 				long now = System.currentTimeMillis();
 				int randomNum = (int) (Math.random() * 90000 + 10000);
 				String changeFileName = now + "_" + randomNum;
+				
+				String noticeFilename = originName;
 
 				// 2. 저장할 경로파일 객체 생성
-				String rootPath = req.getServletContext().getRealPath("/resources/upload/");
-				File targetFile = new File(rootPath + changeFileName + ext);
-
+				String rootPath = req.getServletContext().getRealPath("/resources/upload/notice/");
+				String fileRoot = rootPath + noticeFilename;
+				File targetFile = new File(rootPath + originName );
+				
+				nfvo.setNoticeChangename(changeFileName);
+				nfvo.setNoticeOriginname(originName);
+				nfvo.setNoticeFileroot(fileRoot);
 				// 3. 저장
 				try {
 					f.transferTo(targetFile);
+					int result2 = ns.fileWrite(nfvo);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -111,10 +125,39 @@ public class NoticeController {
 	public String noticeDetail(@PathVariable String noticeCode, Model model) {
 
 		NoticeVo nvo = ns.selectOne(noticeCode);
+		List<NoticeFileVo> noticeFileList = ns.selectNoticeFileList(noticeCode);
 
 		model.addAttribute("nvo", nvo);
+		model.addAttribute("noticeFileList",noticeFileList);
 		return "notice/noticeDetail";
 
+	}
+	
+	@GetMapping("download/{noticeCode}/{noticeFilecode}")
+	public ResponseEntity<ByteArrayResource> download(@PathVariable String noticeCode, @PathVariable String noticeFilecode, HttpServletRequest req) throws IOException {
+		
+		List<NoticeFileVo> fileVo = ns.selectFile(noticeFilecode);
+		
+		
+		//파일 객체 준비
+		String rootPath = req.getServletContext().getRealPath("/resources/upload/notice/");
+		String name = fileVo.get(0).getNoticeOriginname();
+		
+		File target = new File(rootPath + name);
+		
+		//파일 -> 바이트 -> 리소스
+		byte[] data = FileUtils.readFileToByteArray(target);
+		ByteArrayResource res = new ByteArrayResource(data);
+		
+		
+		
+		return ResponseEntity
+			.ok()
+			.contentType(MediaType.APPLICATION_OCTET_STREAM)
+			.contentLength(54997L)
+			.header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=" + name)
+			.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
+			.body(res);
 	}
 	
 	
@@ -128,12 +171,48 @@ public class NoticeController {
 	
 	//게시글 수정
 	@PostMapping("noticeEdit/{noticeCode}")
-	public String edit(@PathVariable String noticeCode , NoticeVo nvo, HttpSession session) {
+	public String edit(@PathVariable String noticeCode , NoticeVo nvo, HttpSession session, NoticeFileVo nfvo,HttpServletRequest req) {
 		
 		nvo.setNoticeCode(noticeCode);
 		
+		
 		//디비 다녀오기
 		int result = ns.edit(nvo);
+		MultipartFile[] fArr = nfvo.getF();
+
+		if (!fArr[0].isEmpty()) { // 클라이언트 로부터 전달받은 파일 있음
+
+			for (int i = 0; i < fArr.length; ++i) {
+				MultipartFile f = fArr[i];
+
+				// 원본파일명
+				String originName = f.getOriginalFilename();
+				String ext = originName.substring(originName.lastIndexOf("."));
+
+				// 변경된 파일명
+				long now = System.currentTimeMillis();
+				int randomNum = (int) (Math.random() * 90000 + 10000);
+				String changeFileName = now + "_" + randomNum;
+				
+				String noticeFilename = originName;
+
+				// 2. 저장할 경로파일 객체 생성
+				String rootPath = req.getServletContext().getRealPath("/resources/upload/notice/");
+				String fileRoot = rootPath + noticeFilename;
+				File targetFile = new File(rootPath + originName );
+				
+				nfvo.setNoticeChangename(changeFileName);
+				nfvo.setNoticeOriginname(originName);
+				nfvo.setNoticeFileroot(fileRoot);
+				// 3. 저장
+				try {
+					f.transferTo(targetFile);
+					int result2 = ns.fileWrite(nfvo);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		
 		if(result == 1) {
 			//성공 화면 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.app00.common.PageVo;
 import com.kh.app00.mail.dao.MailDao;
+import com.kh.app00.mail.vo.MailFileVo;
 import com.kh.app00.mail.vo.MailVo;
 
 @Service
@@ -40,8 +41,8 @@ public class MailServiceImpl implements MailService{
 
 
 	@Override
-	public List<MailVo> selectTrashlist(PageVo pv) {
-		return dao.selectTrashlist(sst, pv);
+	public List<MailVo> selectTrashlist(String id,PageVo pv) {
+		return dao.selectTrashlist(sst,id, pv);
 	}
 
 
@@ -82,8 +83,8 @@ public class MailServiceImpl implements MailService{
 
 
 	@Override
-	public List<MailVo> selectSelflist(PageVo pv) {
-		return dao.selectSelflist(sst, pv);
+	public List<MailVo> selectSelflist(String id,PageVo pv) {
+		return dao.selectSelflist(sst,id, pv);
 	}
 
 
@@ -105,8 +106,8 @@ public class MailServiceImpl implements MailService{
 
 
 	@Override
-	public int selectTotalCnt() {
-		return dao.selectCountAll(sst);
+	public int selectTotalCnt(String id) {
+		return dao.selectCountAll(sst,id);
 	}
 
 
@@ -137,6 +138,36 @@ public class MailServiceImpl implements MailService{
 	@Override
 	public int selectSearchTotalCnt() {
 		return dao.selectSearchTotalCnt(sst);
+	}
+
+
+	@Override
+	public int fileWrite(MailFileVo mfvo) {
+		return dao.insertFile(sst, mfvo);
+	}
+
+
+	@Override
+	public List<MailFileVo> selectFile(String mailFilecode) {
+		return dao.selectFile(sst,mailFilecode);
+	}
+
+
+	@Override
+	public List<MailFileVo> selectMailFileList(String mailCode) {
+		return dao.selectMailFileList(sst,mailCode);
+	}
+
+
+	@Override
+	public int selectSendTotalCnt(String id) {
+		return dao.selectSendTotalCnt(sst,id);
+	}
+
+
+	@Override
+	public int selectSelfTotalCnt(String id) {
+		return dao.selectSelfTotalCnt(sst,id);
 	}
 
 

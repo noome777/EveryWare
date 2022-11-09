@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.app00.common.PageVo;
+import com.kh.app00.mail.vo.MailFileVo;
 import com.kh.app00.mail.vo.MailVo;
 
 @Repository
@@ -32,12 +33,12 @@ public class MailDaoImpl implements MailDao {
 	}
 
 	@Override
-	public List<MailVo> selectTrashlist(SqlSessionTemplate sst, PageVo pv) {
+	public List<MailVo> selectTrashlist(SqlSessionTemplate sst,String id, PageVo pv) {
 		
 		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
 		RowBounds rb = new RowBounds(offset , pv.getBoardLimit());
 		
-		return sst.selectList("mailMapper.selectTrashlist", null, rb);
+		return sst.selectList("mailMapper.selectTrashlist", id, rb);
 	}
 
 	@Override
@@ -79,13 +80,13 @@ public class MailDaoImpl implements MailDao {
 	}
 
 	@Override
-	public List<MailVo> selectSelflist(SqlSessionTemplate sst, PageVo pv) {
+	public List<MailVo> selectSelflist(SqlSessionTemplate sst, String id,PageVo pv) {
 		
 		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
 		RowBounds rb = new RowBounds(offset , pv.getBoardLimit());
 		
 		
-		return sst.selectList("mailMapper.selectSelflist", null, rb);
+		return sst.selectList("mailMapper.selectSelflist", id, rb);
 	}
 	
 	@Override
@@ -99,8 +100,8 @@ public class MailDaoImpl implements MailDao {
 	}
 
 	@Override
-	public int selectCountAll(SqlSessionTemplate sst) {
-		return sst.selectOne("mailMapper.selectCountAll");
+	public int selectCountAll(SqlSessionTemplate sst, String id) {
+		return sst.selectOne("mailMapper.selectCountAll",id);
 	}
 
 	@Override
@@ -136,6 +137,34 @@ public class MailDaoImpl implements MailDao {
 	public int selectSearchTotalCnt(SqlSessionTemplate sst) {
 		return sst.selectOne("mailMapper.selectSearchTotalCnt");
 	}
+
+	@Override
+	public int insertFile(SqlSessionTemplate sst,MailFileVo mfvo) {
+		return sst.insert("mailMapper.insertFile",mfvo);
+	}
+	
+	
+	@Override
+	public List<MailFileVo> selectMailFileList(SqlSessionTemplate sst, String mailCode) {
+		return sst.selectList("mailMapper.selectMailFileList",mailCode);
+	}
+	
+	@Override
+	public List<MailFileVo> selectFile(SqlSessionTemplate sst, String mailFilecode) {
+		return sst.selectList("mailMapper.selectFile",mailFilecode);
+	}
+
+	@Override
+	public int selectSendTotalCnt(SqlSessionTemplate sst, String id) {
+		return sst.selectOne("mailMapper.selectSendTotalCnt",id);
+	}
+
+	@Override
+	public int selectSelfTotalCnt(SqlSessionTemplate sst, String id) {
+		return sst.selectOne("mailMapper.selectSelfTotalCnt", id);
+	}
+
+	
 
 
 	

@@ -17,6 +17,9 @@
 .title {
 	font-size: 20px;
 }
+.card-body{
+
+}
 </style>
 </head>
 <body>
@@ -49,6 +52,7 @@
 							<span class="blind">받은 날짜:${mvo.mailSenddate}</span> 
 						</p>
 					</div>
+					
 					<div class="send_cover">
 						<p class="send_date">
 							<span class="blind">보낸 사람:${mvo.mailSender}</span>
@@ -59,15 +63,18 @@
 							<span class="blind">받는 사람:${mvo.mailReceiver}</span>
 						</p>
 					</div>
+					<br>
+					<c:forEach items="${mailFileList}" var="f">
+	            			<div>${f.mailChangename}&nbsp;&nbsp;<a href="${root}/mail/download/${f.mailCode}/${f.mailFilecode}" class="fe fe-download"></a></div>
+          			</c:forEach>
 				</div>
 				<hr>
 				<div class="content">
 					<div
-						style="padding: 2em 2em; margin: 2em 0; color: black; background: #FFF; border: solid 0px #black; border-radius: 10px;">
+						style="padding: 2em 2em; margin: 2em 0; height:300px; color: black; background: #FFF; border: solid 0px #black; border-radius: 10px;">
 						<p>${mvo.mailContent}</p>
 					</div>
 				</div>
-
 			</div>
 
 		</main>

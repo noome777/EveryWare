@@ -62,8 +62,25 @@
 		SELECT COUNT (*)
 		FROM MAIL
 		WHERE MAIL_DELETE IS NULL
+		AND MAIL_RECEIVER = #{id}
+		AND MAIL_SENDER != #{id} 
 			
-			
+	</select>	
+	
+	<select id="selectSendTotalCnt" resultType="int">
+		SELECT COUNT (*)
+		FROM MAIL
+		WHERE MAIL_DELETE IS NULL
+		AND MAIL_SENDER= #{id}
+		AND MAIL_RECEIVER != #{id}
+	</select>	
+	
+	<select id="selectSelfTotalCnt" resultType="int">
+		SELECT COUNT (*)
+		FROM MAIL
+		WHERE MAIL_DELETE IS NULL
+		AND MAIL_SENDER= #{id}
+		AND MAIL_RECEIVER = #{id}
 	</select>	
 	
 		
@@ -91,6 +108,42 @@
 		 )
 	</insert>
 	
+	<insert id="insertFile">
+		INSERT INTO MAIL_FILE
+		(
+		 MAIL_FILE_CODE
+		 , MAIL_CODE
+		 , MAIL_ORIGIN_NAME
+		 , MAIL_CHANGE_NAME
+		 , MAIL_FILE_ROOT
+		)
+		VALUES
+		(
+		 SEQ_MAIL_FILE_CODE.NEXTVAL
+		 ,SEQ_MAIL_CODE.CURRVAL
+		 ,#{mailOriginname}
+		 ,#{mailChangename}
+		 ,#{mailFileroot}
+		)
+		
+	</insert>
+	
+	<select id="selectMailFileList" resultType="MailFileVo">
+		SELECT MAIL_FILE_CODE, MAIL_CODE, MAIL_ORIGIN_NAME, MAIL_CHANGE_NAME,MAIL_FILE_ROOT FROM MAIL_FILE
+		WHERE MAIL_CODE = #{mailCode}
+		ORDER BY MAIL_FILE_CODE ASC
+	</select>
+	
+	<select id="selectFile" resultType="MailFileVo">
+		SELECT  MAIL_FILE_CODE
+		 , MAIL_CODE
+		 , MAIL_ORIGIN_NAME
+		 , MAIL_CHANGE_NAME
+		 , MAIL_FILE_ROOT
+		FROM MAIL_FILE
+		WHERE MAIL_FILE_CODE = #{mailFilecode}
+	</select>
+	
 	<update id="deleteMail">
 		UPDATE MAIL
 		SET
@@ -113,6 +166,7 @@
 		JOIN EMP
 		ON MAIL.EMP_CODE = EMP.EMP_CODE
 		WHERE MAIL_DELETE IS NOT NULL
+		AND MAIL_RECEIVER = #{id}
 		ORDER BY MAIL_DELETE DESC
 	</select>
 	
@@ -238,6 +292,8 @@
 		JOIN EMP
 		ON MAIL.EMP_CODE = EMP.EMP_CODE
 		WHERE MAIL_DELETE IS NULL
+		AND MAIL_SENDER = #{id}
+		AND MAIL_RECEIVER = #{id}
 		ORDER BY MAIL_CODE DESC
 	</select>
 	

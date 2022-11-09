@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.app00.common.PageVo;
+import com.kh.app00.mail.vo.MailFileVo;
 import com.kh.app00.mail.vo.MailVo;
 
 public interface MailDao {
@@ -20,7 +21,7 @@ public interface MailDao {
 	int deleteMail(SqlSessionTemplate sst, String mailCode);
 
 	//휴지통
-	List<MailVo> selectTrashlist(SqlSessionTemplate sst,PageVo pv);
+	List<MailVo> selectTrashlist(SqlSessionTemplate sst,String id,PageVo pv);
 
 	//휴지통 비우기
 	int clean(SqlSessionTemplate sst,String mailCode);
@@ -42,7 +43,7 @@ public interface MailDao {
 	int selfWrite(SqlSessionTemplate sst, MailVo mvo);
 
 	//내게 쓴 메일함 조회
-	List<MailVo> selectSelflist(SqlSessionTemplate sst, PageVo pv);
+	List<MailVo> selectSelflist(SqlSessionTemplate sst,String id, PageVo pv);
 
 	//메일 상세 조회	
 	MailVo selectMail(SqlSessionTemplate sst, String mailCode);
@@ -51,7 +52,7 @@ public interface MailDao {
 	int deleteOne(SqlSessionTemplate sst, String mailCode);
 
 	//메일 메인글 갯수 조회
-	int selectCountAll(SqlSessionTemplate sst);
+	int selectCountAll(SqlSessionTemplate sst, String id);
 
 	//메일 삭제 갯수 조회
 	int selectDeleteCnt(SqlSessionTemplate sst);
@@ -70,6 +71,22 @@ public interface MailDao {
 
 	//검색 갯수
 	int selectSearchTotalCnt(SqlSessionTemplate sst);
+
+	//파일 첨부
+	int insertFile(SqlSessionTemplate sst, MailFileVo mfvo);
+
+	//파일 선택
+	List<MailFileVo> selectFile(SqlSessionTemplate sst, String mailFilecode);
+
+	//파일 조회
+	List<MailFileVo> selectMailFileList(SqlSessionTemplate sst, String mailCode);
+
+	
+	//보낸 메일함 갯수
+	int selectSendTotalCnt(SqlSessionTemplate sst, String id);
+
+	//내게 보낸 메일함 갯수
+	int selectSelfTotalCnt(SqlSessionTemplate sst, String id);
 
 
 
