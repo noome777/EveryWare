@@ -9,16 +9,19 @@
 			, T.TARGET_NAME AS BK_TARGET_NO
 			, BK_WRITER
 			, BK_TYPE
-			, BK_START
-			, BK_END
+			, TO_CHAR(BK_START, 'YYYY/MM/DD')BK_START
+			, TO_CHAR(START_TIME, 'HH24:MI') START_TIME
+			, TO_CHAR(BK_END, 'YYYY/MM/DD')BK_END
+			, TO_CHAR(END_TIME, 'HH24:MI') END_TIME
 			, BK_STATUS
 		FROM 
         BOOKING B
         JOIN
         TARGET T
-        ON BK_TARGET_NO = T.TARGET_NO WHERE BK_STATUS = 'N'
+        ON BK_TARGET_NO = T.TARGET_NO WHERE BK_STATUS = 'Y'
 	</select>
 	
+	<!-- 예약 추가 -->
 	<insert id="insertOne">
 		INSERT INTO BOOKING
 		(	
@@ -27,7 +30,9 @@
               , BK_TYPE
               , BK_TARGET_NO
               , BK_START
+              , START_TIME
               , BK_END
+              , END_TIME
               , BK_STATUS
 		)
 		VALUES
@@ -36,13 +41,19 @@
 			, #{bkWriter}
 			, #{bkType}
 			, #{bkTargetNo}
-			, TO_DATE(#{bkStart}, 'YYYY/MM/DD HH:MI')
-			, TO_DATE(#{bkEnd}, 'YYYY/MM/DD HH:MI')
-			, 'N'
+			, TO_DATE(#{bkStart}, 'YYYY/MM/DD')
+			, TO_DATE(#{startTime}, 'HH24:MI')
+			, TO_DATE(#{bkEnd}, 'YYYY/MM/DD')
+			, TO_DATE(#{endTime}, 'HH24:MI')
+			, 'Y'
 		)
 	</insert>
 	
-	
+	<!-- 예약 삭제 -->
+	<delete id="deleteOne">
+		 DELETE FROM BOOKING
+		 WHERE BK_NO = #{bkNo}
+	</delete>
 	
 	
 	

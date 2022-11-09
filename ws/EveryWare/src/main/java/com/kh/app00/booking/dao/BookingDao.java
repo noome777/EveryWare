@@ -14,4 +14,7 @@ public interface BookingDao {
 	//예약 작성
 	int write(SqlSessionTemplate sst, BookingVo vo);
 
+	//예약 삭제
+	int delete(SqlSessionTemplate sst, String no);
+
 }

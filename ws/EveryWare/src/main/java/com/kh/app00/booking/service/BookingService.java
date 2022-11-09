@@ -12,4 +12,7 @@ public interface BookingService {
 	//예약 작성
 	int write(BookingVo vo);
 
+	//예약 삭제
+	int delete(String no);
+
 }

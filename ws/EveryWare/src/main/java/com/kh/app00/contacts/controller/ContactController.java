@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kh.app00.common.PageVo;
+import com.kh.app00.common.Pagination;
 import com.kh.app00.commute.service.CommuteService;
 import com.kh.app00.contacts.service.ContactsService;
 import com.kh.app00.contacts.vo.ContactsVo;
@@ -31,19 +33,23 @@ public class ContactController {
 
 	
 	//주소록 목록
-	@GetMapping("contactList")
-	public String contactList(Model model , HttpServletRequest req) {
+	@GetMapping("contactList/{pno}")
+	public String contactList(Model model , @PathVariable int pno) {
 		
-		List<ContactsVo> cList = service.selectList();
+		int totalCount = service.selectTotalCnt();
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
+		
+		List<ContactsVo> cList = service.selectList(pv);
 		
 		model.addAttribute("cList" , cList);
+		model.addAttribute("pv" , pv);
 		
 		return "contacts/contactList";
 		
 		}
 	
 	//주소록 삭제
-	@GetMapping("contactList/{no}")
+	@PostMapping("contactList/{no}")
 	public String delete(@PathVariable String no , HttpSession session , Model model) {
 		
 		int result = service.delete(no);

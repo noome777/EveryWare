@@ -21,6 +21,12 @@ public class BookingDaoImpl implements BookingDao{
 	public int write(SqlSessionTemplate sst, BookingVo vo) {
 		return sst.insert("bookingMapper.insertOne", vo);
 	}
+
+	//예약 삭제
+	@Override
+	public int delete(SqlSessionTemplate sst, String no) {
+		return sst.delete("bookingMapper.deleteOne", no);
+	}
 	
 	
 	
