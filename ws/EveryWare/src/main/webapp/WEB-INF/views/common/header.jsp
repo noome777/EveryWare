@@ -52,7 +52,7 @@
 		</button>
 		<ul class="nav">
 			<li class="nav-item nav-notif"><a
-				class="nav-link text-muted my-2" href="./#" data-toggle="modal"
+				class="nav-link text-muted my-2" href="${root}/alarm/select" data-toggle="modal"
 				data-target=".modal-notif"> <span class="fe fe-bell fe-16"></span>
 					<span class="dot dot-md bg-success"></span>
 			</a></li>
@@ -330,7 +330,11 @@
 				</div>
 				<div class="modal-body">
 					<div class="list-group list-group-flush my-n3">
-
+						
+						
+						<c:forEach items="${alarmList}" var="al">
+						
+						
 						<div class="list-group-item bg-transparent">
 							<a href="#" style="text-decoration: none; color: black;">
 								<div class="row align-items-center">
@@ -338,7 +342,7 @@
 										<span class="fe fe-calendar fe-24"></span>
 									</div>
 									<div class="col">
-										<small><strong>10분 후 일정이 있습니다.</strong></small>
+										<small><strong>${al.alarmcontent}</strong></small>
 										<div class="my-0 text-muted small">10분 후 회의 예정</div>
 										<small class="badge badge-pill badge-light text-muted">1분 전
 											</small>
@@ -346,8 +350,8 @@
 								</div>
 							</a>
 						</div>
-
-						<div class="list-group-item bg-transparent">
+						</c:forEach>
+						<!-- <div class="list-group-item bg-transparent">
 							<a href="#" style="text-decoration: none; color: black;">
 								<div class="row align-items-center">
 									<div class="col-auto">
@@ -377,7 +381,7 @@
 									</div>
 								</div>
 							</a>
-						</div>
+						</div> -->
 						
 					</div>
 					<!-- / .list-group -->
