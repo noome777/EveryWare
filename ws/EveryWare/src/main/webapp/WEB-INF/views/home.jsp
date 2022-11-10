@@ -1,3 +1,5 @@
+<%@page import="com.kh.app00.calendar.vo.CalendarVo"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -8,7 +10,7 @@
 <style>
  #commute{
  	margin-left: 58%;
- 	margin-top: 1%;
+ 	
  }
  #employee-image{
  	width: 180px;
@@ -18,6 +20,13 @@
  #commute-content{
  	float: right;
  	margin-right: 20%;
+ }
+ 
+ #cal{
+ 	margin-right: 2%;
+ 	margin-top: 0%;
+ 	float: right;
+ 	/* margin: 1% auto; */
  }
 </style>
 </head>
@@ -51,7 +60,24 @@
           </div> <!-- .row -->
         </div> <!-- .card-body -->
       </div>
-     </div>
+        
+       <!-- 일정 위젯 -->
+	   
+	  
+       <div class="card shadow mb-5" id="cal" style="width: 82%; height: 400px;">
+        <div class="card-body">
+          <div class="d-flex mb-2">
+            <div class="flex-fill pt-2">
+              	<div id="calendar"></div>
+              	
+              </div>
+            </div>
+          </div> <!-- .row -->
+        </div> <!-- .card-body -->
+      </div>
+        
+
+</div>
      
      
      
@@ -106,4 +132,71 @@
   todayDate();
 
 </script>
+
+
+
+<script src='${root}/resources/js/fullcalendar.js'></script>
+	<script src='${root}/resources/js/fullcalendar.custom.js'></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.js"></script>
+	<script>
+	/** full calendar */
+    var calendarEl = document.getElementById('calendar');
+    if (calendarEl)
+    {
+      document.addEventListener('DOMContentLoaded', function()
+      {
+        var calendar = new FullCalendar.Calendar(calendarEl,
+        {
+          plugins: ['dayGrid', 'timeGrid', 'list', 'bootstrap'],
+          themeSystem: 'bootstrap',
+          aspectRatio: 1.35,
+          contentHeight: 200,
+          header:
+          {
+            left: 'prev,today, next',
+            center: 'title',
+            right: 'listMonth'
+          },
+          navLinks: true,
+          eventLimit: true, // allow "more" link when too many events
+          selectable: true,
+          buttonIcons:
+          {
+            prev: 'fe-arrow-left',
+            next: 'fe-arrow-right',
+            prevYear: 'left-double-arrow',
+            nextYear: 'right-double-arrow'
+          },
+			events: [
+				<%List<CalendarVo> calendarList = (List<CalendarVo>) request.getAttribute("calendarList");%>
+	            <%if (calendarList != null) {%>
+	            <%for (CalendarVo vo : calendarList) {%>
+	            {
+	            	id : '<%=vo.getCalCode() %>',
+	            	title : '<%=vo.getCalTitle()%>',
+	                start : '<%=vo.getCalStart()%>',
+	                end : '<%=vo.getCalEnd()%>',
+	                <%if (vo.getCalAllday().equals("TRUE ")) {%>
+	                	allDay : 'TRUE',
+	                <% } %>
+	                color : '#ffff00'
+	             },
+		<%}
+}%>],
+          locale: 'ko'
+        });
+        calendar.render();
+      });
+    }
+      
+    </script>
+    <script>
+	/** full calendar */
+	$(document).ready(function() {
+		const fcbtn = document.querySelector('.fc-listMonth-button');
+		fcbtn.click();
+	});
+      
+    </script>
 </html>

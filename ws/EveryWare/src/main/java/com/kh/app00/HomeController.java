@@ -1,5 +1,8 @@
 package com.kh.app00;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kh.app00.calendar.service.CalendarService;
+import com.kh.app00.calendar.vo.CalendarVo;
 import com.kh.app00.commute.service.CommuteService;
 import com.kh.app00.commute.vo.CommuteVo;
 import com.kh.app00.emp.vo.EmpVo;
@@ -16,15 +21,17 @@ import com.kh.app00.emp.vo.EmpVo;
 public class HomeController {
     
     private final CommuteService commuteService;
+    private final CalendarService calendarService;
     
     //생성자
     @Autowired
-    public HomeController(CommuteService commuteService) {
+    public HomeController(CommuteService commuteService, CalendarService calendarService) {
         this.commuteService = commuteService;
+        this.calendarService = calendarService;
     }
     
     @GetMapping("/")
-    public String commuteWidget(HttpSession session, EmpVo empVo, Model model) {
+    public String commuteWidget(HttpSession session, EmpVo empVo, Model model, HttpServletRequest request) {
         
         //사원 정보 (로그인 유저)
         EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
@@ -49,13 +56,14 @@ public class HomeController {
         //근태 끝
         
         
+        //일정
+        List<CalendarVo> calendar = null;
         
+        calendar = calendarService.getAllCalendar(loginMember);
+		request.setAttribute("calendarList", calendar);
         
-        
-        
-        
-        
-        
+        //일정 끝
+		
         return "home";
     }
 	
