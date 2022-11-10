@@ -88,6 +88,19 @@ public interface MailService {
 	//보낸 메일함 검색 갯수
 	int selectSearchSendCnt(MailVo mvo);
 	
+	//내게 쓴 메일함 갯수
+	List<MailVo> selectSearchSelfList(MailVo mvo, PageVo pv2);
+	
+	//내게 쓴 메일함 검색 갯수
+	int selectSearchSelfCnt(MailVo mvo);
+	
+	//휴지통 검색 리스트
+	List<MailVo> selectSearchTrashList(MailVo mvo, PageVo pv2);
+	
+	
+	//휴지통 검색 갯수
+	int selectSearchTrashCnt(MailVo mvo);
+	
 	
 	
 	

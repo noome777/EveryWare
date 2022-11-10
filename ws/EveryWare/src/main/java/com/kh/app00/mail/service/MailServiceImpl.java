@@ -184,6 +184,30 @@ public class MailServiceImpl implements MailService{
 	}
 
 
+	@Override
+	public List<MailVo> selectSearchSelfList(MailVo mvo, PageVo pv2) {
+		return dao.selectSearchSelfList(sst,mvo, pv2);
+	}
+
+
+	@Override
+	public int selectSearchSelfCnt(MailVo mvo) {
+		return dao.selectSearchSelfCnt(sst,mvo);
+	}
+
+
+	@Override
+	public List<MailVo> selectSearchTrashList(MailVo mvo, PageVo pv2) {
+		return dao.selectSearchTrashList(sst,mvo,pv2);
+	}
+
+
+	@Override
+	public int selectSearchTrashCnt(MailVo mvo) {
+		return dao.selectSearchTrashCnt(sst,mvo);
+	}
+
+
 
 	
 }
