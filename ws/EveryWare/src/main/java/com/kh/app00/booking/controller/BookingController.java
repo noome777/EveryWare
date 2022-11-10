@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.app00.booking.service.BookingService;
 import com.kh.app00.booking.vo.BookingVo;
+import com.kh.app00.common.PageVo;
+import com.kh.app00.common.Pagination;
 import com.kh.app00.contacts.vo.ContactsVo;
 import com.kh.app00.emp.vo.EmpVo;
 
@@ -31,12 +33,16 @@ public class BookingController {
 
 
 	//예약 목록
-	@GetMapping("bookingList")
-	public String bookingList(Model model , HttpServletRequest req) {
+	@GetMapping("bookingList/{pno}")
+	public String bookingList(Model model , @PathVariable int pno) {
 		
-		List<BookingVo> bList = service.selectList();
+		int totalCount = service.selectTotalCnt();
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
+		
+		List<BookingVo> bList = service.selectList(pv);
 		
 		model.addAttribute("bList" , bList);
+		model.addAttribute("pv" , pv);
 		
 		return "booking/bookingList";
 	}
@@ -56,7 +62,7 @@ public class BookingController {
 		if(result == 1) {
 			//작성 성공
 			session.setAttribute("alertMsg", "예약이 추가되었습니다.");
-			return "redirect:/booking/bookingList";
+			return "redirect:/booking/bookingList/1";
 		}else {
 			//작성 실패
 			model.addAttribute("msg" , "예약 추가 실패");
@@ -65,7 +71,7 @@ public class BookingController {
 	}
 	
 	//예약 삭제
-	@GetMapping("bookingList/{no}")
+	@GetMapping("delete/{no}")
 	public String delete(@PathVariable String no , HttpSession session , Model model) {
 		
 		int result = service.delete(no);
@@ -73,16 +79,13 @@ public class BookingController {
 		if(result == 1) {
 			//삭제성공
 			session.setAttribute("alertMsg", "반납 처리 되었습니다.");
-			return "redirect:/booking/bookingList";
+			return "redirect:/booking/bookingList/1";
 		}else {
 			//삭제실패
 			model.addAttribute("msg", "반납 실패하였습니다.");
-			return "booking/bookingList";
+			return "error/errorPage";
 		}
 	}
-	
-	//예약 수정
-	
 	
 	
 

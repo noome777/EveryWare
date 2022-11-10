@@ -82,8 +82,8 @@
                        
                         <label for="custom-select">종류</label>
                         <select class="custom-select" id="custom-select" name="bkType">
-                          <option value="비품">비품</option>
-                          <option value="회의실">회의실</option>
+                          <option value="A">비품</option>
+                          <option value="M">회의실</option>
                         </select>
                         <label for="custom-multiselect">비품명</label>
                         <select class="custom-select" multiple id="custom-multiselect" name="bkTargetNo">
@@ -127,15 +127,7 @@
               <div class="card shadow">
                 <div class="card-body tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 
-                <!-- 예약중/반납완료 -->
-                <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
-                   <li class="nav-item">
-                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">예약중</a>
-                   </li>
-                   <li class="nav-item">
-                     <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">반납완료</a>
-                   </li>
-                </ul>
+                
                 
                   <table class="table table-borderless table-hover">
                   
@@ -158,7 +150,7 @@
                         
                         <td>
                           <div class="avatar avatar-sm">
-                            <img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+                            <img src="${root}/resources/img/${list.targetImage}" alt="..." class="avatar-img rounded-circle">
                           </div>
                         </td>
                         <td>
@@ -172,7 +164,7 @@
                           <span class="badge badge-primary">예약중</span>
                         </td>
                         <td>
-                          <button class="returnBtn" onclick="location.href='${root}/booking/bookingList/${list.bkNo}';"><span class="badge badge-primary">반납하기</span></button>
+                          <button class="returnBtn" onclick="location.href='${root}/booking/delete/${list.bkNo}';"><span class="badge badge-primary">반납하기</span></button>
                         </td> 
                       </tr>
                     </c:if>
@@ -184,16 +176,19 @@
                 </div>
               </div>
               
-              
-
-              
-              <!-- 페이징 -->
-              <nav aria-label="Table Paging" class="my-3">
-                <ul class="pagination justify-content-end mb-0">
-                  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                  <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul>
+             <!-- 페이징 -->
+             <nav aria-label="Table Paging" class="my-3">
+              <ul class="pagination justify-content-center mb-0">
+              	<c:if test="${pv.startPage ne 1}">
+            	    <li class="page-item"><a class="page-link" href="/app00/booking/bookingList/${pv.startPage - 1}">Previous</a></li>
+                </c:if>
+                <c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
+                	<li class="page-item"><a class="page-link" href="/app00/booking/bookingList/${i}">${i}</a></li>
+                </c:forEach>
+                <c:if test="${pv.endPage ne pv.maxPage}">
+           	     <li class="page-item"><a class="page-link" href="/app00/booking/bookingList/${pv.endPage + 1}">Next</a></li>
+                </c:if>
+               </ul>
               </nav>
               
             </div> <!-- .col-12 -->

@@ -14,5 +14,5 @@ public class BookingVo {
 	private String bkEnd;
 	private String endTime;
 	private String bkStatus;
-	
+	private String targetImage;
 }
