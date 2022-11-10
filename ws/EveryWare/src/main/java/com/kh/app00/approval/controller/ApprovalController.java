@@ -264,11 +264,6 @@ public class ApprovalController {
 		int apprRefCount = service.selectRefListTotalCnt(vo);
 		int apprWaitCount = service.selectWaitListTotalCnt(vo);
 		int apprProgCount = service.selectProgressListTotalCnt(vo);
-		System.out.println(apprProgCount);
-		System.out.println(apprWaitCount);
-		System.out.println(apprRefCount);
-		System.out.println(apprExpectCount);
-		
 		
 		Map<String, Integer> count = new HashMap<String, Integer>();
 		count.put("apprExpectCount", apprExpectCount);
@@ -288,11 +283,6 @@ public class ApprovalController {
 		EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
 		ApprovalDocVo vo = new ApprovalDocVo();
 		vo.setEmpCode(loginMember.getEmpCode());
-//		int apprExpectCount = service.selectExpectCount(vo);
-//		int apprRefCount = service.selectRefListTotalCnt(vo);
-//		int apprWaitCount = service.selectWaitListTotalCnt(vo);
-//		int apprProgCount = service.selectProgressListTotalCnt(vo);
-		
 		vo.setDeptCode(loginMember.getDeptCode());
 		vo.setDocFormCode(docFormCode);
 		
@@ -302,10 +292,6 @@ public class ApprovalController {
 		List<ApprovalDocVo> docList = service.selectProgressDocList(vo, pv);
 		List<DocFormVo> formList = service.selectFormList();
 		
-//		session.setAttribute("apprProgCount", apprProgCount);
-//		session.setAttribute("apprRefCount", apprRefCount);
-//		session.setAttribute("apprExpectCount", apprExpectCount);
-//		session.setAttribute("apprWaitCount", apprWaitCount);
 		model.addAttribute("formList", formList);
 		model.addAttribute("docList", docList);
 		model.addAttribute("pv", pv);
