@@ -695,9 +695,9 @@
 	function openEditModal() {
 
 		const checkBoxArr = [];
-		const highDeptArr = [];
+		const deptCodeArr = [];
 
-		const highDeptCode= $('input[type="checkbox"]:checked').parent().next();
+		const deptCode= $('input[type="checkbox"]:checked').parent().next();
 
 		$('input:checkbox:checked').each(function(){
 			checkBoxArr.push($(this).val());
@@ -735,12 +735,12 @@
 				
 				for(var i = 0; i < checkBoxArr.length; ++i) {
 
-					highDeptArr.push(highDeptCode.eq(i).text());
+					deptCodeArr.push(deptCode.eq(i).text());
 
 					$('#edit-target').prepend(
 
 						'<tr>' + 
-							'<td class="edit-high-dept">' + highDeptArr[i] + '</td>' +
+							'<td class="edit-high-dept">' + deptCodeArr[i] + '</td>' +
 							'<td>' + checkBoxArr[i] + '</td>' + 
 							'<td>' + 
 								'<select name="highDeptCode" class="highDept-selector">' +
@@ -785,15 +785,15 @@
 
 			console.log("???");
 
+			const deptCodeArr = [];
+			const deptNameArr = [];
 			const highDeptArr = [];
-			const deptArr = [];
-			const editDeptArr = [];
 			
 
 			for(let i=0; i<$('.edit-high-dept').length; ++i) {
-				highDeptArr.push($(".edit-high-dept").eq(i).text());
-				deptArr.push($(".highDept-selector").eq(i).val());
-				editDeptArr.push($(".edit-dept-input").eq(i).val());
+				deptCodeArr.push($(".edit-high-dept").eq(i).text());
+				deptNameArr.push($(".edit-dept-input").eq(i).val());
+				highDeptArr.push($(".highDept-selector").eq(i).val());
 			}
 
 			
@@ -806,8 +806,8 @@
 					cache: false,
 					data : {
 						highDeptArr : highDeptArr,
-						deptArr : deptArr,
-						editDeptArr : editDeptArr
+						deptNameArr : deptNameArr,
+						deptCodeArr : deptCodeArr
 					},
 					success: function(data) {
 						

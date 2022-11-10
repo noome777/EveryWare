@@ -124,6 +124,7 @@ public interface OrganizationService {
 	//부서관리 - 부서 수정
 	int updateDept(Map<String, List<String>> updateTarget);
 
-
+	//부서관리 - 부서 수정 - 하위부서 재귀호출
+	boolean updateRowDepts(List<DeptVo> deptList, String depth);
 
 }

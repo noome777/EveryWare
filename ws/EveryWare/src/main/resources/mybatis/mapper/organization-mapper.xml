@@ -539,7 +539,7 @@
 	</select>
 	
 	<update id="updateDept" parameterType="java.util.Map">
-		<foreach collection="highDeptList" index="index" open="DECLARE BEGIN" close="; END;"  separator=";"> 
+		<foreach collection="highDeptList"  item="item" index="index" open="DECLARE BEGIN" close="; END;"  separator=";"> 
 				UPDATE DEPT
 				SET
 					HIGH_DEPT_CODE = #{highDeptList[${index}]}
@@ -548,30 +548,12 @@
 							FROM DEPT 
 							WHERE DEPT_CODE = #{highDeptList[${index}]}
 						)+1
-					, DEPT_NAME = #{editDeptList[${index}]}
+					, DEPT_NAME = #{deptNameList[${index}]}
 				WHERE 
 					DEPT_CODE = #{deptCodeList[${index}]}
 		 </foreach>
 	</update>
 	
-	<update id="updateRowDept" parameterType="java.util.Map">
-		<foreach collection="deptCodeList"  index="index" open="DECLARE BEGIN" close="; END;"  separator=";"> 
-				UPDATE DEPT
-				SET
-					HIGH_DEPT_CODE = HIGH_DEPT_CODE = (
-			                SELECT HIGH_DEPT_CODE
-			                FROM DEPT
-			                WHERE DEPT_CODE = #{deptCodeList[${index}]}
-			            )
-					, DEPT_DEPTH = (
-							SELECT DEPT_DEPTH 
-							FROM DEPT 
-							WHERE DEPT_CODE = #{deptCodeList[${index}]}
-						)
-				WHERE 
-					HIGH_DEPT_CODE = #{deptCodeList[${index}]}
-		 </foreach>
-	</update>
 	
 	
 </mapper>
