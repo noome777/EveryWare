@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.app00.calendar.vo.CalendarVo;
+import com.kh.app00.emp.vo.EmpVo;
 
 @Repository
 public class CalendarDaoImpl implements CalendarDao{
@@ -23,6 +24,14 @@ public class CalendarDaoImpl implements CalendarDao{
 		System.out.println(deptCode);
 		return sst.selectList("calendarMapper.selectDepartAll", deptCode);
 	}
+
+	//모든일정 조회
+	@Override
+	public List<CalendarVo> selectAll(SqlSessionTemplate sst, EmpVo loginMember) {
+		// TODO Auto-generated method stub
+		return sst.selectList("calendarMapper.selectAll", loginMember);
+	}
+
 	
 	//일정 작성
 	@Override
@@ -37,4 +46,5 @@ public class CalendarDaoImpl implements CalendarDao{
 		return sst.update("calendarMapper.deleteOne", no);
 	}
 
+	
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.app00.calendar.dao.CalendarDao;
 import com.kh.app00.calendar.vo.CalendarVo;
+import com.kh.app00.emp.vo.EmpVo;
 
 @Service
 public class CalendarServiceImpl implements CalendarService {
@@ -60,6 +61,12 @@ public class CalendarServiceImpl implements CalendarService {
 	public int deleteOne(String no) {
 		// TODO Auto-generated method stub
 		return dao.deleteOne(sst, no);
+	}
+
+	@Override
+	public List<CalendarVo> getAllCalendar(EmpVo loginMember) {
+		// TODO Auto-generated method stub
+		return dao.selectAll(sst, loginMember);
 	}
 
 }
