@@ -34,6 +34,42 @@
 		, SYSDATE
 		)
 	</insert>
+	
+	<insert id="insertFile">
+		INSERT INTO NOTICE_FILE
+		(
+		 NOTICE_FILE_CODE
+		 , NOTICE_CODE
+		 , NOTICE_ORIGIN_NAME
+		 , NOTICE_CHANGE_NAME
+		 , NOTICE_FILE_ROOT
+		)
+		VALUES
+		(
+		 SEQ_NOTICE_FILE_CODE.NEXTVAL
+		 ,SEQ_NOTICE_CODE.CURRVAL
+		 ,#{noticeOriginname}
+		 ,#{noticeChangename}
+		 ,#{noticeFileroot}
+		)
+		
+	</insert>
+	
+	<select id="selectNoticeFileList" resultType="NoticeFileVo">
+		SELECT NOTICE_FILE_CODE, NOTICE_CODE, NOTICE_ORIGIN_NAME, NOTICE_CHANGE_NAME,NOTICE_FILE_ROOT FROM NOTICE_FILE
+		WHERE NOTICE_CODE = #{noticeCode}
+		ORDER BY NOTICE_FILE_CODE ASC
+	</select>
+	
+	<select id="selectFile" resultType="NoticeFileVo">
+		SELECT  NOTICE_FILE_CODE
+		 , NOTICE_CODE
+		 , NOTICE_ORIGIN_NAME
+		 , NOTICE_CHANGE_NAME
+		 , NOTICE_FILE_ROOT
+		FROM NOTICE_FILE
+		WHERE NOTICE_FILE_CODE = #{noticeFilecode}
+	</select>
 
 	<select id="selectOne" resultType="NoticeVo">
 		SELECT

@@ -21,6 +21,7 @@ public class MailVo {
 	private String searchType;
 	private String keyword;
 	private String search;
+	private String id;
 	
 	private MultipartFile[] f;
 }

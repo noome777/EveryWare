@@ -57,14 +57,14 @@
 				<div class="date_cover">
 						<p>${nvo.noticeDate}</p>
 				</div>
-				<div class="file_cover">
-						<a href="${root}/notice/download">파일 다운로드</a>
-				</div>
+				<c:forEach items="${noticeFileList}" var="n">
+	            			<div>${n.noticeChangename}&nbsp;&nbsp;<a href="${root}/notice/download/${n.noticeCode}/${n.noticeFilecode}" class="fe fe-download"></a></div>
+          			</c:forEach>
 			</div>
 			<hr>
 			<div class="content">
 				<div
-					style="padding: 2em 2em; margin: 2em 0; color: black; background: #FFF; border: solid 0px #black; border-radius: 10px;">
+					style="padding: 2em 2em; margin: 2em 0; height:300px; color: black; background: #FFF; border: solid 0px #black; border-radius: 10px;">
 						${nvo.noticeContent}
 				</div>
 				

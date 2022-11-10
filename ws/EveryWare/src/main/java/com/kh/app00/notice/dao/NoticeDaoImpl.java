@@ -54,5 +54,20 @@ public class NoticeDaoImpl implements NoticeDao {
 		return sst.update("noticeMapper.updateOne" , nvo);
 	}
 
+	@Override
+	public int insertFile(SqlSessionTemplate sst, NoticeFileVo nfvo) {
+		return sst.insert("noticeMapper.insertFile", nfvo);
+	}
+
+	@Override
+	public List<NoticeFileVo> selectFile(SqlSessionTemplate sst, String noticeFilecode) {
+		return sst.selectList("noticeMapper.selectFile", noticeFilecode);
+	}
+
+	@Override
+	public List<NoticeFileVo> selectNoticeFileList(SqlSessionTemplate sst, String noticeCode) {
+		return sst.selectList("noticeMapper.selectNoticeFileList", noticeCode);
+	}
+
 	
 }

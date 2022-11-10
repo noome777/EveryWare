@@ -1,7 +1,5 @@
 package com.kh.app00.notice.vo;
 
-import java.util.List;
-
 import lombok.Data;
 
 @Data
@@ -15,5 +13,4 @@ public class NoticeVo {
 	private String noticeUpdate;
 	private String noticeDelete;
 	
-	private List<NoticeFileVo> fileList;
 }

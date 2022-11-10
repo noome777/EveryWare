@@ -1,12 +1,14 @@
 package com.kh.app00.mail.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
 import com.kh.app00.common.PageVo;
 import com.kh.app00.mail.dao.MailDao;
+import com.kh.app00.mail.vo.MailFileVo;
 import com.kh.app00.mail.vo.MailVo;
 
 @Service
@@ -40,8 +42,8 @@ public class MailServiceImpl implements MailService{
 
 
 	@Override
-	public List<MailVo> selectTrashlist(PageVo pv) {
-		return dao.selectTrashlist(sst, pv);
+	public List<MailVo> selectTrashlist(String id,PageVo pv) {
+		return dao.selectTrashlist(sst,id, pv);
 	}
 
 
@@ -82,8 +84,8 @@ public class MailServiceImpl implements MailService{
 
 
 	@Override
-	public List<MailVo> selectSelflist(PageVo pv) {
-		return dao.selectSelflist(sst, pv);
+	public List<MailVo> selectSelflist(String id,PageVo pv) {
+		return dao.selectSelflist(sst,id, pv);
 	}
 
 
@@ -105,8 +107,8 @@ public class MailServiceImpl implements MailService{
 
 
 	@Override
-	public int selectTotalCnt() {
-		return dao.selectCountAll(sst);
+	public int selectTotalCnt(String id) {
+		return dao.selectCountAll(sst,id);
 	}
 
 
@@ -129,14 +131,56 @@ public class MailServiceImpl implements MailService{
 
 
 	@Override
-	public List<MailVo> selectSearchList(String searchType, String keyword,String id,PageVo pv2) {
-		return dao.selectSearchList(sst,searchType, keyword,id,pv2);
+	public List<MailVo> selectSearchList(MailVo mvo,PageVo pv2) {
+		return dao.selectSearchList(sst,mvo,pv2);
 	}
 
 
 	@Override
-	public int selectSearchTotalCnt() {
-		return dao.selectSearchTotalCnt(sst);
+	public int selectSearchTotalCnt(MailVo mvo) {
+		return dao.selectSearchTotalCnt(sst, mvo);
+	}
+
+
+	@Override
+	public int fileWrite(MailFileVo mfvo) {
+		return dao.insertFile(sst, mfvo);
+	}
+
+
+	@Override
+	public List<MailFileVo> selectFile(String mailFilecode) {
+		return dao.selectFile(sst,mailFilecode);
+	}
+
+
+	@Override
+	public List<MailFileVo> selectMailFileList(String mailCode) {
+		return dao.selectMailFileList(sst,mailCode);
+	}
+
+
+	@Override
+	public int selectSendTotalCnt(String id) {
+		return dao.selectSendTotalCnt(sst,id);
+	}
+
+
+	@Override
+	public int selectSelfTotalCnt(String id) {
+		return dao.selectSelfTotalCnt(sst,id);
+	}
+
+
+	@Override
+	public List<MailVo> selectSearchSendList(MailVo mvo, PageVo pv2) {
+		return dao.selectSearchSendList(sst, mvo, pv2);
+	}
+
+
+	@Override
+	public int selectSearchSendCnt(MailVo mvo) {
+		return dao.selectSearchSendCnt(sst,mvo);
 	}
 
 

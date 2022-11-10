@@ -9,7 +9,9 @@ public class NoticeFileVo {
 	
 	private String noticeFilecode;
 	private String noticeCode;
-	private String noticeFilename;
+	private String noticeChangename;
+	private String noticeOriginname;
+	private String noticeFileroot;
 	
 	private MultipartFile[] f;
 }

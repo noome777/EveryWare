@@ -9,7 +9,9 @@ public class MailFileVo {
 	
 	private String mailFilecode;
 	private String mailCode;
-	private String mailFilename;
+	private String mailChangename;
+	private String mailOriginname;
+	private String mailFileroot;
 	
 	private MultipartFile[] f;
 }

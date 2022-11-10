@@ -63,28 +63,28 @@
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
 		<%@ include file="/WEB-INF/views/mail/sidemenu-content.jsp"%>
 		<div class="main-content">
-
-			<h2 id="mailall">보낸 메일함</h2>
-			<br>
-				<div class="form-group row " style="margin-left: 3px;">
-			<div class="w100" style="padding-right:10px">
-				<select class="form-control form-control-sm" name="searchType" id="searchType">
-					<option value="title">제목</option>
-					<option value="reg_id">발신자</option>
-				</select>
-			</div>
-
-			<div class="w300" style="padding-right:10px">
-				<input type="text" class="form-control form-control-sm" name="keyword" id="keyword">
-
-			</div>
-
-			<div>
-				<button class="btn btn-sm btn-primary" name="btnSearch" id="btnSearch">검색</button>
-			</div>
-
-		</div>
-
+	<h2 id="mailSen">보낸 메일함</h2>
+	<br>
+	<form action="${root}/mail/mailSearchsend/${pno}" method="get" name="mailSend" onsubmit="return Checkform">
+			<div class="form-group row " style="margin-left: 3px;">
+				<div class="w100" style="padding-right: 10px">
+					<select class="form-control form-control-sm" name="searchType" id="searchType"
+						>
+						<option value="title">제목</option>
+						<option value="rec_id">받는 사람</option>
+						<option value="all">전체</option>
+					</select>
+				</div>
+				<div class="w300" style="padding-right: 10px">
+					<input type="text" class="form-control form-control-sm"
+						name="keyword" id="keyword" >
+				</div>
+				<div>
+					<input  type="submit" class="btn btn-sm btn-primary" name="search" 
+						id="search" value="검색">
+				</div>
+			</div>	
+			</form>
 				<br>
 				<div class="buttonSet">
 					<input type="button" value="삭제" id="deleteBtn"
@@ -152,7 +152,15 @@
 				$("input[type=checkbox]").prop("checked", false);
 			}
 		});
-
+	
+		function Checkform() {
+		    if( mailSend.keyword.value == "" ) {
+		    	mailSend.keyword.focus();
+		      alert("내용을 입력해주세요.");
+		      
+		      return false;
+		    }
+		}
 		
 		
 		function deleteValue() {

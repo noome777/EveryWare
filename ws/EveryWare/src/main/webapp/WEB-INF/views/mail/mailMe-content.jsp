@@ -39,7 +39,7 @@
 	<main role="main" class="main-content">
 		<h2 id="mailall">내게 쓰기</h2>
 		<br>
-		<form action="/app00/mail/write" method="post"
+		<form action="/app00/mail/mailMe" method="post"
 			enctype="multipart/form-data">
 		<div class="buttonSet">
 			<button type="submit" id="sendBtn" class="btn btn-primary">보내기</button>

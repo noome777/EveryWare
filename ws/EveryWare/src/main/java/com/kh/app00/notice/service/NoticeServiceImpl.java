@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
 import com.kh.app00.common.PageVo;
+import com.kh.app00.mail.vo.MailFileVo;
 import com.kh.app00.notice.dao.NoticeDao;
 import com.kh.app00.notice.vo.NoticeFileVo;
 import com.kh.app00.notice.vo.NoticeVo;
@@ -59,5 +60,20 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public int edit(NoticeVo nvo) {
 		return dao.updateOne(sst , nvo);
+	}
+
+	@Override
+	public int fileWrite(NoticeFileVo nfvo) {
+		return dao.insertFile(sst,nfvo);
+	}
+
+	@Override
+	public List<NoticeFileVo> selectFile(String noticeFilecode) {
+		return dao.selectFile(sst,noticeFilecode);
+	}
+
+	@Override
+	public List<NoticeFileVo> selectNoticeFileList(String noticeCode) {
+		return dao.selectNoticeFileList(sst,noticeCode);
 	}
 }

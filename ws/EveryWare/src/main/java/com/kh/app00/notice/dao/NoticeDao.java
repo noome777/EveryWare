@@ -31,6 +31,16 @@ public interface NoticeDao {
 	//게시글 수정
 	int updateOne(SqlSessionTemplate sst, NoticeVo nvo);
 	
+	//파일첨부
+	int insertFile(SqlSessionTemplate sst, NoticeFileVo nfvo);
+	
+	//파일 선택
+	List<NoticeFileVo> selectFile(SqlSessionTemplate sst, String noticeFilecode);
+	
+	
+	//파일 조회
+	List<NoticeFileVo> selectNoticeFileList(SqlSessionTemplate sst, String noticeCode);
+	
 	
 
 }
