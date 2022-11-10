@@ -386,18 +386,21 @@ public class OrganizationServiceImpl implements OrganizationService {
 	//부서관리 - 부서수정
 	@Override
 	public int updateDept(Map<String, List<String>> updateTarget) {
+	
 		
-		 int result  =  organizationDao.updateRowDept(sqlSessionTemplate, updateTarget);
-		
-		if(result== -1) {
-			System.out.println("1회 성공");
-			return  organizationDao.updateDept(sqlSessionTemplate, updateTarget);
-		} else {
-			return -100;
-		}
-		
+		 int result =   organizationDao.updateDept(sqlSessionTemplate, updateTarget);
+		 
+		return 0;
 		
 	}
+
+
+	//부서관리 - 부서 수정 - 하위부서 재귀호출
+	@Override
+	public boolean updateRowDepts(List<DeptVo> deptList, String depth) {
+		return false;
+	}
+	
 
 
 

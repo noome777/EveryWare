@@ -802,29 +802,25 @@ public class OrganizationController {
 	//부서관리 - 부서 수정
 	@PostMapping("management/dept/edit")
 	@ResponseBody
-	public String updateDept(@RequestParam("highDeptArr") String[] highDeptArr, @RequestParam("editDeptArr") String[] editDeptArr, @RequestParam("deptArr") String[] deptArr) {
+	public String updateDept(@RequestParam("highDeptArr") String[] highDeptArr, @RequestParam("deptCodeArr") String[] deptCodeArr, @RequestParam("deptNameArr") String[] deptNameArr) {
 		
 		List<String> highDeptList = new ArrayList<String>();
 		for (String highDeptCode : highDeptArr) {
 			highDeptList.add(highDeptCode);
 		}
-		List<String> editDeptList = new ArrayList<String>();
-		for(String editDeptName : editDeptArr) {
-			editDeptList.add(editDeptName);
+		List<String> deptNameList = new ArrayList<String>();
+		for(String deptName : deptNameArr) {
+			deptNameList.add(deptName);
 		}
 		List<String> deptCodeList = new ArrayList<String>();
-		for(String deptCode : deptArr) {
+		for(String deptCode : deptCodeArr) {
 			deptCodeList.add(deptCode);
 		}
-		
-		System.out.println(highDeptList);
-		System.out.println(editDeptList);
-		System.out.println(deptCodeList);
 	
 		Map<String, List<String>> updateTarget = new HashMap<String,List<String>>();
 		updateTarget.put("highDeptList", highDeptList);
-		updateTarget.put("editDeptList", editDeptList);
 		updateTarget.put("deptCodeList", deptCodeList);
+		updateTarget.put("deptNameList", deptNameList);
 		
 		int result = organizationService.updateDept(updateTarget);
 		
