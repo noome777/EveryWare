@@ -195,7 +195,7 @@ public class MailController {
 		}
 		if (result == 1) {
 			session.setAttribute("alertMsg", "메일 작성 성공!");
-			return "redirect:/mail/mailMain/1";
+			return "redirect:/mail/send/1";
 
 		} else {
 			model.addAttribute("msg", "메일 작성 실패...");
@@ -383,17 +383,18 @@ public class MailController {
 	
 	@GetMapping("mailSearchsend/{pno}")
 	public String mailSearchsend(Model model, @PathVariable int pno, MailVo mvo, EmpVo evo, HttpSession session,
-			String id,String searchType, String keyword) {
+			String id,String searchType, String keyword){
 		
 		EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
 		id = loginMember.getEmpId() + "@everyware.com";
 
 
-		if ( keyword != "" ) {
+		if (keyword != "") {
 			
 			mvo.setSearchType(searchType);
 			mvo.setKeyword(keyword);
 			mvo.setId(id);
+			
 			
 			int totalCount = ms.selectSearchSendCnt(mvo);
 			PageVo pv2 = Pagination.getPageVo(totalCount, pno, 5, 10);
@@ -402,8 +403,9 @@ public class MailController {
 
 			model.addAttribute("sendList", searchList);
 			model.addAttribute("pv", pv2);
+			
 
-		} else if (keyword == "" ) {
+		} else if (keyword == "") {
 
 			int totalCount = ms.selectSendTotalCnt(id);
 			PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
@@ -433,6 +435,44 @@ public class MailController {
 		model.addAttribute("trashList", trashList);
 		model.addAttribute("pv", pv);
 
+		return "mail/mailTrash";
+	}
+	
+	@GetMapping("mailTrashSearch/{pno}")
+	public String mailTrashSearch(Model model, @PathVariable int pno, MailVo mvo, EmpVo evo, HttpSession session,
+			String id,String searchType, String keyword) {
+
+		EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
+		id = loginMember.getEmpId() + "@everyware.com";
+
+		
+		
+		if (keyword != "") {
+			
+			mvo.setSearchType(searchType);
+			mvo.setKeyword(keyword);
+			mvo.setId(id);
+			
+			int totalCount = ms.selectSearchTrashCnt(mvo);
+			PageVo pv2 = Pagination.getPageVo(totalCount, pno, 5, 10);
+
+			List<MailVo> searchList = ms.selectSearchTrashList(mvo,pv2);
+
+			model.addAttribute("trashList", searchList);
+			model.addAttribute("pv", pv2);
+
+		} else if (keyword == "") {
+
+			int totalCount = ms.selectDeleteCnt();
+			PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
+
+			List<MailVo> trashList = ms.selectTrashlist(id,pv);
+
+			model.addAttribute("trashList", trashList);
+			model.addAttribute("pv", pv);
+
+
+		}
 		return "mail/mailTrash";
 	}
 	
@@ -592,7 +632,45 @@ public class MailController {
 			return "error/errorPage";
 		}
 		}
+	
+	
+	@GetMapping("mailSearchself/{pno}")
+	public String mailSearchself(Model model, @PathVariable int pno, MailVo mvo, EmpVo evo, HttpSession session,
+			String id,String searchType, String keyword){
+		
+		EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
+		id = loginMember.getEmpId() + "@everyware.com";
 
+
+		if (keyword != "") {
+			
+			mvo.setSearchType(searchType);
+			mvo.setKeyword(keyword);
+			mvo.setId(id);
+			
+			
+			int totalCount = ms.selectSearchSelfCnt(mvo);
+			PageVo pv2 = Pagination.getPageVo(totalCount, pno, 5, 10);
+
+			List<MailVo> searchList = ms.selectSearchSelfList(mvo, pv2);
+
+			model.addAttribute("selfList", searchList);
+			model.addAttribute("pv", pv2);
+			
+
+		} else if (keyword == "") {
+
+			int totalCount = ms.selectSelfTotalCnt(id);
+			PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
+
+			List<MailVo> selfList = ms.selectSelflist(id,pv);
+
+			model.addAttribute("selfList", selfList);
+			model.addAttribute("pv", pv);
+
+		}
+		return "mail/mailSelf";
+	}
 	
 
 }

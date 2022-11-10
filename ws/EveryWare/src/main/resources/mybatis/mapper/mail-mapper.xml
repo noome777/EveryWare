@@ -42,8 +42,8 @@
 			AND MAIL_SENDER LIKE '%' || #{keyword} || '%'
 		</if>
 		<if test="searchType=='all' and (keyword != null and keyword != '') ">
-			AND MAIL_SENDER LIKE '%' || #{keyword} || '%'
-			OR MAIL_TITLE LIKE '%' || #{keyword} ||'%'
+			AND (MAIL_SENDER LIKE '%' || #{keyword} || '%'
+			OR MAIL_TITLE LIKE '%' || #{keyword} ||'%')
 		</if>
 		
 		ORDER BY MAIL_CODE DESC
@@ -63,8 +63,8 @@
 			AND MAIL_SENDER LIKE '%' || #{keyword} || '%'
 		</if>
 		<if test="searchType=='all' and (keyword != null and keyword != '') ">
-			AND MAIL_SENDER LIKE '%' || #{keyword} || '%'
-			OR MAIL_TITLE LIKE '%' || #{keyword} ||'%'
+			AND (MAIL_SENDER LIKE '%' || #{keyword} || '%'
+			OR MAIL_TITLE LIKE '%' || #{keyword} ||'%')
 		</if>
 		
 		</select>
@@ -85,14 +85,16 @@
 			AND MAIL_RECEIVER LIKE '%' || #{keyword} || '%'
 		</if>
 		<if test="searchType=='all' and (keyword != null and keyword != '') ">
-			AND MAIL_RECEIVER LIKE '%' || #{keyword} || '%'
-			OR MAIL_TITLE LIKE '%' || #{keyword} ||'%'
+			AND (MAIL_TITLE LIKE '%' || #{keyword} || '%'
+			OR  MAIL_RECEIVER LIKE '%' || #{keyword} || '%')
 		</if>
 		ORDER BY MAIL_CODE DESC
 			
 	</select>
 	
-	<select id="selectSearchSendCnt" resultType="MailVo">
+		
+	
+	<select id="selectSearchSendCnt" resultType="int">
 		 SELECT COUNT (*)
 		 FROM MAIL
 		 WHERE MAIL_DELETE IS NULL
@@ -105,8 +107,8 @@
 			AND MAIL_RECEIVER LIKE '%' || #{keyword} || '%'
 		</if>
 		<if test="searchType=='all' and (keyword != null and keyword != '') ">
-			AND MAIL_RECEIVER LIKE '%' || #{keyword} || '%'
-			OR MAIL_TITLE LIKE '%' || #{keyword} ||'%'
+			AND (MAIL_TITLE LIKE '%' || #{keyword} || '%'
+			OR MAIL_RECEIVER LIKE '%' || #{keyword} || '%')
 		</if>
 			
 	</select>
@@ -223,7 +225,46 @@
 		AND MAIL_RECEIVER = #{id}
 		ORDER BY MAIL_DELETE DESC
 	</select>
+		
+		
+		<select id="selectSearchTrashList" resultType="MailVo">
+		 SELECT
+		* FROM MAIL
+		JOIN EMP
+		ON MAIL.EMP_CODE = EMP.EMP_CODE
+		WHERE MAIL_DELETE IS NOT NULL
+		AND MAIL_RECEIVER = #{id}
+		<if test="searchType=='title' and (keyword != null and keyword != '' )">
+			AND MAIL_TITLE LIKE '%' || #{keyword} || '%'
+		</if>
+       <if test="searchType=='send_id' and (keyword != null and keyword != '' )">
+			AND MAIL_SENDER LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType=='all' and (keyword != null and keyword != '') ">
+			AND (MAIL_TITLE LIKE '%' || #{keyword} || '%'
+			OR  MAIL_SENDER LIKE '%' || #{keyword} || '%')
+		</if>
+		ORDER BY MAIL_CODE DESC
+			
+	</select>
 	
+	<select id="selectSearchTrashCnt" resultType="int">
+		 SELECT COUNT (*)
+		 FROM MAIL
+		 WHERE MAIL_DELETE IS NOT NULL
+		 AND MAIL_RECEIVER = #{id}
+		<if test="searchType=='title' and (keyword != null and keyword != '' )">
+			AND MAIL_TITLE LIKE '%' || #{keyword} || '%'
+		</if>
+       <if test="searchType=='send_id' and (keyword != null and keyword != '' )">
+			AND MAIL_SENDER LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType=='all' and (keyword != null and keyword != '') ">
+			AND (MAIL_TITLE LIKE '%' || #{keyword} || '%'
+			OR  MAIL_SENDER LIKE '%' || #{keyword} || '%')
+		</if>
+			
+	</select>
 	<delete id="cleanMail">
 		DELETE 
 		FROM MAIL WHERE MAIL_DELETE IS NOT NULL
@@ -350,7 +391,33 @@
 		AND MAIL_RECEIVER = #{id}
 		ORDER BY MAIL_CODE DESC
 	</select>
-	
+		
+		<select id="selectSearchSelfList" resultType="MailVo">
+	    SELECT
+	    * FROM MAIL
+		JOIN EMP
+		ON MAIL.EMP_CODE = EMP.EMP_CODE
+		WHERE MAIL_DELETE IS NULL
+		AND MAIL_SENDER = #{id}
+		AND MAIL_RECEIVER = #{id}
+		<if test="searchType=='title' and (keyword != null and keyword != '' )">
+			AND MAIL_TITLE LIKE '%' || #{keyword} || '%'
+		</if>
+		ORDER BY MAIL_CODE DESC
+		</select>
+		
+		<select id="selectSearchSelfCnt" resultType="int">
+		SELECT COUNT (*)
+		FROM MAIL
+		WHERE MAIL_DELETE IS NULL
+		AND MAIL_SENDER= #{id}
+		AND MAIL_RECEIVER = #{id}
+		<if test="searchType=='title' and (keyword != null and keyword != '' )">
+			AND MAIL_TITLE LIKE '%' || #{keyword} || '%'
+		</if>
+	</select>	
+		
+		
 	<select id="selectMail" resultType="MailVo">
 		SELECT
 		MAIL.MAIL_CODE

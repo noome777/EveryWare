@@ -95,6 +95,18 @@ public interface MailDao {
 	//보낸 메일함 검색 갯수
 	int selectSearchSendCnt(SqlSessionTemplate sst, MailVo mvo);
 
+	//내게 쓴 메일함 검색 처리
+	List<MailVo> selectSearchSelfList(SqlSessionTemplate sst, MailVo mvo, PageVo pv2);
+
+	//내게 쓴 메일함 갯수 조회
+	int selectSearchSelfCnt(SqlSessionTemplate sst, MailVo mvo);
+
+	//휴지통  검색 리스트
+	List<MailVo> selectSearchTrashList(SqlSessionTemplate sst, MailVo mvo, PageVo pv2);
+
+	//휴지통 검색 리스트 갯수
+	int selectSearchTrashCnt(SqlSessionTemplate sst, MailVo mvo);
+
 
 
 

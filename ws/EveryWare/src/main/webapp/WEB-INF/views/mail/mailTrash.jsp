@@ -64,17 +64,26 @@
 
 			<h2 id="mailSend">휴지통</h2>
 			<br>
-			<div class="input-group w-50">
-				<input class="search-txt" type="text" placeholder="메일 검색"
-					id="basic-addon1">
-				<button class="search-btn" type="submit">
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-						fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-			  	<path
-							d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-			</svg>
-				</button>
-			</div>
+			<form action="${root}/mail/mailTrashSearch/${pno}" method="get" name="mailt" onsubmit="return Checkform">
+			<div class="form-group row " style="margin-left: 3px;">
+				<div class="w100" style="padding-right: 10px">
+					<select class="form-control form-control-sm" name="searchType" id="searchType"
+						>
+						<option value="title">제목</option>
+						<option value="send_id">발신자</option>
+						<option value="all">전체</option>
+					</select>
+				</div>
+				<div class="w300" style="padding-right: 10px">
+					<input type="text" class="form-control form-control-sm"
+						name="keyword" id="keyword" >
+				</div>
+				<div>
+					<input  type="submit" class="btn btn-sm btn-primary" name="search" 
+						id="search" value="검색">
+				</div>
+				</div>
+			</form>
 			<!-- <div class="input-group w-50" >
 		<span class="input-group-text" id="basic-addon1">
 		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">

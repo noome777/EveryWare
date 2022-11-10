@@ -170,12 +170,41 @@ public class MailDaoImpl implements MailDao {
 		int offset = (pv2.getCurrentPage()-1) * pv2.getBoardLimit();
         RowBounds rb = new RowBounds(offset , pv2.getBoardLimit());
 		
-		return sst.selectList("mailMapper.selectSearchSendList",mvo , rb);
+		return sst.selectList("mailMapper.selectSearchSendList", mvo , rb);
 	}
-
+	
+	
 	@Override
 	public int selectSearchSendCnt(SqlSessionTemplate sst, MailVo mvo) {
 		return sst.selectOne("mailMapper.selectSearchSendCnt", mvo);
+	}
+
+	@Override
+	public List<MailVo> selectSearchSelfList(SqlSessionTemplate sst, MailVo mvo, PageVo pv2) {
+		
+		int offset = (pv2.getCurrentPage()-1) * pv2.getBoardLimit();
+        RowBounds rb = new RowBounds(offset , pv2.getBoardLimit());
+        
+		return sst.selectList("mailMapper.selectSearchSelfList", mvo,rb);
+	}
+
+	@Override
+	public int selectSearchSelfCnt(SqlSessionTemplate sst, MailVo mvo) {
+		return sst.selectOne("mailMapper.selectSearchSelfCnt", mvo);
+	}
+
+	@Override
+	public List<MailVo> selectSearchTrashList(SqlSessionTemplate sst, MailVo mvo, PageVo pv2) {
+
+		int offset = (pv2.getCurrentPage()-1) * pv2.getBoardLimit();
+        RowBounds rb = new RowBounds(offset , pv2.getBoardLimit());
+        
+        return sst.selectList("mailMapper.selectSearchTrashList", mvo, rb);
+	}
+
+	@Override
+	public int selectSearchTrashCnt(SqlSessionTemplate sst, MailVo mvo) {
+		return sst.selectOne("mailMapper.selectSearchTrashCnt", mvo);
 	}
 
 	
