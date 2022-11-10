@@ -3,7 +3,9 @@ package com.kh.app00.mail.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
@@ -72,13 +74,18 @@ public class MailController {
 		mvo.setEmpCode(id);
 		mvo.setSearchType(searchType);
 		mvo.setKeyword(keyword);
-
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("id", id);
+		map.put("keyword",keyword);
+		
+		
 		if (keyword != "") {
 
 			int totalCount = ms.selectSearchTotalCnt();
 			PageVo pv2 = Pagination.getPageVo(totalCount, pno, 5, 10);
 
-			List<MailVo> searchList = ms.selectSearchList(id, searchType, keyword, pv2);
+			List<MailVo> searchList = ms.selectSearchList(map,pv2);
 
 			model.addAttribute("mList", searchList);
 			model.addAttribute("pv", pv2);

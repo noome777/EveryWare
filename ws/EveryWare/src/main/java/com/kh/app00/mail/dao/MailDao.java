@@ -1,6 +1,7 @@
 package com.kh.app00.mail.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -67,7 +68,7 @@ public interface MailDao {
 	int noreadMail(SqlSessionTemplate sst, String mailCode);
 
 	//검색 처리
-	List<MailVo> selectSearchList(SqlSessionTemplate sst,String searchType, String keyword,String id, PageVo pv2);
+	List<MailVo> selectSearchList(SqlSessionTemplate sst,Map<String, String> map, PageVo pv2);
 
 	//검색 갯수
 	int selectSearchTotalCnt(SqlSessionTemplate sst);

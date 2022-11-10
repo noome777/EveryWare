@@ -1,6 +1,7 @@
 package com.kh.app00.mail.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kh.app00.common.PageVo;
 import com.kh.app00.mail.vo.MailFileVo;
@@ -60,7 +61,7 @@ public interface MailService {
 	int noread(String mailCode);
 	
 	//검색 처리
-	List<MailVo> selectSearchList(String searchType, String keyword,String id,PageVo pv2);
+	List<MailVo> selectSearchList(Map<String, String> map,PageVo pv2);
 	
 	//리스트 카운트
 	int selectSearchTotalCnt();

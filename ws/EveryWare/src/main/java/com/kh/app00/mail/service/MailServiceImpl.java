@@ -1,6 +1,7 @@
 package com.kh.app00.mail.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
@@ -130,8 +131,8 @@ public class MailServiceImpl implements MailService{
 
 
 	@Override
-	public List<MailVo> selectSearchList(String searchType, String keyword,String id,PageVo pv2) {
-		return dao.selectSearchList(sst,searchType, keyword,id,pv2);
+	public List<MailVo> selectSearchList(Map<String, String> map,PageVo pv2) {
+		return dao.selectSearchList(sst,map,pv2);
 	}
 
 

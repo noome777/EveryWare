@@ -1,6 +1,7 @@
 package com.kh.app00.mail.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -125,12 +126,12 @@ public class MailDaoImpl implements MailDao {
 	}
 
 	@Override
-	public List<MailVo> selectSearchList(SqlSessionTemplate sst ,String searchType,String keyword, String id,PageVo pv2) {
+	public List<MailVo> selectSearchList(SqlSessionTemplate sst ,Map<String, String> map,PageVo pv2) {
 		
 		int offset = (pv2.getCurrentPage()-1) * pv2.getBoardLimit();
         RowBounds rb = new RowBounds(offset , pv2.getBoardLimit());
 		
-		return sst.selectList("mailMapper.selectSearchList",searchType, keyword,id , rb);
+		return sst.selectList("mailMapper.selectSearchList",map , rb);
 	}
 
 	@Override
