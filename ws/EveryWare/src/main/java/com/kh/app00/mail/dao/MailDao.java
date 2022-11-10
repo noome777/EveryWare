@@ -68,10 +68,10 @@ public interface MailDao {
 	int noreadMail(SqlSessionTemplate sst, String mailCode);
 
 	//검색 처리
-	List<MailVo> selectSearchList(SqlSessionTemplate sst,Map<String, String> map, PageVo pv2);
+	List<MailVo> selectSearchList(SqlSessionTemplate sst,MailVo mvo, PageVo pv2);
 
 	//검색 갯수
-	int selectSearchTotalCnt(SqlSessionTemplate sst);
+	int selectSearchTotalCnt(SqlSessionTemplate sst, MailVo mvo);
 
 	//파일 첨부
 	int insertFile(SqlSessionTemplate sst, MailFileVo mfvo);
@@ -88,6 +88,12 @@ public interface MailDao {
 
 	//내게 보낸 메일함 갯수
 	int selectSelfTotalCnt(SqlSessionTemplate sst, String id);
+	
+	//보낸 메일함 검색 처리
+	List<MailVo> selectSearchSendList(SqlSessionTemplate sst, MailVo mvo, PageVo pv2);
+
+	//보낸 메일함 검색 갯수
+	int selectSearchSendCnt(SqlSessionTemplate sst, MailVo mvo);
 
 
 

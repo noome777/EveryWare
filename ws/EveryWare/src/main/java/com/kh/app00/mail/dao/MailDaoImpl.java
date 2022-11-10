@@ -126,17 +126,17 @@ public class MailDaoImpl implements MailDao {
 	}
 
 	@Override
-	public List<MailVo> selectSearchList(SqlSessionTemplate sst ,Map<String, String> map,PageVo pv2) {
+	public List<MailVo> selectSearchList(SqlSessionTemplate sst ,MailVo mvo,PageVo pv2) {
 		
 		int offset = (pv2.getCurrentPage()-1) * pv2.getBoardLimit();
         RowBounds rb = new RowBounds(offset , pv2.getBoardLimit());
 		
-		return sst.selectList("mailMapper.selectSearchList",map , rb);
+		return sst.selectList("mailMapper.selectSearchList",mvo , rb);
 	}
 
 	@Override
-	public int selectSearchTotalCnt(SqlSessionTemplate sst) {
-		return sst.selectOne("mailMapper.selectSearchTotalCnt");
+	public int selectSearchTotalCnt(SqlSessionTemplate sst, MailVo mvo) {
+		return sst.selectOne("mailMapper.selectSearchTotalCnt", mvo);
 	}
 
 	@Override
@@ -163,6 +163,19 @@ public class MailDaoImpl implements MailDao {
 	@Override
 	public int selectSelfTotalCnt(SqlSessionTemplate sst, String id) {
 		return sst.selectOne("mailMapper.selectSelfTotalCnt", id);
+	}
+
+	@Override
+	public List<MailVo> selectSearchSendList(SqlSessionTemplate sst, MailVo mvo, PageVo pv2) {
+		int offset = (pv2.getCurrentPage()-1) * pv2.getBoardLimit();
+        RowBounds rb = new RowBounds(offset , pv2.getBoardLimit());
+		
+		return sst.selectList("mailMapper.selectSearchSendList",mvo , rb);
+	}
+
+	@Override
+	public int selectSearchSendCnt(SqlSessionTemplate sst, MailVo mvo) {
+		return sst.selectOne("mailMapper.selectSearchSendCnt", mvo);
 	}
 
 	

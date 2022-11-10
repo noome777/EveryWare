@@ -61,10 +61,10 @@ public interface MailService {
 	int noread(String mailCode);
 	
 	//검색 처리
-	List<MailVo> selectSearchList(Map<String, String> map,PageVo pv2);
+	List<MailVo> selectSearchList(MailVo mvo,PageVo pv2);
 	
 	//리스트 카운트
-	int selectSearchTotalCnt();
+	int selectSearchTotalCnt(MailVo mvo);
 	
 	
 	//파일 첨부
@@ -81,6 +81,12 @@ public interface MailService {
 	
 	//내게 보낸 메일함 갯수
 	int selectSelfTotalCnt(String id);
+	
+	//보낸 메일함 검색
+	List<MailVo> selectSearchSendList(MailVo mvo, PageVo pv2);
+	
+	//보낸 메일함 검색 갯수
+	int selectSearchSendCnt(MailVo mvo);
 	
 	
 	

@@ -66,33 +66,30 @@ public class MailController {
 
 	@GetMapping("mailSearch/{pno}")
 	public String mailSearch(Model model, @PathVariable int pno, MailVo mvo, EmpVo evo, HttpSession session,
-			String searchType, String keyword) {
+			String id,String searchType, String keyword) {
 
 		EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
-		String id = loginMember.getEmpId() + "@everyware.com";
+		id = loginMember.getEmpId() + "@everyware.com";
 
-		mvo.setEmpCode(id);
-		mvo.setSearchType(searchType);
-		mvo.setKeyword(keyword);
-		
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("id", id);
-		map.put("keyword",keyword);
 		
 		
 		if (keyword != "") {
-
-			int totalCount = ms.selectSearchTotalCnt();
+			
+			mvo.setSearchType(searchType);
+			mvo.setKeyword(keyword);
+			mvo.setId(id);
+			
+			int totalCount = ms.selectSearchTotalCnt(mvo);
 			PageVo pv2 = Pagination.getPageVo(totalCount, pno, 5, 10);
 
-			List<MailVo> searchList = ms.selectSearchList(map,pv2);
+			List<MailVo> searchList = ms.selectSearchList(mvo,pv2);
 
 			model.addAttribute("mList", searchList);
 			model.addAttribute("pv", pv2);
 
 		} else if (keyword == "") {
 
-			int totalCount = ms.selectTotalCnt();
+			int totalCount = ms.selectTotalCnt(id);
 			PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
 
 			List<MailVo> mList = ms.selectList(id, pv);
@@ -106,25 +103,29 @@ public class MailController {
 
 	@GetMapping("mailSearchreceive/{pno}")
 	public String mailSearchreceive(Model model, @PathVariable int pno, MailVo mvo, EmpVo evo, HttpSession session,
-			String searchType, String keyword, String search) {
+			String id,String searchType, String keyword) {
+		
 		EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
-		String id = loginMember.getEmpId() + "@everyware.com";
+		id = loginMember.getEmpId() + "@everyware.com";
 
-		mvo.setEmpCode(id);
 
-		if (searchType != "" && keyword != "" && search != "") {
-
-			int totalCount = ms.selectSearchTotalCnt();
+		if ( keyword != "" ) {
+			
+			mvo.setSearchType(searchType);
+			mvo.setKeyword(keyword);
+			mvo.setId(id);
+			
+			int totalCount = ms.selectSearchTotalCnt(mvo);
 			PageVo pv2 = Pagination.getPageVo(totalCount, pno, 5, 10);
 
-			List<MailVo> searchList = ms.selectSearchList(id, pv2);
+			List<MailVo> searchList = ms.selectSearchList(mvo, pv2);
 
-			model.addAttribute("mList", searchList);
+			model.addAttribute("receiveList", searchList);
 			model.addAttribute("pv", pv2);
 
-		} else if (searchType != "" || keyword == "" || search != "") {
+		} else if (keyword == "" ) {
 
-			int totalCount = ms.selectTotalCnt();
+			int totalCount = ms.selectTotalCnt(id);
 			PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
 
 			List<MailVo> receiveList = ms.selectList(id, pv);
@@ -348,7 +349,6 @@ public class MailController {
 		EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
 		String id = loginMember.getEmpId() + "@everyware.com";
 
-		mvo.setEmpCode(id);
 
 		int totalCount = ms.selectTotalCnt(id);
 		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
@@ -360,6 +360,8 @@ public class MailController {
 
 		return "mail/mailReceive";
 	}
+	
+	
 
 	@GetMapping("send/{pno}")
 	public String mailSend(Model model, @PathVariable int pno, EmpVo evo, HttpSession session, MailVo mvo) {
@@ -367,7 +369,6 @@ public class MailController {
 		EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
 		String id = loginMember.getEmpId() + "@everyware.com";
 
-		mvo.setEmpCode(id);
 
 		int totalCount = ms.selectSendTotalCnt(id);
 		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
@@ -377,6 +378,42 @@ public class MailController {
 		model.addAttribute("sendList", sendList);
 		model.addAttribute("pv", pv);
 
+		return "mail/mailSend";
+	}
+	
+	@GetMapping("mailSearchsend/{pno}")
+	public String mailSearchsend(Model model, @PathVariable int pno, MailVo mvo, EmpVo evo, HttpSession session,
+			String id,String searchType, String keyword) {
+		
+		EmpVo loginMember = (EmpVo) session.getAttribute("loginMember");
+		id = loginMember.getEmpId() + "@everyware.com";
+
+
+		if ( keyword != "" ) {
+			
+			mvo.setSearchType(searchType);
+			mvo.setKeyword(keyword);
+			mvo.setId(id);
+			
+			int totalCount = ms.selectSearchSendCnt(mvo);
+			PageVo pv2 = Pagination.getPageVo(totalCount, pno, 5, 10);
+
+			List<MailVo> searchList = ms.selectSearchSendList(mvo, pv2);
+
+			model.addAttribute("sendList", searchList);
+			model.addAttribute("pv", pv2);
+
+		} else if (keyword == "" ) {
+
+			int totalCount = ms.selectSendTotalCnt(id);
+			PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
+
+			List<MailVo> sendList = ms.selectSendlist(id, pv);
+
+			model.addAttribute("sendList", sendList);
+			model.addAttribute("pv", pv);
+
+		}
 		return "mail/mailSend";
 	}
 

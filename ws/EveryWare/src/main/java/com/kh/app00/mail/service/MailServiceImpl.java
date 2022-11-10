@@ -131,14 +131,14 @@ public class MailServiceImpl implements MailService{
 
 
 	@Override
-	public List<MailVo> selectSearchList(Map<String, String> map,PageVo pv2) {
-		return dao.selectSearchList(sst,map,pv2);
+	public List<MailVo> selectSearchList(MailVo mvo,PageVo pv2) {
+		return dao.selectSearchList(sst,mvo,pv2);
 	}
 
 
 	@Override
-	public int selectSearchTotalCnt() {
-		return dao.selectSearchTotalCnt(sst);
+	public int selectSearchTotalCnt(MailVo mvo) {
+		return dao.selectSearchTotalCnt(sst, mvo);
 	}
 
 
@@ -169,6 +169,18 @@ public class MailServiceImpl implements MailService{
 	@Override
 	public int selectSelfTotalCnt(String id) {
 		return dao.selectSelfTotalCnt(sst,id);
+	}
+
+
+	@Override
+	public List<MailVo> selectSearchSendList(MailVo mvo, PageVo pv2) {
+		return dao.selectSearchSendList(sst, mvo, pv2);
+	}
+
+
+	@Override
+	public int selectSearchSendCnt(MailVo mvo) {
+		return dao.selectSearchSendCnt(sst,mvo);
 	}
 
 
