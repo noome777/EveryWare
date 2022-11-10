@@ -49,7 +49,7 @@ public class ContactController {
 		}
 	
 	//주소록 삭제
-	@PostMapping("contactList/{no}")
+	@GetMapping("delete/{no}")
 	public String delete(@PathVariable String no , HttpSession session , Model model) {
 		
 		int result = service.delete(no);
@@ -57,11 +57,11 @@ public class ContactController {
 		if(result == 1) {
 			//삭제성공
 			session.setAttribute("alertMsg", "주소록이 삭제되었습니다.");
-			return "redirect:/contacts/contactList";
+			return "redirect:/contacts/contactList/1";
 		}else {
 			//삭제실패
 			model.addAttribute("msg", "삭제 실패하였습니다.");
-			return "contacts/contactList";
+			return "error/errorPage";
 		}
 	}
 	
@@ -80,11 +80,11 @@ public class ContactController {
 		if(result == 1) {
 			//작성 성공
 			session.setAttribute("alertMsg", "주소록이 추가되었습니다.");
-			return "redirect:/contacts/contactList";
+			return "redirect:/contacts/contactList/1";
 		}else {
 			//작성 실패
 			model.addAttribute("msg" , "주소록 작성 실패!");
-			return "contacts/contactList";
+			return "error/errorPage";
 		}
 	}
 	
@@ -118,7 +118,7 @@ public class ContactController {
 		if(result == 1) {
 			//수정 성공
 			session.setAttribute("alertMsg", "수정되었습니다.");
-			return "redirect:/";
+			return "redirect:/contacts/contactList/1";
 		}else {
 			//수정 실패
 			session.setAttribute("alertMsg", "수정 실패하였습니다.");

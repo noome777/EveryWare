@@ -4,7 +4,7 @@
 
 	<!-- 예약 목록 조회 -->
 	<select id="selectList" resultType="BookingVo">
-		SELECT 
+		 SELECT 
             BK_NO
 			, T.TARGET_NAME AS BK_TARGET_NO
 			, BK_WRITER
@@ -13,12 +13,13 @@
 			, TO_CHAR(START_TIME, 'HH24:MI') START_TIME
 			, TO_CHAR(BK_END, 'YYYY/MM/DD')BK_END
 			, TO_CHAR(END_TIME, 'HH24:MI') END_TIME
-			, BK_STATUS
+            , TARGET_IMAGE
 		FROM 
         BOOKING B
         JOIN
         TARGET T
-        ON BK_TARGET_NO = T.TARGET_NO WHERE BK_STATUS = 'Y'
+        ON BK_TARGET_NO = T.TARGET_NO
+        ORDER BY BK_NO DESC
 	</select>
 	
 	<!-- 예약 추가 -->
@@ -33,7 +34,6 @@
               , START_TIME
               , BK_END
               , END_TIME
-              , BK_STATUS
 		)
 		VALUES
 		(
@@ -45,7 +45,6 @@
 			, TO_DATE(#{startTime}, 'HH24:MI')
 			, TO_DATE(#{bkEnd}, 'YYYY/MM/DD')
 			, TO_DATE(#{endTime}, 'HH24:MI')
-			, 'Y'
 		)
 	</insert>
 	
@@ -55,12 +54,10 @@
 		 WHERE BK_NO = #{bkNo}
 	</delete>
 	
-	
-	
-	
-	
-	
-	
+	<!-- 예약 게시글 갯수 조회 -->
+	<select id="selectCountAll" resultType="int">
+		SELECT COUNT(*) FROM BOOKING
+	</select>
 	
 	
 	

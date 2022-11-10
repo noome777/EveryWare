@@ -22,7 +22,7 @@ public class ContactsDaoImpl implements ContactsDao{
 		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
 		RowBounds rb = new RowBounds(offset , pv.getBoardLimit());
 		
-		return sst.selectList("contactsMapper.selectList", null , rb);
+		return sst.selectList("contactsMapper.selectList", null, rb);
 	}
 
 	//주소록 삭제

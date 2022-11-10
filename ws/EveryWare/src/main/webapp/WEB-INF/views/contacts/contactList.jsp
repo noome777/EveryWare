@@ -91,7 +91,6 @@
                     </thead>
                     
                     <tbody>
-                    
                     <c:forEach items="${cList}" var="list">
                     <c:if test="${ list.conWriter eq loginMember.empName }">
                       <tr>
@@ -119,42 +118,35 @@
                         <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
                         <button type="button" class="btn mb-2 btn-primary btn-sm" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" onclick="location.href='${root}/contacts/edit/${list.conNo}';"> Edit </button>
-                        <button type="button" class="btn mb-2 btn-secondary btn-sm" onclick="location.href='${root}/contacts/contactList/${list.conNo}';"> Delete </button>
+                        <button type="button" class="btn mb-2 btn-secondary btn-sm" onclick="location.href='${root}/contacts/delete/${list.conNo}';"> Delete </button>
                         </div>
                        </td>
-                       
                       </tr>
-                    </c:if>
+                      
+                      </c:if>
                     </c:forEach>
-                      
-                      
-    
                     </tbody>
+                    
                   </table>
+                 </div>
                 </div>
-              </div>
-              
-              
-              
-              <!-- 페이징 -->
-              
-              <nav aria-label="Table Paging" class="my-3">
+                  
+             <!-- 페이징 -->
+             <nav aria-label="Table Paging" class="my-3">
               <ul class="pagination justify-content-center mb-0">
               	<c:if test="${pv.startPage ne 1}">
-            	    <li class="page-item"><a class="page-link" href="/app99/contacts/contactList/${pv.startPage - 1}">Previous</a></li>
+            	    <li class="page-item"><a class="page-link" href="/app00/contacts/contactList/${pv.startPage - 1}">Previous</a></li>
                 </c:if>
                 <c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
-                	<li class="page-item"><a class="page-link" href="/app99/contacts/contactList/${i}">${i}</a></li>
+                	<li class="page-item"><a class="page-link" href="/app00/contacts/contactList/${i}">${i}</a></li>
                 </c:forEach>
                 <c:if test="${pv.endPage ne pv.maxPage}">
-           	     <li class="page-item"><a class="page-link" href="/app99/contacts/contactList/${pv.endPage + 1}">Next</a></li>
+           	     <li class="page-item"><a class="page-link" href="/app00/contacts/contactList/${pv.endPage + 1}">Next</a></li>
                 </c:if>
-              </ul>
-            </nav>
-              
-              
-              
-              
+               </ul>
+              </nav>
+                  
+                
             </div> <!-- .col-12 -->
           </div> <!-- .row -->
         </div> <!-- .container-fluid -->
