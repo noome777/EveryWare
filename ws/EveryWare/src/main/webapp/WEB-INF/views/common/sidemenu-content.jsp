@@ -39,12 +39,6 @@
                 <span class="ml-3 item-text">근태</span>
               </a>
             </li>
-            <!-- <li class="nav-item dropdown">
-              <a href="${root}/approval/progressAllList/1/0" aria-expanded="false" class="nav-link">
-                <i class="fe fe-check-square fe-16"></i>
-                <span class="ml-3 item-text">전자결재</span>
-              </a>
-            </li> -->
             <li class="nav-item dropdown">
               <a class="nav-link d-flex flex-row justify-content-between" id="approval" href="${root}/approval/progressAllList/1/0" aria-expanded="false" class="nav-link">
                 <div>
@@ -137,21 +131,12 @@
             method : "GET",
             dataType : 'json',
             success : function (data) {
-              let prog = 0;
-              if(data.apprProgCount > 0){prog = parseInt(data.apprProgCount);}
-              let wait = 0;
-              if(data.apprWaitCount > 0){wait = parseInt(data.apprWaitCount);}
-              let ref = 0;
-              if(data.refCount > 0){ref = parseInt(data.refCount);}
-              let exp = 0;
-              if(data.apprExpectCount > 0){exp = parseInt(data.apprExpectCount);}
-
-              if(parseInt(prog + wait + ref + exp) > 1){
+              if(parseInt(data.apprProgCount + data.apprWaitCount + data.apprRefCount + data.apprExpectCount) > 1){
                 $('#apprNoti').addClass("dot dot-md bg-success");
-              } else if((prog + wait + ref + exp) < 1){
+              } else if(parseInt(data.apprProgCount + data.apprWaitCount + data.apprRefCount + data.apprExpectCount) > 1){
                 $('#apprNoti').removeClass("dot dot-md bg-success");
               } 
-              }
+            }
           });
         }
       </script>
