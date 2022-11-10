@@ -387,8 +387,14 @@ public class OrganizationServiceImpl implements OrganizationService {
 	@Override
 	public int updateDept(Map<String, List<String>> updateTarget) {
 		
-		return organizationDao.updateDept(sqlSessionTemplate, updateTarget);
+		 int result  =  organizationDao.updateRowDept(sqlSessionTemplate, updateTarget);
 		
+		if(result== -1) {
+			System.out.println("1회 성공");
+			return  organizationDao.updateDept(sqlSessionTemplate, updateTarget);
+		} else {
+			return -100;
+		}
 		
 		
 	}

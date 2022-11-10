@@ -789,8 +789,6 @@ public class OrganizationController {
 		
 		List<DeptVo> deptList = organizationService.selectDeptListForEdit();
 		
-		System.out.println(deptList.get(10).getDeptName());
-		
 		Gson gson =  new Gson();
 		
 		if(deptList!=null) {
@@ -824,6 +822,9 @@ public class OrganizationController {
 		System.out.println(deptCodeList);
 	
 		Map<String, List<String>> updateTarget = new HashMap<String,List<String>>();
+		updateTarget.put("highDeptList", highDeptList);
+		updateTarget.put("editDeptList", editDeptList);
+		updateTarget.put("deptCodeList", deptCodeList);
 		
 		int result = organizationService.updateDept(updateTarget);
 		
