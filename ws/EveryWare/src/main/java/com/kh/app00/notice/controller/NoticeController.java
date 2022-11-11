@@ -145,6 +145,7 @@ public class NoticeController {
 		
 		File target = new File(rootPath + name);
 		
+		
 		//파일 -> 바이트 -> 리소스
 		byte[] data = FileUtils.readFileToByteArray(target);
 		ByteArrayResource res = new ByteArrayResource(data);
@@ -152,12 +153,12 @@ public class NoticeController {
 		
 		
 		return ResponseEntity
-			.ok()
-			.contentType(MediaType.APPLICATION_OCTET_STREAM)
-			.contentLength(54997L)
-			.header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=" + name)
-			.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
-			.body(res);
+				.ok()
+				.contentType(MediaType.APPLICATION_OCTET_STREAM)
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + name)
+				.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
+				.header(HttpHeaders.CONTENT_LENGTH, target.length() + "")
+				.body(res);
 	}
 	
 	

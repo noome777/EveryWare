@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath}" />
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,21 +26,32 @@
 	border-radius: 3px;
 	background-color: white;
 }
-
+#number{
+	text-align: center;
+}
 #title {
 	text-align: center;
 }
 
+#views{
+	text-align: center;
+}
 #date {
 	text-align: center;
 }
-
+#ncode{
+	text-align:  center;
+}
 #ntitle {
 	text-align: center;
 }
 
 #ndate {
 	text-align: center;
+}
+
+#nviews{
+	text-align:center;
 }
 </style>
 </head>
@@ -64,21 +76,24 @@
 			<div class="card shadow">
 				<div class="card-body">
 					<table class="table table-striped" id="noticelist">
-
+				
 						<tr>
-							<th>번호</th>
+							<th id=number>번호</th>
 							<th id="title">제목</th>
+							<th id="views">조회수</th> 
 							<th id="date">등록일</th>
 						</tr>
 						<tbody>
 							  
 							<c:forEach items="${nList}" var="x">
 								<c:if test="${x.noticeDelete eq null}">
+								<c:set var = "noticeDat" value="${x.noticeDate}"/>
 								<tr
 									onclick="location.href='${root}/notice/noticeDetail/${x.noticeCode}'">
-									<td>${x.noticeCode}</td>
+									<td id="ncode">${x.noticeCode}</td>
 									<td id="ntitle">${x.noticeTitle}</td>
-									<td id="ndate">${x.noticeDate}</td>
+									<td id="nviews">${x.noticeViews}</td>
+									<td id="ndate">${fn:substring(noticeDat,0,10)}</td>
 								</tr>
 								</c:if>
 							</c:forEach>

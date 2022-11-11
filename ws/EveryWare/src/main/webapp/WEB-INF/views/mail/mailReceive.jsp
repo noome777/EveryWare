@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>메일홈</title>
+<title>받은 메일함</title>
 <style>
 #mailall {
 	font-size: 20px;

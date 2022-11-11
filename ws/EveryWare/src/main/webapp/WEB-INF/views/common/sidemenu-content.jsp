@@ -39,16 +39,13 @@
                 <span class="ml-3 item-text">근태</span>
               </a>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link d-flex flex-row justify-content-between" id="approval" href="${root}/approval/progressAllList/1/0" aria-expanded="false" class="nav-link">
-                <div>
-                  <i class="fe fe-check-square fe-16"></i>  
-                  <span class="ml-3 item-text">전자결재</span>
-                </div>
-                <span id="apprNoti" class="justify-self-end"></span>
+          <li class="nav-item dropdown d-inline">
+              <a class="nav-link " id="approval" href="${root}/approval/progressAllList/1/0" aria-expanded="false" class="nav-link">
+                <i class="fe fe-check-square fe-16"></i>  
+                <span class="ml-3 item-text">전자결재</span>
+                <span id="apprNoti" class="float-right"></span>
               </a>
             </li>
-
 
             <li class="nav-item dropdown">
               <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
@@ -109,7 +106,7 @@
               </a>
             </li>
              <li class="nav-item dropdown">
-              <a href="${root}/mail/main" aria-expanded="false" class="nav-link">
+              <a href="${root}/mail/mailMain/1" aria-expanded="false" class="nav-link">
                 <i class="fe fe-mail fe-16"></i>
                 <span class="ml-3 item-text">이메일</span>
               </a>

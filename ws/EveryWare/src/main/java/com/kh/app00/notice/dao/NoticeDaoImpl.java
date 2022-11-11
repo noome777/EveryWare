@@ -69,5 +69,10 @@ public class NoticeDaoImpl implements NoticeDao {
 		return sst.selectList("noticeMapper.selectNoticeFileList", noticeCode);
 	}
 
+	@Override
+	public List<NoticeVo> selectNList(SqlSessionTemplate sst) {
+		return sst.selectList("noticeMapper.selectNList");
+	}
+
 	
 }

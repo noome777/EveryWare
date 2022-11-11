@@ -16,18 +16,22 @@ import com.kh.app00.calendar.vo.CalendarVo;
 import com.kh.app00.commute.service.CommuteService;
 import com.kh.app00.commute.vo.CommuteVo;
 import com.kh.app00.emp.vo.EmpVo;
+import com.kh.app00.notice.service.NoticeService;
+import com.kh.app00.notice.vo.NoticeVo;
 
 @Controller
 public class HomeController {
     
     private final CommuteService commuteService;
     private final CalendarService calendarService;
+    private final NoticeService ns;
     
     //생성자
     @Autowired
-    public HomeController(CommuteService commuteService, CalendarService calendarService) {
+    public HomeController(CommuteService commuteService, CalendarService calendarService,NoticeService ns) {
         this.commuteService = commuteService;
         this.calendarService = calendarService;
+        this.ns = ns; 
     }
     
     @GetMapping("/")
@@ -63,6 +67,12 @@ public class HomeController {
 		request.setAttribute("calendarList", calendar);
         
         //일정 끝
+		
+		//사내공지
+		List<NoticeVo> nList = ns.selectNList();
+
+		model.addAttribute("nList", nList);
+		
 		
         return "home";
     }

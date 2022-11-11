@@ -35,6 +35,9 @@ public interface NoticeService {
 	
 	//파일 조회
 	List<NoticeFileVo> selectNoticeFileList(String noticeCode);
+	
+	//사내공지 조회
+	List<NoticeVo> selectNList();
 
 	
 	

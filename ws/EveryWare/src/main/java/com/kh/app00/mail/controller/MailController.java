@@ -195,7 +195,7 @@ public class MailController {
 		}
 		if (result == 1) {
 			session.setAttribute("alertMsg", "메일 작성 성공!");
-			return "redirect:/mail/send/1";
+			return "redirect:/mail/mailMain/1";
 
 		} else {
 			model.addAttribute("msg", "메일 작성 실패...");
@@ -214,7 +214,6 @@ public class MailController {
 		String[] ajaxMsg = req.getParameterValues("checkArr");
 		int size = ajaxMsg.length;
 
-		System.out.println("controller : " + Arrays.toString(ajaxMsg));
 
 		for (int i = 0; i < size; i++) {
 			ms.delete(ajaxMsg[i]);
@@ -232,7 +231,6 @@ public class MailController {
 		String[] ajaxMsg = req.getParameterValues("readArr");
 		int size = ajaxMsg.length;
 
-		System.out.println("controller : " + Arrays.toString(ajaxMsg));
 
 		for (int i = 0; i < size; i++) {
 			ms.read(ajaxMsg[i]);
@@ -502,7 +500,6 @@ public class MailController {
 		String[] ajaxMsg = req.getParameterValues("trashArr");
 		int size = ajaxMsg.length;
 
-		System.out.println("controller : " + Arrays.toString(ajaxMsg));
 
 		for (int i = 0; i < size; i++) {
 			ms.clean(ajaxMsg[i]);
@@ -519,7 +516,6 @@ public class MailController {
 		String[] ajaxMsg = req.getParameterValues("backArr");
 		int size = ajaxMsg.length;
 
-		System.out.println("controller : " + Arrays.toString(ajaxMsg));
 
 		for (int i = 0; i < size; i++) {
 			ms.back(ajaxMsg[i]);
@@ -562,12 +558,12 @@ public class MailController {
 		
 		
 		return ResponseEntity
-			.ok()
-			.contentType(MediaType.APPLICATION_OCTET_STREAM)
-			.contentLength(54997L)
-			.header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=" + name)
-			.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
-			.body(res);
+				.ok()
+				.contentType(MediaType.APPLICATION_OCTET_STREAM)
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + name)
+				.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
+				.header(HttpHeaders.CONTENT_LENGTH, target.length() + "")
+				.body(res);
 	}
 
 	@GetMapping("mailMe")

@@ -76,4 +76,9 @@ public class NoticeServiceImpl implements NoticeService {
 	public List<NoticeFileVo> selectNoticeFileList(String noticeCode) {
 		return dao.selectNoticeFileList(sst,noticeCode);
 	}
+
+	@Override
+	public List<NoticeVo> selectNList() {
+		return dao.selectNList(sst);
+	}
 }

@@ -41,6 +41,9 @@ public interface NoticeDao {
 	//파일 조회
 	List<NoticeFileVo> selectNoticeFileList(SqlSessionTemplate sst, String noticeCode);
 	
+	//사내공지 홈화면 조회
+	List<NoticeVo> selectNList(SqlSessionTemplate sst);
+	
 	
 
 }

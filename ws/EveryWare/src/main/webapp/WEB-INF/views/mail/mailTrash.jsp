@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>메일홈</title>
+<title>휴지통</title>
 <style>
 #mailReceive {
 	font-size: 20px;
