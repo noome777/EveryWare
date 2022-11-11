@@ -2,6 +2,11 @@
     pageEncoding="UTF-8"%>
 <style>
   .non-scroll{overflow:hidden}
+  #logo{
+  	margin-top : 10px;
+  	width: 25px;
+  	height : 25px;
+  }
 </style>
 
 <aside class="sidebar-left border-right bg-white shadow non-scroll" id="leftSidebar" data-simplebar>
@@ -12,7 +17,7 @@
           <!-- nav bar -->
           <div class="w-100 mb-4 d-flex">
             <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="${root}">
-              <img src="${root}/resources/img/EveryWareLogo.png" alt="" class="logo">
+              <img id="logo" src="${root}/resources/img/EveryWareLogoSmall.png" alt="" class="logo">
             </a>
           </div>
           <p class="text-muted nav-heading mt-4 mb-1">
@@ -61,12 +66,6 @@
                 </li>
               </ul>
             </li>
-            <li class="nav-item dropdown">
-              <a href="#charts" aria-expanded="false" class="nav-link">
-                <i class="fe fe-flag fe-16"></i>
-                <span class="ml-3 item-text">그룹</span>
-              </a>
-            </li>
           </ul>
           <p class="text-muted nav-heading mt-4 mb-1">
             <span>Other</span>
@@ -111,12 +110,7 @@
                 <span class="ml-3 item-text">이메일</span>
               </a>
             </li>
-            <li class="nav-item dropdown">
-              <a href="${root}/feedback/main" aria-expanded="false" class="nav-link">
-                <i class="fe fe-send fe-16"></i>
-                <span class="ml-3 item-text">피드백</span>
-              </a>
-            </li>
+            
           </ul>
         </nav>
       </aside>

@@ -281,7 +281,6 @@ th, td {
       $(document).ready(function() {
           $('.delete-btn').click(function() {
             var value= $(this).val();
-            console.log(value);
 
             var result = window.confirm("정말로 삭제하시겠습니까?");
 
@@ -289,7 +288,6 @@ th, td {
               return false;
             }
 
-            console.log(result)
 
             $.ajax({
               url : "${root}/organization/management/right/delete",
@@ -317,8 +315,6 @@ th, td {
       function cleanModal() {
 
         var tbodyLength = $('#target tr').length;
-
-        console.log(tbodyLength);
 
         for(let i=0; i<tbodyLength; ++i) {
           $('#target > tr').eq(i).empty();
@@ -363,7 +359,6 @@ th, td {
              word : word
           },
           success : function(jsonStr) {
-            console.log(jsonStr);
 
             const resultLength = jsonStr.length;
 

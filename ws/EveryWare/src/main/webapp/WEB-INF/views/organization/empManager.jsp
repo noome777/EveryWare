@@ -964,7 +964,6 @@ padding: 10px;
 		        const updatedDate = jsonStr[1];
 		        const cnt = checkBoxArr.length;
 		        
-		        console.log(updatedDate);
 		
 		          for(let i = 0; i < cnt; ++i) {
 		            var targetEmp = checkBoxArr.pop();
@@ -1166,17 +1165,13 @@ padding: 10px;
 	       checkBoxArr.push($(this).val());
 	      });
 	      
-	     console.log(checkBoxArr); 
 	     var formData = new FormData();
 	     var profile = $("input[name='profile']");
 	     var file = profile[0].files[0];
 	     
-		console.log(file);
-		 
 		 formData.append("uploadFile", file);
 		 formData.append("checkBoxArr", checkBoxArr);
 		 
-		 console.log(formData.get("uploadFile"));
         
          $.ajax({
              url : "${root}/organization/management/emp/update/checkedProfile"
