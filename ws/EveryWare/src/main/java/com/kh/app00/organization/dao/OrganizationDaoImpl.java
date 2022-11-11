@@ -240,15 +240,23 @@ public class OrganizationDaoImpl implements OrganizationDao {
 
 	//부서관리 - 부서수정
 	@Override
-	public int updateDept(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> updateTarget) {
-		return sqlSessionTemplate.update("organizationMapper.updateDept",updateTarget);
+	public int updateDept(SqlSessionTemplate sqlSessionTemplate, Map<String, List<DeptVo>> targetMap) {
+		return sqlSessionTemplate.update("organizationMapper.updateDept",targetMap);
 	}
 
-	//부서관리 - 하위부서 수정
+
+	//사원 수 가져오기
 	@Override
-	public int updateRowDept(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> updateTarget) {
-		return sqlSessionTemplate.update("organizationMapper.updateRowDept",updateTarget);
+	public String selectEmpCnt(SqlSessionTemplate sqlSessionTemplate) {
+		return sqlSessionTemplate.selectOne("organizationMapper.selectEmpCnt");
 	}
+
+	//부서관리 - 부서삭제
+	@Override
+	public int deleteDept(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> targetMap) {
+		return sqlSessionTemplate.update("organizationMapper.updateDeptStatus",targetMap);
+	}
+
 
 
 	

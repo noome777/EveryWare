@@ -47,6 +47,7 @@ public class OrganizationController {
 	@GetMapping("info")
 	public String getEmpList(Model model, HttpSession session) {
 		
+		String empCnt = organizationService.selectEmpCnt();
 		List<DeptVo> deptList = organizationService.selectDeptList();
 		List<EmpVo> empList = organizationService.selectEmpList();
 		/*
@@ -63,10 +64,11 @@ public class OrganizationController {
 		}
 		//
 		
-		if(empList!=null && deptList!=null) {
+		if(empList!=null && deptList!=null&&empCnt!=null) {
 			model.addAttribute("empList",empList);
 			model.addAttribute("deptMap",deptMap);
 			model.addAttribute("deptList",deptList);
+			model.addAttribute("empCnt", empCnt);
 			return "organization/info";
 		} else {
 			session.setAttribute("errorMsg", "임직원 정보 불러오기에 실패하였습니다.");
@@ -152,7 +154,6 @@ public class OrganizationController {
 		
 		if(dupCheckCnt==1) {
 			session.setAttribute("errorMsg", "사용자 추가 성공하였습니다.");
-			System.out.println("사용자 추가 실패 :: 아이디 중복");
 			return "redirect:/organization/management/emp/1";
 		}
 		
@@ -160,11 +161,9 @@ public class OrganizationController {
 		
 		if(result==1) {
 			session.setAttribute("alertMsg", "사용자 추가 성공하였습니다.");
-			System.out.println("사용자 추가 성공");
 			return "redirect:/organization/management/emp/1";
 		} else {
 			session.setAttribute("errorMsg", "사용자 추가 성공하였습니다.");
-			System.out.println("사용자 추가 실패");
 			return "redirect:/organization/management/emp/1";
 		}
 		
@@ -236,8 +235,6 @@ public class OrganizationController {
 			Gson gson = new Gson();
 			String jsonStr = gson.toJson(resultList);
 			
-			System.out.println(jsonStr);
-			
 			return jsonStr;
 		}
 	}
@@ -261,7 +258,6 @@ public class OrganizationController {
 		
 		int result = organizationService.updateCheckedJob(updateTarget);
 		
-		System.out.println(result);
 		if(result==0) {
 			return "0";
 		}else {
@@ -271,7 +267,6 @@ public class OrganizationController {
 			Gson gson = new Gson();
 			String jsonStr = gson.toJson(updatedJob);
 			
-			System.out.println(jsonStr);
 			
 			return jsonStr;
 		}
@@ -290,7 +285,6 @@ public class OrganizationController {
 		List<String > deptCodeList = new ArrayList<String>();
 	    deptCodeList.add(deptCode);
 	    
-	    System.out.println("deptCode" +deptCode);
 	    
 		Map<String, List<String>> updateTarget = new HashMap<String,List<String>>();
 		updateTarget.put("empCodeList", empCodeList);
@@ -298,7 +292,6 @@ public class OrganizationController {
 		
 		int result = organizationService.updateCheckedDept(updateTarget);
 		
-		System.out.println(result);
 		if(result==0) {
 			return "0";
 		}else {
@@ -332,7 +325,6 @@ public class OrganizationController {
 		
 		int result = organizationService.updateCheckedStatus(updateTarget);
 		
-		System.out.println(result);
 		if(result==0) {
 			return "0";
 		}else {
@@ -342,7 +334,6 @@ public class OrganizationController {
 			Gson gson = new Gson();
 			String jsonStr = gson.toJson(updatedStatus);
 			
-			System.out.println(jsonStr);
 			
 			return jsonStr;
 		}
@@ -371,7 +362,6 @@ public class OrganizationController {
 		
 		int result = organizationService.updateCheckedFileName(updateTarget);
 		
-		System.out.println("result :" + result);
 		if(result==0) {
 			return "0";
 		}else {
@@ -381,7 +371,6 @@ public class OrganizationController {
 			Gson gson = new Gson();
 			String jsonStr = gson.toJson(updatedStatus);
 			
-			System.out.println("json :" + jsonStr);
 			
 			return jsonStr;
 		}
@@ -437,17 +426,14 @@ public class OrganizationController {
 	@ResponseBody
 	public String deleteAdmin(@RequestParam("value") String adminCode) {
 		
-		System.out.println(adminCode);
 		int result = organizationService.updateAdmin(adminCode);
 		
-		System.out.println(result);
 		if(result != 1) {
 			String fail = "관리자 삭제에 실패하였습니다. 다시 한 번 시도해보시길 바랍니다.";
 			
 			Gson gson = new Gson();
 			String jsonStr = gson.toJson(fail);
 			
-			System.out.println("json :" + jsonStr);
 			
 			return jsonStr;
 		} else {
@@ -457,7 +443,6 @@ public class OrganizationController {
 			Gson gson = new Gson();
 			String jsonStr = gson.toJson(success);
 			
-			System.out.println("json :" + jsonStr);
 			
 			return jsonStr;
 		}
@@ -509,14 +494,12 @@ public class OrganizationController {
 			String fail = "ERROR : 관리자 추가에 실패하였습니다.";
 			Gson gson = new Gson();
 			String jsonStr = gson.toJson(fail);
-			System.out.println(jsonStr);
 			return jsonStr;
 		}
 		String success = "관리자 추가에 성공하였습니다.";
 		Gson gson = new Gson();
 		String jsonStr = gson.toJson(success);
 		
-		System.out.println(jsonStr);
 		
 		return jsonStr;
 	}
@@ -651,7 +634,6 @@ public class OrganizationController {
 		}
 		String jsonStr = gson.toJson(msg);
 		
-		System.out.println(jsonStr);
 		
 		return jsonStr;
 	}
@@ -677,7 +659,6 @@ public class OrganizationController {
 		}
 		String jsonStr = gson.toJson(msg);
 		
-		System.out.println(jsonStr);
 		
 		return jsonStr;
 		
@@ -727,7 +708,6 @@ public class OrganizationController {
 			
 		} else {
 			String errorMsg = "부서정보 불러오기에 실패하였습니다.";
-			System.out.println(errorMsg);
 			String jsonStr = gson.toJson(errorMsg);
 			return jsonStr;
 		}
@@ -772,8 +752,6 @@ public class OrganizationController {
 		
 		Gson gson =  new Gson();
 		
-		System.out.println(result);
-		
 		if(result==-1) {
 			return gson.toJson("성공!");
 			
@@ -804,27 +782,22 @@ public class OrganizationController {
 	@ResponseBody
 	public String updateDept(@RequestParam("highDeptArr") String[] highDeptArr, @RequestParam("deptCodeArr") String[] deptCodeArr, @RequestParam("deptNameArr") String[] deptNameArr) {
 		
+		
 		List<String> highDeptList = new ArrayList<String>();
 		for (String highDeptCode : highDeptArr) {
-			highDeptList.add(highDeptCode);
+			highDeptList.add(highDeptCode); //everyware
 		}
-		List<String> deptNameList = new ArrayList<String>();
+		List<String> targetNameList = new ArrayList<String>();
 		for(String deptName : deptNameArr) {
-			deptNameList.add(deptName);
+			targetNameList.add(deptName); //404
 		}
-		List<String> deptCodeList = new ArrayList<String>();
+		List<String> targetList = new ArrayList<String>();
 		for(String deptCode : deptCodeArr) {
-			deptCodeList.add(deptCode);
+			targetList.add(deptCode); //404code
 		}
-	
-		Map<String, List<String>> updateTarget = new HashMap<String,List<String>>();
-		updateTarget.put("highDeptList", highDeptList);
-		updateTarget.put("deptCodeList", deptCodeList);
-		updateTarget.put("deptNameList", deptNameList);
 		
-		int result = organizationService.updateDept(updateTarget);
+		int result = organizationService.updateDept(highDeptList, targetNameList, targetList);
 		
-		System.out.println(result);
 		Gson gson =  new Gson();
 		if(result==-1) {
 			return gson.toJson("성공!");
@@ -833,7 +806,30 @@ public class OrganizationController {
 			return gson.toJson("실패!");
 		}
 	
-}
+	}
+	
+	//부서관리 - 부서삭제
+	@PostMapping("management/dept/delete")
+	@ResponseBody
+	public String deleteDept(@RequestParam("deptCodeArr") String[] deptCodeArr) {
+		
+		List<String> deptCodeList = new ArrayList<String>();
+		for(String deptCode : deptCodeArr) {
+			deptCodeList.add(deptCode);
+		}
+		
+		int result = organizationService.deleteDept(deptCodeList);
+		
+		Gson gson =  new Gson();
+		
+		if(result==-1) {
+			return gson.toJson("성공!");
+			
+		} else {
+			return gson.toJson("실패!");
+		}
+	}
+	
 	
 	
 }

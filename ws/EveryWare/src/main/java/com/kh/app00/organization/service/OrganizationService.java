@@ -122,9 +122,13 @@ public interface OrganizationService {
 	List<DeptVo> selectDeptListForEdit();
 
 	//부서관리 - 부서 수정
-	int updateDept(Map<String, List<String>> updateTarget);
+	int updateDept(List<String> highDeptList, List<String> targetNameList, List<String> targetList);
 
-	//부서관리 - 부서 수정 - 하위부서 재귀호출
-	boolean updateRowDepts(List<DeptVo> deptList, String depth);
+	//사원수 가져오기
+	String selectEmpCnt();
+
+	//부서관리 - 부서 삭제
+	int deleteDept(List<String> deptCodeList);
+
 
 }
