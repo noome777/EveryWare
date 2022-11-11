@@ -214,7 +214,6 @@ public class MailController {
 		String[] ajaxMsg = req.getParameterValues("checkArr");
 		int size = ajaxMsg.length;
 
-		System.out.println("controller : " + Arrays.toString(ajaxMsg));
 
 		for (int i = 0; i < size; i++) {
 			ms.delete(ajaxMsg[i]);
@@ -232,7 +231,6 @@ public class MailController {
 		String[] ajaxMsg = req.getParameterValues("readArr");
 		int size = ajaxMsg.length;
 
-		System.out.println("controller : " + Arrays.toString(ajaxMsg));
 
 		for (int i = 0; i < size; i++) {
 			ms.read(ajaxMsg[i]);
@@ -502,7 +500,6 @@ public class MailController {
 		String[] ajaxMsg = req.getParameterValues("trashArr");
 		int size = ajaxMsg.length;
 
-		System.out.println("controller : " + Arrays.toString(ajaxMsg));
 
 		for (int i = 0; i < size; i++) {
 			ms.clean(ajaxMsg[i]);
@@ -519,7 +516,6 @@ public class MailController {
 		String[] ajaxMsg = req.getParameterValues("backArr");
 		int size = ajaxMsg.length;
 
-		System.out.println("controller : " + Arrays.toString(ajaxMsg));
 
 		for (int i = 0; i < size; i++) {
 			ms.back(ajaxMsg[i]);

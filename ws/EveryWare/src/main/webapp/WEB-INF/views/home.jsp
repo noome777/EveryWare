@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!doctype html>
 <html lang="en">
@@ -28,6 +29,38 @@
  	float: right;
  	/* margin: 1% auto; */
  }
+ 
+ #number{
+	text-align: center;
+}
+#title {
+	text-align: center;
+}
+
+#views{
+	text-align: center;
+}
+#date {
+	text-align: center;
+}
+#ncode{
+	text-align:  center;
+}
+#ntitle {
+	text-align: center;
+}
+
+#ndate {
+	text-align: center;
+}
+
+#nviews{
+	text-align:center;
+}
+
+#moreBtn{
+	float: right;
+}
 </style>
 </head>
   <body class="vertical  light  ">
@@ -75,8 +108,46 @@
           </div> <!-- .row -->
         </div> <!-- .card-body -->
       </div>
-        
+      
+        <div class="card shadow mb-5" id="cal" style="width:82%; height: 350px;">
+				<div class="card-body">
+				<br>
+				<div class="buttonSet">
+				<h2 id="noticeall">사내 공지</h2> 
+				<input type="button" value="더보기" id="moreBtn" onclick="location.href='${root}/notice/noticeMain/1'"
+					class="btn btn-primary">
+					</div>
+				<br>
+				<br>
+					<table class="table table-striped" id="noticelist">
+						<tr>
+							<th id= "number">번호</th>
+							<th id="title">제목</th>
+							<th id="views">조회수</th> 
+							<th id="date">등록일</th>
+						</tr>
+						<tbody>
+							  
+							<c:forEach items="${nList}" var="x">
+								<c:if test="${x.noticeDelete eq null}">
+								<c:set var = "noticeDat" value="${x.noticeDate}"/>
+								<tr
+									onclick="location.href='${root}/notice/noticeDetail/${x.noticeCode}'">
+									<td id="ncode">${x.noticeCode}</td>
+									<td id="ntitle">${x.noticeTitle}</td>
+									<td id="nviews">${x.noticeViews}</td>
+									<td id="ndate">${fn:substring(noticeDat,0,10)}</td>
+								</tr>
+								</c:if>
+							</c:forEach>
+						</tbody>
+					</table>
+					
+					</div>
 
+				</div>
+	
+	
 </div>
      
      

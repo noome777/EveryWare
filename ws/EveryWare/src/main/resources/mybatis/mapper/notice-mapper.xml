@@ -13,6 +13,8 @@
 		FROM NOTICE
 		ORDER BY NOTICE_CODE DESC
 	</select>
+	
+	
 
 	<insert id="insertNotice">
 
@@ -54,6 +56,18 @@
 		)
 		
 	</insert>
+	
+	<select id="selectNList" resultType="NoticeVo">
+		SELECT
+		*
+		FROM( 
+        SELECT
+        *
+        FROM NOTICE ORDER BY NOTICE_CODE DESC)
+        WHERE ROWNUM  <![CDATA[ < ]]>  4
+        
+        </select> 
+	
 	
 	<select id="selectNoticeFileList" resultType="NoticeFileVo">
 		SELECT NOTICE_FILE_CODE, NOTICE_CODE, NOTICE_ORIGIN_NAME, NOTICE_CHANGE_NAME,NOTICE_FILE_ROOT FROM NOTICE_FILE
