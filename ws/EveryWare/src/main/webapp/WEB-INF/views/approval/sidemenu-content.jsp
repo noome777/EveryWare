@@ -56,7 +56,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" d-flex align-items-center justify-content-between href="${root}/approval/progressRefList/1/0"><span class="ml-1 item-text">확인</span>
+                  <a class="nav-link pl-3 d-flex align-items-center justify-content-between" href="${root}/approval/progressRefList/1/0"><span class="ml-1 item-text">확인</span>
                  	     <span class="mr-4" id="refCount"></span>
                   </a>
                 </li>
@@ -144,7 +144,7 @@
             success : function (data) {
               if(data.apprProgCount > 0) $('#apprProgCount').append(data.apprProgCount);
               if(data.apprWaitCount > 0) $('#apprWaitCount').append(data.apprWaitCount);
-              if(data.refCount > 0) $('#refCount').append(data.refCount);
+              if(data.apprRefCount > 0) $('#refCount').append(data.apprRefCount);
               if(data.apprExpectCount > 0) $('#apprExpectCount').append(data.apprExpectCount);
             }
           });

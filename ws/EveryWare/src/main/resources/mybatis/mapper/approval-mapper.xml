@@ -444,7 +444,7 @@
 		INNER JOIN DOC_FORM F ON F.FORM_CODE = A.DOC_FORM_CODE
 		WHERE A.DOC_APPR_DATE IS NOT NULL
 		<if test="empCode != 1">
-			AND E.DEPT_CODE = 2
+			AND E.DEPT_CODE = #{deptCode}
 		</if>
 		<if test="docFormCode != null and docFormCode != 0">
 			AND A.DOC_FORM_CODE = #{docFormCode}
@@ -658,6 +658,10 @@
 		WHERE FORM_CODE = #{formCode}
 	</update>
 	
+	<delete id="deleteDocFormMapping">
+		DELETE FROM DOC_FORM_MAPPING WHERE FORM_CODE = #{formCode}
+	</delete>
+	
 	<select id="selectAllDocTotalCnt" resultType="int">
 		SELECT COUNT(*) FROM APPROVAL_DOC
 		WHERE DOC_STATUS = 'N'
@@ -706,5 +710,7 @@
 		</if>
 		ORDER BY A.DOC_CODE DESC
 	</select>
+	
+	
 	
 </mapper>
