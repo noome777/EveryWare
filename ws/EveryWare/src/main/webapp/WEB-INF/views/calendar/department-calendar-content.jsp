@@ -109,7 +109,7 @@
 															</div>
 														</div>
 														<input type="text" class="form-control time-input"
-															name="startTime" id="start-time" value="00:00 AM">
+															name="startTime" id="start-time" value="12:00 AM">
 													</div>
 												</div>
 											</div>
@@ -135,7 +135,7 @@
 															</div>
 														</div>
 														<input type="text" class="form-control time-input"
-															name="EndTime" id="end-time" value="00:30 AM">
+															name="EndTime" id="end-time" value="12:00 AM">
 													</div>
 												</div>
 											</div>
@@ -348,40 +348,12 @@
               nextYear: 'right-double-arrow'
             },
             /**
-             * 드래그로 이벤트 수정하기
-             */
-            eventDrop: function (info){
-                console.log(info);
-                if(confirm("일정 이름 : '"+ info.event.title +"'  일정을 수정하시겠습니까 ?")){
-                }
-                var events = new Array(); // Json 데이터를 받기 위한 배열 선언
-                var obj = new Object();
-	                obj.no = info.event._def.publicId;
-	                obj.title = info.event._def.title;
-	                obj.start = info.event._instance.range.start;
-	                obj.end = info.event._instance.range.end;
-	                events.push(obj);
-
-                console.log(events);
-                $(function deleteData() {
-                    $.ajax({
-                        url: "${root}/calendar/edit",
-                        method: "POST",
-                        dataType: "json",
-                        data: JSON.stringify(events),
-                        contentType: 'application/json',
-                    })
-                })
-            },
-            /**
              * 이벤트 선택해서 삭제하기
              */
             eventClick: function (info){
                 if(confirm("일정 이름 : '"+ info.event.title +"'  일정을 삭제하시겠습니까 ?")){
                     // 확인 클릭 시
                     info.event.remove();
-                }
-
                 console.log(info.event);
                 var events = new Array(); // Json 데이터를 받기 위한 배열 선언
                 var obj = new Object();
@@ -401,10 +373,9 @@
                         contentType: 'application/json',
                     })
                 })
+                }
+
             },
-            // eventRemove: function (obj) { // 이벤트가 삭제되면 발생하는 이벤트
-            //
-            // },
 			events: [
 				<%List<CalendarVo> calendarList = (List<CalendarVo>) request.getAttribute("calendarList");%>
 	            <%if (calendarList != null) {%>
@@ -415,7 +386,8 @@
 	                start : '<%=vo.getCalStart()%>',
 	                end : '<%=vo.getCalEnd()%>',
 	                <%if (vo.getCalAllday().equals("TRUE ")) {%>
-	                	allDay : 'TRUE',
+	                	allDay : 'true',
+                		end : '<%=vo.getCalEnd()%>',
 	                <% } %>
 	                color : '#' + Math.round(Math.random() * 0xffffff).toString(16)
 	             },

@@ -108,8 +108,6 @@ public class CalendarController {
         
 		int result = service.insertOne(vo); 
 		
-		System.out.println(result);
-		
 		if(result == 1) {
 			return "redirect:/calendar/personal/select";			
 		}else if(result == -2) {
@@ -135,8 +133,6 @@ public class CalendarController {
         
 		int result = service.insertOne(vo); 
 		
-		System.out.println(result);
-		
 		if(result == 1) {
 			return "redirect:/calendar/department/select";			
 		}else if(result == -2) {
@@ -154,12 +150,10 @@ public class CalendarController {
 	@ResponseBody
 	@PostMapping("delete")
 	 public List<Map<String, Object>> deleteOne(@RequestBody List<Map<String, Object>> param) {
-        System.out.println(param);
         //0번째 row에서 date컬럼 값을 String으로 가져옴
         String no = param.get(0).get("no").toString();
 
         //가져온 값 확인
-        System.out.println(no);
         
         int result = service.deleteOne(no);
         
