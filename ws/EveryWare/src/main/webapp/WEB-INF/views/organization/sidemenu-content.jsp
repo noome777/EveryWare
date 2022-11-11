@@ -37,6 +37,8 @@
                 </a>
             </li>
 
+          <c:if test="${loginMember.rightCode eq '1' || loginMember.rightCode eq '2'}">
+
             <p class="text-muted nav-heading mt-4 mb-1">
               <span>인사관리</span>
             </p>
@@ -64,7 +66,7 @@
                 
               </ul>
             </li>
-
+          </c:if>
           
           </ul>
         </nav>

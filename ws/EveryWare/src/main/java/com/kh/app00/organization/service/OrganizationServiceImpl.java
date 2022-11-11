@@ -1,6 +1,8 @@
 package com.kh.app00.organization.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -385,21 +387,117 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 	//부서관리 - 부서수정
 	@Override
-	public int updateDept(Map<String, List<String>> updateTarget) {
+	public int updateDept(List<String> highDeptList, List<String> targetNameList, List<String> targetList) {
+		
+		// start
+		
+		// 전체 리스트 조회
+		// A 에서 B 로 이동 //
+		//	함수 (A 를 B로 이동) //재귀호출 //자식 없으면 ? 리턴
+		
+		List<DeptVo> deptList = organizationDao.selectDeptList(sqlSessionTemplate); //전체
+		Map<String, DeptVo> allMap = new HashMap<String, DeptVo>();
+		for(DeptVo vo : deptList) {
+			allMap.put(vo.getDeptCode(), vo);
+		}
+		
+		List<String> editedList = new ArrayList<String>();
+		
+		int len = targetList.size();
+		
+		for (int i = 0; i < len; i++) {
+			String target = targetList.get(i);
+			String highDept = highDeptList.get(i);
+			String targetName = targetNameList.get(i);
+			
+			edit(allMap, allMap.get(target), allMap.get(highDept), targetName , editedList);
+		}
+		
+		Map<String,List<DeptVo>> targetMap = new HashMap<String, List<DeptVo>>();
+		List<DeptVo> editedDeptlist = new ArrayList<DeptVo>();
+		
+		for(DeptVo deptVo : allMap.values()) {
+			for(String editedCode : editedList) {
+				if(deptVo.getDeptCode().equals(editedCode)) {
+					editedDeptlist.add(deptVo);
+				}
+			}
+		}
+		targetMap.put("editedDeptlist", editedDeptlist);
 	
+		return organizationDao.updateDept(sqlSessionTemplate,targetMap);
 		
-		 int result =   organizationDao.updateDept(sqlSessionTemplate, updateTarget);
-		 
-		return 0;
+	}//method
+	
+	
+	private void edit(Map<String, DeptVo>allMap , DeptVo targetVo , DeptVo highVo, String targetName, List<String> editedList) {
 		
+		//target 수정
+		targetVo.setHighDeptCode(highVo.getDeptCode());
+		targetVo.setDeptDepth(String.valueOf(Integer.parseInt(highVo.getDeptDepth())+1));
+		if(targetName.length()>1) {
+			targetVo.setDeptName(targetName);
+		}
+		targetName="";
+		editedList.add(targetVo.getDeptCode());
+		
+		//자식들 수정
+		for(DeptVo vo : allMap.values()) {
+			if(vo.getHighDeptCode().equals(targetVo.getDeptCode())) {
+				edit(allMap , vo , targetVo, targetName , editedList);
+			}
+		}
 	}
 
 
-	//부서관리 - 부서 수정 - 하위부서 재귀호출
+	//사원수 가져오기
 	@Override
-	public boolean updateRowDepts(List<DeptVo> deptList, String depth) {
-		return false;
+	public String selectEmpCnt() {
+		return organizationDao.selectEmpCnt(sqlSessionTemplate);
 	}
+
+
+	//부서관리 - 부서 삭제
+	@Override
+	public int deleteDept(List<String> targetList) {
+		
+		// star
+				List<DeptVo> deptList = organizationDao.selectDeptList(sqlSessionTemplate); 
+				Map<String, DeptVo> allMap = new HashMap<String, DeptVo>();
+				for(DeptVo vo : deptList) {
+					allMap.put(vo.getDeptCode(), vo);
+				}
+				List<String> deletedList = new ArrayList<String>();
+				
+				int len = targetList.size();
+				
+				for (int i = 0; i < len; i++) {
+					String target = targetList.get(i);
+					editToD(allMap, allMap.get(target) , deletedList);
+				}
+				Map<String,List<String>> targetMap = new HashMap<String, List<String>>();
+				targetMap.put("deletedList", deletedList);
+				
+				return organizationDao.deleteDept(sqlSessionTemplate,targetMap);		
+		
+	}
+
+
+	//부서관리 - 부서 삭제 후 하위부서 재귀호출
+	private void editToD (Map<String, DeptVo>allMap , DeptVo targetVo , List<String> deletedList) {
+		
+		deletedList.add(targetVo.getDeptCode());
+				
+		//자식들 수정
+		for(DeptVo vo : allMap.values()) {
+			if(vo.getHighDeptCode().equals(targetVo.getDeptCode())) {
+				editToD(allMap , targetVo , deletedList);
+			}
+		}
+				
+	}
+
+
 	
 
 

@@ -75,7 +75,7 @@
 									
 									<ul class="nav nav-pills">
 										<li class="nav-item emp-info-bar non-click">
-											<a class="nav-link" data-toggle="pill" href="#all">전체보기</a>
+											<a class="nav-link" data-toggle="pill" href="#all">전체보기 (${empCnt})</a>
 										</li>
 										
 										<c:forEach items="${deptMap['1']}" var="dl" >
@@ -167,7 +167,7 @@
 							<!--프로필 11 -->
 							<div class="tab-pane container active flex-wrap" id="all" >
 								<div id="profile-title">
-									<h4>전체보기</h4>
+									<h4>전체보기 <small>(${empCnt})</small></h4>
 								</div>
 								<div id="profile-area" class="or-scroll-bar">
 									<c:forEach items="${empList}" var="el">

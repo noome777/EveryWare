@@ -514,14 +514,8 @@
 			
 			let word = $('#search-bar').val();
 
-			if(word.trim() === "") {
-				alert("검색창에 글자를 입력하여 주시길 바랍니다.");
-				return false;
-			}
-
 			word = word.trim();
 
-			console.log(word);
 
 		$.ajax({
 		
@@ -534,6 +528,11 @@
 		},
 		success : function(jsonStr) {
 			console.log(jsonStr);
+
+			if(jsonStr==null || jsonStr=="") {
+				alert("검색된 결과가 없습니다. 다시 시도해주세요.");
+				return false;
+			}
 
 			const resultLength = jsonStr.length;
 
@@ -783,11 +782,17 @@
 
 		function editDept() {
 
-			console.log("???");
 
 			const deptCodeArr = [];
 			const deptNameArr = [];
 			const highDeptArr = [];
+
+			let editDeptInput = $('.edit-dept-input');
+
+			/*if(editDeptInput.val() == ""); {
+				alert("변경할 부서명을 기재해주시길 바랍니다.")
+				return false;
+			}*/
 			
 
 			for(let i=0; i<$('.edit-high-dept').length; ++i) {
@@ -831,6 +836,55 @@
 	<!--부서 삭제-->
 	<script>
 		function deleteDept() {
+
+			const confirmResult = window.confirm("부서를 삭제하면 하위부서들도 전부 삭제됩니다. 그래도 삭제하시겠습니까?");
+
+			if(confirmResult==false) {
+				return false;
+			}
+
+			const checkBoxArr = [];
+			const deptCodeArr = [];
+
+			const deptCode= $('input[type="checkbox"]:checked').parent().next();
+
+			$('input:checkbox:checked').each(function(){
+				checkBoxArr.push($(this).val());
+			});
+
+			
+			for(var i = 0; i < checkBoxArr.length; ++i) {
+
+			deptCodeArr.push(deptCode.eq(i).text());
+
+			}
+			
+
+			$.ajax({
+					url:"${root}/organization/management/dept/delete",
+					type:"POST",
+					traditional : true,
+					dataType : "json",
+					async : false,
+					cache: false,
+					data : {
+						deptCodeArr : deptCodeArr
+					},
+					success: function(data) {
+						
+						if(data=="성공!") {
+							alert("부서삭제에 성공하였습니다.");
+							window.location.href = "${root}/organization/management/dept";
+						} else {
+							alert("부서를 삭제하는 과정에서 에러가 발생하였습니다.");
+						}
+
+					},
+					error:function (data) {
+						alert("서버의 처리과정 중 문제가 발생하였습니다.");
+					}
+			});
+
 
 		}
 	</script>

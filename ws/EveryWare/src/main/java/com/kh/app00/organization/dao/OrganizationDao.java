@@ -123,11 +123,15 @@ public interface OrganizationDao {
 	List<DeptVo> selectDeptListForEdit(SqlSessionTemplate sqlSessionTemplate);
 
 	//부서관리 - 부서 수정
-	int updateDept(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> updateTarget);
+	int updateDept(SqlSessionTemplate sqlSessionTemplate, Map<String, List<DeptVo>> targetMap);
 
 
-	//부서관리 - 하위부서들 수정
-	int updateRowDept(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> updateTarget);
+	//사원 수 가져오기
+	String selectEmpCnt(SqlSessionTemplate sqlSessionTemplate);
+
+
+	//부서관리 - 부서삭제
+	int deleteDept(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> targetMap);
 
 
 }

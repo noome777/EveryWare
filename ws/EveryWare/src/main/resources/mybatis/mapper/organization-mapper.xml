@@ -477,6 +477,7 @@
 			    ELSE TO_CHAR(HIGH_DEPT_CODE)
 			    END AS HIGH_DEPT_CODE
 			FROM DEPT
+			WHERE DEPT_STATUS = 'N'
 	</select>
 	
 	
@@ -539,19 +540,31 @@
 	</select>
 	
 	<update id="updateDept" parameterType="java.util.Map">
-		<foreach collection="highDeptList"  item="item" index="index" open="DECLARE BEGIN" close="; END;"  separator=";"> 
+		<foreach collection="editedDeptlist"  item="item" index="index" open="DECLARE BEGIN" close="; END;"  separator=";"> 
 				UPDATE DEPT
 				SET
-					HIGH_DEPT_CODE = #{highDeptList[${index}]}
-					, DEPT_DEPTH = (
-							SELECT DEPT_DEPTH 
-							FROM DEPT 
-							WHERE DEPT_CODE = #{highDeptList[${index}]}
-						)+1
-					, DEPT_NAME = #{deptNameList[${index}]}
+					HIGH_DEPT_CODE = #{item.highDeptCode}
+					, DEPT_DEPTH = #{item.deptDepth}
+					, DEPT_NAME = #{item.deptName}
 				WHERE 
-					DEPT_CODE = #{deptCodeList[${index}]}
+					DEPT_CODE = #{item.deptCode}
 		 </foreach>
+	</update>
+	
+	
+	<select id="selectEmpCnt" resultType="String">
+		SELECT COUNT(*) FROM EMP
+		WHERE EMP_STATUS = 'N'
+	</select>
+	
+	<update id="updateDeptStatus" parameterType="java.util.Map">
+		<foreach collection="deletedList"  item="item" index="index" open="DECLARE BEGIN" close="; END;"  separator=";"> 
+			UPDATE DEPT
+			SET
+				DEPT_STATUS = 'D'
+			WHERE
+				DEPT_CODE = #{item}
+		</foreach>
 	</update>
 	
 	
