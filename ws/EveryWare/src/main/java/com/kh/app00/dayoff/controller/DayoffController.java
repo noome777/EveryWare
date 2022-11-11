@@ -209,7 +209,6 @@ public class DayoffController {
         vo.setOffCode(num);
         vo.setOffApproval(approval);
 
-        System.out.println(vo);
         int result = service.updateApproval(vo);
 
         if (result == 1) {

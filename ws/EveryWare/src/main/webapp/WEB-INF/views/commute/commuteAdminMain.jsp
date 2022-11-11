@@ -78,11 +78,16 @@
         <form action="" method="get" name="frm" onSubmit="return Checkform()">
           <h5 class="card-title">사원명 검색</h5>
             <select id="jobCode" name="jobCode" id="">
-              <option value="1">관리</option>
+              <option value="1">경영관리</option>
               <option value="2">기획</option>
-              <option value="3">영업</option>
-              <option value="4">생산</option>
-              <option value="5">개발</option>
+              <option value="3">회계</option>
+              <option value="4">인사</option>
+              <option value="5">설비관리</option>
+              <option value="6">영업</option>
+              <option value="7">홍보/마케팅</option>
+              <option value="8">개뱔</option>
+              <option value="9">데이터관리</option>
+              <option value="10">생산</option>
             </select>
           <input name="name" id="name" type="text" placeholder="사원명">
           <input  id="search" type="submit" value="검색">

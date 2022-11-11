@@ -253,7 +253,6 @@ public class CommuteController {
                 vo.setComStatus(late);
             }
         }
-        System.out.println(vo);
 
         // DB 에 사원의 근태 insert
         int result = service.insertCommute(vo);
