@@ -1,5 +1,6 @@
 package com.kh.app00.contacts.controller;
 
+import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kh.app00.common.FileUploader;
 import com.kh.app00.common.PageVo;
 import com.kh.app00.common.Pagination;
 import com.kh.app00.commute.service.CommuteService;
@@ -67,13 +69,19 @@ public class ContactController {
 	
 	//주소록 작성
 	@PostMapping("write")
-	public String write(ContactsVo vo , Model model , HttpSession session) {
+	public String write(ContactsVo vo , Model model , HttpSession session, HttpServletRequest req) {
+		
+		if(vo.getProfile() != null && !vo.getProfile().isEmpty()) {
+			String savePath = req.getServletContext().getRealPath("/resources/upload/profile/");
+			String changeName = FileUploader.fileUpload(vo.getProfile(), savePath);
+			vo.setFileName(changeName);
+		}
 		
 		EmpVo loginMember = (EmpVo)session.getAttribute("loginMember");
 		
-		String name = loginMember.getEmpName();
+		String empCode = loginMember.getEmpCode();
 		
-		vo.setConWriter(name);
+		vo.setConWriter(empCode);
 		
 		int result = service.write(vo);
 		
@@ -109,8 +117,20 @@ public class ContactController {
 	
 	//주소록 수정
 	@PostMapping("edit/{no}")
-	public String edit(@PathVariable String no , ContactsVo vo, HttpSession session) {
+	public String edit(@PathVariable String no , ContactsVo vo, HttpServletRequest req, HttpSession session) {
 		
+		String savePath = req.getServletContext().getRealPath("/resources/upload/profile/");
+		String fileName = vo.getFileName();
+		File f = new File(savePath + fileName);
+		if(f.exists()) {
+			f.delete();
+		}
+		
+		if(!vo.getProfile().isEmpty()) {
+			String changeName = FileUploader.fileUpload(vo.getProfile(), savePath);
+			vo.setFileName(changeName);
+		}
+
 		vo.setConNo(no);
 		
 		int result = service.edit(vo);
@@ -127,8 +147,5 @@ public class ContactController {
 	}
 	
 	
-	
-	
 
-	
 }//class

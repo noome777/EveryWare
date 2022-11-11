@@ -11,6 +11,7 @@
 			, CON_EMAIL
 			, CON_TEL
 			, CON_COMPANY
+			, FILE_NAME
 		FROM CONTACTS
 		ORDER BY CON_NO DESC
 	</select>
@@ -32,6 +33,7 @@
 			, CON_TEL
 			, CON_COMPANY
 			, CON_MEMO
+			, FILE_NAME
 		)
 		VALUES
 		(
@@ -42,6 +44,7 @@
 			, #{conTel}
 			, #{conCompany}
 			, #{conMemo}
+			, #{fileName}
 		)
 	</insert>
 
@@ -54,29 +57,30 @@
             , C.CON_EMAIL        
             , C.CON_TEL           
             , C.CON_COMPANY
-            , C.CON_MEMO      
-			, E.EMP_NAME AS CON_WRITER
+            , C.CON_MEMO
+            , FILE_NAME      
 		FROM CONTACTS C
 		JOIN EMP E
-		ON C. CON_WRITER  =  E.EMP_NAME
-		WHERE C.CON_NO = #{conNo}
+		ON C.CON_WRITER  =  E.EMP_CODE
+		WHERE C.CON_NO =  #{conNo}
 	</select>
 	
 	<!-- 주소록 수정 -->
 	<update id="updateOne">
-	UPDATE CONTACTS
-			SET
-             CON_NAME = #{conName}   
-            , CON_EMAIL = #{conEmail}        
-            , CON_TEL = #{conTel}           
-            , CON_COMPANY = #{conCompany} 
-            , CON_MEMO = #{conMemo}       
-			WHERE CON_NO = #{conNo}
+		UPDATE CONTACTS
+				SET
+	             CON_NAME = #{conName}   
+	            , CON_EMAIL = #{conEmail}        
+	            , CON_TEL = #{conTel}           
+	            , CON_COMPANY = #{conCompany} 
+	            , CON_MEMO = #{conMemo}
+	            , FILE_NAME = #{fileName}       
+				WHERE CON_NO = #{conNo}
 	</update>
 
 	<!-- 주소록 게시글 갯수 조회 -->
 	<select id="selectCountAll" resultType="int">
-		SELECT COUNT(CON_NO) FROM CONTACTS
+		SELECT COUNT(*) FROM CONTACTS
 	</select>
  
  

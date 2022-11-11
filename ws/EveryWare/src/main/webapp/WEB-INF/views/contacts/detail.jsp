@@ -44,8 +44,11 @@ margin-left: 5px;
            <textarea class="form-control" id="example-textarea" rows="4" disabled=""  name="conMemo">${vo.conMemo}</textarea>
           <label for="customFile">Image file</label>
           <div class="custom-file">
-           <input type="file" class="custom-file-input" id="customFile" disabled="" value="파일">
+           <input type="file" class="custom-file-input" id="customFile" disabled="" value="파일" name="profile">
            <label class="custom-file-label" for="customFile">file</label>
+          </div>
+          <div id="profile-tumb">
+            <img src="${root}/resources/upload/profile/${vo.fileName}" width="20%" height="20%">
           </div>
         </div>
         </table>  

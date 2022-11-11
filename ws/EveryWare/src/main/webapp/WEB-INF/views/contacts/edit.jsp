@@ -32,7 +32,7 @@ margin-left: 5px;
        
         <table class="table table-borderless table-hover">
         <div class="edit-box">
-          <form "action="" method="post">
+          <form "action="" method="post" enctype="multipart/form-data">
            <label for="simpleinput">Name</label>
             <input type="text" id="simpleinput" class="form-control" placeholder="Name" name="conName" value="${vo.conName}">
            <label for="example-email">Email</label>
@@ -45,12 +45,14 @@ margin-left: 5px;
             <textarea class="form-control" id="example-textarea" rows="4" name="conMemo">${vo.conMemo}</textarea>
            <label for="customFile">Image file</label>
            <div class="custom-file">
-            <input type="file" class="custom-file-input" id="customFile">
+            <input type="file" class="custom-file-input" id="customFile" name="profile">
             <label class="custom-file-label" for="customFile">Choose file</label>
            </div>
-       
-        </div>
-        </table>  
+           <div id="profile-tumb">
+                <img src="${root}/resources/upload/profile/${vo.fileName}" width="20%" height="20%">
+            </div>
+	       </div>
+	       </table>  
          
        </div> 
       </div>

@@ -32,7 +32,7 @@
                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#defaultModal"><span class="fe fe-filter fe-12 mr-2"></span> Create </button>
                   
                  <!-- Modal -->
-                 <form action="${root}/contacts/write" method="post">
+                 <form action="${root}/contacts/write" method="post" enctype="multipart/form-data" onsubmit="return check();">
                   <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
@@ -56,8 +56,13 @@
                         <textarea class="form-control" id="example-textarea" rows="4" name="conMemo"></textarea>
                        <label for="customFile">Image file</label>
                        <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="customFile">
+                        <input type="file" class="custom-file-input" id="customFile" name="profile">
                         <label class="custom-file-label" for="customFile">Choose file</label>
+                       
+                       <div id="profile-tumb">
+			              <img id="profile-img" src="${root}/resources/img/guest.png" width="20%" height="20%">
+			            </div>
+                       
                        </div>
                        </div>
                        
@@ -92,14 +97,14 @@
                     
                     <tbody>
                     <c:forEach items="${cList}" var="list">
-                    <c:if test="${ list.conWriter eq loginMember.empName }">
+                    <c:if test="${ list.conWriter eq loginMember.empCode }">
                       <tr>
                        <td>
                          <i class="fe fe-24 fe-circle small text-muted"></i>
                         </td>
                         <td>
                           <div class="avatar avatar-sm">
-                            <img src="${root}/resources/img/guest.png" alt="..." class="avatar-img rounded-circle">
+                            <img src="${root}/resources/upload/profile/${list.fileName}" alt="image" class="avatar-img rounded-circle">
                           </div>
                         </td>
                         <td>
@@ -155,6 +160,26 @@
     </div> <!-- .wrapper -->
     
     
+    <script>
+		const fileInputTag = document.querySelector('input[name=profile]');
+	
+	    fileInputTag.onchange = function(){
+	        
+	        const imgTag = document.querySelector('#profile-img');
+	        
+	        if(fileInputTag.files.length > 0){
+	            //파일 선택됨
+	            const fr = new FileReader();
+	            fr.onload = function(data){
+	                console.log(data);
+	                imgTag.src = data.target.result;
+	            }
+	            fr.readAsDataURL(fileInputTag.files[0]); //파일 읽기
+	        }else{
+	            imgTag.src = "";
+	        }
+	    }
+	</script>
     
     <script>
 
