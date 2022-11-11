@@ -86,13 +86,11 @@ public class EmpController {
     @PostMapping(value = "searchId", produces = "application/json; charset=UTF-8")
     @ResponseBody /*ajax 사용할 떄 꼭 추가하기 !!*/
     public String searchId(String empName, String empPhone, EmpVo vo, HttpSession session) {
-        System.out.println(vo);
         
         EmpVo idVo = service.selectIdInfo(vo);
         
         Map<String, String> idMap = new HashMap<String, String>();
         idMap.put("empId", idVo.getEmpId());
-        System.out.println(idMap);
         
         Gson gson = new Gson();
         String gsonStr = gson.toJson(idMap);
@@ -129,7 +127,7 @@ public class EmpController {
         
         //이름, 이메일이 사원의 정보와 일치한지 확인
         EmpVo pwdVo = service.selectPwdInfo(vo);
-        System.out.println(pwdVo);
+//        System.out.println(pwdVo);
         
         //해당 회원이 존재할 때만 메일을 보내준다.
         if(pwdVo != null) {
@@ -145,7 +143,6 @@ public class EmpController {
             String contentAll = content.substring(0, 20) + tempPw + content.substring(20);
             
             vo.setEmpPwd(tempPw);
-            System.out.println(vo);
             
             
             //랜덤난수 + 암호화 된 비밀번호 db에서 업데이트 해주기
