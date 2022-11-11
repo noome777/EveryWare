@@ -51,11 +51,11 @@
 			<i class="fe fe-menu navbar-toggler-icon"></i>
 		</button>
 		<ul class="nav">
-			<li class="nav-item nav-notif"><a
+			<%-- <li class="nav-item nav-notif"><a
 				class="nav-link text-muted my-2" href="${root}/alarm/select" data-toggle="modal"
 				data-target=".modal-notif"> <span class="fe fe-bell fe-16"></span>
 					<span class="dot dot-md bg-success"></span>
-			</a></li>
+			</a></li> --%>
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle text-muted pr-0" href="#"
 				id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
@@ -317,7 +317,7 @@
       }
     </script>
 	<script src="${root}/resources/js/apps.js"></script>
-	<div class="modal fade modal-notif modal-slide" tabindex="-1"
+	<%-- <div class="modal fade modal-notif modal-slide" tabindex="-1"
 		role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-sm" role="document">
 			<div class="modal-content">
@@ -393,7 +393,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> --%>
 </body>
 </html>
 

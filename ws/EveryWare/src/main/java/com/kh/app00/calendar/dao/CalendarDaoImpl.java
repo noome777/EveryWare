@@ -21,7 +21,6 @@ public class CalendarDaoImpl implements CalendarDao{
 	//부서일정 조회
 	@Override
 	public List<CalendarVo> getDepartCalendar(SqlSessionTemplate sst, String deptCode) {
-		System.out.println(deptCode);
 		return sst.selectList("calendarMapper.selectDepartAll", deptCode);
 	}
 

@@ -37,8 +37,6 @@ private final AlarmService service;
 		List<AlarmVo> alarmList = service.selectAll(loginMember.getEmpCode());
 		model.addAttribute("alarmList", alarmList);
 		
-		System.out.println(loginMember.getEmpCode());
-		System.out.println(alarmList);
 		
 		return alarmList;
 	

@@ -123,7 +123,11 @@
 			success: function (result) {
 				console.log(result)
 				$('.fileTitle').html(result.fileTitle);
-				$('#infoimg').attr({src: "${root}/resources/upload/filemanager/"+result.fileName});
+				if(result.fileType == 'zip'){
+					$('#infoimg').attr({src: "${root}/resources/upload/filemanager/zipfile.png"});
+				}else{
+					$('#infoimg').attr({src: "${root}/resources/upload/filemanager/"+result.fileName});
+				}
 				$('.filewriter').html(result.fileWriter);
 				$('.fileType').html(result.fileType);
 				$('.fileContent').html(result.fileContent);

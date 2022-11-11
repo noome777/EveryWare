@@ -267,9 +267,7 @@ public class FilemanagerController {
 		
 		if (result == 1) {
 			session.setAttribute("alertMsg", "해당파일이 삭제 되었습니다.");
-			System.out.println("1");
 		}else {
-			System.out.println("2");
 		}
 		
 		return "redirect:/filemanager/select"; 
@@ -288,9 +286,7 @@ public class FilemanagerController {
 		
 		if (result == 1) {
 			session.setAttribute("alertMsg", "해당 파일이 복원 되었습니다.");
-			System.out.println("1");
 		}else {
-			System.out.println("2");
 		}
 		
 		return "redirect:/filemanager/select"; 
@@ -314,7 +310,6 @@ public class FilemanagerController {
 		String rootPath = req.getServletContext().getRealPath("/resources/upload/filemanager/");
 		
 		File target = new File(rootPath + vo.getFileName());
-		System.out.println(target);
 		
 		//파일 -> 바이트 -> ???
 		byte[] data = FileUtils.readFileToByteArray(target);

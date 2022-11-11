@@ -43,14 +43,29 @@ public class CalendarServiceImpl implements CalendarService {
 		if (vo.getCalTitle().length() == 0) {
 			result = -2; // 알람 보내기
 		}
-
+		
 		if (vo.getCalAllday() == null) {
 			vo.setCalAllday("FALSE");
 		} else if (vo.getCalAllday().equals("on")) {
 			vo.setCalAllday("TRUE ");
 		}
-
-		System.out.println(vo);
+		
+		if(vo.getCalAllday().equals("FALSE")) {
+			if(vo.getStartTime() != null) {
+				String startDate = vo.getCalStart() +" " +vo.getStartTime().substring(0, 5);
+				vo.setCalStart(startDate);
+			}else {
+				vo.setCalAllday("TRUE ");
+			}
+			
+			if(vo.getEndTime() != null) {
+				String endDate = vo.getCalEnd() +" " +vo.getEndTime().substring(0, 5);
+				vo.setCalEnd(endDate);
+				vo.setCalAllday("FALSE");
+			}else {
+				vo.setCalAllday("TRUE ");
+			}
+		}
 
 		result = dao.insertOne(sst, vo);
 		return result;
