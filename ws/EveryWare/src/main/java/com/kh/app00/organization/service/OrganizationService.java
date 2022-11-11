@@ -130,7 +130,5 @@ public interface OrganizationService {
 	//부서관리 - 부서 삭제
 	int deleteDept(List<String> deptCodeList);
 
-	
-	
 
 }

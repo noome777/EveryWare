@@ -825,7 +825,7 @@
 
 					},
 					error:function (data) {
-						alert("에러 + " + data);
+						alert("부서명 입력창에 글씨를 입력해주시길 바랍니다.");
 					}
 			});
 

@@ -818,8 +818,6 @@ public class OrganizationController {
 			deptCodeList.add(deptCode);
 		}
 		
-		System.out.println("컨트롤러 : " +deptCodeList);
-		
 		int result = organizationService.deleteDept(deptCodeList);
 		
 		Gson gson =  new Gson();
@@ -831,6 +829,7 @@ public class OrganizationController {
 			return gson.toJson("실패!");
 		}
 	}
+	
 	
 	
 }

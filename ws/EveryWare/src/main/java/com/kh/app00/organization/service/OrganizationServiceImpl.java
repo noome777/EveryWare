@@ -464,8 +464,16 @@ public class OrganizationServiceImpl implements OrganizationService {
 		// star
 				List<DeptVo> deptList = organizationDao.selectDeptList(sqlSessionTemplate); 
 				Map<String, DeptVo> allMap = new HashMap<String, DeptVo>();
+				
+				List<String> highList = new ArrayList<String>();
 				for(DeptVo vo : deptList) {
 					allMap.put(vo.getDeptCode(), vo);
+				}
+				
+				String highDeptCode = "";
+				for(String targetCode : targetList) {
+					highDeptCode = allMap.get(targetCode).getHighDeptCode();
+					highList.add(highDeptCode);
 				}
 				List<String> deletedList = new ArrayList<String>();
 				
@@ -473,7 +481,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 				
 				for (int i = 0; i < len; i++) {
 					String target = targetList.get(i);
-					editToD(allMap, allMap.get(target) , deletedList);
+					String highDept = highList.get(i);
+					editToD(allMap, allMap.get(target), allMap.get(highDept), deletedList);
 				}
 				Map<String,List<String>> targetMap = new HashMap<String, List<String>>();
 				targetMap.put("deletedList", deletedList);
@@ -484,18 +493,21 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 
 	//부서관리 - 부서 삭제 후 하위부서 재귀호출
-	private void editToD (Map<String, DeptVo>allMap , DeptVo targetVo , List<String> deletedList) {
+	private void editToD (Map<String, DeptVo>allMap , DeptVo targetVo , DeptVo highVo , List<String> deletedList) {
+		
+		targetVo.setHighDeptCode(highVo.getDeptCode());
 		
 		deletedList.add(targetVo.getDeptCode());
 				
 		//자식들 수정
 		for(DeptVo vo : allMap.values()) {
 			if(vo.getHighDeptCode().equals(targetVo.getDeptCode())) {
-				editToD(allMap , targetVo , deletedList);
+				editToD(allMap , vo, targetVo , deletedList);
 			}
 		}
 				
 	}
+
 
 
 	
