@@ -195,7 +195,7 @@ public class MailController {
 		}
 		if (result == 1) {
 			session.setAttribute("alertMsg", "메일 작성 성공!");
-			return "redirect:/mail/send/1";
+			return "redirect:/mail/mailMain/1";
 
 		} else {
 			model.addAttribute("msg", "메일 작성 실패...");
@@ -562,12 +562,12 @@ public class MailController {
 		
 		
 		return ResponseEntity
-			.ok()
-			.contentType(MediaType.APPLICATION_OCTET_STREAM)
-			.contentLength(54997L)
-			.header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=" + name)
-			.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
-			.body(res);
+				.ok()
+				.contentType(MediaType.APPLICATION_OCTET_STREAM)
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + name)
+				.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
+				.header(HttpHeaders.CONTENT_LENGTH, target.length() + "")
+				.body(res);
 	}
 
 	@GetMapping("mailMe")

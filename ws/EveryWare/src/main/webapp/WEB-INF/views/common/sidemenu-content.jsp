@@ -109,7 +109,7 @@
               </a>
             </li>
              <li class="nav-item dropdown">
-              <a href="${root}/mail/main" aria-expanded="false" class="nav-link">
+              <a href="${root}/mail/mailMain/1" aria-expanded="false" class="nav-link">
                 <i class="fe fe-mail fe-16"></i>
                 <span class="ml-3 item-text">이메일</span>
               </a>
