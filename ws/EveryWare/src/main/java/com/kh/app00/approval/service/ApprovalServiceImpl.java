@@ -409,12 +409,23 @@ public class ApprovalServiceImpl implements ApprovalService {
 		
 		int docFormMappingResult = dao.insertDocFormMapping(sst, mappingList);
 		
-		return docFormResult * docFormMappingResult;
+		return docFormResult;
 	}
 	//문서양식 수정
 	@Override
+	@Transactional(rollbackFor = {Exception.class})
 	public int updateDocForm(DocFormVo vo) {
-		return dao.updateDocForm(sst, vo);
+		
+		int docFormResult = dao.updateDocForm(sst, vo);
+		
+		List<DocFormMapperVo> mappingList = vo.getFormDetailList();
+		for(DocFormMapperVo mVo : mappingList) {
+			mVo.setFormCode(vo.getFormCode());
+		}
+		int deleteFormMapping = dao.deleteDocFormMapping(sst, vo);
+		int docFormMappingResult = dao.insertDocFormMapping(sst, mappingList);
+		
+		return docFormResult;
 	}
 	//전체 문서 갯수 조회
 	@Override

@@ -95,18 +95,33 @@
           
 					<h5 id="detail-title" class="appr-font-color">양식 항목</h5>
 						<hr>
-						<table class="table table-bordered shadow appr-tab">
-							<tr>
-								<td class="appr-table-color w-50">표시 순서</td>
-								<td class="appr-table-color w-50">항목명</td>
-							</tr>
-							<c:forEach items="${formMappingList}" var="f">
-								<tr>
-									<td>${f.formDetailSeq}</td>
-									<td>${f.formDetailName}</td>
-								</tr>
-							</c:forEach>
-						</table>   
+
+            <div id="form-select-box" class="d-flex w-100 m-auto">
+
+              <div id="name-list" class="w-50 h-100">
+                <label for="example-textarea"><h6 class="appr-font-color">전체 항목</h6></label>
+                <select id="form-name" multiple="multiple" class="custom-select form-control w-100 h-100 non-scroll">
+                  <c:forEach items="${formDetailList}" var="f">
+                    <option value="${f.formDetailCode}">${f.formDetailName}</option>
+                  </c:forEach>
+                </select>
+              </div>
+  
+              <div class="w-25 h-150 d-flex flex-column justify-content-center align-items-center">
+                <a id="" class="fe fe-32 fe-arrow-right-circle w-25 mb-1 add-user"></a>
+                <a class="fe fe-32 fe-arrow-left-circle w-25 delete-user"></a>
+              </div>
+              
+  
+              <div id="selected-list" class="w-50 h-100">
+                <label for="example-textarea"><h6 class="appr-font-color">추가할 항목</h6></label>
+                <select id="selected-detail" multiple="multiple" class="custom-select form-control w-100 h-100 non-scroll" name="formDetailCode">
+                  <c:forEach items="${formMappingList}" var="f">
+                    <option value="${f.formDetailCode}">${f.formDetailName}</option>
+                  </c:forEach>
+                </select>
+              </div>
+            </div>
         </div>
       </div>
     </div>
@@ -119,10 +134,26 @@
 
     $('[type=submit]').on('click', function () {
 
+      //양식순서 추가
+      selected = $('#selected-detail option');
+      selected.each(function (i) {
+        $('#selected-detail option').eq(i).attr('detailSeq', i+1);
+      })
+      
+      let formDetailList = [];
+      $('[name=formDetailCode] option').each(function(){
+        let object = {
+          formDetailCode : $(this).val(),
+          formDetailSeq : $(this).attr('detailSeq')
+        };
+        formDetailList.push(object)
+      });
+
       let param = {
 				formCode : '${docForm.formCode}' ,
         formUseYn : $('[name=formUseYn]').val() ,
-				formIntro : $('[name=formIntro]').val()
+				formIntro : $('[name=formIntro]').val() ,
+        formDetailList : formDetailList 
       };
 
       $.ajax({
@@ -141,6 +172,32 @@
       
     })
 
+    $('.add-user').on('click', function () {
+      let detailCode = $('#form-name option:selected').val();
+      let formOption = $('#form-name option[value=' + detailCode + ']')[0].outerHTML;
+
+      let selectedOptionVal = [];
+      $($('#selected-detail option[value=' + detailCode + ']')).each(function () {
+        var selected = $(this).val();
+        selectedOptionVal.push(selected);
+      })
+
+      if(selectedOptionVal.length == 0){
+        $('#selected-detail').append(formOption);
+      } else {
+          if($.inArray(detailCode, selectedOptionVal) != -1){
+            alert('이미 추가한 항목입니다.');
+          } else {
+            $('#selected-detail').append(formOption);
+          }
+      }
+    })
+
+    $('.delete-user').on('click', function () {
+      let detailCode = $('#selected-detail option:selected').val();
+      $('#selected-detail option[value=' + detailCode + ']').remove();
+    })
+    
   </script>
 
 
