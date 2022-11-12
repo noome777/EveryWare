@@ -192,7 +192,7 @@
  					success : function(cdata) {
  						if (cdata == 'ok') {
  							alert("삭제 성공");
- 							location.replace("${root}/mail/mailMain");
+ 							location.replace("${root}/mail/self/${pno}");
  						} else {
  							alert("삭제 실패");
  						}

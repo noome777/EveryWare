@@ -195,7 +195,7 @@ public class MailController {
 		}
 		if (result == 1) {
 			session.setAttribute("alertMsg", "메일 작성 성공!");
-			return "redirect:/mail/mailMain/1";
+			return "redirect:/mail/send/1";
 
 		} else {
 			model.addAttribute("msg", "메일 작성 실패...");
@@ -219,7 +219,7 @@ public class MailController {
 			ms.delete(ajaxMsg[i]);
 		}
 
-//		return "redirect:/mail/mailMain";
+
 		return "ok";
 
 	}
@@ -236,7 +236,6 @@ public class MailController {
 			ms.read(ajaxMsg[i]);
 		}
 
-//		return "redirect:/mail/mailMain";
 		return "ok";
 
 	}
@@ -252,7 +251,6 @@ public class MailController {
 			ms.noread(ajaxMsg[i]);
 		}
 
-//		return "redirect:/mail/mailMain";
 		return "ok";
 
 	}
@@ -264,11 +262,11 @@ public class MailController {
 
 		if (result == 1) {
 			// 삭제성공 => 알람 , 리스트
-			session.setAttribute("alertMsg", "게시글 삭제 성공!");
-			return "redirect:/mail/mailMain";
+			session.setAttribute("alertMsg", "삭제 성공!");
+			return "redirect:/mail/trash/1";
 		} else {
 			// 삭제실패 => 메세지 , 에러페이지
-			model.addAttribute("msg", "게시글 삭제 실패 ...");
+			model.addAttribute("msg", "삭제 실패 ...");
 			return "error/errorPage";
 		}
 
@@ -334,7 +332,7 @@ public class MailController {
 		}
 		if (result == 1) {
 			session.setAttribute("alertMsg", "답장 성공!");
-			return "redirect:/mail/mailMain/1";
+			return "redirect:/mail/send/1";
 		} else {
 			model.addAttribute("msg", "답장 작성 실패...");
 			return "error/errorPage";

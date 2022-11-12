@@ -195,7 +195,7 @@
  					success : function(cdata) {
  						if (cdata == 'ok') {
  							alert("삭제 성공");
- 							location.replace("${root}/mail/mailSend");
+ 							location.replace("${root}/mail/send/${pno}");
  						} else {
  							alert("삭제 실패");
  						}
