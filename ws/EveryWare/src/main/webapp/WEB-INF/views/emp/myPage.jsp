@@ -249,32 +249,57 @@
 											<strong>사내전화</strong>
 										</div>
 										<div class="rowValue">
+											<c:if test="${loginMember.empTel!='--'}">
 											<input type="tel" class="no-style-input" name="empTel" value="${loginMember.empTel}" placeholder="${loginMember.empTel}" >
+											</c:if>
+											<c:if test="${loginMember.empTel=='--'}">
+											<input type="tel" class="no-style-input" name="empTel" placeholder="입력해주세요. *" >
+											</c:if>
 										</div>
 										<div class="rowName">
 											<strong>휴대전화</strong>
 										</div>
 										<div class="rowValue">
-											<input type="tel" class="no-style-input" name="empPhone" value="${loginMember.empPhone}" placeholder="${loginMember.empPhone}" >
+											<c:if test="${loginMember.empPhone!='--'}">
+												<input type="tel" class="no-style-input" name="empPhone" value="${loginMember.empPhone}" placeholder="${loginMember.empPhone}" >
+											</c:if>
+											<c:if test="${loginMember.empPhone=='--'}">
+												<input type="tel" class="no-style-input" name="empPhone" placeholder="입력해주세요. *" >
+											</c:if>
 										</div>
 										<div class="rowName">
 											<strong>e-mail</strong>
 										</div>
 										<div class="rowValue">
-											<input type="email" class="no-style-input" name="empEMail" value="${loginMember.empEMail}" placeholder="${loginMember.empEMail}" >
+											<c:if test="${not empty loginMember.empEMail}">
+												<input type="email" class="no-style-input" name="empEMail" value="${loginMember.empEMail}" placeholder="${loginMember.empEMail}" >
+											</c:if>
+											<c:if test="${empty loginMember.empEMail}">
+												<input type="email" class="no-style-input" name="empEMail" placeholder="입력해주세요.*" >
+											</c:if>
 										</div>
 										<div class="rowName">
 											<strong>자택주소1</strong>
 										</div>
 										<div class="rowValue">
-											<input id="find-addr" type="text" class="no-style-input" name="empAddress1" value="${loginMember.empAddress1}" placeholder="${loginMember.empAddress1}" data-id="${empList.empCode}" >
-										</div>
+											<c:if test="${not empty loginMember.empAddress1}">
+												<input id="find-addr" type="text" class="no-style-input" name="empAddress1" value="${loginMember.empAddress1}" placeholder="${loginMember.empAddress1}" data-id="${empList.empCode}" >
+											</c:if>
+											<c:if test="${empty loginMember.empAddress1}">
+												<input id="find-addr" type="text" class="no-style-input" name="empAddress1"  placeholder="입력해주세요.*" data-id="${empList.empCode}" >
+											</c:if>
+											</div>
 										<div class="rowName">
 											<strong>자택주소2</strong>
 										</div>
 										<div class="rowValue">
-											<input type="text" class="no-style-input" name="empAddress2" value="${loginMember.empAddress2}" placeholder="${loginMember.empAddress2}" >
 
+											<c:if test="${not empty loginMember.empAddress2}">
+												<input type="text" class="no-style-input" name="empAddress2" value="${loginMember.empAddress2}" placeholder="${loginMember.empAddress2}" >
+											</c:if>
+											<c:if test="${empty loginMember.empAddress2}">
+												<input type="text" class="no-style-input" name="empAddress2" placeholder="입력해주세요.*" >
+											</c:if>
 										</div>
 										<div class="rowName">
 											<strong>입사일</strong>
@@ -442,10 +467,6 @@
 		}
 	  </script>
 
-	  <!--비밀번호,생년월일,사내전화,휴대전화,email체크-->
-	  <script>
-
-	  </script>
 
 
 	  <!--자택주소-->

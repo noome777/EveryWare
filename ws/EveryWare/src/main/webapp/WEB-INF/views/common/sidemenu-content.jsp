@@ -2,6 +2,11 @@
     pageEncoding="UTF-8"%>
 <style>
   .non-scroll{overflow:hidden}
+  #logo{
+  	margin-top : 10px;
+  	width: 25px;
+  	height : 25px;
+  }
 </style>
 
 <aside class="sidebar-left border-right bg-white shadow non-scroll" id="leftSidebar" data-simplebar>
@@ -12,7 +17,7 @@
           <!-- nav bar -->
           <div class="w-100 mb-4 d-flex">
             <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="${root}">
-              <img src="${root}/resources/img/EveryWareLogo.png" alt="" class="logo">
+              <img id="logo" src="${root}/resources/img/EveryWareLogoSmall.png" alt="" class="logo">
             </a>
           </div>
           <p class="text-muted nav-heading mt-4 mb-1">
@@ -29,8 +34,22 @@
                   <a class="nav-link pl-3" href="${root}/organization/info"><span class="ml-1 item-text">임직원 정보</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/organization/management/chart"><span class="ml-1 item-text">조직도</span></a>
+                  <a class="nav-link pl-3" href="${root}/organization/chart"><span class="ml-1 item-text">조직도</span></a>
                 </li>
+                <c:if test="${loginMember.rightCode eq '1' || loginMember.rightCode eq '2'}">
+                  <li class="nav-item">
+                    <a class="nav-link pl-3" href="${root}/organization/management/emp/1"><span class="ml-1 item-text" style="color:rgb(4,46,247);">임직원관리</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link pl-3" href="${root}/organization/management/position"><span class="ml-1 item-text" style="color:rgb(4,46,247);">직위/직무설정</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link pl-3" href="${root}/organization/management/right"><span class="ml-1 item-text" style="color:rgb(4,46,247);">권한관리</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link pl-3" href="${root}/organization/management/dept"><span class="ml-1 item-text" style="color:rgb(4,46,247);">부서관리</span></a>
+                  </li>
+                </c:if>
               </ul>
             </li>
             <li class="nav-item w-100">
@@ -60,12 +79,6 @@
                   <a class="nav-link pl-3" href="${root}/calendar/department/select"><span class="ml-1 item-text">부서 일정</span></a>
                 </li>
               </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="#charts" aria-expanded="false" class="nav-link">
-                <i class="fe fe-flag fe-16"></i>
-                <span class="ml-3 item-text">그룹</span>
-              </a>
             </li>
           </ul>
           <p class="text-muted nav-heading mt-4 mb-1">
@@ -111,12 +124,7 @@
                 <span class="ml-3 item-text">이메일</span>
               </a>
             </li>
-            <li class="nav-item dropdown">
-              <a href="${root}/feedback/main" aria-expanded="false" class="nav-link">
-                <i class="fe fe-send fe-16"></i>
-                <span class="ml-3 item-text">피드백</span>
-              </a>
-            </li>
+            
           </ul>
         </nav>
       </aside>

@@ -7,6 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.app00.common.PageVo;
 import com.kh.app00.emp.vo.EmpVo;
+import com.kh.app00.organization.vo.CeoVo;
+import com.kh.app00.organization.vo.ComVo;
 import com.kh.app00.organization.vo.DeptVo;
 import com.kh.app00.organization.vo.JobVo;
 import com.kh.app00.organization.vo.RankVo;
@@ -132,6 +134,15 @@ public interface OrganizationDao {
 
 	//부서관리 - 부서삭제
 	int deleteDept(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> targetMap);
+
+	//홈페이지 - 회사정보 가져오기
+	ComVo selectComData(SqlSessionTemplate sqlSessionTemplate, String comCode);
+
+	//홈페이지 - ceo 정보 가져오기
+	CeoVo selectCeoData(SqlSessionTemplate sqlSessionTemplate, String comCode);
+
+	//홈페이지 - 해당 임직원 소속된 부서의 인원수 가져오기
+	String selectEmpCntInDept(SqlSessionTemplate sqlSessionTemplate, String deptCode);
 
 
 }

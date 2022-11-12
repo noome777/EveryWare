@@ -447,9 +447,6 @@
 				return false;
 			}
 
-			console.log(checkBoxArr);
-			console.log(editRankArr);
-
 			$.ajax({
 				url : "${root}/organization/management/rank/edit",
 				type : "POST",

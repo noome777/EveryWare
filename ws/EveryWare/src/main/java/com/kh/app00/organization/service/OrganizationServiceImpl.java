@@ -17,6 +17,8 @@ import com.kh.app00.common.SpaceRemover;
 import com.kh.app00.common.SpaceRemover;
 import com.kh.app00.emp.vo.EmpVo;
 import com.kh.app00.organization.dao.OrganizationDao;
+import com.kh.app00.organization.vo.CeoVo;
+import com.kh.app00.organization.vo.ComVo;
 import com.kh.app00.organization.vo.DeptVo;
 import com.kh.app00.organization.vo.JobVo;
 import com.kh.app00.organization.vo.RankVo;
@@ -506,6 +508,27 @@ public class OrganizationServiceImpl implements OrganizationService {
 			}
 		}
 				
+	}
+
+
+	//홈페이지 - 회사 정보 가져오기
+	@Override
+	public ComVo selectComData(String comCode) {
+		return organizationDao.selectComData(sqlSessionTemplate, comCode);
+	}
+
+
+	//홈페이지 - ceo 정보 가져오기
+	@Override
+	public CeoVo selectCeoData(String comCode) {
+		return organizationDao.selectCeoData(sqlSessionTemplate, comCode);
+	}
+
+
+	//홈페이지 - 해당 임직원 부서 내 인원 가져오기
+	@Override
+	public String selectEmpCntInDept(String deptCode) {
+		return organizationDao.selectEmpCntInDept(sqlSessionTemplate, deptCode);
 	}
 
 

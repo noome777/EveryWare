@@ -357,10 +357,18 @@ padding: 10px;
                         	<p class="mb-0 text-muted ${empList.empCode}-job">${empList.jobName}</p>
                         </td>
                         <td class="text-muted">
-	                        <p class="mb-0 text-muted ${empList.empCode}-tel">${empList.empTel}</p>
+	                        <p class="mb-0 text-muted ${empList.empCode}-tel">
+                            <c:if test="${empList.empTel!='--'}">
+                              ${empList.empTel}
+                            </c:if>
+                          </p>
                         </td>
                         <td>
-	                        <p class="mb-0 text-muted ${empList.empCode}-phone">${empList.empPhone}</p>
+	                        <p class="mb-0 text-muted ${empList.empCode}-phone">
+                            <c:if test="${empList.empPhone!='--'}">
+                              ${empList.empPhone}
+                            </c:if>
+                          </p>
                         </td>
                         <td>
                           <p class="mb-0 text-muted ${empList.empCode}-email">${empList.empEMail}</p>
@@ -537,7 +545,6 @@ padding: 10px;
                   </div>
                   <div class="flex-items">
 
-                    <!--비밀번호 유효성 검사 (서비스/프론트)-->
                     <div>
                       <p class="mb-0 text-muted"><strong>비밀번호</strong></p>
                     </div>
@@ -571,7 +578,6 @@ padding: 10px;
                   </div>
                   <div class="flex-items">
 
-                    <!--특정날짜 유효성검사-->
                     <div>
                       <p class="mb-0 text-muted"><strong>생년월일</strong></p>
                     </div>
@@ -580,25 +586,32 @@ padding: 10px;
                     </div>
                   </div>
                   <div class="flex-items">
-                    <!--사내전화 유효성검사-->
                     <div>
                       <p class="mb-0 text-muted" ><strong>사내전화</strong></p>
                     </div>
                     <div>
-                      <input type="tel" name="empTel" class="mb-0 modal-phone-area ${empList.empCode}-tel hide-input" value="${empList.empTel}">
+                      <c:if test="${empList.empTel!='--'}">
+                        <input type="tel" name="empTel" class="mb-0 modal-phone-area ${empList.empCode}-tel hide-input" value="${empList.empTel}">
+                      </c:if>
+                      <c:if test="${empList.empTel=='--'}">
+                        <input type="tel" name="empTel" class="mb-0 modal-phone-area ${empList.empCode}-tel hide-input">
+                      </c:if>
                     </div>
                   </div>
                   <div class="flex-items">
-                    <!--휴대전화 유효성검사-->
                     <div>
                       <p class="mb-0 text-muted"><strong>휴대전화</strong></p>
                     </div>
                     <div>
-                      <input type="tel" name="empPhone" class="mb-0 modal-phone-area ${empList.empCode}-phone hide-input" value="${empList.empPhone}">
+                      <c:if test="${empList.empTel!='--'}">
+                        <input type="tel" name="empPhone" class="mb-0 modal-phone-area ${empList.empCode}-phone hide-input" value="${empList.empPhone}">
+                      </c:if>
+                      <c:if test="${empList.empTel=='--'}">
+                        <input type="tel" name="empPhone" class="mb-0 modal-phone-area ${empList.empCode}-phone hide-input">
+                      </c:if>
                     </div>
                   </div>
                   <div class="flex-items">
-                    <!--email 유효성검사-->
                     <div>
                       <p class="mb-0 text-muted" ><strong>e-mail</strong></p>
                     </div>
@@ -608,7 +621,6 @@ padding: 10px;
                   </div>
                   <div class="flex-items">
 
-                    <!--도로명주소 api 확인-->
                     <div>
                       <p class="mb-0 text-muted"><strong>자택주소1</strong></p>
                     </div>
@@ -964,7 +976,6 @@ padding: 10px;
 		        const updatedDate = jsonStr[1];
 		        const cnt = checkBoxArr.length;
 		        
-		        console.log(updatedDate);
 		
 		          for(let i = 0; i < cnt; ++i) {
 		            var targetEmp = checkBoxArr.pop();
@@ -1166,17 +1177,13 @@ padding: 10px;
 	       checkBoxArr.push($(this).val());
 	      });
 	      
-	     console.log(checkBoxArr); 
 	     var formData = new FormData();
 	     var profile = $("input[name='profile']");
 	     var file = profile[0].files[0];
 	     
-		console.log(file);
-		 
 		 formData.append("uploadFile", file);
 		 formData.append("checkBoxArr", checkBoxArr);
 		 
-		 console.log(formData.get("uploadFile"));
         
          $.ajax({
              url : "${root}/organization/management/emp/update/checkedProfile"

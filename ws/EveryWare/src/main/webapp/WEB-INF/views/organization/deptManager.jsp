@@ -527,7 +527,6 @@
 			word : word
 		},
 		success : function(jsonStr) {
-			console.log(jsonStr);
 
 			if(jsonStr==null || jsonStr=="") {
 				alert("검색된 결과가 없습니다. 다시 시도해주세요.");
@@ -711,8 +710,6 @@
 			async : false,
 			cache: false,
 			success: function(data) {
-
-				console.log(data[10]);
 				
 				var option = "";
 				var blank="";

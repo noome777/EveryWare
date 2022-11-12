@@ -281,14 +281,6 @@
                       <p class="mb-0" class="modal-job-area">${empList.jobName}</p>
                     </div>
                   </div>
-                  <!--<div class="flex-items">
-                    <div>
-                      <p class="mb-0 text-muted"><strong>생년월일</strong></p>
-                    </div>
-                    <div>
-                      <p class="mb-0" class="modal-birthday-area">${empList.empBirthday}</p>
-                    </div>
-                  </div>-->
                   <div class="flex-items">
                     <div>
                       <p class="mb-0 text-muted" ><strong>사내전화</strong></p>
@@ -297,14 +289,6 @@
                       <p class="mb-0" class="modal-tel-area">${empList.empTel}</p>
                     </div>
                   </div>
-                  <!--<div class="flex-items">
-                    <div>
-                      <p class="mb-0 text-muted"><strong>휴대전화</strong></p>
-                    </div>
-                    <div>
-                      <p class="mb-0"  class="modal-phone-area">${empList.empPhone}</p>
-                    </div>
-                  </div>-->
                   <div class="flex-items">
                     <div>
                       <p class="mb-0 text-muted" ><strong>e-mail</strong></p>
