@@ -50,7 +50,7 @@
                   <h2 class="h3 mb-0 page-title">예약 목록</h2>
                 </div>
                 
-	           <!-- 카테고리 
+	           <!-- 카테고리 -->
 			       <div class="form-group mb-3">
 			         <select class="custom-select" id="custom-select">
 			           <option selected>전체</option>
@@ -58,8 +58,6 @@
 			           <option value="2">회의실</option>
 			         </select>
 			       </div>
-			         <button type="submit" class="btn btn-secondary">Search</button>
-			    -->
 	       
                 <div class="col-auto">
                   
@@ -92,8 +90,6 @@
                           <option value="1">빔프로젝트</option>
                           <option value="2">커피머신</option>
                           <option value="3">노트북</option>
-                          <option value="4">회의실 1</option>
-                          <option value="5">회의실 2</option>
                         </select>
                        
 	                 	  <!-- 예약일자 -->       
