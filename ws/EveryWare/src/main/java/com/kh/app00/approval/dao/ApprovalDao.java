@@ -145,8 +145,6 @@ public interface ApprovalDao {
 	int insertDocFormMapping(SqlSessionTemplate sst, List<DocFormMapperVo> mappingList);
 	//문서양식 수정
 	int updateDocForm(SqlSessionTemplate sst, DocFormVo vo);
-	//문서양식 항목 삭제
-	int deleteDocFormMapping(SqlSessionTemplate sst, DocFormVo vo);
 	//전체 문서 갯수 조회
 	int selectAllDocTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo);
 	//전체 문서 목록 조회

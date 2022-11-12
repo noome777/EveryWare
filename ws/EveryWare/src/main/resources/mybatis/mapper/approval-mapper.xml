@@ -658,10 +658,6 @@
 		WHERE FORM_CODE = #{formCode}
 	</update>
 	
-	<delete id="deleteDocFormMapping">
-		DELETE FROM DOC_FORM_MAPPING WHERE FORM_CODE = #{formCode}
-	</delete>
-	
 	<select id="selectAllDocTotalCnt" resultType="int">
 		SELECT COUNT(*) FROM APPROVAL_DOC
 		WHERE DOC_STATUS = 'N'
