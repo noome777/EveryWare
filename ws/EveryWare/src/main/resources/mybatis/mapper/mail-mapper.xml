@@ -222,7 +222,8 @@
 		JOIN EMP
 		ON MAIL.EMP_CODE = EMP.EMP_CODE
 		WHERE MAIL_DELETE IS NOT NULL
-		AND MAIL_RECEIVER = #{id}
+		AND (MAIL_RECEIVER = #{id}
+		OR MAIL_SENDER = #{id})
 		ORDER BY MAIL_DELETE DESC
 	</select>
 		
@@ -233,7 +234,8 @@
 		JOIN EMP
 		ON MAIL.EMP_CODE = EMP.EMP_CODE
 		WHERE MAIL_DELETE IS NOT NULL
-		AND MAIL_RECEIVER = #{id}
+		AND (MAIL_RECEIVER = #{id}
+		OR MAIL_SENDER = #{id})
 		<if test="searchType=='title' and (keyword != null and keyword != '' )">
 			AND MAIL_TITLE LIKE '%' || #{keyword} || '%'
 		</if>
@@ -252,7 +254,8 @@
 		 SELECT COUNT (*)
 		 FROM MAIL
 		 WHERE MAIL_DELETE IS NOT NULL
-		 AND MAIL_RECEIVER = #{id}
+		 AND (MAIL_RECEIVER = #{id}
+		 OR MAIL_SENDER = #{id})
 		<if test="searchType=='title' and (keyword != null and keyword != '' )">
 			AND MAIL_TITLE LIKE '%' || #{keyword} || '%'
 		</if>

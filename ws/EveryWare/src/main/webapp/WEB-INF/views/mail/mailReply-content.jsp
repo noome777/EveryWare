@@ -32,6 +32,7 @@
 .mb-3 {
 	padding-top: 20px;
 	margin-right: 50px;
+	width:1000px;
 }
 </style>
 </head>
