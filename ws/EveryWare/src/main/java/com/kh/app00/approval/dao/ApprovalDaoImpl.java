@@ -358,11 +358,6 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	public int updateDocForm(SqlSessionTemplate sst, DocFormVo vo) {
 		return sst.update("approvalMapper.updateDocForm", vo);
 	}
-	//문서양식 항목 삭제
-	@Override
-	public int deleteDocFormMapping(SqlSessionTemplate sst, DocFormVo vo) {
-		return sst.delete("approvalMapper.deleteDocFormMapping", vo);
-	}
 	//전체 문서 갯수 조회
 	@Override
 	public int selectAllDocTotalCnt(SqlSessionTemplate sst, ApprovalDocVo vo) {
