@@ -32,6 +32,8 @@
 		<typeAlias alias="RankVo" type="com.kh.app00.organization.vo.RankVo"/>
 		<typeAlias alias="RIghtVo" type="com.kh.app00.organization.vo.RightVo"/>
 		<typeAlias alias="JobVo" type="com.kh.app00.organization.vo.JobVo"/>
+		<typeAlias alias="ComVo" type="com.kh.app00.organization.vo.ComVo"/>
+		<typeAlias alias="CeoVo" type="com.kh.app00.organization.vo.CeoVo"/>
 		
 		
 		<!-- 근태 관련 -->

@@ -9,10 +9,61 @@
 <html lang="en">
 <head>
 <style>
+
+#chart {
+  position: absolute;
+  margin-top: 2%;
+  margin-left: 16%;
+}
+
+#chart-text {
+  margin-bottom: 10px;
+}
  #commute{
- 	margin-left: 58%;
- 	
+ 	position : absolute;
+  margin-left: 58%;
+  margin-top: 2%;
  }
+
+ #chart-flex-container {
+  display: flex;
+  flex-direction: column;
+ }
+
+ #chart-flex-container:hover {
+  cursor: pointer;
+ }
+
+ #chart-flex-area {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+ }
+
+ #img-area {
+  width: 35%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+ }
+
+ #text-area {
+  width: 65%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+ }
+
+
+ #widget-logo {
+  width: 100px;
+  height: 100px;
+  margin-top: 12%;
+  margin-left: 20%;
+ }
+
+
  #employee-image{
  	width: 180px;
  	height: 180px;
@@ -25,9 +76,15 @@
  
  #cal{
  	margin-right: 2%;
- 	margin-top: 0%;
+ 	margin-top: 330px;
  	float: right;
  	/* margin: 1% auto; */
+ }
+
+ #notice {
+  margin-right: 2%;
+  margin-top: 0%;
+  float: right;
  }
  
  #number{
@@ -70,6 +127,29 @@
       <%@ include file="/WEB-INF/views/common/sidemenu-content.jsp" %>
       <%-- <%@ include file="/WEB-INF/views/commute/commuteWidget.jsp" %> --%>
       
+      <!-- 조직도 바로가기 -->
+      <div class="card shadow mb-5" id="chart" style="width: 35%; height: 240px;">
+        <div class="card-body">
+          <div class="d-flex mb-2">
+            <div id="chart-flex-container" class="flex-fill pt-2" onclick="location.href='${root}/organization/chart';">
+              <h4 class="mb-0" id="chart-text">조직도</h4>
+              <div id="chart-flex-area">
+                <div id="img-area">
+                  <img id="widget-logo" alt="" src="${root}/resources/img/EveryWareLogoSmall.png">
+                </div>
+                <div id="text-area">
+                  <h2>${comVo.comName} <small>(임직원수 : ${comVo.empCnt}명, CEO : ${ceoVo.ceoName})</small></h2>
+                  <br>
+                  <h5>${loginMember.empName} ${loginMember.rankName}님 안녕하세요.</h5>
+                  <h5>소속부서 : ${loginMember.deptName} (${deptCnt}명)</h5>
+                </div>
+              </div>
+            </div>
+          </div> <!-- .row -->
+        </div> <!-- .card-body -->
+      </div>
+
+
       <!-- 근태위젯 -->
       <div class="card shadow mb-5" id="commute" style="width: 40%; height: 240px;">
         <div class="card-body">
@@ -93,6 +173,9 @@
           </div> <!-- .row -->
         </div> <!-- .card-body -->
       </div>
+
+
+      
         
        <!-- 일정 위젯 -->
 	   
@@ -109,7 +192,7 @@
         </div> <!-- .card-body -->
       </div>
       
-        <div class="card shadow mb-5" id="cal" style="width:82%; height: 350px;">
+        <div class="card shadow mb-5" id="notice" style="width:82%; height: 350px;">
 				<div class="card-body">
 				<br>
 				<div class="buttonSet">

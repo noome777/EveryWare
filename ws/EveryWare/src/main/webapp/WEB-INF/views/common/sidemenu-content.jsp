@@ -34,8 +34,22 @@
                   <a class="nav-link pl-3" href="${root}/organization/info"><span class="ml-1 item-text">임직원 정보</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="${root}/organization/management/chart"><span class="ml-1 item-text">조직도</span></a>
+                  <a class="nav-link pl-3" href="${root}/organization/chart"><span class="ml-1 item-text">조직도</span></a>
                 </li>
+                <c:if test="${loginMember.rightCode eq '1' || loginMember.rightCode eq '2'}">
+                  <li class="nav-item">
+                    <a class="nav-link pl-3" href="${root}/organization/management/emp/1"><span class="ml-1 item-text" style="color:rgb(4,46,247);">임직원관리</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link pl-3" href="${root}/organization/management/position"><span class="ml-1 item-text" style="color:rgb(4,46,247);">직위/직무설정</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link pl-3" href="${root}/organization/management/right"><span class="ml-1 item-text" style="color:rgb(4,46,247);">권한관리</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link pl-3" href="${root}/organization/management/dept"><span class="ml-1 item-text" style="color:rgb(4,46,247);">부서관리</span></a>
+                  </li>
+                </c:if>
               </ul>
             </li>
             <li class="nav-item w-100">

@@ -235,7 +235,6 @@ public class EmpController {
  		
     	 int result = service.updateEmp(empVo);
     	 
-    	 System.out.println("결과 : " + result);
     	 
     	 if(result==1) {
  			EmpVo loginMeber = service.selectEmpByEmpCode(empVo.getEmpCode());
@@ -259,7 +258,6 @@ public class EmpController {
  			session.setAttribute("errorMsg", "ErrorCode : " + result);
  		}
     	 
-    	 System.out.println(result);
     	return "redirect:/emp/myPage"; 
      }
     

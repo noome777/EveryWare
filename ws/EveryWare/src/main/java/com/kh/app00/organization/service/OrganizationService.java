@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.kh.app00.common.PageVo;
 import com.kh.app00.emp.vo.EmpVo;
+import com.kh.app00.organization.vo.CeoVo;
+import com.kh.app00.organization.vo.ComVo;
 import com.kh.app00.organization.vo.DeptVo;
 import com.kh.app00.organization.vo.JobVo;
 import com.kh.app00.organization.vo.RankVo;
@@ -129,6 +131,15 @@ public interface OrganizationService {
 
 	//부서관리 - 부서 삭제
 	int deleteDept(List<String> deptCodeList);
+
+	//홈페이지 - 회사 정보 가져오기
+	ComVo selectComData(String comCode);
+
+	//홈페이지 - ceo 정보 가져오기
+	CeoVo selectCeoData(String comCode);
+
+	//홈페이지 - 해당 사원의 부서정보 가져오기
+	String selectEmpCntInDept(String deptCode);
 
 
 }

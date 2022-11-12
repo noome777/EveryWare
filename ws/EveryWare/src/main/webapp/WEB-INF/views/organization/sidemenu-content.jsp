@@ -9,14 +9,15 @@
  	}
  </style>
  
-<c:set var="alertMsg" value="${requestScope.alertMsg}" />
-<c:remove var="alertMsg" scope="request" />
-
-<c:set var="errorMsg" value="${sessionScope.errorMsg}" />
+ <c:set var="errorMsg" value="${sessionScope.errorMsg}"/>
 <c:remove var="errorMsg" scope="session" />
+<c:if test="${not empty errorMsg }">
+	<script>
+		alert('${errorMsg}');
+	</script>
+</c:if>
 
-<c:set var="errorMsg" value="${requestScope.errorMsg}" />
-<c:remove var="errorMsg" scope="request" />
+
     
 <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
         <!-- <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
@@ -83,8 +84,28 @@
                 
               </ul>
             </li>
+            <br>
           </c:if>
           
           </ul>
         </nav>
       </aside>
+      
+
+      <c:if test="${not empty errorMsg}">
+        <script>
+          alert(${errorMsg});
+        </script>
+      </c:if>
+
+      <c:if test="${not empty alertMsg}">
+        <script>
+          alert(${alertMsg});
+        </script>
+      </c:if>
+
+
+      <c:remove var="errorMsg" scope="session"/>
+      <c:remove var="errorMsg" scope="request"/>
+      <c:remove var="alertMsg" scope="session"/>
+      <c:remove var="alertMsg" scope="request"/>

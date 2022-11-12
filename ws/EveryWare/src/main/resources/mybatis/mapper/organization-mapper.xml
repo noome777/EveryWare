@@ -577,6 +577,38 @@
 		</foreach>
 	</update>
 	
+	<select id="selectComData" resultType="ComVo">
+		SELECT 
+			C.COM_CODE
+			, T.CATEGORY_NAME AS COM_CATEGORY_NAME
+			, C.COM_NAME
+			, C.COM_TEL
+			, (SELECT COUNT(*) FROM EMP WHERE EMP_STATUS='N')AS EMP_CNT
+		FROM COM C
+		JOIN COMPANY_CATEGORY T
+		ON C.COM_CATEGORY_CODE = T.CATEGORY_CODE
+		WHERE C.COM_CODE = #{comCode}
+	</select>
+	
+	<select id="selectCeoData" resultType="CeoVo">
+		SELECT 
+			C.CEO_CODE
+			, C.CEO_TEL
+            , E.EMP_NAME AS CEO_NAME
+		FROM CEO C
+        JOIN EMP E
+        ON E.EMP_CODE = C.EMP_CODE
+		WHERE C.COM_CODE = ${comCode}
+		AND C.CEO_QUIT_DATE IS NULL
+	</select>
+	
+	<select id="selectEmpCntInDept" resultType="String">
+		SELECT
+			COUNT(*) FROM EMP
+		WHERE DEPT_CODE = #{deptCode}
+		AND EMP_STATUS = 'N'
+	</select>
+	
 	
 	
 </mapper>

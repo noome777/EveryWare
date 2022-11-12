@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.app00.common.PageVo;
 import com.kh.app00.emp.vo.EmpVo;
+import com.kh.app00.organization.vo.CeoVo;
+import com.kh.app00.organization.vo.ComVo;
 import com.kh.app00.organization.vo.DeptVo;
 import com.kh.app00.organization.vo.JobVo;
 import com.kh.app00.organization.vo.RankVo;
@@ -255,6 +257,24 @@ public class OrganizationDaoImpl implements OrganizationDao {
 	@Override
 	public int deleteDept(SqlSessionTemplate sqlSessionTemplate, Map<String, List<String>> targetMap) {
 		return sqlSessionTemplate.update("organizationMapper.updateDeptStatus",targetMap);
+	}
+
+	//홈페이지 - 회사 정보 가져오기
+	@Override
+	public ComVo selectComData(SqlSessionTemplate sqlSessionTemplate, String comCode) {
+		return sqlSessionTemplate.selectOne("organizationMapper.selectComData",comCode);
+	}
+
+	//홈페이지 - ceo 정보 가져오기
+	@Override
+	public CeoVo selectCeoData(SqlSessionTemplate sqlSessionTemplate, String comCode) {
+		return sqlSessionTemplate.selectOne("organizationMapper.selectCeoData",comCode);
+	}
+
+	//홈페이지 - 해당 임직원이 소속된 부서의 인원수 가져오기
+	@Override
+	public String selectEmpCntInDept(SqlSessionTemplate sqlSessionTemplate, String deptCode) {
+		return sqlSessionTemplate.selectOne("organizationMapper.selectEmpCntInDept",deptCode);
 	}
 
 
