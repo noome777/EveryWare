@@ -58,7 +58,7 @@ public class CommuteController {
     @GetMapping("main/{pno}")
     public String commuteMain(Model model, HttpSession session, CommuteVo vo, EmpVo empVo,
             @PathVariable int pno, String enrollDate, String comStatus) {
-//System.out.println(comStatus);
+
         // 로그인 여부 체크
         if (session.getAttribute("loginMember") == null) {
             session.setAttribute("alertMsg", "로그인 후 접근 가능합니다 !");
