@@ -14,7 +14,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>EveryWare - 출퇴근 기록 조회</title>
+<title>EveryWare - 사원 출퇴근 기록 조회</title>
 <style>
 .mb-0{
     margin-top: 20px;

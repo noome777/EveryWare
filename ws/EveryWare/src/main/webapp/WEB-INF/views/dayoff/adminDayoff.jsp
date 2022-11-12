@@ -13,7 +13,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>EveryWare - 시간 외 근무</title>
+<title>EveryWare - 휴가 결재</title>
 <style>
 .mb-0{
     margin-top: 20px;

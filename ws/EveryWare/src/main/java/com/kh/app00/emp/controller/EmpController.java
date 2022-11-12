@@ -106,7 +106,7 @@ public class EmpController {
     @GetMapping("logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/";
+        return "redirect:/emp/login";
     }
     
     //비밀번호 찾기 화면
