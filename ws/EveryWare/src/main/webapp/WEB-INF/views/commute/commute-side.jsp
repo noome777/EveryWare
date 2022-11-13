@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
     pageEncoding="UTF-8"%>
+    
+<style>
+     .logo {
+         width : 25px;
+         height : 25px;
+         margin-top : 10px;
+     }
+ </style>
+ 
 <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar">
         <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
           <i class="fe fe-x"><span class="sr-only"></span></i>
@@ -8,7 +17,7 @@
           <!-- nav bar -->
           <div class="w-100 mb-4 d-flex">
             <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="${root}">
-              <img src="${root}/resources/img/EveryWareLogo.png" alt="" class="logo" href="${root}">
+              <img src="${root}/resources/img/EveryWareLogoSmall.png" alt="" class="logo" href="${root}">
                 <g>
                   <polygon class="st0" points="78,105 15,105 24,87 87,87 	" />
                   <polygon class="st0" points="96,69 33,69 42,51 105,51 	" />
