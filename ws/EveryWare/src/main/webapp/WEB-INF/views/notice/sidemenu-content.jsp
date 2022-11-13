@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
      <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style>
+  #logo {
+         width : 25px;
+         height : 25px;
+         margin-top : 10px;
+     }
+</style>
 <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
 
         <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
@@ -8,14 +15,14 @@
         </a>
         <nav class="vertnav navbar navbar-light">
           <!-- nav bar -->
-          <div class="w-100 mb-4 d-flex">
+         <div class="w-100 mb-4 d-flex">
             <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="${root}">
-              <img src="${root}/resources/img/EveryWareLogo.png" alt="" class="logo">
+              <img id="logo" src="${root}/resources/img/EveryWareLogoSmall.png" alt="EVERYWARE 로고" class="logo">
+            </a>
+          </div>
                 
              
-            </a>
             
-          </div>
           <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item dropdown">
              

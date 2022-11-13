@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>메일 상세 조회</title>
 <style>
 .buttonSet {
 	margin-bottom: 20px;

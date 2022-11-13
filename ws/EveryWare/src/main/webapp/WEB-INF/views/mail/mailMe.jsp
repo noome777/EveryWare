@@ -7,7 +7,7 @@
 <!-- include summernote css/js -->
 
   
-<title>메일작성 </title>
+<title>메일 내게 작성 </title>
 
  
 
