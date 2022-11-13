@@ -4350,7 +4350,19 @@ VALUES (SEQ_MAIL_CODE.NEXTVAL, '2','user01@everyware.com', 'π›∞©Ω¿¥œ¥Ÿ', '±›¿œ »
 
 INSERT INTO MAIL (MAIL_CODE, EMP_CODE, MAIL_SENDER, MAIL_TITLE, MAIL_CONTENT, MAIL_SENDDATE, MAIL_RECEIVER)
 VALUES (SEQ_MAIL_CODE.NEXTVAL, '2','user01@everyware.com', 'π›∞©Ω¿¥œ¥Ÿ', '±›¿œ »∏¿«ø° ¥Î«ÿ ∏ªæ∏µÂ∏±∞‘ ¿÷Ω¿¥œ¥Ÿ11', SYSDATE,'admin@everyware.com');
-
+                                                                                                                                                     
+INSERT INTO MAIL (MAIL_CODE, EMP_CODE, MAIL_SENDER, MAIL_TITLE, MAIL_CONTENT, MAIL_SENDDATE, MAIL_RECEIVER)
+VALUES (SEQ_MAIL_CODE.NEXTVAL, '2','user01@everyware.com', 'π›∞©Ω¿¥œ¥Ÿ«œ¿Ã', '±›¿œ »∏¿«ø° ¥Î«ÿ ∏ªæ∏µÂ∏±∞‘ ¿÷Ω¿¥œ¥Ÿ11', SYSDATE,'user02@everyware.com');
+                                                                                                                                                     
+INSERT INTO MAIL (MAIL_CODE, EMP_CODE, MAIL_SENDER, MAIL_TITLE, MAIL_CONTENT, MAIL_SENDDATE, MAIL_RECEIVER)
+VALUES (SEQ_MAIL_CODE.NEXTVAL, '2','user01@everyware.com', 'π›∞©Ω¿¥œ¥Ÿ«œ¿Ã', '±›¿œ »∏¿«ø° ¥Î«ÿ ∏ªæ∏µÂ∏±∞‘ ¿÷Ω¿¥œ¥Ÿ11', SYSDATE,'user02@everyware.com');                                                                                                                                                     
+INSERT INTO MAIL (MAIL_CODE, EMP_CODE, MAIL_SENDER, MAIL_TITLE, MAIL_CONTENT, MAIL_SENDDATE, MAIL_RECEIVER)
+VALUES (SEQ_MAIL_CODE.NEXTVAL, '2','user01@everyware.com', 'π›∞©Ω¿¥œ¥Ÿ«œ¿Ã', '±›¿œ »∏¿«ø° ¥Î«ÿ ∏ªæ∏µÂ∏±∞‘ ¿÷Ω¿¥œ¥Ÿ11', SYSDATE,'user02@everyware.com');                                                                                                                                                   
+INSERT INTO MAIL (MAIL_CODE, EMP_CODE, MAIL_SENDER, MAIL_TITLE, MAIL_CONTENT, MAIL_SENDDATE, MAIL_RECEIVER)
+VALUES (SEQ_MAIL_CODE.NEXTVAL, '2','user01@everyware.com', 'π›∞©Ω¿¥œ¥Ÿ«œ¿Ã', '±›¿œ »∏¿«ø° ¥Î«ÿ ∏ªæ∏µÂ∏±∞‘ ¿÷Ω¿¥œ¥Ÿ11', SYSDATE,'user02@everyware.com'); 
+                                                                                                                                                     
+INSERT INTO MAIL (MAIL_CODE, EMP_CODE, MAIL_SENDER, MAIL_TITLE, MAIL_CONTENT, MAIL_SENDDATE, MAIL_RECEIVER)
+VALUES (SEQ_MAIL_CODE.NEXTVAL, '2','user01@everyware.com', 'π›∞©Ω¿¥œ¥Ÿ«œ¿Ã', '±›¿œ »∏¿«ø° ¥Î«ÿ ∏ªæ∏µÂ∏±∞‘ ¿÷Ω¿¥œ¥Ÿ11', SYSDATE,'user02@everyware.com');                                                                                                                                                      
 INSERT INTO MAIL (MAIL_CODE, EMP_CODE, MAIL_SENDER, MAIL_TITLE, MAIL_CONTENT, MAIL_SENDDATE, MAIL_RECEIVER)
 VALUES (SEQ_MAIL_CODE.NEXTVAL, '3','user02@everyware.com', '¿ÃπÃ¡ˆ »Æ¿Œ πŸ∂¯¥œ¥Ÿ', '≈◊Ω∫∆ÆøÎ 1', SYSDATE,'user01@everyware.com');
 
