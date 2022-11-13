@@ -24,7 +24,7 @@
 	    smtpServer.emailSending(emailInfo);      // 전송
 	  
 	    session.setAttribute("alertMsg", "입력하신 이메일 주소로 임시 비밀번호 메일을 전송하였습니다.");
-	    response.sendRedirect("/EveryWare/emp/resetPwd");
+	    response.sendRedirect("/everyware/emp/resetPwd");
 
 	}
 	catch (Exception e) {

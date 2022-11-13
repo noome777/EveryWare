@@ -54,7 +54,7 @@
 
 
 
-<form method="post" action="/EveryWare/emp/mailSend">
+<form method="post" action="${root}/emp/mailSend">
 
    <!-- controller에서 이름과 이메일이 일치할 때 해당 이메일로 메일 발송하기 -->
             <!-- 받는 사람 : <input type="email" name="empEMail" value="" />

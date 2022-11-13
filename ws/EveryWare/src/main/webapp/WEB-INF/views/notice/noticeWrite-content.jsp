@@ -31,7 +31,7 @@
 	<main role="main" class="main-content">
 		<h2 id="noticewrite">공지사항 작성</h2>
 		<br>
-		<form action="/app00/notice/write" method="post"
+		<form action="${root}/notice/write" method="post"
 			enctype="multipart/form-data">
 			<div class="buttonSet">
 				<button type="submit" class="btn btn-primary">완료</button>
