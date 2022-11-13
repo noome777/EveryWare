@@ -33,7 +33,7 @@ import com.kh.app00.common.Pagination;
 import com.kh.app00.common.SpaceRemover;
 
 @Controller
-@RequestMapping("organization" )
+@RequestMapping("organization")
 public class OrganizationController {
 	
 	private final OrganizationService organizationService;

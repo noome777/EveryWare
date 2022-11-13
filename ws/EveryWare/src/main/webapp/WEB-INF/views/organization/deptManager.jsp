@@ -219,6 +219,8 @@
 
 	</style>
 
+	<title>부서관리</title>
+
 <!-- jsTree theme -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 </head>
@@ -349,7 +351,7 @@
 			  <div class="modal-content">
 				<div class="modal-header">
 				  <h5 class="modal-title" >부서 추가</h5>
-				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="return cleanAddModal();">
 					<span aria-hidden="true">&times;</span>
 				  </button>
 				</div>
@@ -384,7 +386,7 @@
 			  <div class="modal-content">
 				<div class="modal-header">
 				  <h5 class="modal-title" >부서 수정</h5>
-				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close"  onclick="return cleanEditModal();">
 					<span aria-hidden="true">&times;</span>
 				  </button>
 				</div>
@@ -786,10 +788,6 @@
 
 			let editDeptInput = $('.edit-dept-input');
 
-			/*if(editDeptInput.val() == ""); {
-				alert("변경할 부서명을 기재해주시길 바랍니다.")
-				return false;
-			}*/
 			
 
 			for(let i=0; i<$('.edit-high-dept').length; ++i) {

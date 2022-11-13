@@ -27,13 +27,7 @@
           <!-- nav bar -->
           <div class="w-100 mb-4 d-flex">
             <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="${root}">
-              <img id="logo" src="${root}/resources/img/EveryWareLogoSmall.png" alt="" class="logo">
-                <g>
-                  <polygon class="st0" points="78,105 15,105 24,87 87,87 	" />
-                  <polygon class="st0" points="96,69 33,69 42,51 105,51 	" />
-                  <polygon class="st0" points="78,33 15,33 24,15 87,15 	" />
-                </g>
-              </svg>
+              <img id="logo" src="${root}/resources/img/EveryWareLogoSmall.png" alt="EVERYWARE 로고" class="logo">
             </a>
           </div>
           
