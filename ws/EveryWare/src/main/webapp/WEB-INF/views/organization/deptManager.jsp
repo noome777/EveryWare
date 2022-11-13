@@ -219,6 +219,8 @@
 
 	</style>
 
+	<title>부서관리</title>
+
 <!-- jsTree theme -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 </head>

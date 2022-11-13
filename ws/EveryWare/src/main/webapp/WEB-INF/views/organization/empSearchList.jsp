@@ -49,7 +49,10 @@
                 			<h3 class="h4 mb-0 page-title padding-left-20px">검색결과</h3>
                 		</div>
                 		<div class="col-auto">
-			                <button type="button" class="btn shadow"><span class="fe fe-user fe-12 mr-2"></span>내 정보보기</button>
+			                <button type="button" class="btn shadow">
+								<span class="fe fe-user fe-12 mr-2" onclick="location.href='${root}/emp/myPage';"></span>
+								내 정보보기
+						</button>
 			            </div>
                 	</div>
 					<div class="card-body grid-wrap mb-4">
