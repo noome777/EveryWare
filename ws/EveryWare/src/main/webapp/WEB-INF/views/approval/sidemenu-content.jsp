@@ -13,18 +13,19 @@
       .appr-font-color{
         color: rgb(119, 118, 118);
       }
+      .logo{
+      	margin-top: 10px;
+      	width: 25px;
+      	height: 25px;
+      } 
     </style>
 <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
-    <c:set var="apprWaitCount" value="${sessionScope.apprWaitCount}" />
-    <c:set var="apprProgCount" value="${sessionScope.apprProgCount}" />
-    <c:set var="apprRefCount" value="${sessionScope.apprRefCount}" />
-    <c:set var="apprExpectCount" value="${sessionScope.apprExpectCount}" />
   <nav>
         <ul class="vertnav navbar navbar-light">
           <!-- nav bar -->
           <div class="w-100 mb-4 d-flex">
             <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="${root}">
-              <img src="${root}/resources/img/EveryWareLogo.png" alt="" class="logo">
+              <img src="${root}/resources/img/EveryWareLogoSmall.png" alt="" class="logo">
             </a>
           </div>
           
