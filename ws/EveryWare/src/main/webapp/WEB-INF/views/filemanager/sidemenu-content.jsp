@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<style>
+  .non-scroll{overflow:hidden}
+  #logo{
+  	margin-top : 10px;
+  	width: 25px;
+  	height : 25px;
+  }
+</style>
 <aside class="sidebar-left border-right bg-white shadow"
 	id="leftSidebar" data-simplebar>
 	<a href="#"
@@ -10,7 +18,7 @@
 		<!-- nav bar -->
 		<div class="w-100 mb-4 d-flex">
 			<a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="${root}">
-              <img src="${root}/resources/img/EveryWareLogo.png" alt="" class="logo">
+              <img id="logo" src="${root}/resources/img/EveryWareLogoSmall.png" alt="" class="logo">
                 <g>
                   <polygon class="st0" points="78,105 15,105 24,87 87,87 	" />
                   <polygon class="st0" points="96,69 33,69 42,51 105,51 	" />
