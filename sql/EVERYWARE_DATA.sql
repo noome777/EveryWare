@@ -212,8 +212,6 @@ INSERT INTO EMP (
     , EMP_NAME
     , EMP_ID
     , EMP_PWD
-    , EMP_E_MAIL
-    , EMP_PHONE
 ) VALUES (
     SEQ_EMP_NO.NEXTVAL
     , 1
@@ -224,8 +222,6 @@ INSERT INTO EMP (
     , '이이사'
     , 'user01'
     , '$2a$10$G/ZyLA3N/MpOiZlCKHRlwuivRAE5jHF3FvEp45DR3WKImeXpWioLS'
-    , 'everyware1234@naver.com'
-    , '01012341234'
 )
 ;
 
@@ -888,6 +884,8 @@ INSERT INTO EMP (
     , EMP_NAME
     , EMP_ID
     , EMP_PWD
+    , EMP_E_MAIL
+    , EMP_PHONE
 ) VALUES (
     SEQ_EMP_NO.NEXTVAL
     , 1
@@ -898,6 +896,8 @@ INSERT INTO EMP (
     , '배계약'
     , 'user001'
     , '$2a$10$G/ZyLA3N/MpOiZlCKHRlwuivRAE5jHF3FvEp45DR3WKImeXpWioLS'
+    , 'everyware1234@naver.com'
+    , '01012341234'
 )
 ;
 
