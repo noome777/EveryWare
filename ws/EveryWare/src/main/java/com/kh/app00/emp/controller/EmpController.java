@@ -127,7 +127,6 @@ public class EmpController {
         
         //이름, 이메일이 사원의 정보와 일치한지 확인
         EmpVo pwdVo = service.selectPwdInfo(vo);
-//        System.out.println(pwdVo);
         
         //해당 회원이 존재할 때만 메일을 보내준다.
         if(pwdVo != null) {
@@ -135,7 +134,7 @@ public class EmpController {
             //임시 비밀번호 생성(UUID이용) -> 비밀번호를 랜덤 난수로 설정하기
             String tempPw = UUID.randomUUID().toString().replace("-", "");//-를 제거
             tempPw = tempPw.substring(0,10);//tempPw를 앞에서부터 10자리 잘라줌
-            System.out.println("임시 비밀번호 ::: " + tempPw);
+//            System.out.println("임시 비밀번호 ::: " + tempPw);
             
             
             //이메일이 ~인 회원의 비밀번호 랜덤 난수 설정하여 VO 업데이트 하기,
