@@ -48,7 +48,7 @@ EveyrWare는 사내 협업을 위한 다양한 비지니스 기능을 하나의 
 <br><br><br>
 
 ##   4. ERD 설계
-- ERD cloud
+- [ERD cloud](https://www.erdcloud.com/d/CGAyqRh7MCuRsS7Yg)
 ![image](https://user-images.githubusercontent.com/98254235/202898713-9df39c90-d225-45ea-8c50-a08983b8e9c5.png)
 
 
